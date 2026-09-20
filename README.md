@@ -9,7 +9,7 @@ Godot Engine으로 제작하는 횡스크롤 2D 슈팅 게임 프로젝트입니
 - Renderer: Forward+
 - Design resolution: 1920 × 1080
 - Stretch: Canvas Items / Expand
-- Target: Windows and Steam Deck (Linux)
+- Target: Windows and Steam Deck (Windows build via Proton)
 
 ## 시작하기
 
@@ -23,9 +23,9 @@ Godot Engine으로 제작하는 횡스크롤 2D 슈팅 게임 프로젝트입니
 
 ## 내보내기
 
-`export_presets.cfg`에 다음 두 대상을 준비했습니다.
+`export_presets.cfg`에 Windows 빌드 프리셋을 준비했습니다.
 
 - `Windows Desktop`: `build/windows/RetroSFShooting.exe`
-- `Steam Deck (Linux)`: `build/linux/RetroSFShooting.x86_64`
 
-Godot 에디터에서 Export Templates를 설치한 뒤 각 프리셋을 내보낼 수 있습니다.
+Godot 에디터에서 Export Templates를 설치한 뒤 내보낼 수 있습니다. Steam Deck에서는
+동일한 Windows 빌드를 Steam Play(Proton)로 실행합니다.
