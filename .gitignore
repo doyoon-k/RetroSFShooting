@@ -1,0 +1,31 @@
+# Godot 4 generated files
+.godot/
+
+# Godot Mono / C# generated files
+.mono/
+data_*/
+mono_crash.*.json
+
+# Exported builds
+build/
+dist/
+exports/
+
+# IDE and editor settings
+.idea/
+.vscode/
+*.sln
+*.csproj
+*.user
+*.userprefs
+
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Temporary and backup files
+*.tmp
+*.temp
+*~
+
