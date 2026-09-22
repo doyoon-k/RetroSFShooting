@@ -1,54 +1,44 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3]
 
-[ext_resource type="Script" path="res://scenes/main/main.gd" id="1_main"]
+[ext_resource type="Script" path="res://scenes/main/main.gd" id="Script"]
+[ext_resource type="Script" path="res://scripts/save/save_store.gd" id="Save"]
+[ext_resource type="Resource" path="res://data/game_catalog.tres" id="Catalog"]
+[ext_resource type="PackedScene" path="res://scenes/title/title.tscn" id="Title"]
+[ext_resource type="PackedScene" path="res://scenes/story/story_screen.tscn" id="Story"]
+[ext_resource type="PackedScene" path="res://scenes/character_select/character_select.tscn" id="Select"]
+[ext_resource type="PackedScene" path="res://scenes/gameplay/stage/stage_01.tscn" id="Stage"]
+[ext_resource type="PackedScene" path="res://scenes/ui/result.tscn" id="Result"]
 
 [node name="Main" type="Node"]
-script = ExtResource("1_main")
+script = ExtResource("Script")
+catalog = ExtResource("Catalog")
+title_scene = ExtResource("Title")
+story_scene = ExtResource("Story")
+select_scene = ExtResource("Select")
+stage_scene = ExtResource("Stage")
+result_scene = ExtResource("Result")
 
-[node name="Background" type="ColorRect" parent="."]
+
+[node name="ScreenHost" type="Node" parent="."]
+
+
+[node name="SaveStore" type="Node" parent="."]
+script = ExtResource("Save")
+
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+
+
+[node name="TransitionLayer" type="CanvasLayer" parent="."]
+layer = 100
+
+
+[node name="Fade" type="ColorRect" parent="TransitionLayer"]
+unique_name_in_owner = true
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.012, 0.018, 0.043, 1)
-
-[node name="GameWorld" type="Node2D" parent="."]
-
-[node name="Interface" type="CanvasLayer" parent="."]
-
-[node name="SafeArea" type="MarginContainer" parent="Interface"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 64
-theme_override_constants/margin_top = 64
-theme_override_constants/margin_right = 64
-theme_override_constants/margin_bottom = 64
-
-[node name="Content" type="VBoxContainer" parent="Interface/SafeArea"]
-layout_mode = 2
-theme_override_constants/separation = 16
-
-[node name="Title" type="Label" parent="Interface/SafeArea/Content"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.45, 0.9, 1, 1)
-theme_override_font_sizes/font_size = 56
-text = "RETRO SF SHOOTING"
-
-[node name="Description" type="Label" parent="Interface/SafeArea/Content"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.78, 0.84, 0.95, 1)
-theme_override_font_sizes/font_size = 28
-text = "Godot project initialized — press Esc to exit"
-
-[node name="ResolutionLabel" type="Label" parent="Interface/SafeArea/Content"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.55, 0.62, 0.74, 1)
-theme_override_font_sizes/font_size = 22
-text = "Viewport: 1920 × 1080"
-
+color = Color(0.01, 0.02, 0.04, 1)

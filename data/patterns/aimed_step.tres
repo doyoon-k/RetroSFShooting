@@ -1,0 +1,9 @@
+[gd_resource type="Resource" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/pattern_step.gd" id="Script"]
+[ext_resource type="Resource" path="res://data/patterns/aimed.tres" id="Pattern"]
+
+
+[resource]
+script = ExtResource("Script")
+pattern = ExtResource("Pattern")

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/ending_data.gd" id="Script"]
+[ext_resource type="Resource" path="res://data/stories/betrayal.tres" id="Story"]
+
+
+[resource]
+script = ExtResource("Script")
+id = &"betrayal"
+number = "ENDING 03"
+title = "보존 명령"
+story = ExtResource("Story")

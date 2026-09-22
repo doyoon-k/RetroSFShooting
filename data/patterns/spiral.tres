@@ -1,0 +1,17 @@
+[gd_resource type="Resource" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/attack_pattern.gd" id="Script"]
+[ext_resource type="PackedScene" path="res://scenes/projectiles/enemy_bullet.tscn" id="Bullet"]
+
+
+[resource]
+script = ExtResource("Script")
+projectile_scene = ExtResource("Bullet")
+display_name = "Rotating four-way burst"
+aim = 0
+shape = 1
+bullet_count = 4
+volley_count = 9
+volley_interval = 0.18
+rotation_per_volley = 17.0
+recovery = 1.8

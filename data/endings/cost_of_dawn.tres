@@ -1,0 +1,12 @@
+[gd_resource type="Resource" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/ending_data.gd" id="Script"]
+[ext_resource type="Resource" path="res://data/stories/cost_of_dawn.tres" id="Story"]
+
+
+[resource]
+script = ExtResource("Script")
+id = &"cost_of_dawn"
+number = "ENDING 05"
+title = "새벽의 대가"
+story = ExtResource("Story")

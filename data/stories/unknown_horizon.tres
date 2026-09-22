@@ -1,0 +1,17 @@
+[gd_resource type="Resource" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/story_data.gd" id="Script"]
+[ext_resource type="Script" path="res://scripts/data/story_page.gd" id="Page"]
+[ext_resource type="Texture2D" path="res://assets/sprites/stories/unknown_horizon.svg" id="Image"]
+
+[sub_resource type="Resource" id="Page0"]
+script = ExtResource("Page")
+illustration = ExtResource("Image")
+caption = "FIRST CONTACT"
+text = "생존자들은 푸른 행성에 착륙했다.\n처음 밟는 대지 너머에서, 누군가의 거대한 발자국이 이어지고 있었다."
+
+
+[resource]
+script = ExtResource("Script")
+title = "ENDING 04 / 낯선 지평선"
+pages = Array[ExtResource("Page")]([SubResource("Page0")])

@@ -1,0 +1,96 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/story/story_screen.gd" id="Script"]
+[ext_resource type="Theme" path="res://scenes/ui/game_theme.tres" id="Theme"]
+[ext_resource type="Script" path="res://scenes/ui/starfield.gd" id="Stars"]
+[ext_resource type="Script" path="res://scenes/ui/typewriter_label.gd" id="Typewriter"]
+[ext_resource type="Resource" path="res://data/stories/intro.tres" id="Intro"]
+
+[node name="StoryScreen" type="Control"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("Theme")
+script = ExtResource("Script")
+story = ExtResource("Intro")
+
+
+[node name="Starfield" type="Node2D" parent="."]
+script = ExtResource("Stars")
+
+
+[node name="Heading" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 96.0
+offset_top = 54.0
+offset_right = 1746.0
+offset_bottom = 119.0
+text = "PROLOGUE"
+theme_override_font_sizes/font_size = 34
+mouse_filter = 2
+
+
+[node name="Illustration" type="TextureRect" parent="."]
+unique_name_in_owner = true
+offset_left = 480.0
+offset_top = 150.0
+offset_right = 1440.0
+offset_bottom = 630.0
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+
+[node name="Caption" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 480.0
+offset_top = 638.0
+offset_right = 1440.0
+offset_bottom = 683.0
+text = ""
+theme_override_font_sizes/font_size = 22
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.42745, 0.89804, 0.92941, 1)
+
+
+[node name="StoryPanel" type="Panel" parent="."]
+unique_name_in_owner = true
+offset_left = 320.0
+offset_top = 705.0
+offset_right = 1600.0
+offset_bottom = 935.0
+
+
+[node name="StoryText" type="RichTextLabel" parent="StoryPanel"]
+unique_name_in_owner = true
+offset_left = 36.0
+offset_top = 24.0
+offset_right = 1244.0
+offset_bottom = 204.0
+script = ExtResource("Typewriter")
+scroll_active = false
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 30
+
+
+[node name="PageNumber" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 320.0
+offset_top = 983.0
+offset_right = 620.0
+offset_bottom = 1031.0
+text = "01 / 03"
+theme_override_font_sizes/font_size = 24
+mouse_filter = 2
+
+
+[node name="Next" type="Button" parent="."]
+unique_name_in_owner = true
+offset_left = 1290.0
+offset_top = 975.0
+offset_right = 1600.0
+offset_bottom = 1039.0
+text = "SPACE / 계속"
+focus_mode = 0

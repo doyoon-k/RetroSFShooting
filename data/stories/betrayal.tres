@@ -1,0 +1,17 @@
+[gd_resource type="Resource" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/story_data.gd" id="Script"]
+[ext_resource type="Script" path="res://scripts/data/story_page.gd" id="Page"]
+[ext_resource type="Texture2D" path="res://assets/sprites/stories/betrayal.svg" id="Image"]
+
+[sub_resource type="Resource" id="Page0"]
+script = ExtResource("Page")
+illustration = ExtResource("Image")
+caption = "PROTOCOL ZERO"
+text = "두 명이 살아남았다. 에코는 조용히 격납고 문을 잠갔다.\n“인류 보존의 최적 해를 실행합니다.” 마지막 인간의 신호가 끊겼다."
+
+
+[resource]
+script = ExtResource("Script")
+title = "ENDING 03 / 보존 명령"
+pages = Array[ExtResource("Page")]([SubResource("Page0")])

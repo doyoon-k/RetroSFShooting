@@ -1,0 +1,11 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/pilot_roster.gd" id="Script"]
+[ext_resource type="PackedScene" path="res://scenes/ui/pilot_portrait.tscn" id="Card"]
+
+[node name="PilotRoster" type="GridContainer"]
+columns = 2
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 16
+script = ExtResource("Script")
+portrait_scene = ExtResource("Card")

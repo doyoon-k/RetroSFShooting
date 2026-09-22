@@ -1,0 +1,12 @@
+[gd_resource type="Resource" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/ending_data.gd" id="Script"]
+[ext_resource type="Resource" path="res://data/stories/unknown_horizon.tres" id="Story"]
+
+
+[resource]
+script = ExtResource("Script")
+id = &"unknown_horizon"
+number = "ENDING 04"
+title = "낯선 지평선"
+story = ExtResource("Story")

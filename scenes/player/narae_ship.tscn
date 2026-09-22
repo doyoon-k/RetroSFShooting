@@ -1,0 +1,8 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/player/player_ship.tscn" id="Base"]
+
+[node name="PlayerShip" instance=ExtResource("Base")]
+move_speed = 535.0
+tint = Color(0.60784, 0.85098, 0.64706, 1)
+ship_scale = Vector2(0.9, 1)

@@ -1,0 +1,36 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/items/pickup.gd" id="Script"]
+[ext_resource type="Theme" path="res://scenes/ui/game_theme.tres" id="Theme"]
+
+[sub_resource type="CircleShape2D" id="Shape"]
+radius = 24.0
+
+[node name="Pickup" type="Area2D"]
+script = ExtResource("Script")
+kind = 2
+collision_layer = 16
+collision_mask = 1
+
+
+[node name="Visual" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-22, -22, 22, -22, 22, 22, -22, 22)
+color = Color(0.67451, 0.72157, 0.98431, 1)
+
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("Shape")
+
+
+[node name="Symbol" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = -22.0
+offset_top = -25.0
+offset_right = 22.0
+offset_bottom = 23.0
+text = "S"
+theme_override_font_sizes/font_size = 30
+mouse_filter = 2
+theme = ExtResource("Theme")
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.06275, 0.13333, 0.21176, 1)

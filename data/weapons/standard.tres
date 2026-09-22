@@ -1,0 +1,25 @@
+[gd_resource type="Resource" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/weapon_data.gd" id="Script"]
+[ext_resource type="Script" path="res://scripts/data/shot_level_data.gd" id="Level"]
+[ext_resource type="PackedScene" path="res://scenes/projectiles/player_bullet.tscn" id="Bullet"]
+
+[sub_resource type="Resource" id="Level1"]
+script = ExtResource("Level")
+projectile_scene = ExtResource("Bullet")
+angles = PackedFloat32Array(0)
+
+[sub_resource type="Resource" id="Level2"]
+script = ExtResource("Level")
+projectile_scene = ExtResource("Bullet")
+angles = PackedFloat32Array(-6, 6)
+
+[sub_resource type="Resource" id="Level3"]
+script = ExtResource("Level")
+projectile_scene = ExtResource("Bullet")
+angles = PackedFloat32Array(-10, 0, 10)
+
+
+[resource]
+script = ExtResource("Script")
+levels = Array[ExtResource("Level")]([SubResource("Level1"), SubResource("Level2"), SubResource("Level3")])

@@ -1,0 +1,48 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/player/player_ship.gd" id="Script"]
+[ext_resource type="Script" path="res://scenes/player/player_weapon.gd" id="Weapon"]
+[ext_resource type="Resource" path="res://data/weapons/standard.tres" id="WeaponData"]
+
+[sub_resource type="CircleShape2D" id="Shape"]
+radius = 14.0
+
+[node name="PlayerShip" type="Area2D"]
+script = ExtResource("Script")
+collision_layer = 1
+collision_mask = 2
+
+
+[node name="Visuals" type="Node2D" parent="."]
+
+
+[node name="Hull" type="Polygon2D" parent="Visuals"]
+polygon = PackedVector2Array(-38, -13, -9, -13, -19, -34, 12, -19, 39, 0, 12, 19, -19, 34, -9, 13, -38, 13)
+color = Color(0.86275, 0.93725, 0.94902, 1)
+
+
+[node name="Cockpit" type="Polygon2D" parent="Visuals"]
+polygon = PackedVector2Array(0, -7, 19, 0, 0, 7, -12, 0)
+color = Color(0.09412, 0.2, 0.2902, 1)
+
+
+[node name="Engine" type="Polygon2D" parent="Visuals"]
+polygon = PackedVector2Array(-36, -8, -65, 0, -36, 8)
+color = Color(0.47059, 0.84706, 0.96863, 1)
+
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("Shape")
+
+
+[node name="Weapon" type="Node2D" parent="."]
+position = Vector2(40, 0)
+script = ExtResource("Weapon")
+data = ExtResource("WeaponData")
+
+
+[node name="Shield" type="Line2D" parent="."]
+visible = false
+points = PackedVector2Array(48.0,0.0,47.078,9.364,44.346,18.369,39.911,26.667,33.941,33.941,26.667,39.911,18.369,44.346,9.364,47.078,0.0,48.0,-9.364,47.078,-18.369,44.346,-26.667,39.911,-33.941,33.941,-39.911,26.667,-44.346,18.369,-47.078,9.364,-48.0,0.0,-47.078,-9.364,-44.346,-18.369,-39.911,-26.667,-33.941,-33.941,-26.667,-39.911,-18.369,-44.346,-9.364,-47.078,-0.0,-48.0,9.364,-47.078,18.369,-44.346,26.667,-39.911,33.941,-33.941,39.911,-26.667,44.346,-18.369,47.078,-9.364,48.0,-0.0)
+width = 3.0
+default_color = Color(0.56863, 0.87451, 1.0, 1)

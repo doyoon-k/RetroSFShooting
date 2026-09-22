@@ -1,0 +1,496 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/gameplay/stage/stage.gd" id="Script"]
+[ext_resource type="Theme" path="res://scenes/ui/game_theme.tres" id="Theme"]
+[ext_resource type="Script" path="res://scenes/ui/starfield.gd" id="Stars"]
+[ext_resource type="Script" path="res://scenes/ui/typewriter_label.gd" id="Typewriter"]
+[ext_resource type="PackedScene" path="res://scenes/ui/pilot_roster.tscn" id="Roster"]
+[ext_resource type="Resource" path="res://data/game_catalog.tres" id="Catalog"]
+[ext_resource type="Script" path="res://scenes/gameplay/waves/wave_sequence.gd" id="Sequence"]
+[ext_resource type="Script" path="res://scenes/gameplay/waves/wave.gd" id="Wave"]
+[ext_resource type="PackedScene" path="res://scenes/gameplay/explosion.tscn" id="Explosion"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/scout.tscn" id="scout"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/fighter.tscn" id="fighter"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/gunner.tscn" id="gunner"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/hunter.tscn" id="hunter"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/boss.tscn" id="boss"]
+[ext_resource type="PackedScene" path="res://scenes/items/power_up.tscn" id="power_up"]
+[ext_resource type="PackedScene" path="res://scenes/items/bomb.tscn" id="bomb"]
+[ext_resource type="PackedScene" path="res://scenes/items/shield.tscn" id="shield"]
+
+[sub_resource type="Curve2D" id="Route0"]
+_data = {"points": PackedVector2Array(0, 0, 0, 0, 1570, 210, 0, 0, 0, 0, 1120, 210, 0, 0, 0, 0, 870, 520, 0, 0, 0, 0, 380, 760, 0, 0, 0, 0, -140, 760)}
+point_count = 5
+
+[sub_resource type="Curve2D" id="Route1"]
+_data = {"points": PackedVector2Array(0, 0, 0, 0, 1580, 880, 0, 0, 0, 0, 1130, 820, 0, 0, 0, 0, 880, 540, 0, 0, 0, 0, 490, 250, 0, 0, 0, 0, -160, 250)}
+point_count = 5
+
+[sub_resource type="Curve2D" id="Route2"]
+_data = {"points": PackedVector2Array(0, 0, 0, 0, 1580, 450, 0, 0, 0, 0, 1160, 680, 0, 0, 0, 0, 900, 300, 0, 0, 0, 0, 490, 500, 0, 0, 0, 0, -180, 510)}
+point_count = 5
+
+[node name="Stage" type="Node2D"]
+process_mode = 3
+script = ExtResource("Script")
+catalog = ExtResource("Catalog")
+recovery_pickup = ExtResource("power_up")
+explosion_scene = ExtResource("Explosion")
+
+
+[node name="Simulation" type="Node2D" parent="."]
+process_mode = 1
+
+
+[node name="Playfield" type="Panel" parent="Simulation"]
+unique_name_in_owner = true
+offset_left = 48.0
+offset_top = 100.0
+offset_right = 1488.0
+offset_bottom = 964.0
+theme = ExtResource("Theme")
+mouse_filter = 2
+
+
+[node name="Background" type="Node2D" parent="Simulation"]
+position = Vector2(48, 100)
+script = ExtResource("Stars")
+field_size = Vector2(1440, 864)
+scroll_speed = 75.0
+
+
+[node name="WaveSequence" type="Node2D" parent="Simulation"]
+script = ExtResource("Sequence")
+boss_scene = ExtResource("boss")
+boss_time = 65.0
+
+
+[node name="Wave01_scout" type="Node2D" parent="Simulation/WaveSequence"]
+position = Vector2(0, 0)
+script = ExtResource("Wave")
+start_time = 2.0
+enemy_scene = ExtResource("scout")
+count = 7
+interval = 0.6
+
+
+[node name="Path2D" type="Path2D" parent="Simulation/WaveSequence/Wave01_scout"]
+curve = SubResource("Route0")
+
+
+[node name="Wave02_fighter" type="Node2D" parent="Simulation/WaveSequence"]
+position = Vector2(1550, 300)
+script = ExtResource("Wave")
+start_time = 8.0
+enemy_scene = ExtResource("fighter")
+count = 3
+interval = 1.7
+spawn_offset = Vector2(0, 90)
+
+
+[node name="Wave03_gunner" type="Node2D" parent="Simulation/WaveSequence"]
+position = Vector2(1550, 532)
+script = ExtResource("Wave")
+start_time = 13.0
+enemy_scene = ExtResource("gunner")
+count = 1
+interval = 1.0
+drop_mode = 1
+drop_scene = ExtResource("power_up")
+
+
+[node name="Wave04_scout" type="Node2D" parent="Simulation/WaveSequence"]
+position = Vector2(0, 0)
+script = ExtResource("Wave")
+start_time = 16.0
+enemy_scene = ExtResource("scout")
+count = 7
+interval = 0.5
+
+
+[node name="Path2D" type="Path2D" parent="Simulation/WaveSequence/Wave04_scout"]
+curve = SubResource("Route1")
+
+
+[node name="Wave05_hunter" type="Node2D" parent="Simulation/WaveSequence"]
+position = Vector2(1550, 450)
+script = ExtResource("Wave")
+start_time = 23.0
+enemy_scene = ExtResource("hunter")
+count = 3
+interval = 2.0
+spawn_offset = Vector2(0, 90)
+drop_mode = 2
+drop_scene = ExtResource("shield")
+
+
+[node name="Wave06_gunner" type="Node2D" parent="Simulation/WaveSequence"]
+position = Vector2(1550, 532)
+script = ExtResource("Wave")
+start_time = 28.0
+enemy_scene = ExtResource("gunner")
+count = 1
+interval = 1.0
+drop_mode = 1
+drop_scene = ExtResource("power_up")
+
+
+[node name="Wave07_scout" type="Node2D" parent="Simulation/WaveSequence"]
+position = Vector2(0, 0)
+script = ExtResource("Wave")
+start_time = 32.0
+enemy_scene = ExtResource("scout")
+count = 8
+interval = 0.45
+
+
+[node name="Path2D" type="Path2D" parent="Simulation/WaveSequence/Wave07_scout"]
+curve = SubResource("Route2")
+
+
+[node name="Wave08_fighter" type="Node2D" parent="Simulation/WaveSequence"]
+position = Vector2(1550, 500)
+script = ExtResource("Wave")
+start_time = 39.0
+enemy_scene = ExtResource("fighter")
+count = 4
+interval = 1.4
+spawn_offset = Vector2(0, 90)
+drop_mode = 2
+drop_scene = ExtResource("bomb")
+
+
+[node name="Wave09_gunner" type="Node2D" parent="Simulation/WaveSequence"]
+position = Vector2(1550, 532)
+script = ExtResource("Wave")
+start_time = 45.0
+enemy_scene = ExtResource("gunner")
+count = 1
+interval = 1.0
+drop_mode = 1
+drop_scene = ExtResource("power_up")
+
+
+[node name="Wave10_scout" type="Node2D" parent="Simulation/WaveSequence"]
+position = Vector2(0, 0)
+script = ExtResource("Wave")
+start_time = 49.0
+enemy_scene = ExtResource("scout")
+count = 8
+interval = 0.4
+
+
+[node name="Path2D" type="Path2D" parent="Simulation/WaveSequence/Wave10_scout"]
+curve = SubResource("Route0")
+
+
+[node name="Wave11_hunter" type="Node2D" parent="Simulation/WaveSequence"]
+position = Vector2(1550, 370)
+script = ExtResource("Wave")
+start_time = 55.0
+enemy_scene = ExtResource("hunter")
+count = 2
+interval = 2.0
+spawn_offset = Vector2(0, 90)
+
+
+[node name="Actors" type="Node2D" parent="Simulation"]
+
+
+[node name="Projectiles" type="Node2D" parent="Simulation"]
+
+
+[node name="Items" type="Node2D" parent="Simulation"]
+
+
+[node name="Effects" type="Node2D" parent="Simulation"]
+
+
+[node name="Presentation" type="Node2D" parent="."]
+process_mode = 3
+
+
+[node name="Effects" type="Node2D" parent="Presentation"]
+
+
+[node name="Interface" type="CanvasLayer" parent="."]
+
+
+[node name="Root" type="Control" parent="Interface"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("Theme")
+mouse_filter = 2
+
+
+[node name="StatusLine" type="Label" parent="Interface/Root"]
+unique_name_in_owner = true
+offset_left = 48.0
+offset_top = 34.0
+offset_right = 1488.0
+offset_bottom = 83.0
+text = ""
+theme_override_font_sizes/font_size = 24
+mouse_filter = 2
+
+
+[node name="StageTime" type="Label" parent="Interface/Root"]
+unique_name_in_owner = true
+offset_left = 48.0
+offset_top = 985.0
+offset_right = 1078.0
+offset_bottom = 1025.0
+text = ""
+theme_override_font_sizes/font_size = 21
+mouse_filter = 2
+
+
+[node name="Controls" type="Label" parent="Interface/Root"]
+unique_name_in_owner = true
+offset_left = 48.0
+offset_top = 1036.0
+offset_right = 1488.0
+offset_bottom = 1070.0
+text = "WASD 이동   J 공격   K 폭탄   C 길게 눌러 차지 / 놓아서 발사   ESC 일시정지"
+theme_override_font_sizes/font_size = 20
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.43922, 0.54118, 0.63137, 1)
+
+
+[node name="ChargeTitle" type="Label" parent="Interface/Root"]
+unique_name_in_owner = true
+offset_left = 1120.0
+offset_top = 985.0
+offset_right = 1265.0
+offset_bottom = 1025.0
+text = "CHARGE"
+theme_override_font_sizes/font_size = 20
+mouse_filter = 2
+
+
+[node name="ChargeBar" type="ProgressBar" parent="Interface/Root"]
+unique_name_in_owner = true
+offset_left = 1260.0
+offset_top = 999.0
+offset_right = 1480.0
+offset_bottom = 1014.0
+show_percentage = false
+mouse_filter = 2
+
+
+[node name="BossBar" type="ProgressBar" parent="Interface/Root"]
+unique_name_in_owner = true
+visible = false
+offset_left = 370.0
+offset_top = 117.0
+offset_right = 1190.0
+offset_bottom = 133.0
+show_percentage = false
+mouse_filter = 2
+
+
+[node name="BombFlash" type="ColorRect" parent="Interface/Root"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+offset_left = 48.0
+offset_top = 100.0
+offset_right = 1488.0
+offset_bottom = 964.0
+mouse_filter = 2
+color = Color(0.75294, 0.91373, 0.96078, 1)
+
+
+[node name="ChargeFlash" type="ColorRect" parent="Interface/Root"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+offset_left = 48.0
+offset_top = 100.0
+offset_right = 1488.0
+offset_bottom = 964.0
+mouse_filter = 2
+color = Color(0.62353, 0.95294, 0.8, 1)
+
+
+[node name="PauseDimmer" type="ColorRect" parent="Interface/Root"]
+unique_name_in_owner = true
+visible = false
+offset_left = 48.0
+offset_top = 100.0
+offset_right = 1488.0
+offset_bottom = 964.0
+color = Color(0.005, 0.01, 0.025, 0.82)
+
+
+[node name="SequencePanel" type="Panel" parent="Interface/Root"]
+unique_name_in_owner = true
+offset_left = 250.0
+offset_top = 328.0
+offset_right = 1290.0
+offset_bottom = 728.0
+visible = false
+
+
+[node name="SequencePortrait" type="TextureRect" parent="Interface/Root/SequencePanel"]
+unique_name_in_owner = true
+offset_left = 32.0
+offset_top = 94.0
+offset_right = 256.0
+offset_bottom = 318.0
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+
+[node name="SequenceTitle" type="Label" parent="Interface/Root/SequencePanel"]
+unique_name_in_owner = true
+offset_left = 286.0
+offset_top = 36.0
+offset_right = 1012.0
+offset_bottom = 128.0
+text = ""
+theme_override_font_sizes/font_size = 31
+mouse_filter = 2
+autowrap_mode = 2
+theme_override_colors/font_color = Color(0.42745, 0.89804, 0.92941, 1)
+
+
+[node name="SequenceText" type="RichTextLabel" parent="Interface/Root/SequencePanel"]
+unique_name_in_owner = true
+offset_left = 286.0
+offset_top = 157.0
+offset_right = 992.0
+offset_bottom = 355.0
+script = ExtResource("Typewriter")
+scroll_active = false
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 28
+
+
+[node name="CrewPanel" type="Panel" parent="Interface/Root"]
+unique_name_in_owner = true
+offset_left = 1520.0
+offset_top = 32.0
+offset_right = 1888.0
+offset_bottom = 1032.0
+mouse_filter = 2
+
+
+[node name="CrewTitle" type="Label" parent="Interface/Root"]
+unique_name_in_owner = true
+offset_left = 1544.0
+offset_top = 57.0
+offset_right = 1864.0
+offset_bottom = 104.0
+text = "FLIGHT CREW"
+theme_override_font_sizes/font_size = 28
+mouse_filter = 2
+
+
+[node name="SurvivorCount" type="Label" parent="Interface/Root"]
+unique_name_in_owner = true
+offset_left = 1544.0
+offset_top = 115.0
+offset_right = 1864.0
+offset_bottom = 153.0
+text = "CREW 6 / 6"
+theme_override_font_sizes/font_size = 21
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.4902, 0.64706, 0.71373, 1)
+
+
+[node name="Roster" parent="Interface/Root" instance=ExtResource("Roster")]
+unique_name_in_owner = true
+offset_left = 1540.0
+offset_top = 180.0
+offset_right = 1868.0
+offset_bottom = 782.0
+
+
+[node name="NextPilotPanel" type="Panel" parent="Interface/Root"]
+unique_name_in_owner = true
+offset_left = 1540.0
+offset_top = 815.0
+offset_right = 1868.0
+offset_bottom = 1001.0
+visible = false
+
+
+[node name="NextTitle" type="Label" parent="Interface/Root/NextPilotPanel"]
+unique_name_in_owner = true
+offset_left = 12.0
+offset_top = 9.0
+offset_right = 316.0
+offset_bottom = 48.0
+text = "SELECT NEXT PILOT"
+theme_override_font_sizes/font_size = 23
+mouse_filter = 2
+horizontal_alignment = 1
+
+
+[node name="Countdown" type="Label" parent="Interface/Root/NextPilotPanel"]
+unique_name_in_owner = true
+offset_left = 112.0
+offset_top = 48.0
+offset_right = 212.0
+offset_bottom = 140.0
+text = "5"
+theme_override_font_sizes/font_size = 62
+mouse_filter = 2
+horizontal_alignment = 1
+
+
+[node name="NextHint" type="Label" parent="Interface/Root/NextPilotPanel"]
+unique_name_in_owner = true
+offset_left = 8.0
+offset_top = 145.0
+offset_right = 320.0
+offset_bottom = 175.0
+text = "선택 / Enter · 시간 초과 시 확정"
+theme_override_font_sizes/font_size = 17
+mouse_filter = 2
+horizontal_alignment = 1
+
+
+[node name="PauseMenu" type="Panel" parent="Interface/Root"]
+unique_name_in_owner = true
+offset_left = 500.0
+offset_top = 358.0
+offset_right = 1040.0
+offset_bottom = 668.0
+visible = false
+
+
+[node name="PauseHeading" type="Label" parent="Interface/Root/PauseMenu"]
+unique_name_in_owner = true
+offset_left = 36.0
+offset_top = 30.0
+offset_right = 504.0
+offset_bottom = 108.0
+text = "PAUSED"
+theme_override_font_sizes/font_size = 48
+mouse_filter = 2
+horizontal_alignment = 1
+
+
+[node name="PauseSubtitle" type="Label" parent="Interface/Root/PauseMenu"]
+unique_name_in_owner = true
+offset_left = 24.0
+offset_top = 130.0
+offset_right = 516.0
+offset_bottom = 178.0
+text = "아직 우리의 항로는 끝나지 않았다."
+theme_override_font_sizes/font_size = 22
+mouse_filter = 2
+horizontal_alignment = 1
+
+
+[node name="Resume" type="Button" parent="Interface/Root/PauseMenu"]
+unique_name_in_owner = true
+offset_left = 70.0
+offset_top = 212.0
+offset_right = 470.0
+offset_bottom = 276.0
+text = "RESUME / 계속"

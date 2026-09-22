@@ -1,0 +1,13 @@
+[gd_resource type="Resource" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/attack_pattern.gd" id="Script"]
+[ext_resource type="PackedScene" path="res://scenes/projectiles/enemy_bullet.tscn" id="Bullet"]
+
+
+[resource]
+script = ExtResource("Script")
+projectile_scene = ExtResource("Bullet")
+display_name = "Aimed single"
+aim = 2
+bullet_count = 1
+recovery = 1.7

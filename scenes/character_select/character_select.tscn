@@ -1,0 +1,415 @@
+[gd_scene format=3]
+[ext_resource type="Resource" path="res://data/game_catalog.tres" id="PreviewCatalog"]
+
+[ext_resource type="Script" path="res://scenes/character_select/character_select.gd" id="Script"]
+[ext_resource type="Theme" path="res://scenes/ui/game_theme.tres" id="Theme"]
+[ext_resource type="Script" path="res://scenes/ui/starfield.gd" id="Stars"]
+[ext_resource type="Script" path="res://scenes/ui/typewriter_label.gd" id="Typewriter"]
+[ext_resource type="PackedScene" path="res://scenes/ui/pilot_roster.tscn" id="Roster"]
+
+[sub_resource type="Animation" id="Idle0"]
+resource_name = "idle"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Portrait:position")
+tracks/0/keys = {"times": PackedFloat32Array(0, 1.5, 3.0), "transitions": PackedFloat32Array(1, 1, 1), "update": 0, "values": [Vector2(0, 0), Vector2(0, -3), Vector2(0, 0)]}
+
+[sub_resource type="AnimationLibrary" id="Idle0Library"]
+_data = {"idle": SubResource("Idle0")}
+
+[sub_resource type="Animation" id="Idle1"]
+resource_name = "idle"
+length = 3.7
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Portrait:position")
+tracks/0/keys = {"times": PackedFloat32Array(0, 1.85, 3.7), "transitions": PackedFloat32Array(1, 1, 1), "update": 0, "values": [Vector2(0, 0), Vector2(0, -4), Vector2(0, 0)]}
+
+[sub_resource type="AnimationLibrary" id="Idle1Library"]
+_data = {"idle": SubResource("Idle1")}
+
+[sub_resource type="Animation" id="Idle2"]
+resource_name = "idle"
+length = 4.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Portrait:position")
+tracks/0/keys = {"times": PackedFloat32Array(0, 2.2, 4.4), "transitions": PackedFloat32Array(1, 1, 1), "update": 0, "values": [Vector2(0, 0), Vector2(0, -5), Vector2(0, 0)]}
+
+[sub_resource type="AnimationLibrary" id="Idle2Library"]
+_data = {"idle": SubResource("Idle2")}
+
+[sub_resource type="Animation" id="Idle3"]
+resource_name = "idle"
+length = 5.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Portrait:position")
+tracks/0/keys = {"times": PackedFloat32Array(0, 2.55, 5.1), "transitions": PackedFloat32Array(1, 1, 1), "update": 0, "values": [Vector2(0, 0), Vector2(0, -3), Vector2(0, 0)]}
+
+[sub_resource type="AnimationLibrary" id="Idle3Library"]
+_data = {"idle": SubResource("Idle3")}
+
+[sub_resource type="Animation" id="Idle4"]
+resource_name = "idle"
+length = 5.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Portrait:position")
+tracks/0/keys = {"times": PackedFloat32Array(0, 2.9, 5.8), "transitions": PackedFloat32Array(1, 1, 1), "update": 0, "values": [Vector2(0, 0), Vector2(0, -4), Vector2(0, 0)]}
+
+[sub_resource type="AnimationLibrary" id="Idle4Library"]
+_data = {"idle": SubResource("Idle4")}
+
+[sub_resource type="Animation" id="Idle5"]
+resource_name = "idle"
+length = 6.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Portrait:position")
+tracks/0/keys = {"times": PackedFloat32Array(0, 3.25, 6.5), "transitions": PackedFloat32Array(1, 1, 1), "update": 0, "values": [Vector2(0, 0), Vector2(0, -5), Vector2(0, 0)]}
+
+[sub_resource type="AnimationLibrary" id="Idle5Library"]
+_data = {"idle": SubResource("Idle5")}
+
+[node name="CharacterSelect" type="Control"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("Theme")
+script = ExtResource("Script")
+catalog = ExtResource("PreviewCatalog")
+
+
+[node name="Starfield" type="Node2D" parent="."]
+script = ExtResource("Stars")
+
+
+[node name="Heading" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 96.0
+offset_top = 46.0
+offset_right = 1296.0
+offset_bottom = 136.0
+text = "SELECT PILOT"
+theme_override_font_sizes/font_size = 56
+mouse_filter = 2
+
+
+[node name="Subheading" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 100.0
+offset_top = 146.0
+offset_right = 1360.0
+offset_bottom = 191.0
+text = "격납고 06  /  당신의 신호를 기다리는 사람들"
+theme_override_font_sizes/font_size = 24
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.52941, 0.67843, 0.74902, 1)
+
+
+[node name="HangarBackdrop" type="Panel" parent="."]
+unique_name_in_owner = true
+offset_left = 96.0
+offset_top = 220.0
+offset_right = 1176.0
+offset_bottom = 700.0
+
+
+[node name="HangarStatus" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 128.0
+offset_top = 240.0
+offset_right = 1108.0
+offset_bottom = 285.0
+text = "HANGAR 06  •  SYSTEMS READY"
+theme_override_font_sizes/font_size = 20
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.42745, 0.89804, 0.92941, 1)
+
+
+[node name="Hangar" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+
+[node name="Pilot0" type="Node2D" parent="Hangar"]
+position = Vector2(275, 366)
+
+
+[node name="Portrait" type="Sprite2D" parent="Hangar/Pilot0"]
+scale = Vector2(0.85, 0.85)
+
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Hangar/Pilot0"]
+libraries = {&"": SubResource("Idle0Library")}
+autoplay = "idle"
+
+
+[node name="Name" type="Label" parent="Hangar/Pilot0"]
+offset_left = -145.0
+offset_top = 60.0
+offset_right = 145.0
+offset_bottom = 94.0
+text = "LARK"
+theme_override_font_sizes/font_size = 19
+mouse_filter = 2
+horizontal_alignment = 1
+
+
+[node name="Activity0" type="Label" parent="Hangar/Pilot0"]
+unique_name_in_owner = true
+offset_left = -145.0
+offset_top = 96.0
+offset_right = 145.0
+offset_bottom = 124.0
+text = "작전 지도 확인 중"
+theme_override_font_sizes/font_size = 17
+mouse_filter = 2
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.47059, 0.57647, 0.66275, 1)
+
+
+[node name="Pilot1" type="Node2D" parent="Hangar"]
+position = Vector2(625, 366)
+
+
+[node name="Portrait" type="Sprite2D" parent="Hangar/Pilot1"]
+scale = Vector2(0.85, 0.85)
+
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Hangar/Pilot1"]
+libraries = {&"": SubResource("Idle1Library")}
+autoplay = "idle"
+
+
+[node name="Name" type="Label" parent="Hangar/Pilot1"]
+offset_left = -145.0
+offset_top = 60.0
+offset_right = 145.0
+offset_bottom = 94.0
+text = "ATLAS"
+theme_override_font_sizes/font_size = 19
+mouse_filter = 2
+horizontal_alignment = 1
+
+
+[node name="Activity1" type="Label" parent="Hangar/Pilot1"]
+unique_name_in_owner = true
+offset_left = -145.0
+offset_top = 96.0
+offset_right = 145.0
+offset_bottom = 124.0
+text = "독서 중"
+theme_override_font_sizes/font_size = 17
+mouse_filter = 2
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.47059, 0.57647, 0.66275, 1)
+
+
+[node name="Pilot2" type="Node2D" parent="Hangar"]
+position = Vector2(975, 366)
+
+
+[node name="Portrait" type="Sprite2D" parent="Hangar/Pilot2"]
+scale = Vector2(0.85, 0.85)
+
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Hangar/Pilot2"]
+libraries = {&"": SubResource("Idle2Library")}
+autoplay = "idle"
+
+
+[node name="Name" type="Label" parent="Hangar/Pilot2"]
+offset_left = -145.0
+offset_top = 60.0
+offset_right = 145.0
+offset_bottom = 94.0
+text = "ORBIT"
+theme_override_font_sizes/font_size = 19
+mouse_filter = 2
+horizontal_alignment = 1
+
+
+[node name="Activity2" type="Label" parent="Hangar/Pilot2"]
+unique_name_in_owner = true
+offset_left = -145.0
+offset_top = 96.0
+offset_right = 145.0
+offset_bottom = 124.0
+text = "통신 신호 분석 중"
+theme_override_font_sizes/font_size = 17
+mouse_filter = 2
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.47059, 0.57647, 0.66275, 1)
+
+
+[node name="Pilot3" type="Node2D" parent="Hangar"]
+position = Vector2(275, 570)
+
+
+[node name="Portrait" type="Sprite2D" parent="Hangar/Pilot3"]
+scale = Vector2(0.85, 0.85)
+
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Hangar/Pilot3"]
+libraries = {&"": SubResource("Idle3Library")}
+autoplay = "idle"
+
+
+[node name="Name" type="Label" parent="Hangar/Pilot3"]
+offset_left = -145.0
+offset_top = 60.0
+offset_right = 145.0
+offset_bottom = 94.0
+text = "EMBER"
+theme_override_font_sizes/font_size = 19
+mouse_filter = 2
+horizontal_alignment = 1
+
+
+[node name="Activity3" type="Label" parent="Hangar/Pilot3"]
+unique_name_in_owner = true
+offset_left = -145.0
+offset_top = 96.0
+offset_right = 145.0
+offset_bottom = 124.0
+text = "기체 정비 중"
+theme_override_font_sizes/font_size = 17
+mouse_filter = 2
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.47059, 0.57647, 0.66275, 1)
+
+
+[node name="Pilot4" type="Node2D" parent="Hangar"]
+position = Vector2(625, 570)
+
+
+[node name="Portrait" type="Sprite2D" parent="Hangar/Pilot4"]
+scale = Vector2(0.85, 0.85)
+
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Hangar/Pilot4"]
+libraries = {&"": SubResource("Idle4Library")}
+autoplay = "idle"
+
+
+[node name="Name" type="Label" parent="Hangar/Pilot4"]
+offset_left = -145.0
+offset_top = 60.0
+offset_right = 145.0
+offset_bottom = 94.0
+text = "MOTH"
+theme_override_font_sizes/font_size = 19
+mouse_filter = 2
+horizontal_alignment = 1
+
+
+[node name="Activity4" type="Label" parent="Hangar/Pilot4"]
+unique_name_in_owner = true
+offset_left = -145.0
+offset_top = 96.0
+offset_right = 145.0
+offset_bottom = 124.0
+text = "동료와 대화 중"
+theme_override_font_sizes/font_size = 17
+mouse_filter = 2
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.47059, 0.57647, 0.66275, 1)
+
+
+[node name="Pilot5" type="Node2D" parent="Hangar"]
+position = Vector2(975, 570)
+
+
+[node name="Portrait" type="Sprite2D" parent="Hangar/Pilot5"]
+scale = Vector2(0.85, 0.85)
+
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Hangar/Pilot5"]
+libraries = {&"": SubResource("Idle5Library")}
+autoplay = "idle"
+
+
+[node name="Name" type="Label" parent="Hangar/Pilot5"]
+offset_left = -145.0
+offset_top = 60.0
+offset_right = 145.0
+offset_bottom = 94.0
+text = "ECHO-06"
+theme_override_font_sizes/font_size = 19
+mouse_filter = 2
+horizontal_alignment = 1
+
+
+[node name="Activity5" type="Label" parent="Hangar/Pilot5"]
+unique_name_in_owner = true
+offset_left = -145.0
+offset_top = 96.0
+offset_right = 145.0
+offset_bottom = 124.0
+text = "다음 항로 계산 중"
+theme_override_font_sizes/font_size = 17
+mouse_filter = 2
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.47059, 0.57647, 0.66275, 1)
+
+
+[node name="Details" type="Panel" parent="."]
+unique_name_in_owner = true
+offset_left = 96.0
+offset_top = 752.0
+offset_right = 1176.0
+offset_bottom = 1000.0
+
+
+[node name="PilotName" type="Label" parent="Details"]
+unique_name_in_owner = true
+offset_left = 32.0
+offset_top = 22.0
+offset_right = 1040.0
+offset_bottom = 77.0
+text = ""
+theme_override_font_sizes/font_size = 32
+mouse_filter = 2
+
+
+[node name="Description" type="RichTextLabel" parent="Details"]
+unique_name_in_owner = true
+offset_left = 32.0
+offset_top = 91.0
+offset_right = 1040.0
+offset_bottom = 228.0
+script = ExtResource("Typewriter")
+scroll_active = false
+mouse_filter = 2
+
+
+[node name="Roster" parent="." instance=ExtResource("Roster")]
+unique_name_in_owner = true
+offset_left = 1280.0
+offset_top = 220.0
+offset_right = 1808.0
+offset_bottom = 822.0
+
+
+[node name="SelectHint" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 1280.0
+offset_top = 840.0
+offset_right = 1840.0
+offset_bottom = 882.0
+text = "↑↓←→  파일럿 선택   /   Enter  확인"
+theme_override_font_sizes/font_size = 21
+mouse_filter = 2
+
+
+[node name="Sortie" type="Button" parent="."]
+unique_name_in_owner = true
+offset_left = 1280.0
+offset_top = 919.0
+offset_right = 1808.0
+offset_bottom = 1000.0
+text = "SORTIE / 출격"

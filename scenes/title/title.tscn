@@ -1,0 +1,220 @@
+[gd_scene format=3]
+[ext_resource type="Texture2D" path="res://assets/sprites/crew_silhouettes.svg" id="CrewArt"]
+[ext_resource type="Resource" path="res://data/game_catalog.tres" id="PreviewCatalog"]
+
+[ext_resource type="Script" path="res://scenes/title/title.gd" id="Script"]
+[ext_resource type="Theme" path="res://scenes/ui/game_theme.tres" id="Theme"]
+[ext_resource type="Script" path="res://scenes/ui/starfield.gd" id="Stars"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mothership.svg" id="Mothership"]
+
+[sub_resource type="Animation" id="Float"]
+resource_name = "idle"
+length = 9.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Mothership:position")
+tracks/0/keys = {"times": PackedFloat32Array(0, 4.5, 9), "transitions": PackedFloat32Array(1, 1, 1), "update": 0, "values": [Vector2(1330, 540), Vector2(1330, 522), Vector2(1330, 540)]}
+
+[sub_resource type="AnimationLibrary" id="FloatLibrary"]
+_data = {"idle": SubResource("Float")}
+
+[node name="Title" type="Control"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("Theme")
+script = ExtResource("Script")
+catalog = ExtResource("PreviewCatalog")
+
+
+[node name="Starfield" type="Node2D" parent="."]
+script = ExtResource("Stars")
+
+
+[node name="Mothership" type="Sprite2D" parent="."]
+position = Vector2(1330, 540)
+texture = ExtResource("Mothership")
+scale = Vector2(1.15, 1.15)
+
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {&"": SubResource("FloatLibrary")}
+autoplay = "idle"
+
+
+[node name="Designation" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 96.0
+offset_top = 65.0
+offset_right = 1046.0
+offset_bottom = 110.0
+text = "ARK-06  /  DEEP SPACE SURVIVAL"
+theme_override_font_sizes/font_size = 22
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.42745, 0.89804, 0.92941, 1)
+
+
+[node name="Logo" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 88.0
+offset_top = 190.0
+offset_right = 838.0
+offset_bottom = 530.0
+text = "LAST\nARK"
+theme_override_font_sizes/font_size = 125
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.86275, 0.93333, 0.95686, 1)
+
+
+[node name="Subtitle" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 100.0
+offset_top = 560.0
+offset_right = 800.0
+offset_bottom = 625.0
+text = "최후의 방주"
+theme_override_font_sizes/font_size = 38
+mouse_filter = 2
+
+
+[node name="Tagline" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 100.0
+offset_top = 636.0
+offset_right = 860.0
+offset_bottom = 676.0
+text = "여섯 개의 목소리. 단 한 번의 귀환."
+theme_override_font_sizes/font_size = 24
+mouse_filter = 2
+
+
+[node name="Telemetry" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 1510.0
+offset_top = 70.0
+offset_right = 1870.0
+offset_bottom = 150.0
+text = "HUMANITY\nIN TRANSIT"
+theme_override_font_sizes/font_size = 25
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.53333, 0.69804, 0.75294, 1)
+
+
+[node name="Menu" type="Control" parent="."]
+unique_name_in_owner = true
+offset_left = 100.0
+offset_top = 730.0
+offset_right = 490.0
+offset_bottom = 976.0
+
+
+[node name="NewGame" type="Button" parent="Menu"]
+unique_name_in_owner = true
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 390.0
+offset_bottom = 64.0
+text = "NEW GAME"
+
+
+[node name="Endings" type="Button" parent="Menu"]
+unique_name_in_owner = true
+offset_left = 0.0
+offset_top = 82.0
+offset_right = 390.0
+offset_bottom = 146.0
+text = "ENDINGS"
+
+
+[node name="Exit" type="Button" parent="Menu"]
+unique_name_in_owner = true
+offset_left = 0.0
+offset_top = 164.0
+offset_right = 390.0
+offset_bottom = 228.0
+text = "EXIT"
+
+
+[node name="Footer" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 100.0
+offset_top = 1010.0
+offset_right = 1150.0
+offset_bottom = 1046.0
+text = "이동  ↑↓ / WASD     선택  Enter / A"
+theme_override_font_sizes/font_size = 20
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.46275, 0.58039, 0.66275, 1)
+
+
+[node name="CrewSilhouette" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 1110.0
+offset_top = 977.0
+offset_right = 1850.0
+offset_bottom = 1022.0
+text = "SIX PILOTS / ONE LAST SORTIE"
+theme_override_font_sizes/font_size = 28
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.28627, 0.40784, 0.49412, 1)
+
+
+[node name="Collection" type="Panel" parent="."]
+unique_name_in_owner = true
+offset_left = 96.0
+offset_top = 220.0
+offset_right = 1026.0
+offset_bottom = 980.0
+visible = false
+
+
+[node name="CollectionHeading" type="Label" parent="Collection"]
+unique_name_in_owner = true
+offset_left = 42.0
+offset_top = 34.0
+offset_right = 862.0
+offset_bottom = 104.0
+text = "ENDING ARCHIVE"
+theme_override_font_sizes/font_size = 42
+mouse_filter = 2
+
+
+[node name="CollectionText" type="Label" parent="Collection"]
+unique_name_in_owner = true
+offset_left = 42.0
+offset_top = 124.0
+offset_right = 862.0
+offset_bottom = 638.0
+text = ""
+theme_override_font_sizes/font_size = 26
+mouse_filter = 2
+
+
+[node name="CollectionBack" type="Button" parent="Collection"]
+unique_name_in_owner = true
+offset_left = 42.0
+offset_top = 663.0
+offset_right = 402.0
+offset_bottom = 725.0
+text = "BACK / 돌아가기"
+
+[node name="CrewSilhouettes" type="Sprite2D" parent="."]
+position = Vector2(1435, 889)
+texture = ExtResource("CrewArt")
+
+[node name="DamageSparks" type="CPUParticles2D" parent="Mothership"]
+position = Vector2(87, -20)
+amount = 25
+lifetime = 0.8
+emission_shape = 1
+emission_sphere_radius = 7.0
+direction = Vector2(0, -1)
+spread = 40.0
+gravity = Vector2(30, 0)
+initial_velocity_min = 30.0
+initial_velocity_max = 85.0
+scale_amount_min = 2.0
+scale_amount_max = 5.0
+color = Color(1, 0.55, 0.28, 0.75)

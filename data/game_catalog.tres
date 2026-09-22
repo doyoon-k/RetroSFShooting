@@ -1,0 +1,27 @@
+[gd_resource type="Resource" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/game_catalog.gd" id="Script"]
+[ext_resource type="Script" path="res://scripts/data/pilot_data.gd" id="PilotType"]
+[ext_resource type="Script" path="res://scripts/data/ending_data.gd" id="EndingType"]
+[ext_resource type="Resource" path="res://data/rules/default.tres" id="Rules"]
+[ext_resource type="Resource" path="res://data/stories/intro.tres" id="Intro"]
+[ext_resource type="Resource" path="res://data/pilots/serin.tres" id="serin"]
+[ext_resource type="Resource" path="res://data/pilots/jihoon.tres" id="jihoon"]
+[ext_resource type="Resource" path="res://data/pilots/haeon.tres" id="haeon"]
+[ext_resource type="Resource" path="res://data/pilots/taeo.tres" id="taeo"]
+[ext_resource type="Resource" path="res://data/pilots/narae.tres" id="narae"]
+[ext_resource type="Resource" path="res://data/pilots/echo.tres" id="echo"]
+[ext_resource type="Resource" path="res://data/endings/extinction.tres" id="extinction"]
+[ext_resource type="Resource" path="res://data/endings/last_signal.tres" id="last_signal"]
+[ext_resource type="Resource" path="res://data/endings/betrayal.tres" id="betrayal"]
+[ext_resource type="Resource" path="res://data/endings/unknown_horizon.tres" id="unknown_horizon"]
+[ext_resource type="Resource" path="res://data/endings/cost_of_dawn.tres" id="cost_of_dawn"]
+[ext_resource type="Resource" path="res://data/endings/new_home.tres" id="new_home"]
+
+
+[resource]
+script = ExtResource("Script")
+rules = ExtResource("Rules")
+intro = ExtResource("Intro")
+pilots = Array[ExtResource("PilotType")]([ExtResource("serin"), ExtResource("jihoon"), ExtResource("haeon"), ExtResource("taeo"), ExtResource("narae"), ExtResource("echo")])
+endings = Array[ExtResource("EndingType")]([ExtResource("extinction"), ExtResource("last_signal"), ExtResource("betrayal"), ExtResource("unknown_horizon"), ExtResource("cost_of_dawn"), ExtResource("new_home")])

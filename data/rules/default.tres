@@ -1,0 +1,7 @@
+[gd_resource type="Resource" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/game_rules.gd" id="Script"]
+
+
+[resource]
+script = ExtResource("Script")

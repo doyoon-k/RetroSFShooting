@@ -1,0 +1,95 @@
+[gd_scene format=3]
+[ext_resource type="Resource" path="res://data/game_catalog.tres" id="PreviewCatalog"]
+
+[ext_resource type="Script" path="res://scenes/ui/result.gd" id="Script"]
+[ext_resource type="Theme" path="res://scenes/ui/game_theme.tres" id="Theme"]
+[ext_resource type="Script" path="res://scenes/ui/starfield.gd" id="Stars"]
+[ext_resource type="PackedScene" path="res://scenes/ui/pilot_roster.tscn" id="Roster"]
+
+[node name="Result" type="Control"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("Theme")
+script = ExtResource("Script")
+preview_catalog = ExtResource("PreviewCatalog")
+
+
+[node name="Starfield" type="Node2D" parent="."]
+script = ExtResource("Stars")
+
+
+[node name="Debrief" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 120.0
+offset_top = 72.0
+offset_right = 1740.0
+offset_bottom = 142.0
+text = "MISSION DEBRIEF"
+theme_override_font_sizes/font_size = 54
+mouse_filter = 2
+
+
+[node name="Heading" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 120.0
+offset_top = 176.0
+offset_right = 1740.0
+offset_bottom = 244.0
+text = "ENDING"
+theme_override_font_sizes/font_size = 36
+mouse_filter = 2
+
+
+[node name="Survivors" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 120.0
+offset_top = 303.0
+offset_right = 970.0
+offset_bottom = 413.0
+text = "SURVIVORS"
+theme_override_font_sizes/font_size = 66
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.42745, 0.89804, 0.92941, 1)
+
+
+[node name="ReturnLine" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 120.0
+offset_top = 479.0
+offset_right = 970.0
+offset_bottom = 649.0
+text = "우리가 지나온 항로는\n남겨진 목소리로 기억된다."
+theme_override_font_sizes/font_size = 32
+mouse_filter = 2
+
+
+[node name="Roster" parent="." instance=ExtResource("Roster")]
+unique_name_in_owner = true
+offset_left = 1110.0
+offset_top = 294.0
+offset_right = 1730.0
+offset_bottom = 896.0
+
+
+[node name="SaveStatus" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 120.0
+offset_top = 803.0
+offset_right = 1020.0
+offset_bottom = 888.0
+text = ""
+theme_override_font_sizes/font_size = 23
+mouse_filter = 2
+autowrap_mode = 2
+
+
+[node name="Return" type="Button" parent="."]
+unique_name_in_owner = true
+offset_left = 120.0
+offset_top = 923.0
+offset_right = 720.0
+offset_bottom = 1003.0
+text = "TITLE / 돌아가기"

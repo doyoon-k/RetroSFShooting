@@ -1,0 +1,102 @@
+[gd_resource type="Theme" format=3]
+[ext_resource type="FontFile" path="res://assets/fonts/NotoSansKR.ttf" id="Font"]
+
+[sub_resource type="FontVariation" id="Regular"]
+base_font = ExtResource("Font")
+variation_opentype = {2003265652: 450.0}
+
+[sub_resource type="StyleBoxFlat" id="MeterBackground"]
+bg_color = Color(0.05, 0.10, 0.16, 1)
+
+[sub_resource type="StyleBoxFlat" id="MeterFill"]
+bg_color = Color(0.42, 0.86, 0.91, 1)
+
+[sub_resource type="StyleBoxFlat" id="Panel"]
+bg_color = Color(0.0549, 0.1098, 0.17647, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.18824, 0.26667, 0.34902, 1)
+content_margin_left = 16.0
+content_margin_top = 10.0
+content_margin_right = 16.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="Normal"]
+bg_color = Color(0.07843, 0.13725, 0.21569, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.21961, 0.32157, 0.41176, 1)
+content_margin_left = 16.0
+content_margin_top = 10.0
+content_margin_right = 16.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="Hover"]
+bg_color = Color(0.12941, 0.24314, 0.31373, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.42745, 0.89804, 0.92941, 1)
+content_margin_left = 16.0
+content_margin_top = 10.0
+content_margin_right = 16.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="Pressed"]
+bg_color = Color(0.16471, 0.32549, 0.38039, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.75294, 0.98039, 1.0, 1)
+content_margin_left = 16.0
+content_margin_top = 10.0
+content_margin_right = 16.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="Disabled"]
+bg_color = Color(0.05098, 0.09412, 0.15686, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.15294, 0.22353, 0.29412, 1)
+content_margin_left = 16.0
+content_margin_top = 10.0
+content_margin_right = 16.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="Focus"]
+bg_color = Color(0.07843, 0.13725, 0.21569, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.96471, 0.74118, 0.4549, 1)
+content_margin_left = 16.0
+content_margin_top = 10.0
+content_margin_right = 16.0
+content_margin_bottom = 10.0
+
+[resource]
+default_font = SubResource("Regular")
+default_font_size = 24
+Label/colors/font_color = Color(0.81961, 0.87451, 0.92157, 1)
+RichTextLabel/colors/default_color = Color(0.75686, 0.82745, 0.88235, 1)
+Panel/styles/panel = SubResource("Panel")
+PanelContainer/styles/panel = SubResource("Panel")
+Button/styles/normal = SubResource("Normal")
+Button/styles/hover = SubResource("Hover")
+Button/styles/pressed = SubResource("Pressed")
+Button/styles/disabled = SubResource("Disabled")
+Button/styles/focus = SubResource("Focus")
+Button/colors/font_color = Color(0.85098, 0.92941, 0.9451, 1)
+Button/colors/font_disabled_color = Color(0.5098, 0.57647, 0.62353, 1)
+Button/font_sizes/font_size = 26
+ProgressBar/styles/background = SubResource("MeterBackground")
+ProgressBar/styles/fill = SubResource("MeterFill")
