@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="PilotData" load_steps=12 format=3 uid="uid://dc5chan1q6qli"]
+
+[ext_resource type="Texture2D" uid="uid://cwe1rgjhvysy0" path="res://assets/Pilots_sprites/pilots/P5_nomal.png" id="7_dm0p5"]
+[ext_resource type="Texture2D" uid="uid://8lucu7rmf2hy" path="res://assets/Pilots_sprites/pilots/P5_alone.svg" id="alone"]
+[ext_resource type="Texture2D" uid="uid://n4j2t5p4j4cp" path="res://assets/Pilots_sprites/pilots/P5_angry.svg" id="angry"]
+[ext_resource type="Texture2D" uid="uid://ntb12if5ajjl" path="res://assets/Pilots_sprites/pilots/P5_anxious.svg" id="anxious"]
+[ext_resource type="Texture2D" uid="uid://uv2w410nikdp" path="res://assets/Pilots_sprites/pilots/P5_cockpit.svg" id="cockpit"]
+[ext_resource type="Texture2D" uid="uid://bnau17ohg7e2x" path="res://assets/Pilots_sprites/pilots/P5_dead.svg" id="dead"]
+[ext_resource type="Texture2D" uid="uid://fhklwha6cv2e" path="res://assets/Pilots_sprites/pilots/P5_despair.svg" id="despair"]
+[ext_resource type="Script" path="res://scripts/data/pilot_data.gd" id="Script"]
+[ext_resource type="PackedScene" uid="uid://2d1rtuog2a2c" path="res://scenes/player/P5_ship.tscn" id="Ship"]
+[ext_resource type="Texture2D" uid="uid://c4dsea2mhlyuh" path="res://assets/Pilots_sprites/pilots/P5_shocked.svg" id="shocked"]
+[ext_resource type="Texture2D" uid="uid://j4al0kfcfmp" path="res://assets/Pilots_sprites/pilots/P5_victory.svg" id="victory"]
+
+[resource]
+script = ExtResource("Script")
+id = &"P5"
+display_name = "P5"
+callsign = "P5"
+description = "방주의 최연소 조종사. 작은 행성의 사진을 늘 품고 다닌다. 누구도 혼자 두고 싶지 않다."
+is_ai = false
+accent = Color(0.60784, 0.85098, 0.64706, 1)
+ship_scene = ExtResource("Ship")
+hangar_animation = &"idle"
+normal = ExtResource("7_dm0p5")
+shocked = ExtResource("shocked")
+anxious = ExtResource("anxious")
+angry = ExtResource("angry")
+despair = ExtResource("despair")
+alone = ExtResource("alone")
+victory = ExtResource("victory")
+dead = ExtResource("dead")
+cockpit = ExtResource("cockpit")
+death_line = "혼자 남겨서… 미안해."
+victory_line = "저 빛… 사진에서 본 것보다 예쁘다."

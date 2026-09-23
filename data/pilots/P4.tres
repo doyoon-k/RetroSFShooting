@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="PilotData" load_steps=12 format=3 uid="uid://17vqfwhwgl02"]
+
+[ext_resource type="Texture2D" uid="uid://c35cb8gdp57ws" path="res://assets/Pilots_sprites/pilots/P4_Nomal.png" id="7_uxrjp"]
+[ext_resource type="Texture2D" uid="uid://c4022rwd52p2f" path="res://assets/Pilots_sprites/pilots/P4_alone.svg" id="alone"]
+[ext_resource type="Texture2D" uid="uid://dr46romlt2h6l" path="res://assets/Pilots_sprites/pilots/P4_angry.svg" id="angry"]
+[ext_resource type="Texture2D" uid="uid://ctsthkbxdiexi" path="res://assets/Pilots_sprites/pilots/P4_anxious.svg" id="anxious"]
+[ext_resource type="Texture2D" uid="uid://m5qwrpvya6xy" path="res://assets/Pilots_sprites/pilots/P4_cockpit.svg" id="cockpit"]
+[ext_resource type="Texture2D" uid="uid://b6pwxni6doj4m" path="res://assets/Pilots_sprites/pilots/P4_dead.svg" id="dead"]
+[ext_resource type="Texture2D" uid="uid://dh1js2jjmv6aa" path="res://assets/Pilots_sprites/pilots/P4_despair.svg" id="despair"]
+[ext_resource type="Script" path="res://scripts/data/pilot_data.gd" id="Script"]
+[ext_resource type="PackedScene" path="res://scenes/player/P4_ship.tscn" id="Ship"]
+[ext_resource type="Texture2D" uid="uid://bs7u6i42tf34i" path="res://assets/Pilots_sprites/pilots/P4_shocked.svg" id="shocked"]
+[ext_resource type="Texture2D" uid="uid://mpmq85fo0ooc" path="res://assets/Pilots_sprites/pilots/P4_victory.svg" id="victory"]
+
+[resource]
+script = ExtResource("Script")
+id = &"P4"
+display_name = "P4"
+callsign = "P4"
+description = "기체 정비사 출신 파일럿. 손에 묻은 기름을 닦을 새도 없이 조종석에 오른다."
+is_ai = false
+accent = Color(0.94118, 0.50196, 0.56863, 1)
+ship_scene = ExtResource("Ship")
+hangar_animation = &"idle"
+normal = ExtResource("7_uxrjp")
+shocked = ExtResource("shocked")
+anxious = ExtResource("anxious")
+angry = ExtResource("angry")
+despair = ExtResource("despair")
+alone = ExtResource("alone")
+victory = ExtResource("victory")
+dead = ExtResource("dead")
+cockpit = ExtResource("cockpit")
+death_line = "이 기체로는… 여기까지인가."
+victory_line = "수리할 건 많지만… 살아 돌아왔잖아."

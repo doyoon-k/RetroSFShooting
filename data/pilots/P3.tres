@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="PilotData" load_steps=12 format=3 uid="uid://qetf721i8t0k"]
+
+[ext_resource type="Texture2D" uid="uid://dqsvu2gffd6xd" path="res://assets/Pilots_sprites/pilots/P3_Nomal.png" id="7_0vypb"]
+[ext_resource type="Texture2D" uid="uid://drkbrb62tyicy" path="res://assets/Pilots_sprites/pilots/P3_alone.svg" id="alone"]
+[ext_resource type="Texture2D" uid="uid://datf00xkw5pml" path="res://assets/Pilots_sprites/pilots/P3_angry.svg" id="angry"]
+[ext_resource type="Texture2D" uid="uid://deecqerdywhfi" path="res://assets/Pilots_sprites/pilots/P3_anxious.svg" id="anxious"]
+[ext_resource type="Texture2D" uid="uid://dkuuxbih8rnga" path="res://assets/Pilots_sprites/pilots/P3_cockpit.svg" id="cockpit"]
+[ext_resource type="Texture2D" uid="uid://c27bij8gpycp1" path="res://assets/Pilots_sprites/pilots/P3_dead.svg" id="dead"]
+[ext_resource type="Texture2D" uid="uid://bq37l51rie3ex" path="res://assets/Pilots_sprites/pilots/P3_despair.svg" id="despair"]
+[ext_resource type="Script" path="res://scripts/data/pilot_data.gd" id="Script"]
+[ext_resource type="PackedScene" path="res://scenes/player/P3_ship.tscn" id="Ship"]
+[ext_resource type="Texture2D" uid="uid://docxp5f0gmaeq" path="res://assets/Pilots_sprites/pilots/P3_shocked.svg" id="shocked"]
+[ext_resource type="Texture2D" uid="uid://djpqxoho3frju" path="res://assets/Pilots_sprites/pilots/P3_victory.svg" id="victory"]
+
+[resource]
+script = ExtResource("Script")
+id = &"P3"
+display_name = "P3"
+callsign = "P3"
+description = "모든 신호에서 가능성을 찾는 통신 담당. 끊긴 지구의 주파수를 아직 기억하고 있다."
+is_ai = false
+accent = Color(0.72941, 0.61569, 0.97255, 1)
+ship_scene = ExtResource("Ship")
+hangar_animation = &"idle"
+normal = ExtResource("7_0vypb")
+shocked = ExtResource("shocked")
+anxious = ExtResource("anxious")
+angry = ExtResource("angry")
+despair = ExtResource("despair")
+alone = ExtResource("alone")
+victory = ExtResource("victory")
+dead = ExtResource("dead")
+cockpit = ExtResource("cockpit")
+death_line = "아직… 신호가 들리는데…"
+victory_line = "응답이 있어. 저 행성에서 신호가 와!"

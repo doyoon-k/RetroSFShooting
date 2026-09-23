@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="StoryData" load_steps=5 format=3 uid="uid://yuvlq8bs1okp"]
 
-[ext_resource type="Texture2D" uid="uid://rbuunuckhttt" path="res://assets/sprites/stories/cost_of_dawn.svg" id="Image"]
+[ext_resource type="Texture2D" uid="uid://rbuunuckhttt" path="res://assets/Pilots_sprites/stories/cost_of_dawn.svg" id="Image"]
 [ext_resource type="Script" path="res://scripts/data/story_page.gd" id="Page"]
 [ext_resource type="Script" path="res://scripts/data/story_data.gd" id="Script"]
 

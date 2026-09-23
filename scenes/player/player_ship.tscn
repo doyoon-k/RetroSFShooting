@@ -1,8 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://bellqgks15i0n"]
+[gd_scene load_steps=11 format=3 uid="uid://bellqgks15i0n"]
 
 [ext_resource type="Script" path="res://scenes/player/player_ship.gd" id="Script"]
 [ext_resource type="Script" path="res://scenes/player/player_weapon.gd" id="Weapon"]
 [ext_resource type="Resource" uid="uid://dj7cna4wypie8" path="res://data/weapons/standard.tres" id="WeaponData"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Player/Robot_Nomal.png" id="Normal"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Player/Robot_Nomal_Back.png" id="NormalBack"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Player/Robot_Nomal_Forward.png" id="NormalForward"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Player/Robot_Demaged.png" id="Damaged"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Player/Robot_Demaged_Back.png" id="DamagedBack"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Player/Robot_Demaged_Forward.png" id="DamagedForward"]
 
 [sub_resource type="CircleShape2D" id="Shape"]
 radius = 14.0
@@ -10,20 +16,15 @@ radius = 14.0
 [node name="PlayerShip" type="Area2D"]
 collision_mask = 2
 script = ExtResource("Script")
+normal_sprite = ExtResource("Normal")
+normal_back_sprite = ExtResource("NormalBack")
+normal_forward_sprite = ExtResource("NormalForward")
+damaged_sprite = ExtResource("Damaged")
+damaged_back_sprite = ExtResource("DamagedBack")
+damaged_forward_sprite = ExtResource("DamagedForward")
 
-[node name="Visuals" type="Node2D" parent="."]
-
-[node name="Hull" type="Polygon2D" parent="Visuals"]
-color = Color(0.86275, 0.93725, 0.94902, 1)
-polygon = PackedVector2Array(-38, -13, -9, -13, -19, -34, 12, -19, 39, 0, 12, 19, -19, 34, -9, 13, -38, 13)
-
-[node name="Cockpit" type="Polygon2D" parent="Visuals"]
-color = Color(0.09412, 0.2, 0.2902, 1)
-polygon = PackedVector2Array(0, -7, 19, 0, 0, 7, -12, 0)
-
-[node name="Engine" type="Polygon2D" parent="Visuals"]
-color = Color(0.47059, 0.84706, 0.96863, 1)
-polygon = PackedVector2Array(-36, -8, -65, 0, -36, 8)
+[node name="Visuals" type="Sprite2D" parent="."]
+texture = ExtResource("Normal")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("Shape")

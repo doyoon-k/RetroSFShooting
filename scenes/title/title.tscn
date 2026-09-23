@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://xu1ybjw215vl"]
 
-[ext_resource type="Texture2D" uid="uid://bxa2fa56r5wcb" path="res://assets/sprites/crew_silhouettes.svg" id="CrewArt"]
-[ext_resource type="Texture2D" uid="uid://b72idyn6iae7y" path="res://assets/sprites/mothership.svg" id="Mothership"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/crew_silhouettes.svg" id="CrewArt"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/mothership.svg" id="Mothership"]
 [ext_resource type="Resource" path="res://data/game_catalog.tres" id="PreviewCatalog"]
 [ext_resource type="Script" path="res://scenes/title/title.gd" id="Script"]
 [ext_resource type="Script" path="res://scenes/ui/starfield.gd" id="Stars"]

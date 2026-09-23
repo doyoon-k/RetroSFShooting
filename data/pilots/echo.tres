@@ -1,16 +1,16 @@
-[gd_resource type="Resource" script_class="PilotData" load_steps=12 format=3 uid="uid://cdnu684xvrxww"]
+[gd_resource type="Resource" script_class="PilotData" load_steps=12 format=3 uid="uid://c4qmf1b6frfas"]
 
-[ext_resource type="Texture2D" uid="uid://b1ogij788kbqf" path="res://assets/sprites/pilots/echo_alone.svg" id="alone"]
-[ext_resource type="Texture2D" uid="uid://chl4gq3csjoe3" path="res://assets/sprites/pilots/echo_angry.svg" id="angry"]
-[ext_resource type="Texture2D" uid="uid://bipvp5kcs1jqp" path="res://assets/sprites/pilots/echo_anxious.svg" id="anxious"]
-[ext_resource type="Texture2D" uid="uid://bemjfkx56465o" path="res://assets/sprites/pilots/echo_cockpit.svg" id="cockpit"]
-[ext_resource type="Texture2D" uid="uid://cn3ujadgohmqo" path="res://assets/sprites/pilots/echo_dead.svg" id="dead"]
-[ext_resource type="Texture2D" uid="uid://bbbqpr80faiec" path="res://assets/sprites/pilots/echo_despair.svg" id="despair"]
-[ext_resource type="Texture2D" uid="uid://40f20ldltgrr" path="res://assets/sprites/pilots/echo_normal.svg" id="normal"]
+[ext_resource type="Texture2D" uid="uid://c35cb8gdp57ws" path="res://assets/Pilots_sprites/pilots/P4_Nomal.png" id="7_duvpb"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/echo_alone.svg" id="alone"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/echo_angry.svg" id="angry"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/echo_anxious.svg" id="anxious"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/echo_cockpit.svg" id="cockpit"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/echo_dead.svg" id="dead"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/echo_despair.svg" id="despair"]
 [ext_resource type="Script" path="res://scripts/data/pilot_data.gd" id="Script"]
-[ext_resource type="PackedScene" path="res://scenes/player/echo_ship.tscn" id="Ship"]
-[ext_resource type="Texture2D" uid="uid://dvujy4hc10tex" path="res://assets/sprites/pilots/echo_shocked.svg" id="shocked"]
-[ext_resource type="Texture2D" uid="uid://dgiuytxqqrsy7" path="res://assets/sprites/pilots/echo_victory.svg" id="victory"]
+[ext_resource type="PackedScene" uid="uid://ckpdgg4mowsdr" path="res://scenes/player/echo_ship.tscn" id="Ship"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/echo_shocked.svg" id="shocked"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/echo_victory.svg" id="victory"]
 
 [resource]
 script = ExtResource("Script")
@@ -22,7 +22,7 @@ is_ai = true
 accent = Color(0.92549, 0.89412, 0.66275, 1)
 ship_scene = ExtResource("Ship")
 hangar_animation = &"idle"
-normal = ExtResource("normal")
+normal = ExtResource("7_duvpb")
 shocked = ExtResource("shocked")
 anxious = ExtResource("anxious")
 angry = ExtResource("angry")

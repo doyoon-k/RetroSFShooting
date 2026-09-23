@@ -15,18 +15,11 @@ func _ready() -> void:
 	%Roster.refresh()
 	%Sortie.pressed.connect(_sortie)
 	%Roster.focus_first()
-	for i in catalog.pilots.size():
-		var actor := %Hangar.get_child(i)
-		actor.get_node("Portrait").texture = catalog.pilots[i].normal
-		actor.get_node("Name").text = catalog.pilots[i].callsign
-		var animation := actor.get_node("AnimationPlayer") as AnimationPlayer
-		if animation.has_animation(catalog.pilots[i].hangar_animation):
-			animation.play(catalog.pilots[i].hangar_animation)
 
 func _focus_pilot(id: StringName) -> void:
 	selected = id
 	var pilot := catalog.pilot_by_id(id)
-	%PilotName.text = pilot.display_name + " / " + pilot.callsign
+	%PilotName.text = pilot.display_name if pilot.display_name == pilot.callsign else pilot.display_name + " / " + pilot.callsign
 	%PilotName.modulate = pilot.accent
 	%Description.reveal(pilot.description)
 	%Sortie.text = "SORTIE  /  %s 출격" % pilot.display_name

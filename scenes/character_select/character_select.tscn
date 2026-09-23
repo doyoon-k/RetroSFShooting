@@ -1,5 +1,18 @@
-[gd_scene load_steps=19 format=3 uid="uid://diab46cka0xnd"]
+[gd_scene load_steps=32 format=3 uid="uid://diab46cka0xnd"]
 
+[ext_resource type="Texture2D" uid="uid://dhdcjagylx8hl" path="res://assets/Pilots_sprites/pilots/P1_Nomal.png" id="7_ugtsa"]
+[ext_resource type="Texture2D" uid="uid://bbvbysn73t2gk" path="res://assets/Pilots_sprites/pilots/P2_Nomal.png" id="9_saw8y"]
+[ext_resource type="Texture2D" uid="uid://dqsvu2gffd6xd" path="res://assets/Pilots_sprites/pilots/P3_Nomal.png" id="11_tag0i"]
+[ext_resource type="Texture2D" uid="uid://c35cb8gdp57ws" path="res://assets/Pilots_sprites/pilots/P4_Nomal.png" id="13_5ypp3"]
+[ext_resource type="Texture2D" uid="uid://cwe1rgjhvysy0" path="res://assets/Pilots_sprites/pilots/P5_nomal.png" id="15_j15fu"]
+[ext_resource type="Texture2D" uid="uid://owgeyvnencb4" path="res://assets/Pilots_sprites/pilots/P6_Nomal.png" id="17_ugtgx"]
+[ext_resource type="Script" path="res://scenes/character_select/hangar_pilot.gd" id="HangarPilot"]
+[ext_resource type="Resource" uid="uid://ci0so1hhj0d16" path="res://data/pilots/P1.tres" id="P1"]
+[ext_resource type="Resource" uid="uid://cbnk8hp0r0npb" path="res://data/pilots/P2.tres" id="P2"]
+[ext_resource type="Resource" uid="uid://qetf721i8t0k" path="res://data/pilots/P3.tres" id="P3"]
+[ext_resource type="Resource" uid="uid://17vqfwhwgl02" path="res://data/pilots/P4.tres" id="P4"]
+[ext_resource type="Resource" uid="uid://dc5chan1q6qli" path="res://data/pilots/P5.tres" id="P5"]
+[ext_resource type="Resource" uid="uid://dpkdp53nex4ol" path="res://data/pilots/P6.tres" id="P6"]
 [ext_resource type="Resource" path="res://data/game_catalog.tres" id="PreviewCatalog"]
 [ext_resource type="PackedScene" path="res://scenes/ui/pilot_roster.tscn" id="Roster"]
 [ext_resource type="Script" path="res://scenes/character_select/character_select.gd" id="Script"]
@@ -198,9 +211,12 @@ unique_name_in_owner = true
 
 [node name="Pilot0" type="Node2D" parent="Hangar"]
 position = Vector2(275, 366)
+script = ExtResource("HangarPilot")
+pilot = ExtResource("P1")
 
 [node name="Portrait" type="Sprite2D" parent="Hangar/Pilot0"]
 scale = Vector2(0.85, 0.85)
+texture = ExtResource("7_ugtsa")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Hangar/Pilot0"]
 libraries = {
@@ -214,7 +230,7 @@ offset_top = 60.0
 offset_right = 145.0
 offset_bottom = 94.0
 theme_override_font_sizes/font_size = 19
-text = "LARK"
+text = "P1"
 horizontal_alignment = 1
 
 [node name="Activity0" type="Label" parent="Hangar/Pilot0"]
@@ -230,9 +246,12 @@ horizontal_alignment = 1
 
 [node name="Pilot1" type="Node2D" parent="Hangar"]
 position = Vector2(625, 366)
+script = ExtResource("HangarPilot")
+pilot = ExtResource("P2")
 
 [node name="Portrait" type="Sprite2D" parent="Hangar/Pilot1"]
 scale = Vector2(0.85, 0.85)
+texture = ExtResource("9_saw8y")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Hangar/Pilot1"]
 libraries = {
@@ -246,7 +265,7 @@ offset_top = 60.0
 offset_right = 145.0
 offset_bottom = 94.0
 theme_override_font_sizes/font_size = 19
-text = "ATLAS"
+text = "P2"
 horizontal_alignment = 1
 
 [node name="Activity1" type="Label" parent="Hangar/Pilot1"]
@@ -262,9 +281,12 @@ horizontal_alignment = 1
 
 [node name="Pilot2" type="Node2D" parent="Hangar"]
 position = Vector2(975, 366)
+script = ExtResource("HangarPilot")
+pilot = ExtResource("P3")
 
 [node name="Portrait" type="Sprite2D" parent="Hangar/Pilot2"]
 scale = Vector2(0.85, 0.85)
+texture = ExtResource("11_tag0i")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Hangar/Pilot2"]
 libraries = {
@@ -278,7 +300,7 @@ offset_top = 60.0
 offset_right = 145.0
 offset_bottom = 94.0
 theme_override_font_sizes/font_size = 19
-text = "ORBIT"
+text = "P3"
 horizontal_alignment = 1
 
 [node name="Activity2" type="Label" parent="Hangar/Pilot2"]
@@ -294,9 +316,12 @@ horizontal_alignment = 1
 
 [node name="Pilot3" type="Node2D" parent="Hangar"]
 position = Vector2(275, 570)
+script = ExtResource("HangarPilot")
+pilot = ExtResource("P4")
 
 [node name="Portrait" type="Sprite2D" parent="Hangar/Pilot3"]
 scale = Vector2(0.85, 0.85)
+texture = ExtResource("13_5ypp3")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Hangar/Pilot3"]
 libraries = {
@@ -310,7 +335,7 @@ offset_top = 60.0
 offset_right = 145.0
 offset_bottom = 94.0
 theme_override_font_sizes/font_size = 19
-text = "EMBER"
+text = "P4"
 horizontal_alignment = 1
 
 [node name="Activity3" type="Label" parent="Hangar/Pilot3"]
@@ -326,9 +351,12 @@ horizontal_alignment = 1
 
 [node name="Pilot4" type="Node2D" parent="Hangar"]
 position = Vector2(625, 570)
+script = ExtResource("HangarPilot")
+pilot = ExtResource("P5")
 
 [node name="Portrait" type="Sprite2D" parent="Hangar/Pilot4"]
 scale = Vector2(0.85, 0.85)
+texture = ExtResource("15_j15fu")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Hangar/Pilot4"]
 libraries = {
@@ -342,7 +370,7 @@ offset_top = 60.0
 offset_right = 145.0
 offset_bottom = 94.0
 theme_override_font_sizes/font_size = 19
-text = "MOTH"
+text = "P5"
 horizontal_alignment = 1
 
 [node name="Activity4" type="Label" parent="Hangar/Pilot4"]
@@ -358,9 +386,12 @@ horizontal_alignment = 1
 
 [node name="Pilot5" type="Node2D" parent="Hangar"]
 position = Vector2(975, 570)
+script = ExtResource("HangarPilot")
+pilot = ExtResource("P6")
 
 [node name="Portrait" type="Sprite2D" parent="Hangar/Pilot5"]
 scale = Vector2(0.85, 0.85)
+texture = ExtResource("17_ugtgx")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Hangar/Pilot5"]
 libraries = {
@@ -374,7 +405,7 @@ offset_top = 60.0
 offset_right = 145.0
 offset_bottom = 94.0
 theme_override_font_sizes/font_size = 19
-text = "ECHO-06"
+text = "P6"
 horizontal_alignment = 1
 
 [node name="Activity5" type="Label" parent="Hangar/Pilot5"]

@@ -326,7 +326,8 @@ func _next_victory_line() -> void:
 		return
 	var pilot := survivors[victory_index]
 	phase_left = rules.victory_line_seconds
-	_show_message(pilot.display_name + " / " + pilot.callsign, pilot.victory_line, pilot.portrait(&"victory"))
+	var pilot_label := pilot.display_name if pilot.display_name == pilot.callsign else pilot.display_name + " / " + pilot.callsign
+	_show_message(pilot_label, pilot.victory_line, pilot.portrait(&"victory"))
 
 func _finish() -> void:
 	_enter(Phase.FINISHED)

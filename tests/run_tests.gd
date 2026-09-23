@@ -35,6 +35,7 @@ func _run() -> void:
 	_test_sorties()
 	_test_patterns()
 	_test_input_map()
+	await _test_ship_sprites()
 	_test_save()
 	await _test_game_flow()
 	await _test_bad_ending_flow()
@@ -67,7 +68,7 @@ func _test_endings() -> void:
 
 func _test_sorties() -> void:
 	var run := RunState.new(content)
-	check(run.begin_sortie(&"serin"), "Living pilot can launch")
+	check(run.begin_sortie(&"P1"), "Living pilot can launch")
 	var old := run.current_sortie
 	old.collect(0, 3)
 	old.collect(0, 3)
@@ -79,13 +80,13 @@ func _test_sorties() -> void:
 	old.damage()
 	check(old.hp == 1, "Next hit damages the hull")
 	old.spend_bomb()
-	run.mark_dead(&"serin")
-	run.mark_dead(&"serin")
+	run.mark_dead(&"P1")
+	run.mark_dead(&"P1")
 	check(run.survivors().size() == 5, "Death is idempotent")
-	check(not run.begin_sortie(&"serin"), "Dead pilot cannot launch")
-	check(run.automatic_choice(&"serin") == &"jihoon", "Invalid timeout focus falls back to first living pilot")
-	check(run.automatic_choice(&"echo") == &"echo", "Valid timeout focus is preserved")
-	run.begin_sortie(&"jihoon")
+	check(not run.begin_sortie(&"P1"), "Dead pilot cannot launch")
+	check(run.automatic_choice(&"P1") == &"P2", "Invalid timeout focus falls back to first living pilot")
+	check(run.automatic_choice(&"P6") == &"P6", "Valid timeout focus is preserved")
+	run.begin_sortie(&"P2")
 	check(run.current_sortie != old and run.current_sortie.hp == 2 and run.current_sortie.power_level == 1 and run.current_sortie.bombs == 2 and not run.current_sortie.shield, "New sortie resets all transient stats")
 	check(content.rules.starting_hp == 2 and content.rules.starting_bombs == 2, "Runtime changes do not mutate shared rules")
 	var durable := SortieState.new(content.rules)
@@ -130,6 +131,46 @@ func _test_input_map() -> void:
 		event.physical_keycode = entry[0]
 		check(InputMap.event_is_action(event, entry[1]), "Expected physical key is mapped to " + entry[1])
 
+func _test_ship_sprites() -> void:
+	var normal := load("res://assets/Pilots_sprites/Player/Robot_Nomal.png") as Texture2D
+	var normal_back := load("res://assets/Pilots_sprites/Player/Robot_Nomal_Back.png") as Texture2D
+	var normal_forward := load("res://assets/Pilots_sprites/Player/Robot_Nomal_Forward.png") as Texture2D
+	var damaged := load("res://assets/Pilots_sprites/Player/Robot_Demaged.png") as Texture2D
+	var damaged_back := load("res://assets/Pilots_sprites/Player/Robot_Demaged_Back.png") as Texture2D
+	var damaged_forward := load("res://assets/Pilots_sprites/Player/Robot_Demaged_Forward.png") as Texture2D
+	for pilot in content.pilots:
+		var ship := pilot.ship_scene.instantiate() as PlayerShip
+		ship.state = SortieState.new(content.rules)
+		ship.rules = content.rules
+		ship.bounds = Rect2(0, 0, 1920, 1080)
+		ship.position = Vector2(500, 500)
+		root.add_child(ship)
+		var sprite := ship.get_node("Visuals") as Sprite2D
+		var label := String(pilot.id)
+		check(sprite.texture == normal, label + " starts with the common normal sprite")
+		Input.action_press("move_right")
+		await frames()
+		check(sprite.texture == normal_forward, label + " uses the forward sprite while moving right")
+		Input.action_release("move_right")
+		Input.action_press("move_left")
+		await frames()
+		check(sprite.texture == normal_back, label + " uses the back sprite while moving left")
+		Input.action_release("move_left")
+		Input.action_press("move_right")
+		await frames()
+		ship.state.shield = true
+		ship.take_damage()
+		check(sprite.texture == damaged_forward, label + " switches to damaged art after a shielded hit")
+		Input.action_release("move_right")
+		Input.action_press("move_left")
+		await frames()
+		check(sprite.texture == damaged_back, label + " uses the damaged back sprite")
+		Input.action_release("move_left")
+		await frames()
+		check(sprite.texture == damaged, label + " keeps damaged art when movement stops")
+		ship.queue_free()
+		await frames()
+
 func _test_game_flow() -> void:
 	var main: Node = load("res://scenes/main/main.tscn").instantiate()
 	main.get_node("SaveStore").save_path = save_test_path
@@ -157,6 +198,19 @@ func _test_game_flow() -> void:
 	story.advance()
 	await frames(25)
 	check(main.current_screen.name == "CharacterSelect", "Intro ends in Character Select")
+	var hangar: Node = main.current_screen.get_node("Hangar")
+	check(hangar.get_child_count() == content.pilots.size(), "Hangar has one slot per pilot")
+	for actor in hangar.get_children():
+		var pilot: PilotData = actor.get("pilot") as PilotData
+		check(pilot == content.pilot_by_id(pilot.id), "Hangar slot points to catalog pilot data")
+		check(actor.get_node("Portrait").texture == pilot.hangar_portrait, "Hangar portrait comes from pilot data")
+		check(actor.get_node("Name").text == pilot.callsign, "Hangar name comes from pilot data")
+	var first_pilot: PilotData = hangar.get_child(0).get("pilot") as PilotData
+	var first_portrait := hangar.get_child(0).get_node("Portrait") as Sprite2D
+	var original_hangar_portrait: Texture2D = first_pilot.hangar_portrait
+	first_pilot.hangar_portrait = content.pilots[1].hangar_portrait
+	check(first_portrait.texture == content.pilots[1].hangar_portrait, "Hangar preview updates when pilot data changes")
+	first_pilot.hangar_portrait = original_hangar_portrait
 	await capture("03_character_select")
 	main.current_screen.get_node("Sortie").pressed.emit()
 	await frames(100)
@@ -205,7 +259,7 @@ func _test_bad_ending_flow() -> void:
 	main.get_node("SaveStore").save_path = save_test_path
 	root.add_child(main)
 	main.run = RunState.new(main.catalog)
-	main.start_stage(&"serin")
+	main.start_stage(&"P1")
 	await frames(16)
 	for i in 6:
 		var stage: StageController = main.current_screen
@@ -317,15 +371,15 @@ func _test_stage() -> void:
 	await capture("06_death")
 	stage.phase_left = 0
 	await frames(3)
-	check(stage.phase == StageController.Phase.SELECTING_NEXT and not stage.run.is_alive(&"serin"), "Death completes before next selection")
+	check(stage.phase == StageController.Phase.SELECTING_NEXT and not stage.run.is_alive(&"P1"), "Death completes before next selection")
 	check(stage.roster.cards[0].disabled, "Dead portrait cannot be selected")
 	lifetime = item.lifetime
 	await frames(6)
 	check(is_equal_approx(lifetime, item.lifetime), "Selection freezes existing pickups")
-	stage.roster.highlighted_id = &"echo"
+	stage.roster.highlighted_id = &"P6"
 	stage.phase_left = 0
 	await frames(16)
-	check(stage.run.current_pilot_id == &"echo" and stage.phase == StageController.Phase.PLAYING, "Timeout launches highlighted living pilot")
+	check(stage.run.current_pilot_id == &"P6" and stage.phase == StageController.Phase.PLAYING, "Timeout launches highlighted living pilot")
 	check(stage.run.current_sortie.power_level == 1 and stage.run.current_sortie.bombs == 2 and stage.run.current_sortie.hp == 2, "Respawn starts with fresh sortie stats")
 	stage.queue_free()
 	await frames()
@@ -371,7 +425,7 @@ func _test_simultaneous_outcomes() -> void:
 		await frames(3)
 		stage.phase_left = 0
 		await frames(3)
-		stage.select_next(&"jihoon")
+		stage.select_next(&"P2")
 		await frames(30)
 		check(is_instance_valid(stage.boss), "Boss spawn survives death in either callback order")
 		stage.queue_free()
