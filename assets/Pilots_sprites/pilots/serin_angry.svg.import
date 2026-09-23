@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cnfcjtu2182k"
-path="res://.godot/imported/serin_angry.svg-7f57e5fb8262e11f3f7bdd7213df2738.ctex"
+path="res://.godot/imported/serin_angry.svg-33c837909f3c10c15f593b111d922477.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/pilots/serin_angry.svg"
-dest_files=["res://.godot/imported/serin_angry.svg-7f57e5fb8262e11f3f7bdd7213df2738.ctex"]
+source_file="res://assets/Pilots_sprites/pilots/serin_angry.svg"
+dest_files=["res://.godot/imported/serin_angry.svg-33c837909f3c10c15f593b111d922477.ctex"]
 
 [params]
 

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bj2x8527wd1uu"
-path="res://.godot/imported/jihoon_angry.svg-16a72434f29c884d0f0bb5462051fad2.ctex"
+path="res://.godot/imported/jihoon_angry.svg-e03e205e6145bdbd7c50467b7592e146.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/pilots/jihoon_angry.svg"
-dest_files=["res://.godot/imported/jihoon_angry.svg-16a72434f29c884d0f0bb5462051fad2.ctex"]
+source_file="res://assets/Pilots_sprites/pilots/jihoon_angry.svg"
+dest_files=["res://.godot/imported/jihoon_angry.svg-e03e205e6145bdbd7c50467b7592e146.ctex"]
 
 [params]
 

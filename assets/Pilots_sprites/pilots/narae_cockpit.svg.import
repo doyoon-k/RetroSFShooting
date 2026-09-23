@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://uv2w410nikdp"
-path="res://.godot/imported/narae_cockpit.svg-04f2380812b192ce5883dee8aebb06ea.ctex"
+path="res://.godot/imported/narae_cockpit.svg-2a605cf8c17a269db8851d6b60947405.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/pilots/narae_cockpit.svg"
-dest_files=["res://.godot/imported/narae_cockpit.svg-04f2380812b192ce5883dee8aebb06ea.ctex"]
+source_file="res://assets/Pilots_sprites/pilots/narae_cockpit.svg"
+dest_files=["res://.godot/imported/narae_cockpit.svg-2a605cf8c17a269db8851d6b60947405.ctex"]
 
 [params]
 

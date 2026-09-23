@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c4dsea2mhlyuh"
-path="res://.godot/imported/narae_shocked.svg-54ebb131c9a2d4addf3dfc67c86d810f.ctex"
+path="res://.godot/imported/narae_shocked.svg-8fbf1f6aa578ec2995bb0fdc56928db2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/pilots/narae_shocked.svg"
-dest_files=["res://.godot/imported/narae_shocked.svg-54ebb131c9a2d4addf3dfc67c86d810f.ctex"]
+source_file="res://assets/Pilots_sprites/pilots/narae_shocked.svg"
+dest_files=["res://.godot/imported/narae_shocked.svg-8fbf1f6aa578ec2995bb0fdc56928db2.ctex"]
 
 [params]
 

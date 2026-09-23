@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://deecqerdywhfi"
-path="res://.godot/imported/haeon_anxious.svg-694b9951f3a7d116f5ffeba3f62af58c.ctex"
+uid="uid://xxakhgemc0bw"
+path="res://.godot/imported/Robot_Nomal_Forward.png-db1806490cc5da974501423f8ec7cf7c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Pilots_sprites/pilots/haeon_anxious.svg"
-dest_files=["res://.godot/imported/haeon_anxious.svg-694b9951f3a7d116f5ffeba3f62af58c.ctex"]
+source_file="res://assets/Pilots_sprites/Player/Robot_Nomal_Forward.png"
+dest_files=["res://.godot/imported/Robot_Nomal_Forward.png-db1806490cc5da974501423f8ec7cf7c.ctex"]
 
 [params]
 
@@ -32,6 +32,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

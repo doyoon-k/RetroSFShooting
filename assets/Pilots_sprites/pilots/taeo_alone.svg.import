@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c4022rwd52p2f"
-path="res://.godot/imported/taeo_alone.svg-b3f8390811b03c413e7119163c119541.ctex"
+path="res://.godot/imported/taeo_alone.svg-7ce40fd454ba25051136d04d543e72db.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/pilots/taeo_alone.svg"
-dest_files=["res://.godot/imported/taeo_alone.svg-b3f8390811b03c413e7119163c119541.ctex"]
+source_file="res://assets/Pilots_sprites/pilots/taeo_alone.svg"
+dest_files=["res://.godot/imported/taeo_alone.svg-7ce40fd454ba25051136d04d543e72db.ctex"]
 
 [params]
 

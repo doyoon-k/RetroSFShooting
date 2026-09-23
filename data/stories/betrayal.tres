@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="StoryData" load_steps=5 format=3 uid="uid://b38c6efjhx2hg"]
 
-[ext_resource type="Texture2D" uid="uid://ig6osxhdylcq" path="res://assets/sprites/stories/betrayal.svg" id="Image"]
+[ext_resource type="Texture2D" uid="uid://ig6osxhdylcq" path="res://assets/Pilots_sprites/stories/betrayal.svg" id="Image"]
 [ext_resource type="Script" path="res://scripts/data/story_page.gd" id="Page"]
 [ext_resource type="Script" path="res://scripts/data/story_data.gd" id="Script"]
 

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c27bij8gpycp1"
-path="res://.godot/imported/haeon_dead.svg-cc993c1468b29eb4d41216ec5fdba446.ctex"
+path="res://.godot/imported/haeon_dead.svg-2b28a1c3408403621237918d4f226998.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/pilots/haeon_dead.svg"
-dest_files=["res://.godot/imported/haeon_dead.svg-cc993c1468b29eb4d41216ec5fdba446.ctex"]
+source_file="res://assets/Pilots_sprites/pilots/haeon_dead.svg"
+dest_files=["res://.godot/imported/haeon_dead.svg-2b28a1c3408403621237918d4f226998.ctex"]
 
 [params]
 

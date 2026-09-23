@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dhuc16eq8sml"
-path="res://.godot/imported/jihoon_normal.svg-b0d11c9569c30d4cf59804263f03376c.ctex"
+path="res://.godot/imported/jihoon_normal.svg-e6d6433f7c305bd94842b1a56f53b2e5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/pilots/jihoon_normal.svg"
-dest_files=["res://.godot/imported/jihoon_normal.svg-b0d11c9569c30d4cf59804263f03376c.ctex"]
+source_file="res://assets/Pilots_sprites/pilots/jihoon_normal.svg"
+dest_files=["res://.godot/imported/jihoon_normal.svg-e6d6433f7c305bd94842b1a56f53b2e5.ctex"]
 
 [params]
 

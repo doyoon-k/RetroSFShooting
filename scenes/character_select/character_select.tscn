@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://diab46cka0xnd"]
+[gd_scene load_steps=25 format=3 uid="uid://diab46cka0xnd"]
 
 [ext_resource type="Resource" path="res://data/game_catalog.tres" id="PreviewCatalog"]
 [ext_resource type="PackedScene" path="res://scenes/ui/pilot_roster.tscn" id="Roster"]
@@ -6,6 +6,12 @@
 [ext_resource type="Script" path="res://scenes/ui/starfield.gd" id="Stars"]
 [ext_resource type="Theme" uid="uid://wbownrqyfplv" path="res://scenes/ui/game_theme.tres" id="Theme"]
 [ext_resource type="Script" path="res://scenes/ui/typewriter_label.gd" id="Typewriter"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/serin_normal.svg" id="SerinPortrait"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/jihoon_normal.svg" id="JihoonPortrait"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/haeon_normal.svg" id="HaeonPortrait"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/taeo_normal.svg" id="TaeoPortrait"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/narae_normal.svg" id="NaraePortrait"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/echo_normal.svg" id="EchoPortrait"]
 
 [sub_resource type="Animation" id="Idle0"]
 resource_name = "idle"
@@ -200,6 +206,7 @@ unique_name_in_owner = true
 position = Vector2(275, 366)
 
 [node name="Portrait" type="Sprite2D" parent="Hangar/Pilot0"]
+texture = ExtResource("SerinPortrait")
 scale = Vector2(0.85, 0.85)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Hangar/Pilot0"]
@@ -232,6 +239,7 @@ horizontal_alignment = 1
 position = Vector2(625, 366)
 
 [node name="Portrait" type="Sprite2D" parent="Hangar/Pilot1"]
+texture = ExtResource("JihoonPortrait")
 scale = Vector2(0.85, 0.85)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Hangar/Pilot1"]
@@ -264,6 +272,7 @@ horizontal_alignment = 1
 position = Vector2(975, 366)
 
 [node name="Portrait" type="Sprite2D" parent="Hangar/Pilot2"]
+texture = ExtResource("HaeonPortrait")
 scale = Vector2(0.85, 0.85)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Hangar/Pilot2"]
@@ -296,6 +305,7 @@ horizontal_alignment = 1
 position = Vector2(275, 570)
 
 [node name="Portrait" type="Sprite2D" parent="Hangar/Pilot3"]
+texture = ExtResource("TaeoPortrait")
 scale = Vector2(0.85, 0.85)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Hangar/Pilot3"]
@@ -328,6 +338,7 @@ horizontal_alignment = 1
 position = Vector2(625, 570)
 
 [node name="Portrait" type="Sprite2D" parent="Hangar/Pilot4"]
+texture = ExtResource("NaraePortrait")
 scale = Vector2(0.85, 0.85)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Hangar/Pilot4"]
@@ -360,6 +371,7 @@ horizontal_alignment = 1
 position = Vector2(975, 570)
 
 [node name="Portrait" type="Sprite2D" parent="Hangar/Pilot5"]
+texture = ExtResource("EchoPortrait")
 scale = Vector2(0.85, 0.85)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Hangar/Pilot5"]

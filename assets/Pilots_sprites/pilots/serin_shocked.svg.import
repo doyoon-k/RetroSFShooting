@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://csokftgm0c41a"
-path="res://.godot/imported/serin_shocked.svg-509df2db172f1cee0ed916b91738749c.ctex"
+path="res://.godot/imported/serin_shocked.svg-223821eb8e0f38ae49b455a1b17fce8c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/pilots/serin_shocked.svg"
-dest_files=["res://.godot/imported/serin_shocked.svg-509df2db172f1cee0ed916b91738749c.ctex"]
+source_file="res://assets/Pilots_sprites/pilots/serin_shocked.svg"
+dest_files=["res://.godot/imported/serin_shocked.svg-223821eb8e0f38ae49b455a1b17fce8c.ctex"]
 
 [params]
 

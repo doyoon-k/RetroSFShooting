@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dh1js2jjmv6aa"
-path="res://.godot/imported/taeo_despair.svg-1cf9200a5f2b57407424b47f1a66447b.ctex"
+path="res://.godot/imported/taeo_despair.svg-f3fb2e22b312f9846b4fcfed20c0c0b1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/pilots/taeo_despair.svg"
-dest_files=["res://.godot/imported/taeo_despair.svg-1cf9200a5f2b57407424b47f1a66447b.ctex"]
+source_file="res://assets/Pilots_sprites/pilots/taeo_despair.svg"
+dest_files=["res://.godot/imported/taeo_despair.svg-f3fb2e22b312f9846b4fcfed20c0c0b1.ctex"]
 
 [params]
 

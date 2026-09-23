@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cn3ujadgohmqo"
-path="res://.godot/imported/echo_dead.svg-b90d3d7e557b42e0b10c30f88230dd7e.ctex"
+path="res://.godot/imported/echo_dead.svg-94223ad318e4e31a74fdfb3404e366d4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/pilots/echo_dead.svg"
-dest_files=["res://.godot/imported/echo_dead.svg-b90d3d7e557b42e0b10c30f88230dd7e.ctex"]
+source_file="res://assets/Pilots_sprites/pilots/echo_dead.svg"
+dest_files=["res://.godot/imported/echo_dead.svg-94223ad318e4e31a74fdfb3404e366d4.ctex"]
 
 [params]
 

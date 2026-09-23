@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://rbuunuckhttt"
-path="res://.godot/imported/cost_of_dawn.svg-9f2d073704ef8ad9880bc3597d5d9fdc.ctex"
+path="res://.godot/imported/cost_of_dawn.svg-57eb7de6632f80e5ff02523c0dc52748.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/stories/cost_of_dawn.svg"
-dest_files=["res://.godot/imported/cost_of_dawn.svg-9f2d073704ef8ad9880bc3597d5d9fdc.ctex"]
+source_file="res://assets/Pilots_sprites/stories/cost_of_dawn.svg"
+dest_files=["res://.godot/imported/cost_of_dawn.svg-57eb7de6632f80e5ff02523c0dc52748.ctex"]
 
 [params]
 

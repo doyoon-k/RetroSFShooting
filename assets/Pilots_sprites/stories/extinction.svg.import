@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://kurheidal535"
-path="res://.godot/imported/extinction.svg-6905c739e258d2a3130b058190257a39.ctex"
+path="res://.godot/imported/extinction.svg-c68749a5c7bba9226e0204345c8c5ed0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/stories/extinction.svg"
-dest_files=["res://.godot/imported/extinction.svg-6905c739e258d2a3130b058190257a39.ctex"]
+source_file="res://assets/Pilots_sprites/stories/extinction.svg"
+dest_files=["res://.godot/imported/extinction.svg-c68749a5c7bba9226e0204345c8c5ed0.ctex"]
 
 [params]
 

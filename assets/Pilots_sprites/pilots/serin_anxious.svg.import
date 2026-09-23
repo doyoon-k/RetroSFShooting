@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bsdb3ifsukg6r"
-path="res://.godot/imported/serin_anxious.svg-68f0d168f3862a3d96fa9f6d9cd72bb6.ctex"
+path="res://.godot/imported/serin_anxious.svg-ba4660eefa8b0265d953e3fd55573f66.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/pilots/serin_anxious.svg"
-dest_files=["res://.godot/imported/serin_anxious.svg-68f0d168f3862a3d96fa9f6d9cd72bb6.ctex"]
+source_file="res://assets/Pilots_sprites/pilots/serin_anxious.svg"
+dest_files=["res://.godot/imported/serin_anxious.svg-ba4660eefa8b0265d953e3fd55573f66.ctex"]
 
 [params]
 

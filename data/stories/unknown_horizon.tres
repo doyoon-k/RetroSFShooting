@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="StoryData" load_steps=5 format=3 uid="uid://d0sgit0ijolup"]
 
-[ext_resource type="Texture2D" uid="uid://pjff73fbrgtu" path="res://assets/sprites/stories/unknown_horizon.svg" id="Image"]
+[ext_resource type="Texture2D" uid="uid://pjff73fbrgtu" path="res://assets/Pilots_sprites/stories/unknown_horizon.svg" id="Image"]
 [ext_resource type="Script" path="res://scripts/data/story_page.gd" id="Page"]
 [ext_resource type="Script" path="res://scripts/data/story_data.gd" id="Script"]
 

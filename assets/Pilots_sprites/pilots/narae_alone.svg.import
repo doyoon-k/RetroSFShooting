@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://8lucu7rmf2hy"
-path="res://.godot/imported/narae_alone.svg-2908ff5d118142a2f3074f52f4f81c97.ctex"
+path="res://.godot/imported/narae_alone.svg-9682673c1ddf883b6e4b315756ca5bc8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/pilots/narae_alone.svg"
-dest_files=["res://.godot/imported/narae_alone.svg-2908ff5d118142a2f3074f52f4f81c97.ctex"]
+source_file="res://assets/Pilots_sprites/pilots/narae_alone.svg"
+dest_files=["res://.godot/imported/narae_alone.svg-9682673c1ddf883b6e4b315756ca5bc8.ctex"]
 
 [params]
 

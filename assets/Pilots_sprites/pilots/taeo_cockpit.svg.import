@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://m5qwrpvya6xy"
-path="res://.godot/imported/taeo_cockpit.svg-65be971fc55a9bdb23d7fb3dbaba5099.ctex"
+path="res://.godot/imported/taeo_cockpit.svg-79c3cf25585247b111e35138356a4b28.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/pilots/taeo_cockpit.svg"
-dest_files=["res://.godot/imported/taeo_cockpit.svg-65be971fc55a9bdb23d7fb3dbaba5099.ctex"]
+source_file="res://assets/Pilots_sprites/pilots/taeo_cockpit.svg"
+dest_files=["res://.godot/imported/taeo_cockpit.svg-79c3cf25585247b111e35138356a4b28.ctex"]
 
 [params]
 

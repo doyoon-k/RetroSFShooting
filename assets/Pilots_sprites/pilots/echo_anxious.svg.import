@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bipvp5kcs1jqp"
-path="res://.godot/imported/echo_anxious.svg-088656daea57ebe58fa441da235c5cc3.ctex"
+path="res://.godot/imported/echo_anxious.svg-24fe6330e4f677d4c77a92bf0a171c89.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/pilots/echo_anxious.svg"
-dest_files=["res://.godot/imported/echo_anxious.svg-088656daea57ebe58fa441da235c5cc3.ctex"]
+source_file="res://assets/Pilots_sprites/pilots/echo_anxious.svg"
+dest_files=["res://.godot/imported/echo_anxious.svg-24fe6330e4f677d4c77a92bf0a171c89.ctex"]
 
 [params]
 

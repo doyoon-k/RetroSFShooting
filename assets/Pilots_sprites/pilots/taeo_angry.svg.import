@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dr46romlt2h6l"
-path="res://.godot/imported/taeo_angry.svg-f434e99a6145db3592962211bad3d4da.ctex"
+path="res://.godot/imported/taeo_angry.svg-8287be8cfcbfcaf3ac752adf961e5390.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/pilots/taeo_angry.svg"
-dest_files=["res://.godot/imported/taeo_angry.svg-f434e99a6145db3592962211bad3d4da.ctex"]
+source_file="res://assets/Pilots_sprites/pilots/taeo_angry.svg"
+dest_files=["res://.godot/imported/taeo_angry.svg-8287be8cfcbfcaf3ac752adf961e5390.ctex"]
 
 [params]
 

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://pjff73fbrgtu"
-path="res://.godot/imported/unknown_horizon.svg-0f3101228d47caa6302fa9169f430c1f.ctex"
+path="res://.godot/imported/unknown_horizon.svg-58e5c8a572396f6a4178fb4f8c8e5673.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/stories/unknown_horizon.svg"
-dest_files=["res://.godot/imported/unknown_horizon.svg-0f3101228d47caa6302fa9169f430c1f.ctex"]
+source_file="res://assets/Pilots_sprites/stories/unknown_horizon.svg"
+dest_files=["res://.godot/imported/unknown_horizon.svg-58e5c8a572396f6a4178fb4f8c8e5673.ctex"]
 
 [params]
 
