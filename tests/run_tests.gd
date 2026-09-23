@@ -67,7 +67,7 @@ func _test_endings() -> void:
 
 func _test_sorties() -> void:
 	var run := RunState.new(content)
-	check(run.begin_sortie(&"serin"), "Living pilot can launch")
+	check(run.begin_sortie(&"P1"), "Living pilot can launch")
 	var old := run.current_sortie
 	old.collect(0, 3)
 	old.collect(0, 3)
@@ -79,13 +79,13 @@ func _test_sorties() -> void:
 	old.damage()
 	check(old.hp == 1, "Next hit damages the hull")
 	old.spend_bomb()
-	run.mark_dead(&"serin")
-	run.mark_dead(&"serin")
+	run.mark_dead(&"P1")
+	run.mark_dead(&"P1")
 	check(run.survivors().size() == 5, "Death is idempotent")
-	check(not run.begin_sortie(&"serin"), "Dead pilot cannot launch")
-	check(run.automatic_choice(&"serin") == &"jihoon", "Invalid timeout focus falls back to first living pilot")
-	check(run.automatic_choice(&"echo") == &"echo", "Valid timeout focus is preserved")
-	run.begin_sortie(&"jihoon")
+	check(not run.begin_sortie(&"P1"), "Dead pilot cannot launch")
+	check(run.automatic_choice(&"P1") == &"P2", "Invalid timeout focus falls back to first living pilot")
+	check(run.automatic_choice(&"P6") == &"P6", "Valid timeout focus is preserved")
+	run.begin_sortie(&"P2")
 	check(run.current_sortie != old and run.current_sortie.hp == 2 and run.current_sortie.power_level == 1 and run.current_sortie.bombs == 2 and not run.current_sortie.shield, "New sortie resets all transient stats")
 	check(content.rules.starting_hp == 2 and content.rules.starting_bombs == 2, "Runtime changes do not mutate shared rules")
 	var durable := SortieState.new(content.rules)
@@ -205,7 +205,7 @@ func _test_bad_ending_flow() -> void:
 	main.get_node("SaveStore").save_path = save_test_path
 	root.add_child(main)
 	main.run = RunState.new(main.catalog)
-	main.start_stage(&"serin")
+	main.start_stage(&"P1")
 	await frames(16)
 	for i in 6:
 		var stage: StageController = main.current_screen
@@ -317,15 +317,15 @@ func _test_stage() -> void:
 	await capture("06_death")
 	stage.phase_left = 0
 	await frames(3)
-	check(stage.phase == StageController.Phase.SELECTING_NEXT and not stage.run.is_alive(&"serin"), "Death completes before next selection")
+	check(stage.phase == StageController.Phase.SELECTING_NEXT and not stage.run.is_alive(&"P1"), "Death completes before next selection")
 	check(stage.roster.cards[0].disabled, "Dead portrait cannot be selected")
 	lifetime = item.lifetime
 	await frames(6)
 	check(is_equal_approx(lifetime, item.lifetime), "Selection freezes existing pickups")
-	stage.roster.highlighted_id = &"echo"
+	stage.roster.highlighted_id = &"P6"
 	stage.phase_left = 0
 	await frames(16)
-	check(stage.run.current_pilot_id == &"echo" and stage.phase == StageController.Phase.PLAYING, "Timeout launches highlighted living pilot")
+	check(stage.run.current_pilot_id == &"P6" and stage.phase == StageController.Phase.PLAYING, "Timeout launches highlighted living pilot")
 	check(stage.run.current_sortie.power_level == 1 and stage.run.current_sortie.bombs == 2 and stage.run.current_sortie.hp == 2, "Respawn starts with fresh sortie stats")
 	stage.queue_free()
 	await frames()
@@ -371,7 +371,7 @@ func _test_simultaneous_outcomes() -> void:
 		await frames(3)
 		stage.phase_left = 0
 		await frames(3)
-		stage.select_next(&"jihoon")
+		stage.select_next(&"P2")
 		await frames(30)
 		check(is_instance_valid(stage.boss), "Boss spawn survives death in either callback order")
 		stage.queue_free()

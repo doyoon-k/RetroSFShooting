@@ -6,12 +6,12 @@
 [ext_resource type="Script" path="res://scenes/ui/starfield.gd" id="Stars"]
 [ext_resource type="Theme" uid="uid://wbownrqyfplv" path="res://scenes/ui/game_theme.tres" id="Theme"]
 [ext_resource type="Script" path="res://scenes/ui/typewriter_label.gd" id="Typewriter"]
-[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/serin_normal.svg" id="SerinPortrait"]
-[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/jihoon_normal.svg" id="JihoonPortrait"]
-[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/haeon_normal.svg" id="HaeonPortrait"]
-[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/taeo_normal.svg" id="TaeoPortrait"]
-[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/narae_normal.svg" id="NaraePortrait"]
-[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/echo_normal.svg" id="EchoPortrait"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/P1_normal.svg" id="P1Portrait"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/P2_normal.svg" id="P2Portrait"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/P3_normal.svg" id="P3Portrait"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/P4_normal.svg" id="P4Portrait"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/P5_normal.svg" id="P5Portrait"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/P6_normal.svg" id="P6Portrait"]
 
 [sub_resource type="Animation" id="Idle0"]
 resource_name = "idle"
@@ -206,7 +206,7 @@ unique_name_in_owner = true
 position = Vector2(275, 366)
 
 [node name="Portrait" type="Sprite2D" parent="Hangar/Pilot0"]
-texture = ExtResource("SerinPortrait")
+texture = ExtResource("P1Portrait")
 scale = Vector2(0.85, 0.85)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Hangar/Pilot0"]
@@ -221,7 +221,7 @@ offset_top = 60.0
 offset_right = 145.0
 offset_bottom = 94.0
 theme_override_font_sizes/font_size = 19
-text = "LARK"
+text = "P1"
 horizontal_alignment = 1
 
 [node name="Activity0" type="Label" parent="Hangar/Pilot0"]
@@ -239,7 +239,7 @@ horizontal_alignment = 1
 position = Vector2(625, 366)
 
 [node name="Portrait" type="Sprite2D" parent="Hangar/Pilot1"]
-texture = ExtResource("JihoonPortrait")
+texture = ExtResource("P2Portrait")
 scale = Vector2(0.85, 0.85)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Hangar/Pilot1"]
@@ -254,7 +254,7 @@ offset_top = 60.0
 offset_right = 145.0
 offset_bottom = 94.0
 theme_override_font_sizes/font_size = 19
-text = "ATLAS"
+text = "P2"
 horizontal_alignment = 1
 
 [node name="Activity1" type="Label" parent="Hangar/Pilot1"]
@@ -272,7 +272,7 @@ horizontal_alignment = 1
 position = Vector2(975, 366)
 
 [node name="Portrait" type="Sprite2D" parent="Hangar/Pilot2"]
-texture = ExtResource("HaeonPortrait")
+texture = ExtResource("P3Portrait")
 scale = Vector2(0.85, 0.85)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Hangar/Pilot2"]
@@ -287,7 +287,7 @@ offset_top = 60.0
 offset_right = 145.0
 offset_bottom = 94.0
 theme_override_font_sizes/font_size = 19
-text = "ORBIT"
+text = "P3"
 horizontal_alignment = 1
 
 [node name="Activity2" type="Label" parent="Hangar/Pilot2"]
@@ -305,7 +305,7 @@ horizontal_alignment = 1
 position = Vector2(275, 570)
 
 [node name="Portrait" type="Sprite2D" parent="Hangar/Pilot3"]
-texture = ExtResource("TaeoPortrait")
+texture = ExtResource("P4Portrait")
 scale = Vector2(0.85, 0.85)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Hangar/Pilot3"]
@@ -320,7 +320,7 @@ offset_top = 60.0
 offset_right = 145.0
 offset_bottom = 94.0
 theme_override_font_sizes/font_size = 19
-text = "EMBER"
+text = "P4"
 horizontal_alignment = 1
 
 [node name="Activity3" type="Label" parent="Hangar/Pilot3"]
@@ -338,7 +338,7 @@ horizontal_alignment = 1
 position = Vector2(625, 570)
 
 [node name="Portrait" type="Sprite2D" parent="Hangar/Pilot4"]
-texture = ExtResource("NaraePortrait")
+texture = ExtResource("P5Portrait")
 scale = Vector2(0.85, 0.85)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Hangar/Pilot4"]
@@ -353,7 +353,7 @@ offset_top = 60.0
 offset_right = 145.0
 offset_bottom = 94.0
 theme_override_font_sizes/font_size = 19
-text = "MOTH"
+text = "P5"
 horizontal_alignment = 1
 
 [node name="Activity4" type="Label" parent="Hangar/Pilot4"]
@@ -371,7 +371,7 @@ horizontal_alignment = 1
 position = Vector2(975, 570)
 
 [node name="Portrait" type="Sprite2D" parent="Hangar/Pilot5"]
-texture = ExtResource("EchoPortrait")
+texture = ExtResource("P6Portrait")
 scale = Vector2(0.85, 0.85)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Hangar/Pilot5"]
@@ -386,7 +386,7 @@ offset_top = 60.0
 offset_right = 145.0
 offset_bottom = 94.0
 theme_override_font_sizes/font_size = 19
-text = "ECHO-06"
+text = "P6"
 horizontal_alignment = 1
 
 [node name="Activity5" type="Label" parent="Hangar/Pilot5"]

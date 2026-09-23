@@ -5,12 +5,12 @@
 [ext_resource type="Script" path="res://scripts/data/ending_data.gd" id="EndingType"]
 [ext_resource type="Resource" path="res://data/rules/default.tres" id="Rules"]
 [ext_resource type="Resource" path="res://data/stories/intro.tres" id="Intro"]
-[ext_resource type="Resource" path="res://data/pilots/serin.tres" id="serin"]
-[ext_resource type="Resource" path="res://data/pilots/jihoon.tres" id="jihoon"]
-[ext_resource type="Resource" path="res://data/pilots/haeon.tres" id="haeon"]
-[ext_resource type="Resource" path="res://data/pilots/taeo.tres" id="taeo"]
-[ext_resource type="Resource" path="res://data/pilots/narae.tres" id="narae"]
-[ext_resource type="Resource" path="res://data/pilots/echo.tres" id="echo"]
+[ext_resource type="Resource" path="res://data/pilots/P1.tres" id="P1"]
+[ext_resource type="Resource" path="res://data/pilots/P2.tres" id="P2"]
+[ext_resource type="Resource" path="res://data/pilots/P3.tres" id="P3"]
+[ext_resource type="Resource" path="res://data/pilots/P4.tres" id="P4"]
+[ext_resource type="Resource" path="res://data/pilots/P5.tres" id="P5"]
+[ext_resource type="Resource" path="res://data/pilots/P6.tres" id="P6"]
 [ext_resource type="Resource" path="res://data/endings/extinction.tres" id="extinction"]
 [ext_resource type="Resource" path="res://data/endings/last_signal.tres" id="last_signal"]
 [ext_resource type="Resource" path="res://data/endings/betrayal.tres" id="betrayal"]
@@ -23,5 +23,5 @@
 script = ExtResource("Script")
 rules = ExtResource("Rules")
 intro = ExtResource("Intro")
-pilots = Array[ExtResource("PilotType")]([ExtResource("serin"), ExtResource("jihoon"), ExtResource("haeon"), ExtResource("taeo"), ExtResource("narae"), ExtResource("echo")])
+pilots = Array[ExtResource("PilotType")]([ExtResource("P1"), ExtResource("P2"), ExtResource("P3"), ExtResource("P4"), ExtResource("P5"), ExtResource("P6")])
 endings = Array[ExtResource("EndingType")]([ExtResource("extinction"), ExtResource("last_signal"), ExtResource("betrayal"), ExtResource("unknown_horizon"), ExtResource("cost_of_dawn"), ExtResource("new_home")])

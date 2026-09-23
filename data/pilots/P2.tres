@@ -1,0 +1,35 @@
+[gd_resource type="Resource" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/pilot_data.gd" id="Script"]
+[ext_resource type="PackedScene" path="res://scenes/player/P2_ship.tscn" id="Ship"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/P2_normal.svg" id="normal"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/P2_shocked.svg" id="shocked"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/P2_anxious.svg" id="anxious"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/P2_angry.svg" id="angry"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/P2_despair.svg" id="despair"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/P2_alone.svg" id="alone"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/P2_victory.svg" id="victory"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/P2_dead.svg" id="dead"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/P2_cockpit.svg" id="cockpit"]
+
+
+[resource]
+script = ExtResource("Script")
+id = &"P2"
+display_name = "P2"
+callsign = "P2"
+description = "항법 담당이자 오래된 책의 수집가. 조용하지만 위기에는 가장 먼저 움직인다."
+is_ai = false
+accent = Color(0.96471, 0.74118, 0.4549, 1)
+ship_scene = ExtResource("Ship")
+death_line = "책의 마지막 장은… 부탁할게."
+victory_line = "이번에는 마지막 장까지 읽겠어."
+normal = ExtResource("normal")
+shocked = ExtResource("shocked")
+anxious = ExtResource("anxious")
+angry = ExtResource("angry")
+despair = ExtResource("despair")
+alone = ExtResource("alone")
+victory = ExtResource("victory")
+dead = ExtResource("dead")
+cockpit = ExtResource("cockpit")

@@ -25,7 +25,7 @@ func _ready() -> void:
 func _focus_pilot(id: StringName) -> void:
 	selected = id
 	var pilot := catalog.pilot_by_id(id)
-	%PilotName.text = pilot.display_name + " / " + pilot.callsign
+	%PilotName.text = pilot.display_name if pilot.display_name == pilot.callsign else pilot.display_name + " / " + pilot.callsign
 	%PilotName.modulate = pilot.accent
 	%Description.reveal(pilot.description)
 	%Sortie.text = "SORTIE  /  %s 출격" % pilot.display_name

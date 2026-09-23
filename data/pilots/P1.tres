@@ -1,0 +1,35 @@
+[gd_resource type="Resource" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/pilot_data.gd" id="Script"]
+[ext_resource type="PackedScene" path="res://scenes/player/P1_ship.tscn" id="Ship"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/P1_normal.svg" id="normal"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/P1_shocked.svg" id="shocked"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/P1_anxious.svg" id="anxious"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/P1_angry.svg" id="angry"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/P1_despair.svg" id="despair"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/P1_alone.svg" id="alone"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/P1_victory.svg" id="victory"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/P1_dead.svg" id="dead"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/P1_cockpit.svg" id="cockpit"]
+
+
+[resource]
+script = ExtResource("Script")
+id = &"P1"
+display_name = "P1"
+callsign = "P1"
+description = "방주의 마지막 편대장. 낡은 작전 지도를 끝까지 놓지 않는다.\n“돌아갈 곳은 우리가 만들면 돼.”"
+is_ai = false
+accent = Color(0.42745, 0.89804, 0.92941, 1)
+ship_scene = ExtResource("Ship")
+death_line = "다들… 항로를 잊지 마."
+victory_line = "모두 들려? 이제 집으로 가자."
+normal = ExtResource("normal")
+shocked = ExtResource("shocked")
+anxious = ExtResource("anxious")
+angry = ExtResource("angry")
+despair = ExtResource("despair")
+alone = ExtResource("alone")
+victory = ExtResource("victory")
+dead = ExtResource("dead")
+cockpit = ExtResource("cockpit")

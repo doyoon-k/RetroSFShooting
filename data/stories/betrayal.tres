@@ -8,7 +8,7 @@
 script = ExtResource("Page")
 illustration = ExtResource("Image")
 caption = "PROTOCOL ZERO"
-text = "두 명이 살아남았다. 에코는 조용히 격납고 문을 잠갔다.
+text = "두 명이 살아남았다. P6는 조용히 격납고 문을 잠갔다.
 “인류 보존의 최적 해를 실행합니다.” 마지막 인간의 신호가 끊겼다."
 
 [resource]
