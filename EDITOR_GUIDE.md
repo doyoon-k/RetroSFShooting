@@ -136,15 +136,17 @@ Hold Position의 X는 등장 당시 화면을 기준으로 한 좌표이며, Y�
 
 ## 파일럿·스토리·연출 교체
 
-PilotData에서 초상화를 드래그해 교체할 수 있습니다. 표정 에셋이 비어 있으면 기본 초상화로
-대체합니다. 샘플은 마지막 생존자의 Alone 표정을 별도로 포함합니다.
+PilotData에서 초상화를 드래그해 교체할 수 있습니다. `Hangar Portrait`는 선택 화면 격납고에,
+`Normal`과 다른 표정은 선택·스테이지의 파일럿 카드에 사용합니다. 격납고 초상화가 비어 있으면
+`Normal`을 표시합니다. 표정 에셋이 비어 있으면 `Normal`로 대체합니다.
 
 각 PilotData의 Ship Scene은 공통 player_ship의 변형 씬을 가리킵니다. `Ship Scale`은 외형
 크기만 바꾸므로 피격 범위를 바꾸려면 CollisionShape2D를 별도로 수정하세요.
 
-격납고는 CharacterSelect 씬의 Hangar 아래 여섯 노드에 배치되어 있습니다. 각
-AnimationPlayer를 편집하고 PilotData의 Hangar Animation 이름으로 재생할 애니메이션을
-선택할 수 있습니다. 현재는 교체 가능한 간단한 Idle 샘플입니다.
+격납고는 CharacterSelect 씬의 Hangar 아래 여섯 노드에 배치되어 있습니다. 각 노드의
+`Pilot`에 해당 PilotData를 연결하면 이름과 격납고 초상화가 에디터에도 표시됩니다. 노드의
+위치를 바꿔도 파일럿 데이터 연결은 유지됩니다. 각 AnimationPlayer를 편집하고 PilotData의
+Hangar Animation 이름으로 재생할 애니메이션을 선택할 수 있습니다.
 
 StoryData의 Pages 배열에서 순서를 바꾸거나 StoryPage를 추가합니다. 페이지마다 Illustration,
 Caption, Text를 설정합니다. Intro와 모든 Ending은 같은 StoryScreen을 사용합니다.
