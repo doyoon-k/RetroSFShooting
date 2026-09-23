@@ -1,29 +1,32 @@
-[gd_resource type="Resource" format=3]
+[gd_resource type="Resource" script_class="StoryData" load_steps=7 format=3 uid="uid://dw3n83fo2xv00"]
 
-[ext_resource type="Script" path="res://scripts/data/story_data.gd" id="Script"]
+[ext_resource type="Texture2D" uid="uid://bgrqbfens3sh7" path="res://assets/sprites/stories/intro.svg" id="Image"]
 [ext_resource type="Script" path="res://scripts/data/story_page.gd" id="Page"]
-[ext_resource type="Texture2D" path="res://assets/sprites/stories/intro.svg" id="Image"]
+[ext_resource type="Script" path="res://scripts/data/story_data.gd" id="Script"]
 
 [sub_resource type="Resource" id="Page0"]
 script = ExtResource("Page")
 illustration = ExtResource("Image")
 caption = "THE LAST ARK"
-text = "인류가 마지막으로 남긴 생존 모함은\n목적지를 잃은 채 우주를 떠돌고 있었다."
+text = "인류가 마지막으로 남긴 생존 모함은
+목적지를 잃은 채 우주를 떠돌고 있었다."
 
 [sub_resource type="Resource" id="Page1"]
 script = ExtResource("Page")
 illustration = ExtResource("Image")
 caption = "SIX VOICES"
-text = "남은 파일럿은 여섯 명.\n여섯 개의 목소리가 꺼지기 전에, 새로운 터전을 찾아야 한다."
+text = "남은 파일럿은 여섯 명.
+여섯 개의 목소리가 꺼지기 전에, 새로운 터전을 찾아야 한다."
 
 [sub_resource type="Resource" id="Page2"]
 script = ExtResource("Page")
 illustration = ExtResource("Image")
 caption = "A SIGNAL BEYOND"
-text = "마침내 수신된 행성의 신호.\n그 앞을 가로막는 기계 군단을 돌파하라. 방주의 마지막 출격이 시작된다."
-
+text = "마침내 수신된 행성의 신호.
+그 앞을 가로막는 기계 군단을 돌파하라. 방주의 마지막 출격이 시작된다."
 
 [resource]
 script = ExtResource("Script")
 title = "PROLOGUE / 남겨진 항로"
 pages = Array[ExtResource("Page")]([SubResource("Page0"), SubResource("Page1"), SubResource("Page2")])
+characters_per_second = 42.0

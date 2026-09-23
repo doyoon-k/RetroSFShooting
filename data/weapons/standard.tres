@@ -1,25 +1,35 @@
-[gd_resource type="Resource" format=3]
+[gd_resource type="Resource" script_class="WeaponData" load_steps=7 format=3 uid="uid://dj7cna4wypie8"]
 
-[ext_resource type="Script" path="res://scripts/data/weapon_data.gd" id="Script"]
-[ext_resource type="Script" path="res://scripts/data/shot_level_data.gd" id="Level"]
 [ext_resource type="PackedScene" path="res://scenes/projectiles/player_bullet.tscn" id="Bullet"]
+[ext_resource type="Script" path="res://scripts/data/shot_level_data.gd" id="Level"]
+[ext_resource type="Script" path="res://scripts/data/weapon_data.gd" id="Script"]
 
 [sub_resource type="Resource" id="Level1"]
 script = ExtResource("Level")
 projectile_scene = ExtResource("Bullet")
+interval = 0.16
 angles = PackedFloat32Array(0)
+damage = 1
 
 [sub_resource type="Resource" id="Level2"]
 script = ExtResource("Level")
 projectile_scene = ExtResource("Bullet")
+interval = 0.16
 angles = PackedFloat32Array(-6, 6)
+damage = 1
 
 [sub_resource type="Resource" id="Level3"]
 script = ExtResource("Level")
 projectile_scene = ExtResource("Bullet")
+interval = 0.16
 angles = PackedFloat32Array(-10, 0, 10)
-
+damage = 1
 
 [resource]
 script = ExtResource("Script")
 levels = Array[ExtResource("Level")]([SubResource("Level1"), SubResource("Level2"), SubResource("Level3")])
+charge_seconds = 1.0
+charge_cooldown = 1.5
+charge_damage = 12
+charge_size = Vector2(390, 200)
+charge_color = Color(0.666667, 1, 0.811765, 1)

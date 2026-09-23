@@ -1,11 +1,11 @@
-[gd_scene format=3]
+[gd_scene load_steps=10 format=3 uid="uid://bgxei4xcj30fw"]
 
-[ext_resource type="Script" path="res://scenes/enemies/enemy_ship.gd" id="Script"]
+[ext_resource type="Resource" path="res://data/patterns/aimed_step.tres" id="aimed"]
+[ext_resource type="PackedScene" uid="uid://crf6oscbynrkg" path="res://scenes/gameplay/explosion.tscn" id="Explosion"]
 [ext_resource type="Script" path="res://scenes/enemies/enemy_movement.gd" id="Movement"]
+[ext_resource type="Script" path="res://scenes/enemies/enemy_ship.gd" id="Script"]
 [ext_resource type="Script" path="res://scenes/enemies/enemy_shooter.gd" id="Shooter"]
 [ext_resource type="Script" path="res://scripts/data/pattern_step.gd" id="StepType"]
-[ext_resource type="PackedScene" path="res://scenes/gameplay/explosion.tscn" id="Explosion"]
-[ext_resource type="Resource" path="res://data/patterns/aimed_step.tres" id="aimed"]
 
 [sub_resource type="CircleShape2D" id="Shape"]
 radius = 26.25
@@ -14,46 +14,53 @@ radius = 26.25
 resource_name = "death"
 length = 0.45
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath("Visual:modulate")
-tracks/0/keys = {"times": PackedFloat32Array(0, 0.2, 0.45), "transitions": PackedFloat32Array(1, 1, 1), "update": 0, "values": [Color(1, 1, 1, 1), Color(3, 2, 1, 1), Color(0.2, 0.1, 0.1, 0)]}
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(3, 2, 1, 1), Color(0.2, 0.1, 0.1, 0)]
+}
 
 [sub_resource type="AnimationLibrary" id="Animations"]
-_data = {"death": SubResource("Death")}
+_data = {
+"death": SubResource("Death")
+}
 
 [node name="EnemyShip" type="Area2D"]
-script = ExtResource("Script")
-maximum_hp = 5
 collision_layer = 2
 collision_mask = 0
 monitoring = false
+script = ExtResource("Script")
+maximum_hp = 5
 death_effect = ExtResource("Explosion")
 
-
 [node name="Visual" type="Polygon2D" parent="."]
-polygon = PackedVector2Array(35, -22.75, 0, -14.0, -35, -28.0, -24.5, 0, -35, 28.0, 0, 14.0, 35, 22.75, 24.5, 0)
 color = Color(0.94118, 0.72157, 0.48627, 1)
-
+polygon = PackedVector2Array(35, -22.75, 0, -14, -35, -28, -24.5, 0, -35, 28, 0, 14, 35, 22.75, 24.5, 0)
 
 [node name="Core" type="Polygon2D" parent="."]
-polygon = PackedVector2Array(-14.0, 0, 0, -8.75, 12.25, 0, 0, 8.75)
 color = Color(0.17647, 0.12941, 0.23529, 1)
-
+polygon = PackedVector2Array(-14, 0, 0, -8.75, 12.25, 0, 0, 8.75)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("Shape")
-
 
 [node name="Movement" type="Node" parent="."]
 script = ExtResource("Movement")
 mode = 2
 speed = 190.0
 
-
 [node name="Shooter" type="Node2D" parent="."]
 position = Vector2(-35, 0)
 script = ExtResource("Shooter")
 steps = Array[ExtResource("StepType")]([ExtResource("aimed")])
 
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {&"": SubResource("Animations")}
+libraries = {
+"": SubResource("Animations")
+}

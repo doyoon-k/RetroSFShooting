@@ -1,17 +1,18 @@
-[gd_resource type="Resource" format=3]
+[gd_resource type="Resource" script_class="StoryData" load_steps=5 format=3 uid="uid://yuvlq8bs1okp"]
 
-[ext_resource type="Script" path="res://scripts/data/story_data.gd" id="Script"]
+[ext_resource type="Texture2D" uid="uid://rbuunuckhttt" path="res://assets/sprites/stories/cost_of_dawn.svg" id="Image"]
 [ext_resource type="Script" path="res://scripts/data/story_page.gd" id="Page"]
-[ext_resource type="Texture2D" path="res://assets/sprites/stories/cost_of_dawn.svg" id="Image"]
+[ext_resource type="Script" path="res://scripts/data/story_data.gd" id="Script"]
 
 [sub_resource type="Resource" id="Page0"]
 script = ExtResource("Page")
 illustration = ExtResource("Image")
 caption = "WE REMEMBER"
-text = "그들은 정착지를 세웠다.\n돌아오지 못한 이들의 이름은 첫 번째 벽에 새겨졌다. 새벽은 그 이름들을 비추었다."
-
+text = "그들은 정착지를 세웠다.
+돌아오지 못한 이들의 이름은 첫 번째 벽에 새겨졌다. 새벽은 그 이름들을 비추었다."
 
 [resource]
 script = ExtResource("Script")
 title = "ENDING 05 / 새벽의 대가"
 pages = Array[ExtResource("Page")]([SubResource("Page0")])
+characters_per_second = 42.0

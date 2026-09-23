@@ -1,17 +1,18 @@
-[gd_resource type="Resource" format=3]
+[gd_resource type="Resource" script_class="StoryData" load_steps=5 format=3 uid="uid://1xwfjpq14gw7"]
 
-[ext_resource type="Script" path="res://scripts/data/story_data.gd" id="Script"]
+[ext_resource type="Texture2D" uid="uid://co5xxnlyu71co" path="res://assets/sprites/stories/last_signal.svg" id="Image"]
 [ext_resource type="Script" path="res://scripts/data/story_page.gd" id="Page"]
-[ext_resource type="Texture2D" path="res://assets/sprites/stories/last_signal.svg" id="Image"]
+[ext_resource type="Script" path="res://scripts/data/story_data.gd" id="Script"]
 
 [sub_resource type="Resource" id="Page0"]
 script = ExtResource("Page")
 illustration = ExtResource("Image")
 caption = "ONE VOICE"
-text = "단 한 명만이 돌아왔다.\n모선의 마지막 전력을 모아, 그들은 여기까지 왔다는 신호를 보냈다."
-
+text = "단 한 명만이 돌아왔다.
+모선의 마지막 전력을 모아, 그들은 여기까지 왔다는 신호를 보냈다."
 
 [resource]
 script = ExtResource("Script")
 title = "ENDING 02 / 마지막 신호"
 pages = Array[ExtResource("Page")]([SubResource("Page0")])
+characters_per_second = 42.0

@@ -10,7 +10,8 @@ enum Phase { LAUNCHING, PLAYING, BOSS_INTRO, PLAYER_DYING, SELECTING_NEXT, CLEAR
 @export var explosion_scene: PackedScene
 @export_range(0.1, 10.0, 0.1) var boss_intro_seconds: float = 2.0
 @export_range(0.1, 10.0, 0.1) var clear_intro_seconds: float = 1.5
-@export var boss_spawn_offset: Vector2 = Vector2(130, 0)
+@export_range(1.0, 1000.0, 1.0) var scroll_speed: float = 180.0
+@export_range(0.0, 500.0, 1.0) var activation_margin: float = 80.0
 var run: RunState
 var phase: Phase = Phase.LAUNCHING
 var user_paused: bool = false
@@ -25,8 +26,14 @@ var resolution_queued: bool = false
 var dying_pilot_id: StringName
 var victory_index: int = -1
 var defeated: int = 0
+var placed_activated: int = 0
+var placed_layers: Dictionary = {}
 var rules: GameRules
+var progress_x: float = 0.0
+var view_bounds: Rect2
 @onready var simulation: Node2D = $Simulation
+@onready var camera: Camera2D = $Camera2D
+@onready var placed_enemies: Node2D = $Simulation/PlacedEnemies
 @onready var actors: Node2D = $Simulation/Actors
 @onready var projectiles: Node2D = $Simulation/Projectiles
 @onready var items: Node2D = $Simulation/Items
@@ -38,18 +45,55 @@ func _ready() -> void:
 		run = RunState.new(catalog)
 		run.begin_sortie(catalog.pilots[0].id)
 	rules = catalog.rules
+	view_bounds = rules.playfield
+	camera.make_current()
+	for enemy in placed_enemies.get_children():
+		if enemy is EnemyShip:
+			placed_layers[enemy] = enemy.collision_layer
+			enemy.process_mode = Node.PROCESS_MODE_DISABLED
+			enemy.visible = false
+			enemy.collision_layer = 0
 	roster.configure(catalog, run)
 	roster.pilot_selected.connect(select_next)
 	waves.enemy_requested.connect(_spawn_wave_enemy)
 	waves.boss_requested.connect(_request_boss_intro)
 	%Resume.pressed.connect(toggle_pause)
-	%Playfield.position = rules.playfield.position
 	%Playfield.size = rules.playfield.size
 	%PauseDimmer.position = rules.playfield.position
 	%PauseDimmer.size = rules.playfield.size
 	%BombFlash.position = rules.playfield.position
 	%BombFlash.size = rules.playfield.size
+	_sync_world_bounds()
 	_launch_current()
+
+func _physics_process(delta: float) -> void:
+	if phase != Phase.PLAYING or user_paused or is_instance_valid(boss) or boss_waiting_to_enter:
+		return
+	progress_x += scroll_speed * delta
+	_sync_world_bounds()
+	waves.advance(view_bounds.end.x + activation_margin)
+	for child in placed_enemies.get_children():
+		var enemy := child as EnemyShip
+		if enemy != null and enemy.global_position.x <= view_bounds.end.x + activation_margin:
+			_activate_placed_enemy(enemy)
+
+func _sync_world_bounds() -> void:
+	view_bounds = Rect2(rules.playfield.position + Vector2(progress_x, 0.0), rules.playfield.size)
+	camera.position = get_viewport_rect().size * 0.5 + Vector2(progress_x, 0.0)
+	%Playfield.position = view_bounds.position
+	$Simulation/Background.position = view_bounds.position
+	if is_instance_valid(player):
+		player.bounds = view_bounds
+		player.weapon.bounds = view_bounds
+	for actor in actors.get_children():
+		if actor is EnemyShip:
+			actor.bounds = view_bounds
+			if actor.shooter != null:
+				actor.shooter.bounds = view_bounds
+	for bullet in projectiles.get_children():
+		bullet.bounds = view_bounds
+	for item in items.get_children():
+		item.bounds = view_bounds
 
 func _exit_tree() -> void:
 	if get_tree() != null:
@@ -64,7 +108,7 @@ func _process(delta: float) -> void:
 	phase_left -= delta
 	if phase == Phase.LAUNCHING and is_instance_valid(player):
 		var t := clampf(1.0 - phase_left / rules.launch_seconds, 0.0, 1.0)
-		player.position = Vector2(rules.playfield.position.x - 80, rules.spawn_position.y).lerp(rules.spawn_position, 1 - pow(1 - t, 3))
+		player.position = (Vector2(rules.playfield.position.x - 80, rules.spawn_position.y).lerp(rules.spawn_position, 1 - pow(1 - t, 3)) + Vector2(progress_x, 0.0))
 	if phase == Phase.SELECTING_NEXT:
 		%Countdown.text = str(maxi(1, ceili(phase_left)))
 	if phase_left > 0.0:
@@ -86,6 +130,8 @@ func _enter(next_phase: Phase, seconds: float = 0.0) -> void:
 	phase = next_phase
 	phase_left = seconds
 	get_tree().paused = phase != Phase.PLAYING or user_paused
+	if is_instance_valid(player):
+		player.auto_advance_speed = scroll_speed if phase == Phase.PLAYING and not is_instance_valid(boss) and not boss_waiting_to_enter else 0.0
 	%SequencePanel.hide()
 	%NextPilotPanel.visible = phase == Phase.SELECTING_NEXT
 	%PauseDimmer.visible = phase == Phase.PLAYER_DYING or phase == Phase.SELECTING_NEXT or phase == Phase.CLEARING or user_paused
@@ -103,12 +149,12 @@ func _launch_current() -> void:
 	player = pilot.ship_scene.instantiate() as PlayerShip
 	player.state = run.current_sortie
 	player.rules = rules
-	player.bounds = rules.playfield
-	player.position = Vector2(rules.playfield.position.x - 80, rules.spawn_position.y)
+	player.bounds = view_bounds
+	player.position = Vector2(progress_x + rules.playfield.position.x - 80, rules.spawn_position.y)
 	actors.add_child(player)
 	player.weapon.state = run.current_sortie
 	player.weapon.projectiles = projectiles
-	player.weapon.bounds = rules.playfield
+	player.weapon.bounds = view_bounds
 	player.weapon.special_fired.connect(_special_attack)
 	player.weapon.charge_changed.connect(func(ratio: float): %ChargeBar.value = ratio * 100.0)
 	player.bomb_requested.connect(_bomb)
@@ -122,7 +168,7 @@ func _update_hud() -> void:
 		return
 	var sortie := run.current_sortie
 	%StatusLine.text = "HULL  %d/%d     POWER  LV.%d     BOMB  %02d     SHIELD  %s" % [sortie.hp, rules.starting_hp, sortie.power_level, sortie.bombs, "ON" if sortie.shield else "—"]
-	%StageTime.text = "SECTOR 01  /  %02d:%02d     DOWN %03d" % [int(waves.elapsed) / 60, int(waves.elapsed) % 60, defeated]
+	%StageTime.text = "SECTOR 01  /  DIST %05d     DOWN %03d" % [int(progress_x), defeated]
 	%SurvivorCount.text = "CREW  %d / %d" % [run.survivors().size(), catalog.pilots.size()]
 	if is_instance_valid(boss):
 		%BossBar.visible = true
@@ -139,26 +185,41 @@ func _spawn_wave_enemy(wave: EnemyWave, index: int) -> void:
 	elif wave.drop_mode == EnemyWave.DropMode.CHANCE:
 		chance = wave.drop_chance
 	var path := wave.get_node_or_null("Path2D") as Path2D
-	var location := wave.global_position + wave.spawn_offset * index
+	var offset := wave.spawn_offset * index
+	var location := wave.global_position + offset
 	if path != null and path.curve != null:
-		location = path.to_global(path.curve.sample_baked(0.0))
+		location = path.to_global(path.curve.sample_baked(0.0)) + offset
 	var enemy := _spawn_enemy(wave.enemy_scene, location, wave.drop_scene, chance)
 	if path != null:
-		enemy.movement.use_path(path)
+		enemy.movement.use_path(path, offset)
 
 func _spawn_enemy(scene: PackedScene, location: Vector2, drop: PackedScene = null, chance: float = 0.0) -> EnemyShip:
 	var enemy := scene.instantiate() as EnemyShip
 	enemy.position = location
-	enemy.bounds = rules.playfield
+	actors.add_child(enemy)
+	_configure_enemy(enemy, drop, chance)
+	return enemy
+
+func _activate_placed_enemy(enemy: EnemyShip) -> void:
+	placed_activated += 1
+	enemy.reparent(actors, true)
+	enemy.process_mode = Node.PROCESS_MODE_INHERIT
+	enemy.visible = true
+	enemy.collision_layer = placed_layers.get(enemy, 2)
+	placed_layers.erase(enemy)
+	_configure_enemy(enemy, enemy.drop_scene, enemy.drop_chance)
+
+func _configure_enemy(enemy: EnemyShip, drop: PackedScene, chance: float) -> void:
+	enemy.bounds = view_bounds
 	enemy.drop_scene = drop
 	enemy.drop_chance = chance
 	enemy.destroyed.connect(_enemy_destroyed)
-	actors.add_child(enemy)
+	if enemy.movement.mode == EnemyMovement.Mode.ENTER_HOLD_EXIT:
+		enemy.movement.hold_position.x += progress_x
 	if enemy.shooter != null:
 		enemy.shooter.projectiles = projectiles
 		enemy.shooter.target_provider = get_target
-		enemy.shooter.bounds = rules.playfield
-	return enemy
+		enemy.shooter.bounds = view_bounds
 
 func _request_boss_intro() -> void:
 	boss_waiting_to_enter = true
@@ -174,7 +235,7 @@ func _begin_boss_intro() -> void:
 		boss_waiting_to_enter = false
 		return
 	boss_waiting_to_enter = false
-	boss = _spawn_enemy(waves.boss_scene, Vector2(rules.playfield.end.x, rules.playfield.get_center().y) + boss_spawn_offset)
+	boss = _spawn_enemy(waves.boss_scene, (waves.get_node("BossMarker") as Marker2D).global_position)
 	_enter(Phase.BOSS_INTRO, boss_intro_seconds)
 	_show_message("WARNING / THE WARDEN", "고에너지 반응 접근. 방주의 항로를 확보하라.", null)
 
@@ -276,9 +337,9 @@ func _spawn_pickup(scene: PackedScene, location: Vector2) -> Pickup:
 	if scene == null:
 		return null
 	var pickup := scene.instantiate() as Pickup
-	pickup.bounds = rules.playfield
+	pickup.bounds = view_bounds
 	pickup.target = player
-	pickup.position = location.clamp(rules.playfield.position + Vector2(25, 25), rules.playfield.end - Vector2(25, 25))
+	pickup.position = location.clamp(view_bounds.position + Vector2(25, 25), view_bounds.end - Vector2(25, 25))
 	items.add_child(pickup)
 	return pickup
 
@@ -287,7 +348,7 @@ func _bomb() -> void:
 		return
 	player.grant_invincibility(rules.bomb_invincibility)
 	for actor in actors.get_children():
-		if actor is EnemyShip and rules.playfield.has_point(actor.global_position):
+		if actor is EnemyShip and view_bounds.has_point(actor.global_position):
 			actor.take_damage(rules.bomb_damage)
 	if rules.bomb_clears_bullets:
 		_clear_projectiles(false)
@@ -305,7 +366,7 @@ func _special_attack(origin: Vector2, size: Vector2, damage: int) -> void:
 		if not bullet.friendly and area.has_point(bullet.global_position):
 			bullet.spent = true
 			bullet.queue_free()
-	%ChargeFlash.position = area.position
+	%ChargeFlash.position = area.position - Vector2(progress_x, 0.0)
 	%ChargeFlash.size = area.size
 	%ChargeFlash.color = player.weapon.data.charge_color
 	%ChargeFlash.modulate.a = 0.65

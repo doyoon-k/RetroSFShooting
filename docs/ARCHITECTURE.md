@@ -29,8 +29,12 @@ Stage의 Phase는 Launching, Playing, BossIntro, PlayerDying, SelectingNext, Cle
 Finished입니다. 사용자 Pause는 별도 값이며 Playing 중에만 전환할 수 있습니다.
 
 Stage와 Presentation/UI는 Always, Simulation은 Pausable입니다. 전투가 아닐 때나 사용자
-Pause 중에는 SceneTree.paused를 켭니다. 따라서 이동·충돌·발사·웨이브·아이템 수명이 함께
-멈추고, 연출과 선택 카운트다운은 진행합니다. Stage 종료 시 Pause를 해제합니다.
+Pause 중에는 SceneTree.paused를 켭니다. 따라서 이동·충돌·발사·아이템 수명과 카메라 전진이
+함께 멈추고, 연출과 선택 카운트다운은 진행합니다. Stage 종료 시 Pause를 해제합니다.
+
+Stage의 진행 X좌표가 카메라와 플레이어의 자동 전진을 결정합니다. WaveSequence의 마커와
+PlacedEnemies의 직접 배치 적은 화면 오른쪽 경계가 해당 월드 X좌표에 가까워질 때 활성화됩니다.
+BossMarker에 도달하면 전진을 멈추고 보스전을 시작합니다.
 
 Stage는 기본적인 연출 시간을 GameRules에서 읽습니다. 발진 중 기체 위치는 Stage가 제어하고,
 발진 완료 후 PlayerShip이 이동을 이어받습니다. 출격 무적은 연출이 끝날 때부터 시작됩니다.
@@ -79,6 +83,6 @@ Ending 연출을 끝내고 Result에 들어갈 때 해금하고 저장합니다.
 ## 검증 범위
 
 자동 검사는 모든 64가지 생존 조합, 파일럿 교대, 타이핑 입력 의미, 메뉴 전환, 무적/Shield,
-탄환 충돌, 차지 공격, 공유 패턴 독립성, Pause 수명 정지, 동시 사망 순서, 전체 45기 웨이브,
+탄환 충돌, 차지 공격, 공유 패턴 독립성, Pause 수명 정지, 동시 사망 순서, 전체 45기 공간 배치,
 보스 페이즈, 클리어/전멸 결과 저장을 포함합니다. 렌더링 검사는 같은 흐름의 스크린샷을 남깁니다.
 게임패드 실물 입력, Steam Deck 성능과 최종 난이도/아트 품질은 별도의 플레이테스트 대상입니다.

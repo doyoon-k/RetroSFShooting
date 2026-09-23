@@ -9,6 +9,7 @@ signal hit
 @export var tint: Color = Color("6de5ed")
 @export var ship_scale: Vector2 = Vector2.ONE
 @export var boundary_padding: Vector2 = Vector2(24, 24)
+var auto_advance_speed: float = 0.0
 var state: SortieState
 var rules: GameRules
 var bounds: Rect2
@@ -27,7 +28,7 @@ func _physics_process(delta: float) -> void:
 		return
 	invincibility = maxf(0.0, invincibility - delta)
 	var motion := Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	position += motion * move_speed * delta
+	position += (Vector2(auto_advance_speed, 0.0) + motion * move_speed) * delta
 	position = position.clamp(bounds.position + boundary_padding, bounds.end - boundary_padding)
 	visuals.modulate = tint if state.hp > 1 else tint.lerp(Color("ff765e"), 0.65)
 	visuals.modulate.a = 0.4 if invincibility > 0.0 and fmod(invincibility, 0.14) < 0.07 else 1.0

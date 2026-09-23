@@ -15,7 +15,7 @@
 | 기본 공격 LV1~3 / 차지샷 | `data/weapons/standard.tres` |
 | 적 성능 | `scenes/enemies/*.tscn` |
 | 공격 패턴 | `data/patterns/*.tres` |
-| 스테이지와 웨이브 | `scenes/gameplay/stage/stage_01.tscn` |
+| 스테이지 배치와 이동 속도 | `scenes/gameplay/stage/stage_01.tscn` |
 | 아이템 성능 | `scenes/items/*.tscn` |
 | 일러스트·본문·타이핑 속도 | `data/stories/*.tres` |
 | 메뉴·HUD 스타일 | `scenes/ui/game_theme.tres` |
@@ -27,7 +27,7 @@
 2. Inspector에서 `AttackPattern`의 값을 수정합니다.
 3. `fan_step.tres`도 복제하고 `Pattern`에 새 패턴을 연결합니다.
 4. 적 씬의 `Shooter` 노드 → `Steps`에 새 `PatternStep`을 넣습니다.
-5. Stage의 Wave에서 그 적 씬을 사용합니다.
+5. Stage의 `PlacedEnemies`에 적 씬을 배치하거나 `WaveSequence` 마커의 Enemy Scene에 연결합니다.
 
 새 Resource를 처음부터 만들려면 FileSystem의 New Resource에서 `AttackPattern`,
 `PatternStep`을 선택할 수 있습니다. 노드의 경고 아이콘은 누락된 패턴·탄환 연결을 알려줍니다.
@@ -70,26 +70,42 @@
 각 배열의 순서와 Step의 반복/대기를 편집하면 됩니다. 2단계 진입은 한 번만 일어나고,
 바뀐 공격 목록은 첫 단계부터 시작합니다.
 
-## 이동과 웨이브 편집
+## 스테이지의 적과 보스 배치
 
-`stage_01.tscn`의 `Simulation/WaveSequence` 아래 Wave들을 수정하거나 복제합니다.
+`stage_01.tscn`은 오른쪽으로 이어지는 월드입니다. 플레이어와 카메라는 전투 중
+`Stage.Scroll Speed`(기본 180px/초)로 전진합니다. 적의 등장 기준은 경과 시간이 아니라
+**월드 X좌표**입니다. 카메라가 적 위치에서 `Activation Margin`(기본 80px)만큼 떨어진
+지점에 오면 적이 활성화됩니다. 일시정지·사망·교대 중에는 전진도 멈추고, 보스 진입 후에는
+카메라가 고정됩니다. `StageGuide`의 청록색 테두리와 구획선은 에디터에서만 보이는 배치 기준입니다.
+같은 노드의 `Show Enemy Previews`와 `Show Trajectories`로 적 외형과 예상 이동선을 켜고 끌 수
+있습니다. `Preview Seconds`는 직선·물결·진입/정지/퇴장 이동선의 표시 길이만 조절합니다.
 
-- Start Time: 실제 전투 경과 시간 기준 시작 시각
-- Enemy Scene: 생성할 적
-- Count / Interval: 수량과 생성 간격
-- Wave 위치 / Spawn Offset: 생성 위치와 적마다 추가할 위치 차이
-- Drop Mode: None / Guaranteed / Chance
-- Drop Scene / Drop Chance: 드롭 아이템과 확률
+한 기를 정확한 위치에 놓으려면 적 씬을 `Simulation/PlacedEnemies` 아래에 인스턴스로
+추가하고 2D 화면에서 옮기세요. 이 적은 처음에 보이지 않고 동작하지 않다가 화면 오른쪽에
+가까워지면 활성화됩니다. 아이템을 떨어뜨리려면 해당 적 루트의 `Drop Scene`과
+`Drop Chance`를 설정합니다. `HunterTop`과 `HunterBottom`이 직접 배치 예시입니다.
 
-Wave에 `Path2D` 자식이 있으면 그것을 편대 경로로 사용합니다. 2D 에디터의 곡선 편집으로
-점과 접선을 옮기세요. 곡선은 Wave의 로컬 좌표계이므로 Wave를 옮기면 전체 경로도 옮겨집니다.
-적의 Movement가 곡선을 따라 거리를 증가시키며, 경로 끝에서 적을 제거합니다. 경로 이동은
-다른 이동 모드를 대체하므로 두 기능이 동시에 기체 위치를 수정하지 않습니다.
+편대를 배치하려면 `Simulation/WaveSequence` 아래의 마커를 복제하고 옮깁니다.
 
-곡선도 공유 가능한 Resource입니다. 특정 Wave의 경로만 바꾸려면 Path2D의 Curve를
-Make Unique로 독립시킨 뒤 편집하세요.
+- `Enemy Scene`: 생성할 적 씬
+- `Count`: 편대의 적 수. 한 기만 필요하면 1
+- `Spawn Offset`: 다음 적과의 **월드 좌표 간격**. X가 클수록 진행 방향으로 멀리 놓임
+- `Drop Mode`: None / Guaranteed / Chance
+- `Drop Scene / Drop Chance`: 처치 시 아이템과 적 한 기당 드롭 확률
 
-Path2D가 없는 Wave에서는 적 씬의 `Movement` 설정을 사용합니다.
+마커 위치가 첫 적의 출현 위치입니다. `Path2D` 자식이 있으면 그 경로 시작점이 첫 적의
+위치가 되고, 이후 적은 `Spawn Offset`만큼 평행 이동한 같은 경로를 따릅니다. 2D 에디터에서
+곡선의 점과 접선을 옮길 수 있습니다. 경로 이동은 적 씬의 이동 모드를 대체합니다.
+마커에 연결된 적 씬의 `Visual`(Polygon2D 또는 Sprite2D)과 `Core`(Polygon2D)가 시작 위치에
+미리 표시됩니다. `Path2D`가 없는 편대와 직접 배치한 적은 Movement 프리셋의 이동선이
+에디터에 표시됩니다. 직접 배치한 적의 실제 외형은 씬 인스턴스가 보여줍니다.
+특정 편대의 경로만 바꾸려면 Curve를 **Make Unique**로 분리하세요.
+
+보스는 `WaveSequence/BossMarker`를 옮겨 등장 구역을 정합니다. 보스 씬 자체는
+`WaveSequence.Boss Scene`에 연결합니다. 마커에 도달하면 화면 전진이 멈추고 보스전이
+시작됩니다. 맵을 더 길게 만들면 `StageGuide.Length`도 늘려 배치선을 확장하세요.
+
+`Path2D`가 없는 편대와 직접 배치된 적은 적 씬의 `Movement` 설정을 사용합니다.
 
 | Mode | 주요 설정 |
 |---|---|
@@ -98,11 +114,12 @@ Path2D가 없는 Wave에서는 적 씬의 `Movement` 설정을 사용합니다.
 | Enter Hold Exit | Hold Position, Hold Seconds, Exit Direction, Speed |
 | Path | Wave에서 경로를 전달할 때 자동 지정 |
 
-Hold Position은 스테이지 좌표입니다. `Stay Forever`를 켜면 정지 지점에서 퇴장하지 않습니다.
+Hold Position의 X는 등장 당시 화면을 기준으로 한 좌표이며, Y는 월드 좌표입니다.
+`Stay Forever`를 켜면 정지 지점에서 퇴장하지 않습니다.
 같은 적의 다른 이동 변형이 필요하면 적 씬의 inherited scene을 만들고 Movement만 수정하세요.
 
-`WaveSequence.Boss Time`은 보스 등장 시각입니다. 그 이후에는 일반 웨이브를 새로 시작하지
-않으므로 일반 Wave의 마지막 생성 시각은 Boss Time 이전으로 두세요.
+일반 적의 마지막 배치 위치는 BossMarker보다 앞에 두세요. 보스 진입 후에는 새 적을
+활성화하지 않습니다.
 
 ## 새로운 동작 코드 추가
 

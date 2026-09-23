@@ -15,6 +15,7 @@ enum Mode { LINEAR, PATH, SINE, ENTER_HOLD_EXIT }
 @export var stay_forever: bool = false
 @export var exit_direction: Vector2 = Vector2.LEFT
 var path: Path2D
+var path_offset: Vector2 = Vector2.ZERO
 var distance: float = 0.0
 var age: float = 0.0
 var hold_elapsed: float = 0.0
@@ -26,8 +27,9 @@ func _ready() -> void:
 	actor = get_parent() as Node2D
 	origin = actor.position
 
-func use_path(route: Path2D) -> void:
+func use_path(route: Path2D, offset: Vector2 = Vector2.ZERO) -> void:
 	path = route
+	path_offset = offset
 	mode = Mode.PATH
 	distance = 0.0
 
@@ -40,7 +42,7 @@ func _physics_process(delta: float) -> void:
 			if not is_instance_valid(path) or path.curve == null:
 				return
 			distance += speed * delta
-			actor.global_position = path.to_global(path.curve.sample_baked(distance))
+			actor.global_position = path.to_global(path.curve.sample_baked(distance)) + path_offset
 			if distance >= path.curve.get_baked_length():
 				actor.queue_free()
 		Mode.SINE:
@@ -54,4 +56,3 @@ func _physics_process(delta: float) -> void:
 				hold_elapsed += delta
 				if hold_elapsed >= hold_seconds:
 					actor.position += exit_direction.normalized() * speed * delta
-

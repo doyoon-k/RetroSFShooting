@@ -1,17 +1,18 @@
-[gd_resource type="Resource" format=3]
+[gd_resource type="Resource" script_class="StoryData" load_steps=5 format=3 uid="uid://dt4h2mbncw5xa"]
 
-[ext_resource type="Script" path="res://scripts/data/story_data.gd" id="Script"]
+[ext_resource type="Texture2D" uid="uid://bvi5tx5nli1tc" path="res://assets/sprites/stories/new_home.svg" id="Image"]
 [ext_resource type="Script" path="res://scripts/data/story_page.gd" id="Page"]
-[ext_resource type="Texture2D" path="res://assets/sprites/stories/new_home.svg" id="Image"]
+[ext_resource type="Script" path="res://scripts/data/story_data.gd" id="Script"]
 
 [sub_resource type="Resource" id="Page0"]
 script = ExtResource("Page")
 illustration = ExtResource("Image")
 caption = "ALL VOICES RETURNED"
-text = "여섯 명 모두 돌아왔다.\n방주의 마지막 항로는 새로운 도시의 첫 번째 길이 되었다. 이제 여기가, 우리의 집이다."
-
+text = "여섯 명 모두 돌아왔다.
+방주의 마지막 항로는 새로운 도시의 첫 번째 길이 되었다. 이제 여기가, 우리의 집이다."
 
 [resource]
 script = ExtResource("Script")
 title = "ENDING 06 / 우리의 집"
 pages = Array[ExtResource("Page")]([SubResource("Page0")])
+characters_per_second = 42.0

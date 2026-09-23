@@ -1,6 +1,6 @@
-[gd_scene format=3]
+[gd_scene load_steps=2 format=3 uid="uid://csjgkr38ybmd0"]
 
-[ext_resource type="PackedScene" path="res://scenes/player/player_ship.tscn" id="Base"]
+[ext_resource type="PackedScene" uid="uid://bellqgks15i0n" path="res://scenes/player/player_ship.tscn" id="Base"]
 
 [node name="PlayerShip" instance=ExtResource("Base")]
 move_speed = 460.0

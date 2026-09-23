@@ -235,6 +235,19 @@ func _test_stage() -> void:
 	check(stage.phase == StageController.Phase.PLAYING and not paused, "Launch resumes simulation")
 	check(stage.player.invincibility > 1.0, "Spawn protection starts after launch")
 	var initial_x := stage.player.position.x
+	var initial_progress := stage.progress_x
+	var dormant := stage.placed_enemies.get_node("HunterTop") as EnemyShip
+	var dormant_x := dormant.position.x
+	var guide := stage.get_node("Simulation/StageGuide")
+	var linear_preview: PackedVector2Array = guide.call("_movement_points", dormant.movement, dormant.global_position)
+	check(linear_preview.size() > 2 and linear_preview[1].x < linear_preview[0].x, "Editor preview follows the linear movement preset")
+	var fighter_preview := load("res://scenes/enemies/fighter.tscn").instantiate() as EnemyShip
+	var sine_preview: PackedVector2Array = guide.call("_movement_points", fighter_preview.get_node("Movement"), Vector2(3000, 300))
+	check(sine_preview.size() > 20 and not is_equal_approx(sine_preview[5].y, sine_preview[15].y), "Editor preview shows the sine movement preset")
+	fighter_preview.free()
+	await frames(6)
+	check(stage.progress_x > initial_progress and stage.player.position.x > initial_x, "Player and camera advance without directional input")
+	check(dormant.get_parent() == stage.placed_enemies and is_equal_approx(dormant.position.x, dormant_x) and dormant.process_mode == Node.PROCESS_MODE_DISABLED, "Distant placed enemy remains dormant")
 	Input.action_press("move_right")
 	Input.action_press("shoot")
 	await frames(24)
@@ -245,9 +258,9 @@ func _test_stage() -> void:
 	var item := stage._spawn_pickup(stage.recovery_pickup, Vector2(900, 700))
 	stage.toggle_pause()
 	var lifetime := item.lifetime
-	var wave_time := stage.waves.elapsed
+	var progress := stage.progress_x
 	await frames(20)
-	check(is_equal_approx(lifetime, item.lifetime) and is_equal_approx(wave_time, stage.waves.elapsed), "Pause freezes item lifetime and wave clock")
+	check(is_equal_approx(lifetime, item.lifetime) and is_equal_approx(progress, stage.progress_x), "Pause freezes item lifetime and stage travel")
 	await capture("05_pause")
 	stage.toggle_pause()
 	stage.run.current_sortie.shield = true
@@ -369,18 +382,20 @@ func _test_full_stage() -> void:
 	await frames(16)
 	stage.player.invincibility = 300.0
 	Input.action_press("shoot")
-	# Run the entire authored schedule without moving its clock manually.
+	# Run the entire authored route without moving the camera manually.
 	for i in 4150:
 		await process_frame
 		if i % 120 == 0 and is_instance_valid(stage.player):
 			stage.player.position.y = 532 + sin(i * 0.006) * 260
 	Input.action_release("shoot")
-	check(stage.waves.boss_sent and is_instance_valid(stage.boss), "Complete wave schedule reaches its boss")
+	check(stage.waves.boss_sent and is_instance_valid(stage.boss), "Travel reaches the placed boss marker")
 	var emitted := 0
 	for wave in stage.waves.get_children():
-		check(wave.emitted == wave.count, "Authored wave emits all enemies: " + wave.name)
-		emitted += wave.emitted
-	check(emitted == 45, "Stage emits the expected 45 non-boss enemies")
+		if wave is EnemyWave:
+			check(wave.emitted == wave.count, "Spatial group emits all enemies: " + wave.name)
+			emitted += wave.emitted
+	check(emitted + stage.placed_activated == 45, "Spatial groups and placed enemies activate all 45 non-boss enemies")
+	check(stage.placed_activated == 2 and stage.placed_enemies.get_child_count() == 0, "Placed enemy scenes activate when the camera reaches them")
 	var boss := stage.boss
 	if is_instance_valid(boss):
 		boss.take_damage(130)

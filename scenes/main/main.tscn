@@ -1,13 +1,13 @@
-[gd_scene format=3]
+[gd_scene load_steps=9 format=3 uid="uid://cjsegmoccb65g"]
 
-[ext_resource type="Script" path="res://scenes/main/main.gd" id="Script"]
-[ext_resource type="Script" path="res://scripts/save/save_store.gd" id="Save"]
 [ext_resource type="Resource" path="res://data/game_catalog.tres" id="Catalog"]
-[ext_resource type="PackedScene" path="res://scenes/title/title.tscn" id="Title"]
-[ext_resource type="PackedScene" path="res://scenes/story/story_screen.tscn" id="Story"]
-[ext_resource type="PackedScene" path="res://scenes/character_select/character_select.tscn" id="Select"]
-[ext_resource type="PackedScene" path="res://scenes/gameplay/stage/stage_01.tscn" id="Stage"]
 [ext_resource type="PackedScene" path="res://scenes/ui/result.tscn" id="Result"]
+[ext_resource type="Script" path="res://scripts/save/save_store.gd" id="Save"]
+[ext_resource type="Script" path="res://scenes/main/main.gd" id="Script"]
+[ext_resource type="PackedScene" uid="uid://diab46cka0xnd" path="res://scenes/character_select/character_select.tscn" id="Select"]
+[ext_resource type="PackedScene" uid="uid://mfi362jrfrvm" path="res://scenes/gameplay/stage/stage_01.tscn" id="Stage"]
+[ext_resource type="PackedScene" path="res://scenes/story/story_screen.tscn" id="Story"]
+[ext_resource type="PackedScene" uid="uid://xu1ybjw215vl" path="res://scenes/title/title.tscn" id="Title"]
 
 [node name="Main" type="Node"]
 script = ExtResource("Script")
@@ -18,20 +18,15 @@ select_scene = ExtResource("Select")
 stage_scene = ExtResource("Stage")
 result_scene = ExtResource("Result")
 
-
 [node name="ScreenHost" type="Node" parent="."]
-
 
 [node name="SaveStore" type="Node" parent="."]
 script = ExtResource("Save")
 
-
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
-
 
 [node name="TransitionLayer" type="CanvasLayer" parent="."]
 layer = 100
-
 
 [node name="Fade" type="ColorRect" parent="TransitionLayer"]
 unique_name_in_owner = true

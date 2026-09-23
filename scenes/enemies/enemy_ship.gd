@@ -15,8 +15,8 @@ signal health_changed(current: int, maximum: int)
 @export var second_phase: Array[PatternStep] = []
 var hp: int
 var bounds: Rect2
-var drop_scene: PackedScene
-var drop_chance: float = 0.0
+@export var drop_scene: PackedScene
+@export_range(0.0, 1.0, 0.05) var drop_chance: float = 0.0
 var phase_two: bool = false
 var dying: bool = false
 var death_left: float = 0.0

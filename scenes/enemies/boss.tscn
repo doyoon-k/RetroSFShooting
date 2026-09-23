@@ -1,14 +1,14 @@
-[gd_scene format=3]
+[gd_scene load_steps=13 format=3 uid="uid://go6dxu1qx1bf"]
 
-[ext_resource type="Script" path="res://scenes/enemies/enemy_ship.gd" id="Script"]
-[ext_resource type="Script" path="res://scenes/enemies/enemy_movement.gd" id="Movement"]
-[ext_resource type="Script" path="res://scenes/enemies/enemy_shooter.gd" id="Shooter"]
-[ext_resource type="Script" path="res://scripts/data/pattern_step.gd" id="StepType"]
-[ext_resource type="PackedScene" path="res://scenes/gameplay/explosion.tscn" id="Explosion"]
 [ext_resource type="Resource" path="res://data/patterns/burst_step.tres" id="burst"]
+[ext_resource type="PackedScene" uid="uid://crf6oscbynrkg" path="res://scenes/gameplay/explosion.tscn" id="Explosion"]
 [ext_resource type="Resource" path="res://data/patterns/fan_step.tres" id="fan"]
+[ext_resource type="Script" path="res://scenes/enemies/enemy_movement.gd" id="Movement"]
 [ext_resource type="Resource" path="res://data/patterns/ring_step.tres" id="ring"]
+[ext_resource type="Script" path="res://scenes/enemies/enemy_ship.gd" id="Script"]
+[ext_resource type="Script" path="res://scenes/enemies/enemy_shooter.gd" id="Shooter"]
 [ext_resource type="Resource" path="res://data/patterns/spiral_step.tres" id="spiral"]
+[ext_resource type="Script" path="res://scripts/data/pattern_step.gd" id="StepType"]
 
 [sub_resource type="CircleShape2D" id="Shape"]
 radius = 75.0
@@ -17,38 +17,45 @@ radius = 75.0
 resource_name = "death"
 length = 0.45
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath("Visual:modulate")
-tracks/0/keys = {"times": PackedFloat32Array(0, 0.2, 0.45), "transitions": PackedFloat32Array(1, 1, 1), "update": 0, "values": [Color(1, 1, 1, 1), Color(3, 2, 1, 1), Color(0.2, 0.1, 0.1, 0)]}
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(3, 2, 1, 1), Color(0.2, 0.1, 0.1, 0)]
+}
 
 [sub_resource type="AnimationLibrary" id="Animations"]
-_data = {"death": SubResource("Death")}
+_data = {
+"death": SubResource("Death")
+}
 
 [node name="EnemyShip" type="Area2D"]
-script = ExtResource("Script")
-maximum_hp = 220
 collision_layer = 2
 collision_mask = 0
 monitoring = false
+script = ExtResource("Script")
+maximum_hp = 220
 death_effect = ExtResource("Explosion")
 death_animation = &"death"
 death_animation_seconds = 0.45
 is_boss = true
 second_phase = Array[ExtResource("StepType")]([ExtResource("spiral"), ExtResource("ring"), ExtResource("burst")])
 
-
 [node name="Visual" type="Polygon2D" parent="."]
-polygon = PackedVector2Array(100, -65.0, 0, -40.0, -100, -80.0, -70.0, 0, -100, 80.0, 0, 40.0, 100, 65.0, 70.0, 0)
 color = Color(0.93333, 0.62745, 0.63922, 1)
-
+polygon = PackedVector2Array(100, -65, 0, -40, -100, -80, -70, 0, -100, 80, 0, 40, 100, 65, 70, 0)
 
 [node name="Core" type="Polygon2D" parent="."]
-polygon = PackedVector2Array(-40.0, 0, 0, -25.0, 35.0, 0, 0, 25.0)
 color = Color(0.17647, 0.12941, 0.23529, 1)
-
+polygon = PackedVector2Array(-40, 0, 0, -25, 35, 0, 0, 25)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("Shape")
-
 
 [node name="Movement" type="Node" parent="."]
 script = ExtResource("Movement")
@@ -56,12 +63,12 @@ mode = 3
 speed = 140.0
 stay_forever = true
 
-
 [node name="Shooter" type="Node2D" parent="."]
 position = Vector2(-100, 0)
 script = ExtResource("Shooter")
 steps = Array[ExtResource("StepType")]([ExtResource("fan"), ExtResource("ring"), ExtResource("burst")])
 
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {&"": SubResource("Animations")}
+libraries = {
+"": SubResource("Animations")
+}
