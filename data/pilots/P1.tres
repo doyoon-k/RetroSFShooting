@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="PilotData" load_steps=12 format=3 uid="uid://ci0so1hhj0d16"]
+[gd_resource type="Resource" script_class="PilotData" format=3 uid="uid://ci0so1hhj0d16"]
 
 [ext_resource type="Texture2D" uid="uid://dhdcjagylx8hl" path="res://assets/Pilots_sprites/pilots/P1_Nomal.png" id="7_e3uqc"]
 [ext_resource type="Texture2D" uid="uid://k15ucvko4gjx" path="res://assets/Pilots_sprites/pilots/P1_alone.svg" id="alone"]
