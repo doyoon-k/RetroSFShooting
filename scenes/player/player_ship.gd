@@ -1,7 +1,7 @@
 class_name PlayerShip
 extends Area2D
 
-signal died(position: Vector2, power_level: int)
+signal died(position: Vector2, recoverable_powerups: int)
 signal bomb_requested
 signal hit
 
@@ -57,11 +57,11 @@ func take_damage(amount: int = 1) -> void:
 	grant_invincibility(rules.hit_invincibility)
 	if state.hp == 0:
 		death_reported = true
-		died.emit(global_position, state.power_level)
+		died.emit(global_position, state.recoverable_powerups())
 
 func collect(kind: int) -> void:
 	if state != null and state.hp > 0:
-		state.collect(kind, weapon.data.levels.size())
+		state.collect(kind, weapon.active_data().levels.size())
 
 func _on_contact(area: Area2D) -> void:
 	if area is EnemyShip and area.hp > 0:

@@ -224,27 +224,7 @@ offset_right = 1488.0
 offset_bottom = 1070.0
 theme_override_colors/font_color = Color(0.43922, 0.54118, 0.63137, 1)
 theme_override_font_sizes/font_size = 20
-text = "WASD 이동   J 공격   K 폭탄   C 길게 눌러 차지 / 놓아서 발사   ESC 일시정지"
-
-[node name="ChargeTitle" type="Label" parent="Interface/Root"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 1120.0
-offset_top = 985.0
-offset_right = 1265.0
-offset_bottom = 1025.0
-theme_override_font_sizes/font_size = 20
-text = "CHARGE"
-
-[node name="ChargeBar" type="ProgressBar" parent="Interface/Root"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 1260.0
-offset_top = 999.0
-offset_right = 1480.0
-offset_bottom = 1014.0
-mouse_filter = 2
-show_percentage = false
+text = "WASD 이동   J 공격   K 폭탄   H 무기 변경   ESC 일시정지"
 
 [node name="BossBar" type="ProgressBar" parent="Interface/Root"]
 unique_name_in_owner = true
@@ -267,17 +247,6 @@ offset_right = 1488.0
 offset_bottom = 964.0
 mouse_filter = 2
 color = Color(0.75294, 0.91373, 0.96078, 1)
-
-[node name="ChargeFlash" type="ColorRect" parent="Interface/Root"]
-unique_name_in_owner = true
-modulate = Color(1, 1, 1, 0)
-layout_mode = 0
-offset_left = 48.0
-offset_top = 100.0
-offset_right = 1488.0
-offset_bottom = 964.0
-mouse_filter = 2
-color = Color(0.62353, 0.95294, 0.8, 1)
 
 [node name="PauseDimmer" type="ColorRect" parent="Interface/Root"]
 unique_name_in_owner = true

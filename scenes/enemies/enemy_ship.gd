@@ -2,7 +2,7 @@ class_name EnemyShip
 extends Area2D
 
 signal destroyed(enemy: EnemyShip)
-signal health_changed(current: int, maximum: int)
+signal health_changed(current: float, maximum: int)
 
 @export_range(1, 2000) var maximum_hp: int = 3
 @export_range(0, 10) var contact_damage: int = 1
@@ -13,7 +13,7 @@ signal health_changed(current: int, maximum: int)
 @export var is_boss: bool = false
 @export_range(0.05, 0.95, 0.05) var phase_threshold: float = 0.5
 @export var second_phase: Array[PatternStep] = []
-var hp: int
+var hp: float
 var bounds: Rect2
 @export var drop_scene: PackedScene
 @export_range(0.0, 1.0, 0.05) var drop_chance: float = 0.0
@@ -34,10 +34,10 @@ func _physics_process(delta: float) -> void:
 	elif not is_boss and not bounds.grow(despawn_margin).has_point(global_position):
 		queue_free()
 
-func take_damage(amount: int) -> void:
+func take_damage(amount: float) -> void:
 	if dying or hp <= 0 or get_tree().paused:
 		return
-	hp = maxi(0, hp - amount)
+	hp = maxf(0.0, hp - amount)
 	health_changed.emit(hp, maximum_hp)
 	if is_boss and not phase_two and float(hp) / maximum_hp <= phase_threshold:
 		phase_two = true

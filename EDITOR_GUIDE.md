@@ -12,7 +12,9 @@
 | 파일럿 이름·소개·표정·대사 | `data/pilots/*.tres` |
 | 기체 이동속도·색·시각 크기 | `scenes/player/*_ship.tscn`의 루트 |
 | 기체 피격 범위 | 기본 `player_ship.tscn`의 CollisionShape2D |
-| 기본 공격 LV1~3 / 차지샷 | `data/weapons/standard.tres` |
+| 직선형 공격 LV1~3 | `data/weapons/standard.tres` |
+| 3갈래 방사형 공격 LV1~3 | `data/weapons/spread.tres` |
+| 근접 사격 배율·거리 | `scenes/player/player_ship.tscn`의 `Weapon` 노드 |
 | 적 성능 | `scenes/enemies/*.tscn` |
 | 공격 패턴 | `data/patterns/*.tres` |
 | 스테이지 배치와 이동 속도 | `scenes/gameplay/stage/stage_01.tscn` |
@@ -51,7 +53,16 @@
 추가로 쉬는 시간입니다. 마지막 단계가 끝나면 첫 단계로 돌아갑니다.
 
 탄속·수명·피해·유도 회전속도·모양은 연결된 탄환 씬에서 바꿉니다. 플레이어 탄환 피해는
-예외적으로 WeaponData의 각 레벨 설정을 사용합니다.
+예외적으로 WeaponData의 각 레벨 설정을 사용합니다. `standard.tres`와 `spread.tres`의
+`Levels` 배열은 각각 독립적이며, 각 레벨의 `Angles`, `Interval`, `Damage`를 편집할 수
+있습니다. Power Up은 현재 선택한 무기의 레벨만 올립니다.
+
+`Weapon` 노드의 `Proximity Damage > Proximity Tiers` 배열에서 거리(px)와 배율을
+한 쌍씩 추가·제거합니다. 배열 순서와 상관없이 거리순으로 적용되며, 단계 사이에서는
+발사 위치에서 충돌 지점까지의 거리에 따라 배율이 선형으로 변합니다. 가장 가까운
+단계 안쪽은 그 단계의 배율, 가장 먼 단계 바깥쪽은 기본 피해 1배입니다.
+기본 설정은 160px 이내 2배, 640px 이상 1배입니다. 배열이 비어 있으면 항상 1배이며,
+단계가 하나면 해당 거리 안쪽에만 그 배율을 적용합니다. 소수 피해도 적 체력에 누적됩니다.
 
 **공유 리소스에 주의:** 같은 `.tres`를 참조하는 모든 적에게 수정이 적용됩니다. 특정 적만
 바꾸려면 그 리소스를 복제해 연결하세요. 중첩된 Step 안의 Pattern까지 독립시키려면 Pattern도

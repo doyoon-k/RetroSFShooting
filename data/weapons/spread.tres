@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="WeaponData" load_steps=7 format=3 uid="uid://dj7cna4wypie8"]
+[gd_resource type="Resource" script_class="WeaponData" load_steps=7 format=3 uid="uid://ob4oj7nv6cxh"]
 
 [ext_resource type="PackedScene" path="res://scenes/projectiles/player_bullet.tscn" id="Bullet"]
 [ext_resource type="Script" path="res://scripts/data/shot_level_data.gd" id="Level"]
@@ -7,25 +7,25 @@
 [sub_resource type="Resource" id="Level1"]
 script = ExtResource("Level")
 projectile_scene = ExtResource("Bullet")
-interval = 0.16
-angles = PackedFloat32Array(0)
+interval = 0.22
+angles = PackedFloat32Array(-12, 0, 12)
 damage = 1
 
 [sub_resource type="Resource" id="Level2"]
 script = ExtResource("Level")
 projectile_scene = ExtResource("Bullet")
-interval = 0.13
-angles = PackedFloat32Array(0)
+interval = 0.2
+angles = PackedFloat32Array(-18, 0, 18)
 damage = 2
 
 [sub_resource type="Resource" id="Level3"]
 script = ExtResource("Level")
 projectile_scene = ExtResource("Bullet")
-interval = 0.11
-angles = PackedFloat32Array(0)
+interval = 0.18
+angles = PackedFloat32Array(-24, 0, 24)
 damage = 3
 
 [resource]
 script = ExtResource("Script")
-display_name = "STRAIGHT"
+display_name = "SPREAD"
 levels = Array[ExtResource("Level")]([SubResource("Level1"), SubResource("Level2"), SubResource("Level3")])

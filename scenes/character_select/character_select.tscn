@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bbvbysn73t2gk" path="res://assets/Pilots_sprites/pilots/P2_Nomal.png" id="9_saw8y"]
 [ext_resource type="Texture2D" uid="uid://dqsvu2gffd6xd" path="res://assets/Pilots_sprites/pilots/P3_Nomal.png" id="11_tag0i"]
 [ext_resource type="Texture2D" uid="uid://c35cb8gdp57ws" path="res://assets/Pilots_sprites/pilots/P4_Nomal.png" id="13_5ypp3"]
-[ext_resource type="Texture2D" uid="uid://cwe1rgjhvysy0" path="res://assets/Pilots_sprites/pilots/P5_nomal.png" id="15_j15fu"]
+[ext_resource type="Texture2D" uid="uid://c3expv0d8onyk" path="res://assets/Pilots_sprites/pilots/P5_nomal.png" id="15_j15fu"]
 [ext_resource type="Texture2D" uid="uid://owgeyvnencb4" path="res://assets/Pilots_sprites/pilots/P6_Nomal.png" id="17_ugtgx"]
 [ext_resource type="Script" path="res://scenes/character_select/hangar_pilot.gd" id="HangarPilot"]
 [ext_resource type="Resource" uid="uid://ci0so1hhj0d16" path="res://data/pilots/P1.tres" id="P1"]

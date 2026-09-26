@@ -35,6 +35,7 @@ func _run() -> void:
 	_test_sorties()
 	_test_patterns()
 	_test_input_map()
+	await _test_proximity_damage()
 	await _test_ship_sprites()
 	_test_save()
 	await _test_game_flow()
@@ -73,7 +74,12 @@ func _test_sorties() -> void:
 	old.collect(0, 3)
 	old.collect(0, 3)
 	old.collect(0, 3)
-	check(old.power_level == 3, "Power caps at weapon level count")
+	check(old.current_power_level() == 3 and old.weapon_levels[SortieState.WeaponType.SPREAD] == 1, "Power caps at level three for the active weapon only")
+	old.switch_weapon()
+	old.collect(0, 3)
+	check(old.current_power_level() == 2 and old.weapon_levels[SortieState.WeaponType.STRAIGHT] == 3, "Spread power upgrades independently of straight power")
+	old.switch_weapon()
+	check(old.current_power_level() == 3 and old.recoverable_powerups() == 3, "Switching retains both weapon levels")
 	old.collect(2, 3)
 	old.damage()
 	check(old.hp == 2 and not old.shield, "Shield absorbs exactly one hit")
@@ -87,7 +93,7 @@ func _test_sorties() -> void:
 	check(run.automatic_choice(&"P1") == &"P2", "Invalid timeout focus falls back to first living pilot")
 	check(run.automatic_choice(&"P6") == &"P6", "Valid timeout focus is preserved")
 	run.begin_sortie(&"P2")
-	check(run.current_sortie != old and run.current_sortie.hp == 2 and run.current_sortie.power_level == 1 and run.current_sortie.bombs == 2 and not run.current_sortie.shield, "New sortie resets all transient stats")
+	check(run.current_sortie != old and run.current_sortie.hp == 2 and run.current_sortie.current_power_level() == 1 and run.current_sortie.weapon_levels[SortieState.WeaponType.SPREAD] == 1 and run.current_sortie.active_weapon == SortieState.WeaponType.STRAIGHT and run.current_sortie.bombs == 2 and not run.current_sortie.shield, "New sortie resets all transient stats")
 	check(content.rules.starting_hp == 2 and content.rules.starting_bombs == 2, "Runtime changes do not mutate shared rules")
 	var durable := SortieState.new(content.rules)
 	check(not durable.damage(0) and durable.hp == 2, "Zero damage does not consume health or shield")
@@ -126,10 +132,62 @@ func _test_save() -> void:
 	reloaded.free()
 
 func _test_input_map() -> void:
-	for entry in [[KEY_LEFT, "move_left"], [KEY_RIGHT, "move_right"], [KEY_UP, "move_up"], [KEY_DOWN, "move_down"], [KEY_ESCAPE, "pause"], [KEY_SPACE, "story_advance"], [KEY_W, "ui_up"], [KEY_D, "ui_right"]]:
+	check(not InputMap.has_action("special"), "Removed charge action is absent")
+	var gamepad_switch := InputEventJoypadButton.new()
+	gamepad_switch.button_index = JOY_BUTTON_Y
+	check(InputMap.event_is_action(gamepad_switch, "switch_weapon"), "Former special gamepad button switches weapons")
+	var old_switch_key := InputEventKey.new()
+	old_switch_key.physical_keycode = KEY_C
+	check(not InputMap.event_is_action(old_switch_key, "switch_weapon"), "Old C key no longer switches weapons")
+	for entry in [[KEY_LEFT, "move_left"], [KEY_RIGHT, "move_right"], [KEY_UP, "move_up"], [KEY_DOWN, "move_down"], [KEY_ESCAPE, "pause"], [KEY_SPACE, "story_advance"], [KEY_W, "ui_up"], [KEY_D, "ui_right"], [KEY_H, "switch_weapon"]]:
 		var event := InputEventKey.new()
 		event.physical_keycode = entry[0]
 		check(InputMap.event_is_action(event, entry[1]), "Expected physical key is mapped to " + entry[1])
+
+func _test_proximity_damage() -> void:
+	var enemy_scene := load("res://scenes/enemies/fighter.tscn") as PackedScene
+	var bullet_scene := load("res://scenes/projectiles/player_bullet.tscn") as PackedScene
+	var enemies: Array[EnemyShip] = []
+	for distance in [120.0, 400.0, 760.0]:
+		var origin := Vector2(200.0, 1500.0 + enemies.size() * 100.0)
+		var enemy := enemy_scene.instantiate() as EnemyShip
+		enemy.maximum_hp = 10
+		enemy.bounds = Rect2(0, 0, 2400, 2000)
+		root.add_child(enemy)
+		enemy.global_position = origin + Vector2(distance, 0.0)
+		enemy.set_physics_process(false)
+		enemy.movement.set_physics_process(false)
+		enemies.append(enemy)
+		var bullet := bullet_scene.instantiate() as Projectile
+		bullet.friendly = true
+		bullet.damage = 1
+		bullet.bounds = Rect2(0, 0, 2400, 2000)
+		bullet.proximity_points = [Vector2(160.0, 2.0), Vector2(640.0, 1.0)]
+		root.add_child(bullet)
+		bullet.global_position = enemy.global_position
+		bullet.damage_origin = origin
+		# Exercise the projectile's collision handler at each impact distance.
+		bullet._on_area_entered(enemy)
+	await frames()
+	var near_damage := 10.0 - enemies[0].hp
+	var middle_damage := 10.0 - enemies[1].hp
+	var far_damage := 10.0 - enemies[2].hp
+	check(is_equal_approx(near_damage, 2.0), "Point-blank player bullet deals double damage on collision")
+	check(middle_damage > 1.0 and middle_damage < 2.0, "Middle-range player bullet deals fractional bonus damage")
+	check(is_equal_approx(far_damage, 1.0), "Distant player bullet deals base damage on collision")
+	var sample := bullet_scene.instantiate() as Projectile
+	sample.proximity_points = [Vector2(160.0, 2.0), Vector2(400.0, 1.8), Vector2(640.0, 1.0)]
+	check(is_equal_approx(sample.proximity_multiplier(400.0), 1.8), "An added damage tier changes the multiplier at its distance")
+	sample.proximity_points.remove_at(1)
+	check(is_equal_approx(sample.proximity_multiplier(400.0), 1.5), "Removing a damage tier reconnects its neighbors")
+	sample.proximity_points.remove_at(1)
+	check(is_equal_approx(sample.proximity_multiplier(200.0), 1.0), "A single close-range tier falls back to base damage beyond its distance")
+	sample.proximity_points.clear()
+	check(is_equal_approx(sample.proximity_multiplier(120.0), 1.0), "No damage tiers means base damage at every range")
+	sample.free()
+	for enemy in enemies:
+		enemy.queue_free()
+	await frames()
 
 func _test_ship_sprites() -> void:
 	var normal := load("res://assets/Pilots_sprites/Player/Robot_Nomal.png") as Texture2D
@@ -203,14 +261,16 @@ func _test_game_flow() -> void:
 	for actor in hangar.get_children():
 		var pilot: PilotData = actor.get("pilot") as PilotData
 		check(pilot == content.pilot_by_id(pilot.id), "Hangar slot points to catalog pilot data")
-		check(actor.get_node("Portrait").texture == pilot.hangar_portrait, "Hangar portrait comes from pilot data")
+		var expected_portrait: Texture2D = pilot.hangar_portrait if pilot.hangar_portrait != null else pilot.normal
+		check(actor.get_node("Portrait").texture == expected_portrait, "Hangar portrait comes from pilot data or its normal fallback")
 		check(actor.get_node("Name").text == pilot.callsign, "Hangar name comes from pilot data")
 	var first_pilot: PilotData = hangar.get_child(0).get("pilot") as PilotData
 	var first_portrait := hangar.get_child(0).get_node("Portrait") as Sprite2D
 	var original_hangar_portrait: Texture2D = first_pilot.hangar_portrait
-	first_pilot.hangar_portrait = content.pilots[1].hangar_portrait
-	check(first_portrait.texture == content.pilots[1].hangar_portrait, "Hangar preview updates when pilot data changes")
+	first_pilot.hangar_portrait = content.pilots[1].normal
+	check(first_portrait.texture == content.pilots[1].normal, "Hangar preview updates when pilot data changes")
 	first_pilot.hangar_portrait = original_hangar_portrait
+	check(first_portrait.texture == first_pilot.normal, "Clearing hangar portrait restores the normal fallback")
 	await capture("03_character_select")
 	main.current_screen.get_node("Sortie").pressed.emit()
 	await frames(100)
@@ -328,6 +388,49 @@ func _test_stage() -> void:
 	var bombs := stage.run.current_sortie.bombs
 	stage._bomb()
 	check(stage.run.current_sortie.bombs == bombs - 1, "Bomb consumes exactly one stock")
+	var straight := stage.player.weapon.data
+	var spread := stage.player.weapon.spread_data
+	check(straight.levels.size() == 3 and spread.levels.size() == 3, "Both weapons have three authored levels")
+	var authored_tiers := stage.player.weapon.proximity_tiers
+	check(authored_tiers.size() == 2 and authored_tiers[0].distance == 160.0 and authored_tiers[1].distance == 640.0, "Player ship authors two editable proximity damage tiers")
+	for level in straight.levels:
+		check(level.angles.size() == 1 and is_zero_approx(level.angles[0]), "Straight weapon remains a single forward shot at every level")
+	for level in spread.levels:
+		check(level.angles.size() == 3 and is_zero_approx(level.angles[1]) and is_equal_approx(level.angles[0], -level.angles[2]), "Spread weapon fires a symmetric three-way fan at every level")
+	var bullet_count := stage.projectiles.get_child_count()
+	stage.player.weapon.fire()
+	check(stage.projectiles.get_child_count() == bullet_count + 1, "Straight weapon fires one projectile")
+	var straight_bullet := stage.projectiles.get_child(bullet_count) as Projectile
+	check(straight_bullet.proximity_points.size() == 2 and straight_bullet.proximity_points[0].y == 2.0 and straight_bullet.damage_origin.is_equal_approx(stage.player.weapon.global_position), "Straight shot captures proximity tiers and firing origin")
+	Input.action_press("switch_weapon")
+	await frames(2)
+	Input.action_release("switch_weapon")
+	check(stage.run.current_sortie.active_weapon == SortieState.WeaponType.SPREAD, "Switch input selects spread weapon")
+	bullet_count = stage.projectiles.get_child_count()
+	stage.player.weapon.fire()
+	check(stage.projectiles.get_child_count() == bullet_count + 3, "Spread weapon fires exactly three projectiles")
+	check(stage.projectiles.get_child(bullet_count).direction.y < 0.0 and stage.projectiles.get_child(bullet_count + 1).direction.y == 0.0 and stage.projectiles.get_child(bullet_count + 2).direction.y > 0.0, "Spread projectiles fan above, forward, and below")
+	check((stage.projectiles.get_child(bullet_count) as Projectile).proximity_points.size() == 2 and (stage.projectiles.get_child(bullet_count + 2) as Projectile).damage_origin.is_equal_approx(stage.player.weapon.global_position), "All spread shots inherit proximity tiers")
+	var extra_tier := ProximityDamageTier.new()
+	extra_tier.distance = 400.0
+	extra_tier.multiplier = 1.8
+	var custom_tiers := authored_tiers.duplicate()
+	custom_tiers.insert(0, extra_tier)
+	stage.player.weapon.proximity_tiers = custom_tiers
+	bullet_count = stage.projectiles.get_child_count()
+	stage.player.weapon.fire()
+	var custom_bullet := stage.projectiles.get_child(bullet_count) as Projectile
+	check(custom_bullet.proximity_points.size() == 3 and custom_bullet.proximity_points[1] == Vector2(400.0, 1.8), "Weapon sorts and applies a newly added tier to fired shots")
+	custom_tiers.erase(extra_tier)
+	bullet_count = stage.projectiles.get_child_count()
+	stage.player.weapon.fire()
+	check((stage.projectiles.get_child(bullet_count) as Projectile).proximity_points.size() == 2 and custom_bullet.proximity_points.size() == 3, "Removing a tier changes new shots without rewriting shots already fired")
+	stage.player.weapon.proximity_tiers = authored_tiers
+	stage.player.collect(Pickup.Kind.POWER)
+	check(stage.run.current_sortie.current_power_level() == 2 and stage.run.current_sortie.weapon_levels[SortieState.WeaponType.STRAIGHT] == 1, "Power pickup upgrades the selected weapon")
+	bullet_count = stage.projectiles.get_child_count()
+	stage.player.weapon.fire()
+	check((stage.projectiles.get_child(bullet_count) as Projectile).damage == 2, "Spread shot uses its upgraded damage")
 	# Exercise actual Area2D collision with a fired player bullet.
 	var enemy := stage._spawn_enemy(load("res://scenes/enemies/scout.tscn"), stage.player.position + Vector2(190, 0))
 	enemy.movement.set_physics_process(false)
@@ -342,24 +445,19 @@ func _test_stage() -> void:
 	b.shooter.timer = 10
 	await frames(4)
 	check(b.shooter.timer > 9 and a.shooter.timer < 3, "Shared pattern does not share firing timers")
-	stage.player.invincibility = 10.0
-	Input.action_press("special")
-	await frames(70)
-	check(stage.player.weapon.charge >= stage.player.weapon.data.charge_seconds, "Holding special completes its charge")
-	var charge_target := stage._spawn_enemy(load("res://scenes/enemies/gunner.tscn"), stage.player.position + Vector2(220, 0))
-	charge_target.movement.set_physics_process(false)
-	var hostile := load("res://scenes/projectiles/enemy_bullet.tscn").instantiate() as Projectile
-	hostile.speed = 0
-	hostile.bounds = stage.rules.playfield
-	stage.projectiles.add_child(hostile)
-	hostile.position = stage.player.position + Vector2(170, 0)
-	Input.action_release("special")
-	await frames(5)
-	check(not is_instance_valid(charge_target) or charge_target.hp == 0, "Released full charge damages enemies in front")
-	check(not is_instance_valid(hostile), "Charge clears hostile bullets within its range")
-	check(stage.player.weapon.special_cooldown > 0.0, "Charge attack starts its cooldown")
 	await capture("04_stage")
-	stage.run.current_sortie.power_level = 3
+	stage.player.collect(Pickup.Kind.POWER)
+	stage.player.collect(Pickup.Kind.POWER)
+	Input.action_press("switch_weapon")
+	await frames(2)
+	Input.action_release("switch_weapon")
+	check(stage.run.current_sortie.active_weapon == SortieState.WeaponType.STRAIGHT, "Second switch restores straight weapon")
+	stage.player.collect(Pickup.Kind.POWER)
+	stage.player.collect(Pickup.Kind.POWER)
+	check(stage.run.current_sortie.recoverable_powerups() == 4, "Two level-three weapons store four recoverable upgrades")
+	bullet_count = stage.projectiles.get_child_count()
+	stage.player.weapon.fire()
+	check((stage.projectiles.get_child(bullet_count) as Projectile).damage == 3, "Straight shot uses its own level-three damage")
 	var item_count := stage.items.get_child_count()
 	stage.player.invincibility = 0
 	stage.player.take_damage()
@@ -367,7 +465,7 @@ func _test_stage() -> void:
 	stage.player.take_damage()
 	await frames(3)
 	check(stage.phase == StageController.Phase.PLAYER_DYING, "Lethal hit enters death presentation")
-	check(stage.items.get_child_count() == item_count + 2, "LV3 death drops two recoverable power-ups")
+	check(stage.items.get_child_count() == item_count + 4, "Death drops both weapons' recoverable power-ups")
 	await capture("06_death")
 	stage.phase_left = 0
 	await frames(3)
@@ -380,7 +478,7 @@ func _test_stage() -> void:
 	stage.phase_left = 0
 	await frames(16)
 	check(stage.run.current_pilot_id == &"P6" and stage.phase == StageController.Phase.PLAYING, "Timeout launches highlighted living pilot")
-	check(stage.run.current_sortie.power_level == 1 and stage.run.current_sortie.bombs == 2 and stage.run.current_sortie.hp == 2, "Respawn starts with fresh sortie stats")
+	check(stage.run.current_sortie.current_power_level() == 1 and stage.run.current_sortie.weapon_levels[SortieState.WeaponType.SPREAD] == 1 and stage.run.current_sortie.bombs == 2 and stage.run.current_sortie.hp == 2, "Respawn starts with fresh sortie stats")
 	stage.queue_free()
 	await frames()
 

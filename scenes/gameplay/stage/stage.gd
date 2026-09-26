@@ -155,8 +155,6 @@ func _launch_current() -> void:
 	player.weapon.state = run.current_sortie
 	player.weapon.projectiles = projectiles
 	player.weapon.bounds = view_bounds
-	player.weapon.special_fired.connect(_special_attack)
-	player.weapon.charge_changed.connect(func(ratio: float): %ChargeBar.value = ratio * 100.0)
 	player.bomb_requested.connect(_bomb)
 	player.died.connect(_player_died)
 	for item in items.get_children():
@@ -167,7 +165,9 @@ func _update_hud() -> void:
 	if run == null or run.current_sortie == null:
 		return
 	var sortie := run.current_sortie
-	%StatusLine.text = "HULL  %d/%d     POWER  LV.%d     BOMB  %02d     SHIELD  %s" % [sortie.hp, rules.starting_hp, sortie.power_level, sortie.bombs, "ON" if sortie.shield else "—"]
+	var weapon := player.weapon.active_data() if is_instance_valid(player) else null
+	var weapon_name: String = weapon.display_name if weapon != null else "—"
+	%StatusLine.text = "HULL  %d/%d     %s  LV.%d  [STRAIGHT %d / SPREAD %d]     BOMB  %02d     SHIELD  %s" % [sortie.hp, rules.starting_hp, weapon_name, sortie.current_power_level(), sortie.weapon_levels[SortieState.WeaponType.STRAIGHT], sortie.weapon_levels[SortieState.WeaponType.SPREAD], sortie.bombs, "ON" if sortie.shield else "—"]
 	%StageTime.text = "SECTOR 01  /  DIST %05d     DOWN %03d" % [int(progress_x), defeated]
 	%SurvivorCount.text = "CREW  %d / %d" % [run.survivors().size(), catalog.pilots.size()]
 	if is_instance_valid(boss):
@@ -250,10 +250,10 @@ func _enemy_destroyed(enemy: EnemyShip) -> void:
 		pending_boss = true
 		_queue_resolution()
 
-func _player_died(location: Vector2, power_level: int) -> void:
+func _player_died(location: Vector2, recoverable_powerups: int) -> void:
 	if phase != Phase.PLAYING or not pending_death.is_empty():
 		return
-	pending_death = {"position": location, "power": power_level, "pilot": run.current_pilot_id}
+	pending_death = {"position": location, "powerups": recoverable_powerups, "pilot": run.current_pilot_id}
 	_queue_resolution()
 
 func _queue_resolution() -> void:
@@ -275,13 +275,13 @@ func _resolve_outcome() -> void:
 
 func _start_death() -> void:
 	var location: Vector2 = pending_death.position
-	var power: int = pending_death.power
+	var powerups: int = pending_death.powerups
 	dying_pilot_id = pending_death.pilot
 	pending_death.clear()
 	_enter(Phase.PLAYER_DYING, rules.death_seconds)
 	_effect(location, explosion_scene, true)
-	for i in maxi(0, power - 1):
-		_spawn_pickup(recovery_pickup, location + Vector2(0, (i - (power - 2) * 0.5) * 52))
+	for i in powerups:
+		_spawn_pickup(recovery_pickup, location + Vector2(0, (i - (powerups - 1) * 0.5) * 52))
 	if is_instance_valid(player):
 		player.queue_free()
 	player = null
@@ -355,23 +355,6 @@ func _bomb() -> void:
 		_clear_projectiles(false)
 	%BombFlash.modulate.a = 0.65
 	create_tween().tween_property(%BombFlash, "modulate:a", 0.0, 0.4)
-
-func _special_attack(origin: Vector2, size: Vector2, damage: int) -> void:
-	if phase != Phase.PLAYING or user_paused:
-		return
-	var area := Rect2(origin - Vector2(0, size.y * 0.5), size)
-	for actor in actors.get_children():
-		if actor is EnemyShip and area.has_point(actor.global_position):
-			actor.take_damage(damage)
-	for bullet in projectiles.get_children():
-		if not bullet.friendly and area.has_point(bullet.global_position):
-			bullet.spent = true
-			bullet.queue_free()
-	%ChargeFlash.position = area.position - Vector2(progress_x, 0.0)
-	%ChargeFlash.size = area.size
-	%ChargeFlash.color = player.weapon.data.charge_color
-	%ChargeFlash.modulate.a = 0.65
-	create_tween().tween_property(%ChargeFlash, "modulate:a", 0.0, 0.3)
 
 func _clear_projectiles(include_friendly: bool) -> void:
 	for bullet in projectiles.get_children():

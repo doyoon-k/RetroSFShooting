@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c3expv0d8onyk"
-path="res://.godot/imported/P5_Nomal.png-66c624543591fb89fc6617d534547e5f.ctex"
+path="res://.godot/imported/P5_nomal.png-e441778df83b766c914ba7f9da2719f9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Pilots_sprites/pilots/P5_Nomal.png"
-dest_files=["res://.godot/imported/P5_Nomal.png-66c624543591fb89fc6617d534547e5f.ctex"]
+source_file="res://assets/Pilots_sprites/pilots/P5_nomal.png"
+dest_files=["res://.godot/imported/P5_nomal.png-e441778df83b766c914ba7f9da2719f9.ctex"]
 
 [params]
 
