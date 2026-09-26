@@ -7,7 +7,7 @@ enum WeaponType { STRAIGHT, SPREAD }
 
 var hp: int
 var active_weapon: WeaponType = WeaponType.STRAIGHT
-var weapon_levels: PackedInt32Array = PackedInt32Array([1, 1])
+var power_level: int = 1
 var bombs: int
 var shield: bool = false
 
@@ -23,6 +23,7 @@ func damage(amount: int = 1) -> bool:
 		shield = false
 	else:
 		hp = maxi(0, hp - amount)
+		power_level = maxi(1, power_level - 1)
 	changed.emit()
 	return true
 
@@ -38,14 +39,14 @@ func switch_weapon() -> void:
 	changed.emit()
 
 func current_power_level() -> int:
-	return weapon_levels[active_weapon]
+	return power_level
 
 func recoverable_powerups() -> int:
-	return (weapon_levels[WeaponType.STRAIGHT] - 1) + (weapon_levels[WeaponType.SPREAD] - 1)
+	return maxi(0, power_level - 1)
 
 func collect(kind: int, maximum_level: int) -> void:
 	match kind:
-		0: weapon_levels[active_weapon] = mini(current_power_level() + 1, maximum_level)
+		0: power_level = mini(power_level + 1, maximum_level)
 		1: bombs += 1
 		2: shield = true
 	changed.emit()

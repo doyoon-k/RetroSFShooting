@@ -42,6 +42,7 @@ process_mode = 3
 script = ExtResource("Script")
 catalog = ExtResource("Catalog")
 recovery_pickup = ExtResource("power_up")
+recovery_bomb = ExtResource("bomb")
 explosion_scene = ExtResource("Explosion")
 
 [node name="Camera2D" type="Camera2D" parent="."]

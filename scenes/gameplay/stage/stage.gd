@@ -7,6 +7,7 @@ enum Phase { LAUNCHING, PLAYING, BOSS_INTRO, PLAYER_DYING, SELECTING_NEXT, CLEAR
 
 @export var catalog: GameCatalog
 @export var recovery_pickup: PackedScene
+@export var recovery_bomb: PackedScene
 @export var explosion_scene: PackedScene
 @export_range(0.1, 10.0, 0.1) var boss_intro_seconds: float = 2.0
 @export_range(0.1, 10.0, 0.1) var clear_intro_seconds: float = 1.5
@@ -167,7 +168,7 @@ func _update_hud() -> void:
 	var sortie := run.current_sortie
 	var weapon := player.weapon.active_data() if is_instance_valid(player) else null
 	var weapon_name: String = weapon.display_name if weapon != null else "—"
-	%StatusLine.text = "HULL  %d/%d     %s  LV.%d  [STRAIGHT %d / SPREAD %d]     BOMB  %02d     SHIELD  %s" % [sortie.hp, rules.starting_hp, weapon_name, sortie.current_power_level(), sortie.weapon_levels[SortieState.WeaponType.STRAIGHT], sortie.weapon_levels[SortieState.WeaponType.SPREAD], sortie.bombs, "ON" if sortie.shield else "—"]
+	%StatusLine.text = "HULL  %d/%d     %s  LV.%d     BOMB  %02d     SHIELD  %s" % [sortie.hp, rules.starting_hp, weapon_name, sortie.current_power_level(), sortie.bombs, "ON" if sortie.shield else "—"]
 	%StageTime.text = "SECTOR 01  /  DIST %05d     DOWN %03d" % [int(progress_x), defeated]
 	%SurvivorCount.text = "CREW  %d / %d" % [run.survivors().size(), catalog.pilots.size()]
 	if is_instance_valid(boss):
@@ -250,10 +251,10 @@ func _enemy_destroyed(enemy: EnemyShip) -> void:
 		pending_boss = true
 		_queue_resolution()
 
-func _player_died(location: Vector2, recoverable_powerups: int) -> void:
+func _player_died(location: Vector2, recovery_powerups: int, recovery_bombs: int) -> void:
 	if phase != Phase.PLAYING or not pending_death.is_empty():
 		return
-	pending_death = {"position": location, "powerups": recoverable_powerups, "pilot": run.current_pilot_id}
+	pending_death = {"position": location, "powerups": recovery_powerups, "bombs": recovery_bombs, "pilot": run.current_pilot_id}
 	_queue_resolution()
 
 func _queue_resolution() -> void:
@@ -276,12 +277,19 @@ func _resolve_outcome() -> void:
 func _start_death() -> void:
 	var location: Vector2 = pending_death.position
 	var powerups: int = pending_death.powerups
+	var bombs: int = pending_death.bombs
 	dying_pilot_id = pending_death.pilot
 	pending_death.clear()
 	_enter(Phase.PLAYER_DYING, rules.death_seconds)
 	_effect(location, explosion_scene, true)
 	for i in powerups:
-		_spawn_pickup(recovery_pickup, location + Vector2(0, (i - (powerups - 1) * 0.5) * 52))
+		var pickup := _spawn_pickup(recovery_pickup, location + Vector2(-80, (i - (powerups - 1) * 0.5) * 56))
+		if pickup != null:
+			pickup.velocity = Vector2(-65, (i - (powerups - 1) * 0.5) * 35)
+	for i in bombs:
+		var pickup := _spawn_pickup(recovery_bomb, location + Vector2(80, (i - (bombs - 1) * 0.5) * 56))
+		if pickup != null:
+			pickup.velocity = Vector2(65, (i - (bombs - 1) * 0.5) * 35)
 	if is_instance_valid(player):
 		player.queue_free()
 	player = null

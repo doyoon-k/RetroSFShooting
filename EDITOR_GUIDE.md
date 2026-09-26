@@ -60,7 +60,8 @@
 있습니다. 직선형은 `Angles`의 0° 탄환 수에 따라 자동으로 세로 간격을 두고
 2/3/4발을 쏩니다. 간격은 기본 `player_ship.tscn`의 `Weapon` 노드 → `Shot Pattern`
 → `Straight Shot Spacing`에서 조절합니다. 방사형은 같은 부채꼴 안의 `Angles`를 늘려
-3/5/7발을 쏩니다. Power Up은 현재 선택한 무기의 레벨만 올립니다.
+3/5/7발을 쏩니다. 두 무기는 하나의 강화 레벨을 공유하므로 Power Up이나 실드 없는 피격이 두 패턴에 함께 적용됩니다.
+사망 시 회수 아이템은 `stage_01.tscn`의 `Recovery Pickup`과 `Recovery Bomb`에 연결된 씬으로 생성됩니다.
 
 `Weapon` 노드의 `Proximity Damage > Proximity Tiers` 배열에서 거리(px)와 배율을
 한 쌍씩 추가·제거합니다. 배열 순서와 상관없이 거리순으로 적용되며, 단계 사이에서는

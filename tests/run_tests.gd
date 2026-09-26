@@ -74,17 +74,17 @@ func _test_sorties() -> void:
 	old.collect(0, 3)
 	old.collect(0, 3)
 	old.collect(0, 3)
-	check(old.current_power_level() == 3 and old.weapon_levels[SortieState.WeaponType.SPREAD] == 1, "Power caps at level three for the active weapon only")
+	check(old.current_power_level() == 3 and old.recoverable_powerups() == 2, "One shared power level caps at three")
 	old.switch_weapon()
-	old.collect(0, 3)
-	check(old.current_power_level() == 2 and old.weapon_levels[SortieState.WeaponType.STRAIGHT] == 3, "Spread power upgrades independently of straight power")
+	check(old.current_power_level() == 3, "Switching weapons preserves the shared power level")
 	old.switch_weapon()
-	check(old.current_power_level() == 3 and old.recoverable_powerups() == 3, "Switching retains both weapon levels")
 	old.collect(2, 3)
 	old.damage()
-	check(old.hp == 2 and not old.shield, "Shield absorbs exactly one hit")
+	check(old.hp == 2 and not old.shield and old.current_power_level() == 3, "Shield absorbs a hit without reducing shared power")
 	old.damage()
-	check(old.hp == 1, "Next hit damages the hull")
+	check(old.hp == 1 and old.current_power_level() == 2, "Hull hit reduces shared power by one level")
+	old.switch_weapon()
+	check(old.current_power_level() == 2, "Both weapons use the reduced level after switching")
 	old.spend_bomb()
 	run.mark_dead(&"P1")
 	run.mark_dead(&"P1")
@@ -93,7 +93,7 @@ func _test_sorties() -> void:
 	check(run.automatic_choice(&"P1") == &"P2", "Invalid timeout focus falls back to first living pilot")
 	check(run.automatic_choice(&"P6") == &"P6", "Valid timeout focus is preserved")
 	run.begin_sortie(&"P2")
-	check(run.current_sortie != old and run.current_sortie.hp == 2 and run.current_sortie.current_power_level() == 1 and run.current_sortie.weapon_levels[SortieState.WeaponType.SPREAD] == 1 and run.current_sortie.active_weapon == SortieState.WeaponType.STRAIGHT and run.current_sortie.bombs == 2 and not run.current_sortie.shield, "New sortie resets all transient stats")
+	check(run.current_sortie != old and run.current_sortie.hp == 2 and run.current_sortie.current_power_level() == 1 and run.current_sortie.active_weapon == SortieState.WeaponType.STRAIGHT and run.current_sortie.bombs == 2 and not run.current_sortie.shield, "New sortie resets all transient stats")
 	check(content.rules.starting_hp == 2 and content.rules.starting_bombs == 2, "Runtime changes do not mutate shared rules")
 	var durable := SortieState.new(content.rules)
 	check(not durable.damage(0) and durable.hp == 2, "Zero damage does not consume health or shield")
@@ -447,10 +447,15 @@ func _test_stage() -> void:
 	check((stage.projectiles.get_child(bullet_count) as Projectile).proximity_points.size() == 2 and custom_bullet.proximity_points.size() == 3, "Removing a tier changes new shots without rewriting shots already fired")
 	stage.player.weapon.proximity_tiers = authored_tiers
 	stage.player.collect(Pickup.Kind.POWER)
-	check(stage.run.current_sortie.current_power_level() == 2 and stage.run.current_sortie.weapon_levels[SortieState.WeaponType.STRAIGHT] == 1, "Power pickup upgrades the selected weapon")
+	check(stage.run.current_sortie.current_power_level() == 2, "Power pickup upgrades both weapon patterns")
 	bullet_count = stage.projectiles.get_child_count()
 	stage.player.weapon.fire()
 	check(stage.projectiles.get_child_count() == bullet_count + 5 and (stage.projectiles.get_child(bullet_count) as Projectile).damage == 1, "Spread LV2 fires five base-damage projectiles")
+	stage.run.current_sortie.switch_weapon()
+	bullet_count = stage.projectiles.get_child_count()
+	stage.player.weapon.fire()
+	check(stage.projectiles.get_child_count() == bullet_count + 3, "Straight LV2 immediately uses the shared power level")
+	stage.run.current_sortie.switch_weapon()
 	# Exercise actual Area2D collision with a fired player bullet.
 	var enemy := stage._spawn_enemy(load("res://scenes/enemies/scout.tscn"), stage.player.position + Vector2(190, 0))
 	enemy.movement.set_physics_process(false)
@@ -475,26 +480,40 @@ func _test_stage() -> void:
 	await frames(2)
 	Input.action_release("switch_weapon")
 	check(stage.run.current_sortie.active_weapon == SortieState.WeaponType.STRAIGHT, "Second switch restores straight weapon")
-	stage.player.collect(Pickup.Kind.POWER)
-	bullet_count = stage.projectiles.get_child_count()
-	stage.player.weapon.fire()
-	check(stage.projectiles.get_child_count() == bullet_count + 3, "Straight LV2 fires three projectiles")
-	check(is_equal_approx((stage.projectiles.get_child(bullet_count) as Projectile).global_position.y, stage.player.weapon.global_position.y - 28.0) and is_equal_approx((stage.projectiles.get_child(bullet_count + 2) as Projectile).global_position.y, stage.player.weapon.global_position.y + 28.0), "Straight LV2 keeps three visibly separated rows")
-	stage.player.collect(Pickup.Kind.POWER)
-	check(stage.run.current_sortie.recoverable_powerups() == 4, "Two level-three weapons store four recoverable upgrades")
+	check(stage.run.current_sortie.current_power_level() == 3 and stage.run.current_sortie.recoverable_powerups() == 2, "Both weapons share two recoverable upgrades at LV3")
 	bullet_count = stage.projectiles.get_child_count()
 	stage.player.weapon.fire()
 	check(stage.projectiles.get_child_count() == bullet_count + 4 and (stage.projectiles.get_child(bullet_count) as Projectile).damage == 1, "Straight LV3 fires four base-damage projectiles")
 	check(is_equal_approx((stage.projectiles.get_child(bullet_count) as Projectile).global_position.y, stage.player.weapon.global_position.y - 42.0) and is_equal_approx((stage.projectiles.get_child(bullet_count + 3) as Projectile).global_position.y, stage.player.weapon.global_position.y + 42.0), "Straight LV3 keeps four visibly separated rows")
 	await capture("straight_lv3")
-	var item_count := stage.items.get_child_count()
+	stage.player.collect(Pickup.Kind.BOMB)
+	check(stage.run.current_sortie.bombs == 2, "Bomb pickup restores one spent bomb")
 	stage.player.invincibility = 0
 	stage.player.take_damage()
+	check(stage.run.current_sortie.hp == 1 and stage.run.current_sortie.current_power_level() == 2, "A nonlethal hit lowers both weapons from LV3 to LV2")
+	stage.player.collect(Pickup.Kind.POWER)
+	check(stage.run.current_sortie.current_power_level() == 3, "Power pickup restores both weapons after damage")
+	var item_count := stage.items.get_child_count()
 	stage.player.invincibility = 0
 	stage.player.take_damage()
 	await frames(3)
 	check(stage.phase == StageController.Phase.PLAYER_DYING, "Lethal hit enters death presentation")
-	check(stage.items.get_child_count() == item_count + 4, "Death drops both weapons' recoverable power-ups")
+	check(stage.items.get_child_count() == item_count + 4, "Death drops two power-ups and two unspent bombs")
+	var death_powerups := 0
+	var death_bombs := 0
+	var recovery_power: Pickup
+	var recovery_bomb: Pickup
+	for index in range(item_count, stage.items.get_child_count()):
+		var dropped := stage.items.get_child(index) as Pickup
+		if dropped.kind == Pickup.Kind.POWER:
+			death_powerups += 1
+			if recovery_power == null:
+				recovery_power = dropped
+		elif dropped.kind == Pickup.Kind.BOMB:
+			death_bombs += 1
+			if recovery_bomb == null:
+				recovery_bomb = dropped
+	check(death_powerups == 2 and death_bombs == 2, "Death recovery items contain the correct power and bomb types")
 	await capture("06_death")
 	stage.phase_left = 0
 	await frames(3)
@@ -507,7 +526,26 @@ func _test_stage() -> void:
 	stage.phase_left = 0
 	await frames(16)
 	check(stage.run.current_pilot_id == &"P6" and stage.phase == StageController.Phase.PLAYING, "Timeout launches highlighted living pilot")
-	check(stage.run.current_sortie.current_power_level() == 1 and stage.run.current_sortie.weapon_levels[SortieState.WeaponType.SPREAD] == 1 and stage.run.current_sortie.bombs == 2 and stage.run.current_sortie.hp == 2, "Respawn starts with fresh sortie stats")
+	check(stage.run.current_sortie.current_power_level() == 1 and stage.run.current_sortie.bombs == 2 and stage.run.current_sortie.hp == 2, "Respawn starts with fresh sortie stats")
+	var old_power_position := recovery_power.position
+	var old_bomb_position := recovery_bomb.position
+	await frames(10)
+	check(recovery_power.position.distance_to(old_power_position) > 1.0 and recovery_bomb.position.distance_to(old_bomb_position) > 1.0, "Death power-up and bomb move through the playfield after respawn")
+	await capture("07_recovery")
+	stage.player.position = recovery_power.position
+	await frames(3)
+	check(stage.run.current_sortie.current_power_level() == 2, "Next pilot can collect a dropped power-up")
+	stage.player.position = recovery_bomb.position
+	await frames(3)
+	check(stage.run.current_sortie.bombs == 3, "Next pilot can collect a dropped bomb")
+	item_count = stage.items.get_child_count()
+	stage.run.current_sortie.power_level = 1
+	stage.run.current_sortie.bombs = 0
+	stage.run.current_sortie.hp = 1
+	stage.player.invincibility = 0
+	stage.player.take_damage()
+	await frames(3)
+	check(stage.items.get_child_count() == item_count + 2, "Death at LV1 with zero bombs still drops one of each recovery item")
 	stage.queue_free()
 	await frames()
 

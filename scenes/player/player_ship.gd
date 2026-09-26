@@ -1,7 +1,7 @@
 class_name PlayerShip
 extends Area2D
 
-signal died(position: Vector2, recoverable_powerups: int)
+signal died(position: Vector2, recovery_powerups: int, recovery_bombs: int)
 signal bomb_requested
 signal hit
 
@@ -49,6 +49,8 @@ func grant_invincibility(seconds: float) -> void:
 func take_damage(amount: int = 1) -> void:
 	if state == null or death_reported or invincibility > 0.0 or get_tree().paused:
 		return
+	var powerups_before_hit := state.recoverable_powerups()
+	var bombs_before_hit := state.bombs
 	if not state.damage(amount):
 		return
 	has_taken_hit = true
@@ -57,7 +59,7 @@ func take_damage(amount: int = 1) -> void:
 	grant_invincibility(rules.hit_invincibility)
 	if state.hp == 0:
 		death_reported = true
-		died.emit(global_position, state.recoverable_powerups())
+		died.emit(global_position, maxi(1, powerups_before_hit), maxi(1, bombs_before_hit))
 
 func collect(kind: int) -> void:
 	if state != null and state.hp > 0:
