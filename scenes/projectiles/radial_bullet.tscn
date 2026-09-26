@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scenes/projectiles/projectile.gd" id="Script"]
-[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Player/Projectile_Strait.png" id="BulletTexture"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Player/Projectile_Radial.png" id="BulletTexture"]
 
 [sub_resource type="CircleShape2D" id="Shape"]
 radius = 5.0
@@ -14,14 +14,12 @@ collision_layer = 8
 collision_mask = 1
 monitorable = false
 
-
 [node name="Visual" type="Sprite2D" parent="."]
 texture_filter = 1
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("BulletTexture")
 region_enabled = true
-region_rect = Rect2(32, 42, 64, 44)
-
+region_rect = Rect2(36, 50, 54, 29)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("Shape")

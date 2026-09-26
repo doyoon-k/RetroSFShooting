@@ -390,17 +390,26 @@ func _test_stage() -> void:
 	check(stage.run.current_sortie.bombs == bombs - 1, "Bomb consumes exactly one stock")
 	var straight := stage.player.weapon.data
 	var spread := stage.player.weapon.spread_data
+	var straight_texture := load("res://assets/Pilots_sprites/Player/Projectile_Strait.png") as Texture2D
+	var radial_texture := load("res://assets/Pilots_sprites/Player/Projectile_Radial.png") as Texture2D
 	check(straight.levels.size() == 3 and spread.levels.size() == 3, "Both weapons have three authored levels")
 	var authored_tiers := stage.player.weapon.proximity_tiers
 	check(authored_tiers.size() == 2 and authored_tiers[0].distance == 160.0 and authored_tiers[1].distance == 640.0, "Player ship authors two editable proximity damage tiers")
 	for level in straight.levels:
 		check(level.angles.size() == 1 and is_zero_approx(level.angles[0]), "Straight weapon remains a single forward shot at every level")
+		var shot := level.projectile_scene.instantiate() as Projectile
+		check((shot.get_node("Visual") as Sprite2D).texture == straight_texture, "Every straight level uses Projectile_Strait")
+		shot.free()
 	for level in spread.levels:
 		check(level.angles.size() == 3 and is_zero_approx(level.angles[1]) and is_equal_approx(level.angles[0], -level.angles[2]), "Spread weapon fires a symmetric three-way fan at every level")
+		var shot := level.projectile_scene.instantiate() as Projectile
+		check((shot.get_node("Visual") as Sprite2D).texture == radial_texture, "Every spread level uses Projectile_Radial")
+		shot.free()
 	var bullet_count := stage.projectiles.get_child_count()
 	stage.player.weapon.fire()
 	check(stage.projectiles.get_child_count() == bullet_count + 1, "Straight weapon fires one projectile")
 	var straight_bullet := stage.projectiles.get_child(bullet_count) as Projectile
+	check((straight_bullet.get_node("Visual") as Sprite2D).texture == straight_texture, "Fired straight bullet shows the straight image")
 	check(straight_bullet.proximity_points.size() == 2 and straight_bullet.proximity_points[0].y == 2.0 and straight_bullet.damage_origin.is_equal_approx(stage.player.weapon.global_position), "Straight shot captures proximity tiers and firing origin")
 	Input.action_press("switch_weapon")
 	await frames(2)
@@ -409,6 +418,7 @@ func _test_stage() -> void:
 	bullet_count = stage.projectiles.get_child_count()
 	stage.player.weapon.fire()
 	check(stage.projectiles.get_child_count() == bullet_count + 3, "Spread weapon fires exactly three projectiles")
+	check((stage.projectiles.get_child(bullet_count).get_node("Visual") as Sprite2D).texture == radial_texture, "Fired spread bullet shows the radial image")
 	check(stage.projectiles.get_child(bullet_count).direction.y < 0.0 and stage.projectiles.get_child(bullet_count + 1).direction.y == 0.0 and stage.projectiles.get_child(bullet_count + 2).direction.y > 0.0, "Spread projectiles fan above, forward, and below")
 	check((stage.projectiles.get_child(bullet_count) as Projectile).proximity_points.size() == 2 and (stage.projectiles.get_child(bullet_count + 2) as Projectile).damage_origin.is_equal_approx(stage.player.weapon.global_position), "All spread shots inherit proximity tiers")
 	var extra_tier := ProximityDamageTier.new()

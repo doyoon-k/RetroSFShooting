@@ -14,6 +14,8 @@
 | 기체 피격 범위 | 기본 `player_ship.tscn`의 CollisionShape2D |
 | 직선형 공격 LV1~3 | `data/weapons/standard.tres` |
 | 3갈래 방사형 공격 LV1~3 | `data/weapons/spread.tres` |
+| 직선형 탄환 이미지 | `scenes/projectiles/player_bullet.tscn`의 `Visual` |
+| 방사형 탄환 이미지 | `scenes/projectiles/radial_bullet.tscn`의 `Visual` |
 | 근접 사격 배율·거리 | `scenes/player/player_ship.tscn`의 `Weapon` 노드 |
 | 적 성능 | `scenes/enemies/*.tscn` |
 | 공격 패턴 | `data/patterns/*.tres` |

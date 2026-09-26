@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="WeaponData" load_steps=7 format=3 uid="uid://ob4oj7nv6cxh"]
 
-[ext_resource type="PackedScene" path="res://scenes/projectiles/player_bullet.tscn" id="Bullet"]
+[ext_resource type="PackedScene" path="res://scenes/projectiles/radial_bullet.tscn" id="Bullet"]
 [ext_resource type="Script" path="res://scripts/data/shot_level_data.gd" id="Level"]
 [ext_resource type="Script" path="res://scripts/data/weapon_data.gd" id="Script"]
 
