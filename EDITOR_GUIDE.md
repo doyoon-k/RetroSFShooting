@@ -57,7 +57,10 @@
 탄속·수명·피해·유도 회전속도·모양은 연결된 탄환 씬에서 바꿉니다. 플레이어 탄환 피해는
 예외적으로 WeaponData의 각 레벨 설정을 사용합니다. `standard.tres`와 `spread.tres`의
 `Levels` 배열은 각각 독립적이며, 각 레벨의 `Angles`, `Interval`, `Damage`를 편집할 수
-있습니다. Power Up은 현재 선택한 무기의 레벨만 올립니다.
+있습니다. 직선형은 `Angles`의 0° 탄환 수에 따라 자동으로 세로 간격을 두고
+2/3/4발을 쏩니다. 간격은 기본 `player_ship.tscn`의 `Weapon` 노드 → `Shot Pattern`
+→ `Straight Shot Spacing`에서 조절합니다. 방사형은 같은 부채꼴 안의 `Angles`를 늘려
+3/5/7발을 쏩니다. Power Up은 현재 선택한 무기의 레벨만 올립니다.
 
 `Weapon` 노드의 `Proximity Damage > Proximity Tiers` 배열에서 거리(px)와 배율을
 한 쌍씩 추가·제거합니다. 배열 순서와 상관없이 거리순으로 적용되며, 단계 사이에서는

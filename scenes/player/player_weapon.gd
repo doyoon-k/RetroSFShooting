@@ -3,6 +3,8 @@ extends Node2D
 
 @export var data: WeaponData
 @export var spread_data: WeaponData
+@export_group("Shot Pattern")
+@export_range(0.0, 100.0, 1.0) var straight_shot_spacing: float = 28.0
 @export_group("Proximity Damage")
 @export var proximity_tiers: Array[ProximityDamageTier] = []
 var state: SortieState
@@ -38,7 +40,11 @@ func fire() -> void:
 		if tier != null:
 			proximity_points.append(Vector2(maxf(0.0, tier.distance), maxf(1.0, tier.multiplier)))
 	proximity_points.sort_custom(func(a: Vector2, b: Vector2) -> bool: return a.x < b.x)
-	for angle in level.angles:
+	for index in level.angles.size():
+		var angle := level.angles[index]
+		var offset := Vector2.ZERO
+		if state.active_weapon == SortieState.WeaponType.STRAIGHT:
+			offset.y = (float(index) - float(level.angles.size() - 1) * 0.5) * straight_shot_spacing
 		var bullet := level.projectile_scene.instantiate() as Projectile
 		bullet.friendly = true
 		bullet.damage = level.damage
@@ -46,5 +52,5 @@ func fire() -> void:
 		bullet.bounds = bounds
 		bullet.proximity_points = proximity_points.duplicate()
 		projectiles.add_child(bullet)
-		bullet.global_position = global_position
-		bullet.damage_origin = global_position
+		bullet.global_position = to_global(offset)
+		bullet.damage_origin = bullet.global_position

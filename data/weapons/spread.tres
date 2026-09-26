@@ -8,22 +8,22 @@
 script = ExtResource("Level")
 projectile_scene = ExtResource("Bullet")
 interval = 0.22
-angles = PackedFloat32Array(-12, 0, 12)
+angles = PackedFloat32Array(-18, 0, 18)
 damage = 1
 
 [sub_resource type="Resource" id="Level2"]
 script = ExtResource("Level")
 projectile_scene = ExtResource("Bullet")
-interval = 0.2
-angles = PackedFloat32Array(-18, 0, 18)
-damage = 2
+interval = 0.22
+angles = PackedFloat32Array(-18, -9, 0, 9, 18)
+damage = 1
 
 [sub_resource type="Resource" id="Level3"]
 script = ExtResource("Level")
 projectile_scene = ExtResource("Bullet")
-interval = 0.18
-angles = PackedFloat32Array(-24, 0, 24)
-damage = 3
+interval = 0.22
+angles = PackedFloat32Array(-18, -12, -6, 0, 6, 12, 18)
+damage = 1
 
 [resource]
 script = ExtResource("Script")

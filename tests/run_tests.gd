@@ -395,22 +395,32 @@ func _test_stage() -> void:
 	check(straight.levels.size() == 3 and spread.levels.size() == 3, "Both weapons have three authored levels")
 	var authored_tiers := stage.player.weapon.proximity_tiers
 	check(authored_tiers.size() == 2 and authored_tiers[0].distance == 160.0 and authored_tiers[1].distance == 640.0, "Player ship authors two editable proximity damage tiers")
-	for level in straight.levels:
-		check(level.angles.size() == 1 and is_zero_approx(level.angles[0]), "Straight weapon remains a single forward shot at every level")
+	for level_index in straight.levels.size():
+		var level := straight.levels[level_index]
+		check(level.angles.size() == level_index + 2, "Straight weapon gains one parallel shot per level")
+		check(is_equal_approx(level.interval, 0.16) and level.damage == 1, "Straight upgrades retain their base fire rate and per-bullet damage")
+		for angle in level.angles:
+			check(is_zero_approx(angle), "Every straight projectile travels forward")
 		var shot := level.projectile_scene.instantiate() as Projectile
 		check((shot.get_node("Visual") as Sprite2D).texture == straight_texture, "Every straight level uses Projectile_Strait")
 		shot.free()
-	for level in spread.levels:
-		check(level.angles.size() == 3 and is_zero_approx(level.angles[1]) and is_equal_approx(level.angles[0], -level.angles[2]), "Spread weapon fires a symmetric three-way fan at every level")
+	for level_index in spread.levels.size():
+		var level := spread.levels[level_index]
+		check(level.angles.size() == 3 + level_index * 2 and is_zero_approx(level.angles[level.angles.size() / 2]), "Spread weapon gains two rays per level")
+		check(is_equal_approx(level.angles[0], -level.angles[level.angles.size() - 1]) and is_equal_approx(level.angles[0], -18.0), "Spread fan keeps the same symmetric width")
+		check(is_equal_approx(level.interval, 0.22) and level.damage == 1, "Spread upgrades retain their base fire rate and per-bullet damage")
 		var shot := level.projectile_scene.instantiate() as Projectile
 		check((shot.get_node("Visual") as Sprite2D).texture == radial_texture, "Every spread level uses Projectile_Radial")
 		shot.free()
 	var bullet_count := stage.projectiles.get_child_count()
 	stage.player.weapon.fire()
-	check(stage.projectiles.get_child_count() == bullet_count + 1, "Straight weapon fires one projectile")
+	check(stage.projectiles.get_child_count() == bullet_count + 2, "Straight LV1 fires two projectiles")
 	var straight_bullet := stage.projectiles.get_child(bullet_count) as Projectile
+	var second_straight_bullet := stage.projectiles.get_child(bullet_count + 1) as Projectile
+	check(is_equal_approx(straight_bullet.global_position.x, second_straight_bullet.global_position.x) and is_equal_approx(straight_bullet.global_position.y, stage.player.weapon.global_position.y - 14.0) and is_equal_approx(second_straight_bullet.global_position.y, stage.player.weapon.global_position.y + 14.0), "Straight bullets spawn in two parallel rows")
 	check((straight_bullet.get_node("Visual") as Sprite2D).texture == straight_texture, "Fired straight bullet shows the straight image")
-	check(straight_bullet.proximity_points.size() == 2 and straight_bullet.proximity_points[0].y == 2.0 and straight_bullet.damage_origin.is_equal_approx(stage.player.weapon.global_position), "Straight shot captures proximity tiers and firing origin")
+	check(straight_bullet.proximity_points.size() == 2 and straight_bullet.proximity_points[0].y == 2.0 and straight_bullet.damage_origin.is_equal_approx(straight_bullet.global_position), "Straight shot captures proximity tiers and its own firing origin")
+	await capture("straight_lv1")
 	Input.action_press("switch_weapon")
 	await frames(2)
 	Input.action_release("switch_weapon")
@@ -440,7 +450,7 @@ func _test_stage() -> void:
 	check(stage.run.current_sortie.current_power_level() == 2 and stage.run.current_sortie.weapon_levels[SortieState.WeaponType.STRAIGHT] == 1, "Power pickup upgrades the selected weapon")
 	bullet_count = stage.projectiles.get_child_count()
 	stage.player.weapon.fire()
-	check((stage.projectiles.get_child(bullet_count) as Projectile).damage == 2, "Spread shot uses its upgraded damage")
+	check(stage.projectiles.get_child_count() == bullet_count + 5 and (stage.projectiles.get_child(bullet_count) as Projectile).damage == 1, "Spread LV2 fires five base-damage projectiles")
 	# Exercise actual Area2D collision with a fired player bullet.
 	var enemy := stage._spawn_enemy(load("res://scenes/enemies/scout.tscn"), stage.player.position + Vector2(190, 0))
 	enemy.movement.set_physics_process(false)
@@ -458,16 +468,25 @@ func _test_stage() -> void:
 	await capture("04_stage")
 	stage.player.collect(Pickup.Kind.POWER)
 	stage.player.collect(Pickup.Kind.POWER)
+	bullet_count = stage.projectiles.get_child_count()
+	stage.player.weapon.fire()
+	check(stage.projectiles.get_child_count() == bullet_count + 7, "Spread LV3 fires seven projectiles")
 	Input.action_press("switch_weapon")
 	await frames(2)
 	Input.action_release("switch_weapon")
 	check(stage.run.current_sortie.active_weapon == SortieState.WeaponType.STRAIGHT, "Second switch restores straight weapon")
 	stage.player.collect(Pickup.Kind.POWER)
+	bullet_count = stage.projectiles.get_child_count()
+	stage.player.weapon.fire()
+	check(stage.projectiles.get_child_count() == bullet_count + 3, "Straight LV2 fires three projectiles")
+	check(is_equal_approx((stage.projectiles.get_child(bullet_count) as Projectile).global_position.y, stage.player.weapon.global_position.y - 28.0) and is_equal_approx((stage.projectiles.get_child(bullet_count + 2) as Projectile).global_position.y, stage.player.weapon.global_position.y + 28.0), "Straight LV2 keeps three visibly separated rows")
 	stage.player.collect(Pickup.Kind.POWER)
 	check(stage.run.current_sortie.recoverable_powerups() == 4, "Two level-three weapons store four recoverable upgrades")
 	bullet_count = stage.projectiles.get_child_count()
 	stage.player.weapon.fire()
-	check((stage.projectiles.get_child(bullet_count) as Projectile).damage == 3, "Straight shot uses its own level-three damage")
+	check(stage.projectiles.get_child_count() == bullet_count + 4 and (stage.projectiles.get_child(bullet_count) as Projectile).damage == 1, "Straight LV3 fires four base-damage projectiles")
+	check(is_equal_approx((stage.projectiles.get_child(bullet_count) as Projectile).global_position.y, stage.player.weapon.global_position.y - 42.0) and is_equal_approx((stage.projectiles.get_child(bullet_count + 3) as Projectile).global_position.y, stage.player.weapon.global_position.y + 42.0), "Straight LV3 keeps four visibly separated rows")
+	await capture("straight_lv3")
 	var item_count := stage.items.get_child_count()
 	stage.player.invincibility = 0
 	stage.player.take_damage()
