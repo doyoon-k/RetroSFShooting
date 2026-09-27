@@ -74,6 +74,24 @@
 바꾸려면 그 리소스를 복제해 연결하세요. 중첩된 Step 안의 Pattern까지 독립시키려면 Pattern도
 복제해야 합니다. 실행 중 타이머와 조준 상태는 EnemyShooter별로 독립되어 있습니다.
 
+## 편대별 이동·공격 실험
+
+`scenes/gameplay/enemy_lab/enemy_lab.tscn`을 열고 **F6**을 누르면 시험 장면이 실행됩니다.
+오른쪽에서 적 씬, 이동 프리셋, 공격 순서, 플레이어 강화 레벨을 고르고 `Spawn / Retry`를
+누르세요. `Use sample Path2D`를 켜면 같은 적을 곡선 경로로 시험할 수 있습니다. WASD로
+이동하고 J로 공격합니다. 적이 화면 밖으로 나가거나 격추되면 자동으로 다시 등장하며,
+`Clear`를 누르면 자동 등장이 멈춥니다. 시험 장면의 Inspector에서 Enemy Scenes, Movement Presets,
+Attack Presets 배열에 새 파일을 넣으면 선택지에 추가됩니다.
+
+실제 스테이지에서는 `WaveSequence` 아래 편대 마커를 선택해 `Optional Overrides`의
+`Movement Profile` 또는 `Attack Sequence`에 `.tres`를 연결하세요. 비워 두면 적 씬의
+기본 설정을 씁니다. 예시는 `data/movement/`와 `data/sequences/`에 있습니다.
+`No attack` 순서를 고르면 기존 발사도 멈춥니다. 발사 노드가 없는 적에게 공격 순서를
+연결하면 발사 노드가 생성됩니다. `Path2D`가 있는 편대는 그 경로가 이동 프리셋보다 우선입니다.
+
+프리셋은 공유 설정 데이터입니다. 특정 편대만 속도나 탄 수를 바꾸려면 `.tres`를 복제해서
+연결하세요. 발사 타이머와 이동 진행도는 적 인스턴스마다 별개입니다.
+
 ## 보스 패턴 순서 변경
 
 `scenes/enemies/boss.tscn`을 엽니다.
@@ -95,12 +113,13 @@
 지점에 오면 적이 활성화됩니다. 일시정지·사망·교대 중에는 전진도 멈추고, 보스 진입 후에는
 카메라가 고정됩니다. `StageGuide`의 청록색 테두리와 구획선은 에디터에서만 보이는 배치 기준입니다.
 같은 노드의 `Show Enemy Previews`와 `Show Trajectories`로 적 외형과 예상 이동선을 켜고 끌 수
-있습니다. `Preview Seconds`는 직선·물결·진입/정지/퇴장 이동선의 표시 길이만 조절합니다.
+있습니다. `Preview Seconds`는 직선·물결·진입/정지/퇴장·세로 왕복 이동선의 표시 길이만 조절합니다.
+미들 3종(M1–M3)이 등장하면 화면 전진이 멈추고, 처치하면 다시 진행합니다.
 
 한 기를 정확한 위치에 놓으려면 적 씬을 `Simulation/PlacedEnemies` 아래에 인스턴스로
 추가하고 2D 화면에서 옮기세요. 이 적은 처음에 보이지 않고 동작하지 않다가 화면 오른쪽에
 가까워지면 활성화됩니다. 아이템을 떨어뜨리려면 해당 적 루트의 `Drop Scene`과
-`Drop Chance`를 설정합니다. `HunterTop`과 `HunterBottom`이 직접 배치 예시입니다.
+`Drop Chance`를 설정합니다. `N5Upper`와 `N5Lower`가 직접 배치 예시입니다.
 
 편대를 배치하려면 `Simulation/WaveSequence` 아래의 마커를 복제하고 옮깁니다.
 
@@ -133,7 +152,8 @@
 
 Hold Position의 X는 등장 당시 화면을 기준으로 한 좌표이며, Y는 월드 좌표입니다.
 `Stay Forever`를 켜면 정지 지점에서 퇴장하지 않습니다.
-같은 적의 다른 이동 변형이 필요하면 적 씬의 inherited scene을 만들고 Movement만 수정하세요.
+같은 적의 다른 이동 변형은 우선 편대 마커의 Movement Profile로 지정하세요. 외형·충돌
+범위까지 달라질 때는 inherited scene을 만들 수 있습니다.
 
 일반 적의 마지막 배치 위치는 BossMarker보다 앞에 두세요. 보스 진입 후에는 새 적을
 활성화하지 않습니다.
@@ -180,3 +200,7 @@ Caption, Text를 설정합니다. Intro와 모든 Ending은 같은 StoryScreen�
 - Title / CharacterSelect / Story / Result 씬 F6: 샘플 데이터로 화면 미리보기
 - F5: 전체 흐름, 엔딩 해금·저장까지 확인
 - `python tools/check.py`: 상태·전투·전체 웨이브·저장 회귀 검사
+
+## 스테이지 템포 조정
+
+최신 배치표와 연구 근거는 [STAGE_DESIGN.md](docs/STAGE_DESIGN.md)를 참고하세요. 기본 속도에서 출현 초는 `(Wave X - 1568) / 180`입니다. 미들 교전 동안 이 시간은 멈춥니다. `hold_high.tres` / `hold_low.tres`는 상하 정지 사격용 프리셋입니다. `Shooter`의 `Telegraph Seconds`는 공격 묶음 전 예고(기본 0.35초), 탄환의 `Homing Seconds`는 추적 지속 시간(기본 1.2초)입니다.

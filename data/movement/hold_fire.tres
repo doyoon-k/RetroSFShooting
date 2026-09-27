@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="MovementProfile" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/movement_profile.gd" id="Profile"]
+
+[resource]
+resource_name = "Enter, hold, exit"
+script = ExtResource("Profile")
+mode = 2
+speed = 190.0
+hold_position = Vector2(1110, 532)
+hold_seconds = 3.0

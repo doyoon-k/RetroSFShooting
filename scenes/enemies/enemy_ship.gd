@@ -11,6 +11,7 @@ signal health_changed(current: float, maximum: int)
 @export var death_animation: StringName = &""
 @export_range(0.0, 5.0, 0.05) var death_animation_seconds: float = 0.0
 @export var is_boss: bool = false
+@export var is_midboss: bool = false
 @export_range(0.05, 0.95, 0.05) var phase_threshold: float = 0.5
 @export var second_phase: Array[PatternStep] = []
 var hp: float
@@ -25,6 +26,20 @@ var death_left: float = 0.0
 
 func _ready() -> void:
 	hp = maximum_hp
+
+func apply_attack_sequence(sequence: AttackSequence) -> void:
+	if sequence == null:
+		return
+	var emitter := get_node_or_null("Shooter") as EnemyShooter
+	if emitter == null and not sequence.steps.is_empty():
+		emitter = EnemyShooter.new()
+		emitter.name = "Shooter"
+		add_child(emitter)
+	if emitter != null:
+		emitter.initial_delay = sequence.initial_delay
+		emitter.set_sequence(sequence.steps.duplicate())
+		if is_node_ready():
+			shooter = emitter
 
 func _physics_process(delta: float) -> void:
 	if dying:

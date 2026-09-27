@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AttackSequence" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/attack_sequence.gd" id="Sequence"]
+[ext_resource type="Script" path="res://scripts/data/pattern_step.gd" id="StepType"]
+[ext_resource type="Resource" path="res://data/patterns/fan_step.tres" id="Fan"]
+[ext_resource type="Resource" path="res://data/patterns/burst_step.tres" id="Burst"]
+
+[resource]
+resource_name = "Fan then burst"
+script = ExtResource("Sequence")
+steps = Array[ExtResource("StepType")]([ExtResource("Fan"), ExtResource("Burst")])

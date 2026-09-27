@@ -1,0 +1,144 @@
+[gd_scene load_steps=33 format=3]
+
+[ext_resource type="Script" path="res://scenes/gameplay/enemy_lab/enemy_lab.gd" id="Lab"]
+[ext_resource type="PackedScene" path="res://scenes/player/P1_ship.tscn" id="Player"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/z1_wedge.tscn" id="Z1"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/z2_spine.tscn" id="Z2"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/z3_eye.tscn" id="Z3"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/z4_crescent.tscn" id="Z4"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/z5_chain.tscn" id="Z5"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/n1_interceptor.tscn" id="N1"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/n2_crawler.tscn" id="N2"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/n3_claw.tscn" id="N3"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/n4_armor.tscn" id="N4"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/n5_tendril.tscn" id="N5"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/m1_carapace.tscn" id="M1"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/m2_wing.tscn" id="M2"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/m3_star_eye.tscn" id="M3"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/boss.tscn" id="Boss"]
+[ext_resource type="Script" path="res://scripts/data/movement_profile.gd" id="MovementType"]
+[ext_resource type="Resource" path="res://data/movement/linear_pass.tres" id="Linear"]
+[ext_resource type="Resource" path="res://data/movement/sine_pass.tres" id="Sine"]
+[ext_resource type="Resource" path="res://data/movement/hold_fire.tres" id="Hold"]
+[ext_resource type="Resource" path="res://data/movement/vertical_sweep.tres" id="Sweep"]
+[ext_resource type="Script" path="res://scripts/data/attack_sequence.gd" id="AttackType"]
+[ext_resource type="Resource" path="res://data/sequences/silent.tres" id="Silent"]
+[ext_resource type="Resource" path="res://data/sequences/aimed.tres" id="Aimed"]
+[ext_resource type="Resource" path="res://data/sequences/fan.tres" id="Fan"]
+[ext_resource type="Resource" path="res://data/sequences/homing.tres" id="Homing"]
+[ext_resource type="Resource" path="res://data/sequences/ring.tres" id="Ring"]
+[ext_resource type="Resource" path="res://data/sequences/fan_burst.tres" id="FanBurst"]
+[ext_resource type="Resource" path="res://data/sequences/diagonal_down.tres" id="DiagDown"]
+[ext_resource type="Resource" path="res://data/sequences/diagonal_up.tres" id="DiagUp"]
+[ext_resource type="Resource" path="res://data/sequences/short_burst.tres" id="ShortBurst"]
+[ext_resource type="Theme" path="res://scenes/ui/game_theme.tres" id="Theme"]
+
+[node name="EnemyLab" type="Node2D"]
+script = ExtResource("Lab")
+player_scene = ExtResource("Player")
+enemy_scenes = Array[PackedScene]([ExtResource("Z1"), ExtResource("Z2"), ExtResource("Z3"), ExtResource("Z4"), ExtResource("Z5"), ExtResource("N1"), ExtResource("N2"), ExtResource("N3"), ExtResource("N4"), ExtResource("N5"), ExtResource("M1"), ExtResource("M2"), ExtResource("M3"), ExtResource("Boss")])
+movement_presets = Array[ExtResource("MovementType")]([ExtResource("Linear"), ExtResource("Sine"), ExtResource("Hold"), ExtResource("Sweep")])
+attack_presets = Array[ExtResource("AttackType")]([ExtResource("Silent"), ExtResource("Aimed"), ExtResource("Fan"), ExtResource("Homing"), ExtResource("Ring"), ExtResource("FanBurst"), ExtResource("DiagDown"), ExtResource("DiagUp"), ExtResource("ShortBurst")])
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(960, 540)
+
+[node name="Background" type="ColorRect" parent="."]
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+color = Color(0.02, 0.025, 0.045, 1)
+
+[node name="Playfield" type="ColorRect" parent="."]
+offset_left = 48.0
+offset_top = 100.0
+offset_right = 1488.0
+offset_bottom = 964.0
+mouse_filter = 2
+color = Color(0.045, 0.065, 0.1, 1)
+
+[node name="Route" type="Path2D" parent="."]
+position = Vector2(1300, 532)
+
+[node name="Projectiles" type="Node2D" parent="."]
+
+[node name="Actors" type="Node2D" parent="."]
+
+[node name="Canvas" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="PanelContainer" parent="Canvas"]
+offset_left = 1504.0
+offset_top = 100.0
+offset_right = 1904.0
+offset_bottom = 950.0
+theme = ExtResource("Theme")
+
+[node name="Controls" type="VBoxContainer" parent="Canvas/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Canvas/Panel/Controls"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "ENEMY LAB"
+
+[node name="EnemyLabel" type="Label" parent="Canvas/Panel/Controls"]
+layout_mode = 2
+text = "Enemy scene"
+
+[node name="EnemyPicker" type="OptionButton" parent="Canvas/Panel/Controls"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="MovementLabel" type="Label" parent="Canvas/Panel/Controls"]
+layout_mode = 2
+text = "Movement preset"
+
+[node name="MovementPicker" type="OptionButton" parent="Canvas/Panel/Controls"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="AttackLabel" type="Label" parent="Canvas/Panel/Controls"]
+layout_mode = 2
+text = "Attack sequence"
+
+[node name="AttackPicker" type="OptionButton" parent="Canvas/Panel/Controls"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="PathToggle" type="CheckButton" parent="Canvas/Panel/Controls"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Use sample Path2D"
+
+[node name="PowerLabel" type="Label" parent="Canvas/Panel/Controls"]
+layout_mode = 2
+text = "Player power"
+
+[node name="PowerPicker" type="OptionButton" parent="Canvas/Panel/Controls"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Buttons" type="HBoxContainer" parent="Canvas/Panel/Controls"]
+layout_mode = 2
+
+[node name="Spawn" type="Button" parent="Canvas/Panel/Controls/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Spawn / Retry"
+
+[node name="Clear" type="Button" parent="Canvas/Panel/Controls/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Clear"
+
+[node name="Status" type="Label" parent="Canvas/Panel/Controls"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "PLAYER"
+
+[node name="Help" type="Label" parent="Canvas/Panel/Controls"]
+layout_mode = 2
+text = "F6: run this scene\nWASD: move    J: shoot\nH: switch weapon\nEnemies respawn after leaving\nClear stops respawning\nPick a preset, then Spawn / Retry"

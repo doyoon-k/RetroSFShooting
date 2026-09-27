@@ -1,14 +1,19 @@
-[gd_resource type="Resource" format=3]
+[gd_resource type="Resource" script_class="AttackPattern" load_steps=3 format=3 uid="uid://bsoke77wnpj24"]
 
-[ext_resource type="Script" path="res://scripts/data/attack_pattern.gd" id="Script"]
 [ext_resource type="PackedScene" path="res://scenes/projectiles/homing_bullet.tscn" id="Bullet"]
-
+[ext_resource type="Script" path="res://scripts/data/attack_pattern.gd" id="Script"]
 
 [resource]
 script = ExtResource("Script")
+display_name = "Limited homing pair"
 projectile_scene = ExtResource("Bullet")
-display_name = "Homing pair"
 aim = 2
+shape = 0
 bullet_count = 2
-spread_degrees = 45.0
-recovery = 3.0
+spread_degrees = 30.0
+angle_degrees = 180.0
+aim_offset_degrees = 0.0
+volley_count = 1
+volley_interval = 0.2
+rotation_per_volley = 0.0
+recovery = 1.8

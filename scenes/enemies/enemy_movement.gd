@@ -2,7 +2,7 @@ class_name EnemyMovement
 extends Node
 ## Exactly one movement mode writes the actor position.
 
-enum Mode { LINEAR, PATH, SINE, ENTER_HOLD_EXIT }
+enum Mode { LINEAR, PATH, SINE, ENTER_HOLD_EXIT, VERTICAL_SWEEP }
 @export var mode: Mode = Mode.LINEAR
 @export var direction: Vector2 = Vector2.LEFT
 @export_range(0.0, 1000.0, 5.0) var speed: float = 180.0
@@ -26,6 +26,34 @@ var actor: Node2D
 func _ready() -> void:
 	actor = get_parent() as Node2D
 	origin = actor.position
+
+func apply_profile(profile: MovementProfile) -> void:
+	if profile == null:
+		return
+	match profile.mode:
+		MovementProfile.Mode.LINEAR:
+			mode = Mode.LINEAR
+		MovementProfile.Mode.SINE:
+			mode = Mode.SINE
+		MovementProfile.Mode.ENTER_HOLD_EXIT:
+			mode = Mode.ENTER_HOLD_EXIT
+		MovementProfile.Mode.VERTICAL_SWEEP:
+			mode = Mode.VERTICAL_SWEEP
+	direction = profile.direction
+	speed = profile.speed
+	amplitude = profile.amplitude
+	frequency = profile.frequency
+	hold_position = profile.hold_position
+	hold_seconds = profile.hold_seconds
+	stay_forever = profile.stay_forever
+	exit_direction = profile.exit_direction
+	path = null
+	distance = 0.0
+	age = 0.0
+	hold_elapsed = 0.0
+	reached_hold = false
+	if actor != null:
+		origin = actor.position
 
 func use_path(route: Path2D, offset: Vector2 = Vector2.ZERO) -> void:
 	path = route
@@ -56,3 +84,10 @@ func _physics_process(delta: float) -> void:
 				hold_elapsed += delta
 				if hold_elapsed >= hold_seconds:
 					actor.position += exit_direction.normalized() * speed * delta
+		Mode.VERTICAL_SWEEP:
+			if not reached_hold:
+				actor.position = actor.position.move_toward(hold_position, speed * delta)
+				reached_hold = actor.position.is_equal_approx(hold_position)
+			else:
+				hold_elapsed += delta
+				actor.position = hold_position + Vector2(0.0, sin(hold_elapsed * TAU * frequency) * amplitude)

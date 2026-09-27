@@ -7,6 +7,10 @@ enum DropMode { NONE, GUARANTEED, CHANCE }
 @export var enemy_scene: PackedScene
 @export_range(1, 100) var count: int = 5
 @export var spawn_offset: Vector2 = Vector2(0, 0)
+@export_group("Optional Overrides")
+@export var movement_profile: MovementProfile
+@export var attack_sequence: AttackSequence
+@export_group("Drops")
 @export var drop_mode: DropMode = DropMode.NONE
 @export var drop_scene: PackedScene
 @export_range(0.0, 1.0, 0.05) var drop_chance: float = 0.5

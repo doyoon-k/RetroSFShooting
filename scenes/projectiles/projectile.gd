@@ -7,6 +7,8 @@ extends Area2D
 @export_range(1, 100) var damage: int = 1
 @export_range(0.0, 500.0, 10.0) var despawn_margin: float = 80.0
 @export_range(0.0, 8.0, 0.1) var homing_radians_per_second: float = 0.0
+@export_range(0.0, 8.0, 0.1) var homing_seconds: float = 1.2
+var age: float = 0.0
 var direction := Vector2.LEFT
 var friendly: bool = false
 var bounds := Rect2(0, 0, 1920, 1080)
@@ -22,7 +24,8 @@ func _ready() -> void:
 	area_entered.connect(_on_area_entered)
 
 func _physics_process(delta: float) -> void:
-	if homing_radians_per_second > 0.0 and is_instance_valid(target):
+	age += delta
+	if age <= homing_seconds and homing_radians_per_second > 0.0 and is_instance_valid(target):
 		var desired := global_position.direction_to(target.global_position).angle()
 		direction = Vector2.from_angle(rotate_toward(direction.angle(), desired, homing_radians_per_second * delta))
 	rotation = direction.angle()

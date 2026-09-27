@@ -1,0 +1,45 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://scenes/enemies/enemy_ship.gd" id="Ship"]
+[ext_resource type="Script" path="res://scenes/enemies/enemy_movement.gd" id="Movement"]
+[ext_resource type="PackedScene" path="res://scenes/gameplay/explosion.tscn" id="Explosion"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Enemy/L2.png" id="EnemyTexture"]
+[ext_resource type="Script" path="res://scenes/enemies/enemy_shooter.gd" id="Shooter"]
+[ext_resource type="Script" path="res://scripts/data/pattern_step.gd" id="StepType"]
+[ext_resource type="Resource" path="res://data/patterns/short_burst_step.tres" id="short_burst"]
+[ext_resource type="Resource" path="res://data/patterns/aimed_step.tres" id="aimed"]
+
+[sub_resource type="CircleShape2D" id="Shape"]
+radius = 87.0
+
+[node name="EnemyShip" type="Area2D"]
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+script = ExtResource("Ship")
+maximum_hp = 220
+is_midboss = true
+death_effect = ExtResource("Explosion")
+despawn_margin = 500.0
+
+[node name="Visual" type="Sprite2D" parent="."]
+offset = Vector2(-11.0, 16.5)
+texture = ExtResource("EnemyTexture")
+scale = Vector2(0.80, 0.80)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("Shape")
+
+[node name="Movement" type="Node" parent="."]
+script = ExtResource("Movement")
+mode = 4
+speed = 300.0
+amplitude = 150.0
+frequency = 0.1
+hold_position = Vector2(1160, 532)
+
+[node name="Shooter" type="Node2D" parent="."]
+position = Vector2(-70, 0)
+script = ExtResource("Shooter")
+steps = Array[ExtResource("StepType")]([ExtResource("short_burst"), ExtResource("aimed")])
+initial_delay = 1.1

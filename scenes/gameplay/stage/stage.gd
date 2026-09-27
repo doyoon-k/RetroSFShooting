@@ -19,6 +19,7 @@ var user_paused: bool = false
 var phase_left: float = 0.0
 var player: PlayerShip
 var boss: EnemyShip
+var mid_enemy: EnemyShip
 var pending_death: Dictionary = {}
 var pending_boss: bool = false
 var boss_waiting_to_enter: bool = false
@@ -68,7 +69,7 @@ func _ready() -> void:
 	_launch_current()
 
 func _physics_process(delta: float) -> void:
-	if phase != Phase.PLAYING or user_paused or is_instance_valid(boss) or boss_waiting_to_enter:
+	if phase != Phase.PLAYING or user_paused or is_instance_valid(boss) or is_instance_valid(mid_enemy) or boss_waiting_to_enter:
 		return
 	progress_x += scroll_speed * delta
 	_sync_world_bounds()
@@ -132,7 +133,7 @@ func _enter(next_phase: Phase, seconds: float = 0.0) -> void:
 	phase_left = seconds
 	get_tree().paused = phase != Phase.PLAYING or user_paused
 	if is_instance_valid(player):
-		player.auto_advance_speed = scroll_speed if phase == Phase.PLAYING and not is_instance_valid(boss) and not boss_waiting_to_enter else 0.0
+		player.auto_advance_speed = scroll_speed if phase == Phase.PLAYING and not is_instance_valid(boss) and not is_instance_valid(mid_enemy) and not boss_waiting_to_enter else 0.0
 	%SequencePanel.hide()
 	%NextPilotPanel.visible = phase == Phase.SELECTING_NEXT
 	%PauseDimmer.visible = phase == Phase.PLAYER_DYING or phase == Phase.SELECTING_NEXT or phase == Phase.CLEARING or user_paused
@@ -175,6 +176,12 @@ func _update_hud() -> void:
 		%BossBar.visible = true
 		%BossBar.max_value = boss.maximum_hp
 		%BossBar.value = boss.hp
+	elif is_instance_valid(mid_enemy):
+		%BossBar.visible = true
+		%BossBar.max_value = mid_enemy.maximum_hp
+		%BossBar.value = mid_enemy.hp
+	else:
+		%BossBar.hide()
 
 func get_target() -> Node2D:
 	return player if is_instance_valid(player) and not player.death_reported else null
@@ -190,15 +197,25 @@ func _spawn_wave_enemy(wave: EnemyWave, index: int) -> void:
 	var location := wave.global_position + offset
 	if path != null and path.curve != null:
 		location = path.to_global(path.curve.sample_baked(0.0)) + offset
-	var enemy := _spawn_enemy(wave.enemy_scene, location, wave.drop_scene, chance)
-	if path != null:
-		enemy.movement.use_path(path, offset)
+	_spawn_enemy(wave.enemy_scene, location, wave.drop_scene, chance, wave.movement_profile, wave.attack_sequence, path, offset)
 
-func _spawn_enemy(scene: PackedScene, location: Vector2, drop: PackedScene = null, chance: float = 0.0) -> EnemyShip:
+func _spawn_enemy(scene: PackedScene, location: Vector2, drop: PackedScene = null, chance: float = 0.0, movement_profile: MovementProfile = null, attack_sequence: AttackSequence = null, path: Path2D = null, path_offset: Vector2 = Vector2.ZERO) -> EnemyShip:
 	var enemy := scene.instantiate() as EnemyShip
 	enemy.position = location
+	var movement := enemy.get_node("Movement") as EnemyMovement
+	if movement_profile != null:
+		movement.apply_profile(movement_profile)
+	if attack_sequence != null:
+		enemy.apply_attack_sequence(attack_sequence)
+	if path != null and path.curve != null:
+		movement.use_path(path, path_offset)
 	actors.add_child(enemy)
 	_configure_enemy(enemy, drop, chance)
+	if enemy.is_midboss:
+		_clear_projectiles(false)
+		mid_enemy = enemy
+		if is_instance_valid(player):
+			player.auto_advance_speed = 0.0
 	return enemy
 
 func _activate_placed_enemy(enemy: EnemyShip) -> void:
@@ -215,7 +232,7 @@ func _configure_enemy(enemy: EnemyShip, drop: PackedScene, chance: float) -> voi
 	enemy.drop_scene = drop
 	enemy.drop_chance = chance
 	enemy.destroyed.connect(_enemy_destroyed)
-	if enemy.movement.mode == EnemyMovement.Mode.ENTER_HOLD_EXIT:
+	if enemy.movement.mode == EnemyMovement.Mode.ENTER_HOLD_EXIT or enemy.movement.mode == EnemyMovement.Mode.VERTICAL_SWEEP:
 		enemy.movement.hold_position.x += progress_x
 	if enemy.shooter != null:
 		enemy.shooter.projectiles = projectiles
@@ -236,12 +253,18 @@ func _begin_boss_intro() -> void:
 		boss_waiting_to_enter = false
 		return
 	boss_waiting_to_enter = false
+	_clear_projectiles(false)
 	boss = _spawn_enemy(waves.boss_scene, (waves.get_node("BossMarker") as Marker2D).global_position)
 	_enter(Phase.BOSS_INTRO, boss_intro_seconds)
 	_show_message("WARNING / THE WARDEN", "고에너지 반응 접근. 방주의 항로를 확보하라.", null)
 
 func _enemy_destroyed(enemy: EnemyShip) -> void:
 	defeated += 1
+	if enemy == mid_enemy:
+		mid_enemy = null
+		_clear_projectiles(false)
+		if is_instance_valid(player) and phase == Phase.PLAYING:
+			player.auto_advance_speed = scroll_speed
 	_effect(enemy.global_position, enemy.death_effect if enemy.death_effect != null else explosion_scene)
 	if enemy.drop_scene != null and randf() < enemy.drop_chance:
 		# Area2D callbacks run while the physics server flushes overlap queries.

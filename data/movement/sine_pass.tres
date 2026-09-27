@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="MovementProfile" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/movement_profile.gd" id="Profile"]
+
+[resource]
+resource_name = "Sine pass"
+script = ExtResource("Profile")
+mode = 1
+speed = 190.0
+amplitude = 120.0
+frequency = 0.45

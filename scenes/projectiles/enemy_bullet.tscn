@@ -9,7 +9,7 @@ radius = 7.0
 collision_layer = 8
 monitorable = false
 script = ExtResource("Script")
-speed = 300.0
+speed = 340.0
 
 [node name="Visual" type="Polygon2D" parent="."]
 color = Color(1, 0.61176, 0.50196, 1)

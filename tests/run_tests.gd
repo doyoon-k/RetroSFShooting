@@ -35,6 +35,8 @@ func _run() -> void:
 	_test_sorties()
 	_test_portraits()
 	_test_patterns()
+	await _test_enemy_profiles()
+	await _test_attack_fairness()
 	_test_input_map()
 	await _test_proximity_damage()
 	await _test_ship_sprites()
@@ -51,6 +53,50 @@ func _run() -> void:
 	for failure in failures:
 		print(" - " + failure)
 	quit(0 if failures.is_empty() else 1)
+
+func _test_attack_fairness() -> void:
+	var enemy := load("res://scenes/enemies/n2_crawler.tscn").instantiate() as EnemyShip
+	var target := Node2D.new()
+	var bullets := Node2D.new()
+	root.add_child(target)
+	root.add_child(bullets)
+	root.add_child(enemy)
+	enemy.set_physics_process(false)
+	enemy.movement.set_physics_process(false)
+	var shooter := enemy.shooter
+	shooter.set_physics_process(false)
+	shooter.bounds = Rect2(48, 100, 1440, 864)
+	shooter.projectiles = bullets
+	shooter.target_provider = func(): return target
+	target.position = Vector2(300, 532)
+	enemy.position = Vector2(1600, 532)
+	check(not shooter.can_fire(), "Offscreen enemy cannot fire")
+	enemy.position = Vector2(250, 532)
+	check(not shooter.can_fire(), "Normal enemy behind the player cannot fire")
+	enemy.position = Vector2(430, 532)
+	check(not shooter.can_fire(), "Normal enemy does not point-blank fire within 160px")
+	enemy.position = Vector2(1200, 532)
+	shooter.timer = 0.0
+	shooter._physics_process(0.01)
+	check(shooter.warning and bullets.get_child_count() == 0, "A burst gives a visible warning before any projectile")
+	var angle := shooter.locked_angle
+	target.position.y = 800
+	shooter._physics_process(shooter.telegraph_seconds + 0.01)
+	check(bullets.get_child_count() == 1 and (bullets.get_child(0) as Projectile).direction.is_equal_approx(Vector2.from_angle(angle)), "Locked burst keeps its warned aim after player movement")
+	var homing := load("res://scenes/projectiles/homing_bullet.tscn").instantiate() as Projectile
+	root.add_child(homing)
+	homing.set_physics_process(false)
+	homing.position = Vector2(900, 532)
+	homing.target = target
+	homing.age = homing.homing_seconds + 0.1
+	var old_direction := homing.direction
+	homing._physics_process(0.1)
+	check(homing.direction == old_direction, "Homing bullet stops turning after its tracking window")
+	homing.queue_free()
+	enemy.queue_free()
+	target.queue_free()
+	bullets.queue_free()
+	await frames()
 
 func _test_endings() -> void:
 	var counts := {&"extinction": 0, &"last_signal": 0, &"betrayal": 0, &"unknown_horizon": 0, &"cost_of_dawn": 0, &"new_home": 0}
@@ -139,12 +185,136 @@ func _test_portraits() -> void:
 func _test_patterns() -> void:
 	var fan := load("res://data/patterns/fan.tres") as AttackPattern
 	var angles := fan.angles_for_volley(PI, 0)
-	check(angles.size() == 3 and is_equal_approx(angles[1], PI), "Aimed fan is symmetric around its target")
+	check(angles.size() == 5 and is_equal_approx(angles[2], PI) and is_equal_approx(PI - angles[0], angles[4] - PI), "Aimed fan is symmetric around its target")
 	var ring := load("res://data/patterns/ring.tres") as AttackPattern
 	angles = ring.angles_for_volley(0, 0)
 	check(angles.size() == 12 and not is_equal_approx(angles[0], angles[11]), "Ring does not duplicate its first bullet at 360 degrees")
 	var spiral := load("res://data/patterns/spiral.tres") as AttackPattern
 	check(is_equal_approx(spiral.angles_for_volley(0, 1)[0], deg_to_rad(17)), "Rotating pattern advances the volley angle")
+
+func _test_enemy_profiles() -> void:
+	var sine := load("res://data/movement/sine_pass.tres") as MovementProfile
+	var hold := load("res://data/movement/hold_fire.tres") as MovementProfile
+	var aimed := load("res://data/sequences/aimed.tres") as AttackSequence
+	var silent := load("res://data/sequences/silent.tres") as AttackSequence
+	check(sine != null and aimed != null and aimed.steps.size() == 1, "Movement and attack presets load as editable resources")
+	var planned_enemies := {
+		"z1_wedge": 2, "z2_spine": 2, "z3_eye": 3, "z4_crescent": 2, "z5_chain": 3,
+		"n1_interceptor": 12, "n2_crawler": 24, "n3_claw": 32, "n4_armor": 44, "n5_tendril": 26,
+		"m1_carapace": 240, "m2_wing": 220, "m3_star_eye": 260,
+	}
+	for enemy_name in planned_enemies:
+		var planned_scene := load("res://scenes/enemies/%s.tscn" % enemy_name) as PackedScene
+		var planned_enemy := planned_scene.instantiate() as EnemyShip
+		check(planned_enemy.maximum_hp == planned_enemies[enemy_name] and planned_enemy.get_node_or_null("Visual") != null and planned_enemy.get_node_or_null("Movement") != null, "Enemy scene has distinct combat data: " + enemy_name)
+		var sprite := planned_enemy.get_node_or_null("Visual") as Sprite2D
+		var image_prefix: String = {"z": "S", "n": "M", "m": "L"}[enemy_name.left(1)]
+		var image_name: String = image_prefix + enemy_name.substr(1, 1) + ".png"
+		check(sprite != null and sprite.texture != null and sprite.texture.resource_path.ends_with("/Enemy/" + image_name), "Enemy uses the supplied sprite: " + enemy_name)
+		planned_enemy.free()
+	var stage := _create_stage()
+	await frames(16)
+	var wave := EnemyWave.new()
+	wave.enemy_scene = load("res://scenes/enemies/scout.tscn")
+	wave.position = Vector2(1260, 532)
+	wave.movement_profile = sine
+	wave.attack_sequence = aimed
+	stage._spawn_wave_enemy(wave, 0)
+	var scout := stage.actors.get_child(stage.actors.get_child_count() - 1) as EnemyShip
+	check(scout.movement.mode == EnemyMovement.Mode.SINE and is_equal_approx(scout.movement.amplitude, sine.amplitude), "Wave movement preset overrides the enemy scene")
+	check(scout.shooter != null and scout.shooter.steps[0] == aimed.steps[0], "Attack override can add a shooter to a silent enemy")
+	var first_timer := scout.shooter.timer
+	stage._spawn_wave_enemy(wave, 0)
+	var other := stage.actors.get_child(stage.actors.get_child_count() - 1) as EnemyShip
+	scout.shooter.timer = 7.0
+	check(other.shooter.timer == first_timer and aimed.steps.size() == 1, "Shared attack settings keep independent runtime timers")
+	wave.enemy_scene = load("res://scenes/enemies/fighter.tscn")
+	wave.movement_profile = hold
+	wave.attack_sequence = silent
+	stage._spawn_wave_enemy(wave, 0)
+	var fighter := stage.actors.get_child(stage.actors.get_child_count() - 1) as EnemyShip
+	check(fighter.movement.mode == EnemyMovement.Mode.ENTER_HOLD_EXIT and is_equal_approx(fighter.movement.hold_position.x, hold.hold_position.x + stage.progress_x), "Hold preset receives the current world offset")
+	check(fighter.shooter.steps.is_empty(), "An empty attack preset disables a scene's default shooter")
+	var route := Path2D.new()
+	route.name = "Path2D"
+	var curve := Curve2D.new()
+	curve.add_point(Vector2.ZERO)
+	curve.add_point(Vector2(-300, 100))
+	route.curve = curve
+	wave.add_child(route)
+	wave.movement_profile = sine
+	stage._spawn_wave_enemy(wave, 0)
+	var path_enemy := stage.actors.get_child(stage.actors.get_child_count() - 1) as EnemyShip
+	check(path_enemy.movement.mode == EnemyMovement.Mode.PATH and path_enemy.movement.path == route, "A wave Path2D takes priority over its movement preset")
+	await frames(110)
+	check(stage.projectiles.get_child_count() > 0, "A wave attack override actually fires enemy projectiles")
+	var mid := stage._spawn_enemy(load("res://scenes/enemies/m2_wing.tscn"), Vector2(stage.view_bounds.end.x + 80, 532))
+	var paused_progress := stage.progress_x
+	await frames(8)
+	check(stage.mid_enemy == mid and is_equal_approx(stage.progress_x, paused_progress) and stage.player.auto_advance_speed == 0.0, "Middle enemy pauses camera and player auto-advance")
+	mid.take_damage(9999)
+	await frames(5)
+	check(stage.mid_enemy == null and stage.progress_x > paused_progress and stage.player.auto_advance_speed == stage.scroll_speed, "Defeating a middle enemy resumes scrolling")
+	wave.free()
+	stage.queue_free()
+	await frames()
+
+	var lab := load("res://scenes/gameplay/enemy_lab/enemy_lab.tscn").instantiate() as EnemyLab
+	root.add_child(lab)
+	await frames()
+	check(lab.enemy_scenes.size() == 14 and lab.movement_presets.size() == 4 and lab.attack_presets.size() == 9, "F6 lab exposes all 13 enemies, boss, movement, and attack choices")
+	lab.get_node("Canvas/Panel/Controls/MovementPicker").select(2)
+	lab.get_node("Canvas/Panel/Controls/AttackPicker").select(2)
+	var lab_enemy := lab.spawn_sample() as EnemyShip
+	check(lab_enemy.movement.mode == EnemyMovement.Mode.SINE and lab_enemy.shooter != null, "Lab applies selected presets to a spawned enemy")
+	lab.get_node("Canvas/Panel/Controls/PathToggle").button_pressed = true
+	lab_enemy = lab.spawn_sample() as EnemyShip
+	check(lab_enemy.movement.mode == EnemyMovement.Mode.PATH and lab_enemy.movement.path == lab.get_node("Route"), "Lab path switch overrides the selected movement preset")
+	lab.get_node("Canvas/Panel/Controls/PowerPicker").select(2)
+	lab.call("_set_power", 2)
+	check(lab.state.current_power_level() == 3, "Lab changes player weapon level without restarting")
+	lab_enemy.queue_free()
+	await frames(52)
+	var lab_enemy_count := 0
+	for actor in lab.actors.get_children():
+		if actor is EnemyShip and not actor.is_queued_for_deletion():
+			lab_enemy_count += 1
+	check(lab_enemy_count == 1, "Lab respawns an enemy after its movement ends")
+	lab.clear_sample()
+	await frames(52)
+	lab_enemy_count = 0
+	for actor in lab.actors.get_children():
+		if actor is EnemyShip and not actor.is_queued_for_deletion():
+			lab_enemy_count += 1
+	check(lab_enemy_count == 0, "Lab Clear stops automatic respawning")
+	lab.spawn_sample()
+	await capture("enemy_lab")
+	lab.queue_free()
+	await frames()
+	if screenshots:
+		var gallery := Node2D.new()
+		root.add_child(gallery)
+		var backdrop := ColorRect.new()
+		backdrop.color = Color(0.035, 0.045, 0.08)
+		backdrop.size = Vector2(1920, 1080)
+		gallery.add_child(backdrop)
+		var names := planned_enemies.keys()
+		names.sort()
+		for index in names.size():
+			var name: String = names[index]
+			var scene := load("res://scenes/enemies/%s.tscn" % name) as PackedScene
+			var enemy := scene.instantiate() as EnemyShip
+			enemy.process_mode = Node.PROCESS_MODE_DISABLED
+			enemy.position = Vector2(230 + index % 4 * 470, 150 + floori(float(index) / 4.0) * 240)
+			gallery.add_child(enemy)
+			var label := Label.new()
+			label.position = enemy.position + Vector2(-120, 110)
+			label.text = name.to_upper()
+			label.add_theme_font_size_override("font_size", 28)
+			gallery.add_child(label)
+		await capture("enemy_roster")
+		gallery.queue_free()
+		await frames()
 
 func _test_save() -> void:
 	var save := SaveStore.new()
@@ -386,7 +556,7 @@ func _test_stage() -> void:
 	check(stage.player.invincibility > 1.0, "Spawn protection starts after launch")
 	var initial_x := stage.player.position.x
 	var initial_progress := stage.progress_x
-	var dormant := stage.placed_enemies.get_node("HunterTop") as EnemyShip
+	var dormant := stage.placed_enemies.get_node("N5Upper") as EnemyShip
 	var dormant_x := dormant.position.x
 	var guide := stage.get_node("Simulation/StageGuide")
 	var linear_preview: PackedVector2Array = guide.call("_movement_points", dormant.movement, dormant.global_position)
@@ -637,25 +807,48 @@ func _test_simultaneous_outcomes() -> void:
 func _test_full_stage() -> void:
 	var stage := _create_stage()
 	await frames(16)
+	var authored_waves := 0
+	var authored_enemies := 0
+	var featured_types := {}
+	for wave in stage.waves.get_children():
+		if wave is EnemyWave:
+			authored_waves += 1
+			authored_enemies += wave.count
+			check(wave.enemy_scene != null, "Authored wave has an enemy scene: " + wave.name)
+			if wave.enemy_scene != null:
+				featured_types[wave.enemy_scene.resource_path.get_file().get_basename()] = true
+	check(authored_waves == 61 and authored_enemies == 144, "Stage keeps all 61 configured waves and 144 wave enemies")
+	check(featured_types.size() == 13, "Every planned enemy type appears in the one stage")
 	stage.player.invincibility = 300.0
+	# Fast-forward traversal for the longer one-stage route; keep the ship with the camera.
+	stage.scroll_speed = 720.0
+	stage.player.auto_advance_speed = 720.0
 	Input.action_press("shoot")
 	# Run the entire authored route without moving the camera manually.
+	var mid_encounters := 0
 	for i in 4150:
 		await process_frame
+		if is_instance_valid(stage.mid_enemy):
+			mid_encounters += 1
+			stage.mid_enemy.take_damage(9999)
+		if stage.waves.boss_sent and is_instance_valid(stage.boss):
+			break
 		if i % 120 == 0 and is_instance_valid(stage.player):
 			stage.player.position.y = 532 + sin(i * 0.006) * 260
 	Input.action_release("shoot")
+	check(mid_encounters == 3, "All three middle enemy encounters pause the route")
 	check(stage.waves.boss_sent and is_instance_valid(stage.boss), "Travel reaches the placed boss marker")
 	var emitted := 0
 	for wave in stage.waves.get_children():
 		if wave is EnemyWave:
 			check(wave.emitted == wave.count, "Spatial group emits all enemies: " + wave.name)
 			emitted += wave.emitted
-	check(emitted + stage.placed_activated == 45, "Spatial groups and placed enemies activate all 45 non-boss enemies")
+	check(emitted + stage.placed_activated == 146, "Spatial groups and placed enemies activate all 146 non-boss enemies")
 	check(stage.placed_activated == 2 and stage.placed_enemies.get_child_count() == 0, "Placed enemy scenes activate when the camera reaches them")
 	var boss := stage.boss
 	if is_instance_valid(boss):
-		boss.take_damage(130)
+		await frames(150)
+		boss.take_damage(boss.maximum_hp * 0.55)
 		check(boss.phase_two and boss.shooter.steps == boss.second_phase, "Boss swaps to phase-two sequence at its HP threshold")
 		await frames(120)
 		await capture("09_boss")

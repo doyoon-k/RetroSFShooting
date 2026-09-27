@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AttackSequence" load_steps=4 format=3 uid="uid://bp6ywfkqajwoy"]
+
+[ext_resource type="Script" path="res://scripts/data/attack_sequence.gd" id="Sequence"]
+[ext_resource type="Resource" path="res://data/patterns/short_burst_step.tres" id="Step"]
+[ext_resource type="Script" path="res://scripts/data/pattern_step.gd" id="StepType"]
+
+[resource]
+resource_name = "Four shot burst"
+script = ExtResource("Sequence")
+steps = Array[ExtResource("StepType")]([ExtResource("Step")])
+initial_delay = 0.35

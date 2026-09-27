@@ -1,41 +1,36 @@
-[gd_scene load_steps=22 format=3 uid="uid://mfi362jrfrvm"]
+[gd_scene load_steps=32 format=3 uid="uid://mfi362jrfrvm"]
 
 [ext_resource type="PackedScene" path="res://scenes/items/bomb.tscn" id="bomb"]
 [ext_resource type="PackedScene" uid="uid://go6dxu1qx1bf" path="res://scenes/enemies/boss.tscn" id="boss"]
 [ext_resource type="Resource" path="res://data/game_catalog.tres" id="Catalog"]
+[ext_resource type="Resource" path="res://data/sequences/diagonal_up.tres" id="DiagUp"]
 [ext_resource type="PackedScene" uid="uid://crf6oscbynrkg" path="res://scenes/gameplay/explosion.tscn" id="Explosion"]
-[ext_resource type="PackedScene" uid="uid://bgxei4xcj30fw" path="res://scenes/enemies/fighter.tscn" id="fighter"]
 [ext_resource type="Script" path="res://scenes/gameplay/stage/stage_guide.gd" id="Guide"]
-[ext_resource type="PackedScene" uid="uid://cgav6dq4bps0o" path="res://scenes/enemies/gunner.tscn" id="gunner"]
-[ext_resource type="PackedScene" uid="uid://diwfp81q64kye" path="res://scenes/enemies/hunter.tscn" id="hunter"]
+[ext_resource type="Resource" uid="uid://n1sf5sy2l8bw" path="res://data/movement/hold_high.tres" id="HoldHigh"]
+[ext_resource type="Resource" uid="uid://05s836pbseyp" path="res://data/movement/hold_low.tres" id="HoldLow"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/m1_carapace.tscn" id="M1"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/m2_wing.tscn" id="M2"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/m3_star_eye.tscn" id="M3"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/n1_interceptor.tscn" id="N1"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/n2_crawler.tscn" id="N2"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/n3_claw.tscn" id="N3"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/n4_armor.tscn" id="N4"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/n5_tendril.tscn" id="N5"]
 [ext_resource type="PackedScene" path="res://scenes/items/power_up.tscn" id="power_up"]
 [ext_resource type="PackedScene" path="res://scenes/ui/pilot_roster.tscn" id="Roster"]
-[ext_resource type="PackedScene" uid="uid://btmuklv0dnsmp" path="res://scenes/enemies/scout.tscn" id="scout"]
 [ext_resource type="Script" path="res://scenes/gameplay/stage/stage.gd" id="Script"]
 [ext_resource type="Script" path="res://scenes/gameplay/waves/wave_sequence.gd" id="Sequence"]
 [ext_resource type="PackedScene" path="res://scenes/items/shield.tscn" id="shield"]
+[ext_resource type="Resource" uid="uid://bp6ywfkqajwoy" path="res://data/sequences/short_burst.tres" id="ShortBurst"]
 [ext_resource type="Script" path="res://scenes/ui/starfield.gd" id="Stars"]
 [ext_resource type="Theme" uid="uid://wbownrqyfplv" path="res://scenes/ui/game_theme.tres" id="Theme"]
 [ext_resource type="Script" path="res://scenes/ui/typewriter_label.gd" id="Typewriter"]
 [ext_resource type="Script" path="res://scenes/gameplay/waves/wave.gd" id="Wave"]
-
-[sub_resource type="Curve2D" id="Route0"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -450, 0, 0, 0, 0, 0, -551, 142, 0, 0, 0, 0, -700, 310, 0, 0, 0, 0, -1190, 550, 0, 0, 0, 0, -1710, 550)
-}
-point_count = 6
-
-[sub_resource type="Curve2D" id="Route1"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -450, -60, 0, 0, 0, 0, -700, -340, 0, 0, 0, 0, -1090, -630, 0, 0, 0, 0, -1740, -630)
-}
-point_count = 5
-
-[sub_resource type="Curve2D" id="Route2"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -420, 230, 0, 0, 0, 0, -680, -150, 0, 0, 0, 0, -1090, 50, 0, 0, 0, 0, -1760, 60)
-}
-point_count = 5
+[ext_resource type="PackedScene" path="res://scenes/enemies/z1_wedge.tscn" id="Z1"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/z2_spine.tscn" id="Z2"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/z3_eye.tscn" id="Z3"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/z4_crescent.tscn" id="Z4"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/z5_chain.tscn" id="Z5"]
 
 [node name="Stage" type="Node2D"]
 process_mode = 3
@@ -68,110 +63,432 @@ scroll_speed = 75.0
 
 [node name="StageGuide" type="Node2D" parent="Simulation"]
 script = ExtResource("Guide")
+length = 30000.0
 
 [node name="WaveSequence" type="Node2D" parent="Simulation"]
 script = ExtResource("Sequence")
 boss_scene = ExtResource("boss")
 
 [node name="BossMarker" type="Marker2D" parent="Simulation/WaveSequence"]
-position = Vector2(13250, 532)
+position = Vector2(29648, 532)
 
-[node name="Wave01_scout" type="Marker2D" parent="Simulation/WaveSequence"]
-position = Vector2(1930, 210)
+[node name="Wave01_Z1" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(1748, 532)
 script = ExtResource("Wave")
-enemy_scene = ExtResource("scout")
-count = 7
-spawn_offset = Vector2(108, 0)
-
-[node name="Path2D" type="Path2D" parent="Simulation/WaveSequence/Wave01_scout"]
-curve = SubResource("Route0")
-
-[node name="Wave02_fighter" type="Marker2D" parent="Simulation/WaveSequence"]
-position = Vector2(3251, 605)
-script = ExtResource("Wave")
-enemy_scene = ExtResource("fighter")
-count = 3
-spawn_offset = Vector2(306, 90)
-
-[node name="Wave03_gunner" type="Marker2D" parent="Simulation/WaveSequence"]
-position = Vector2(3890, 532)
-script = ExtResource("Wave")
-enemy_scene = ExtResource("gunner")
-count = 1
-drop_mode = 1
-drop_scene = ExtResource("power_up")
-
-[node name="Wave04_scout" type="Marker2D" parent="Simulation/WaveSequence"]
-position = Vector2(4460, 880)
-script = ExtResource("Wave")
-enemy_scene = ExtResource("scout")
-count = 7
+enemy_scene = ExtResource("Z1")
 spawn_offset = Vector2(90, 0)
 
-[node name="Path2D" type="Path2D" parent="Simulation/WaveSequence/Wave04_scout"]
-curve = SubResource("Route1")
-
-[node name="Wave05_hunter" type="Marker2D" parent="Simulation/WaveSequence"]
-position = Vector2(5690, 450)
+[node name="Wave02_Z1" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(2288, 330)
 script = ExtResource("Wave")
-enemy_scene = ExtResource("hunter")
-count = 3
-spawn_offset = Vector2(360, 90)
-drop_mode = 2
+enemy_scene = ExtResource("Z1")
+spawn_offset = Vector2(90, 0)
+
+[node name="Wave03_Z3" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(2828, 532)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("Z3")
+count = 1
+drop_mode = 1
+drop_scene = ExtResource("power_up")
+
+[node name="Wave04_Z2" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(3368, 720)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("Z2")
+spawn_offset = Vector2(100, 0)
+
+[node name="Wave05_Z2" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(4088, 300)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("Z2")
+spawn_offset = Vector2(100, 0)
+
+[node name="Wave06_Z3" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(4628, 532)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("Z3")
+count = 1
+drop_mode = 1
+drop_scene = ExtResource("power_up")
+
+[node name="Wave07_N1" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(5168, 440)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("N1")
+count = 1
+
+[node name="Wave08_Z1" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(5348, 740)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("Z1")
+spawn_offset = Vector2(90, 0)
+
+[node name="Wave09_N2" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(6068, 740)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("N2")
+count = 1
+
+[node name="Wave10_Z1" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(6248, 300)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("Z1")
+spawn_offset = Vector2(90, 0)
+
+[node name="Wave11_Z3" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(6968, 532)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("Z3")
+count = 1
+drop_mode = 1
 drop_scene = ExtResource("shield")
 
-[node name="Wave06_gunner" type="Marker2D" parent="Simulation/WaveSequence"]
-position = Vector2(6590, 532)
+[node name="Wave12_M2" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(7688, 532)
 script = ExtResource("Wave")
-enemy_scene = ExtResource("gunner")
+enemy_scene = ExtResource("M2")
 count = 1
 drop_mode = 1
 drop_scene = ExtResource("power_up")
 
-[node name="Wave07_scout" type="Marker2D" parent="Simulation/WaveSequence"]
-position = Vector2(7340, 450)
+[node name="Wave13_Z1" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(8588, 532)
 script = ExtResource("Wave")
-enemy_scene = ExtResource("scout")
-count = 8
-spawn_offset = Vector2(81, 0)
+enemy_scene = ExtResource("Z1")
+count = 6
+spawn_offset = Vector2(80, 0)
 
-[node name="Path2D" type="Path2D" parent="Simulation/WaveSequence/Wave07_scout"]
-curve = SubResource("Route2")
-
-[node name="Wave08_fighter" type="Marker2D" parent="Simulation/WaveSequence"]
-position = Vector2(8570, 500)
+[node name="Wave14_Z4" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(9308, 260)
 script = ExtResource("Wave")
-enemy_scene = ExtResource("fighter")
-count = 4
-spawn_offset = Vector2(252, 90)
-drop_mode = 2
+enemy_scene = ExtResource("Z4")
+count = 3
+spawn_offset = Vector2(125, 0)
+
+[node name="Wave15_N3" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(10028, 300)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("N3")
+count = 1
+movement_profile = ExtResource("HoldHigh")
+
+[node name="Wave16_Z1" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(10388, 750)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("Z1")
+spawn_offset = Vector2(90, 0)
+
+[node name="Wave17_N4" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(10928, 650)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("N4")
+count = 1
+attack_sequence = ExtResource("ShortBurst")
+
+[node name="Wave18_Z5" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(11468, 290)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("Z5")
+spawn_offset = Vector2(100, 0)
+
+[node name="Wave19_N3" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(12008, 760)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("N3")
+count = 1
+movement_profile = ExtResource("HoldLow")
+
+[node name="Wave20_Z2" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(12188, 360)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("Z2")
+spawn_offset = Vector2(100, 0)
+
+[node name="Wave21_N2" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(12908, 300)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("N2")
+count = 1
+
+[node name="Wave22_Z4" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(13088, 790)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("Z4")
+count = 3
+spawn_offset = Vector2(125, 0)
+attack_sequence = ExtResource("DiagUp")
+
+[node name="Wave23_N4" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(13808, 532)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("N4")
+count = 1
+drop_mode = 1
 drop_scene = ExtResource("bomb")
 
-[node name="Wave09_gunner" type="Marker2D" parent="Simulation/WaveSequence"]
-position = Vector2(9650, 532)
+[node name="Wave24_Z3" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(14528, 532)
 script = ExtResource("Wave")
-enemy_scene = ExtResource("gunner")
+enemy_scene = ExtResource("Z3")
+count = 1
+drop_mode = 1
+drop_scene = ExtResource("shield")
+
+[node name="Wave25_M1" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(15608, 532)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("M1")
 count = 1
 drop_mode = 1
 drop_scene = ExtResource("power_up")
 
-[node name="Wave10_scout" type="Marker2D" parent="Simulation/WaveSequence"]
-position = Vector2(10390, 210)
+[node name="Wave26_Z1" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(16508, 532)
 script = ExtResource("Wave")
-enemy_scene = ExtResource("scout")
-count = 8
-spawn_offset = Vector2(72, 0)
+enemy_scene = ExtResource("Z1")
+count = 6
+spawn_offset = Vector2(80, 0)
 
-[node name="Path2D" type="Path2D" parent="Simulation/WaveSequence/Wave10_scout"]
-curve = SubResource("Route0")
+[node name="Wave27_N5" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(17228, 400)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("N5")
+count = 1
+
+[node name="Wave28_Z5" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(17948, 730)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("Z5")
+spawn_offset = Vector2(100, 0)
+
+[node name="Wave29_Z2" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(18848, 680)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("Z2")
+spawn_offset = Vector2(100, 0)
+
+[node name="Wave30_N3" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(19388, 760)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("N3")
+count = 1
+movement_profile = ExtResource("HoldLow")
+
+[node name="Wave31_Z1" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(19748, 280)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("Z1")
+spawn_offset = Vector2(90, 0)
+
+[node name="Wave32_N2" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(20468, 700)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("N2")
+count = 1
+
+[node name="Wave33_Z4" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(20648, 260)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("Z4")
+count = 3
+spawn_offset = Vector2(125, 0)
+
+[node name="Wave34_Z3" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(21728, 532)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("Z3")
+count = 1
+drop_mode = 1
+drop_scene = ExtResource("bomb")
+
+[node name="Wave35_Z3" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(22088, 532)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("Z3")
+count = 1
+drop_mode = 1
+drop_scene = ExtResource("shield")
+
+[node name="Wave36_M3" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(23168, 532)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("M3")
+count = 1
+drop_mode = 1
+drop_scene = ExtResource("power_up")
+
+[node name="Wave37_Z1" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(24068, 532)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("Z1")
+count = 6
+spawn_offset = Vector2(80, 0)
+
+[node name="Wave38_N1" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(24608, 300)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("N1")
+count = 1
+
+[node name="Wave39_Z5" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(24788, 730)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("Z5")
+spawn_offset = Vector2(100, 0)
+
+[node name="Wave40_N3" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(25328, 760)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("N3")
+count = 1
+movement_profile = ExtResource("HoldLow")
+
+[node name="Wave41_Z2" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(25508, 300)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("Z2")
+spawn_offset = Vector2(100, 0)
+
+[node name="Wave42_N2" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(26228, 310)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("N2")
+count = 1
+
+[node name="Wave43_Z4" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(26408, 790)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("Z4")
+count = 3
+spawn_offset = Vector2(125, 0)
+attack_sequence = ExtResource("DiagUp")
+
+[node name="Wave44_N4" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(27128, 532)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("N4")
+count = 1
+attack_sequence = ExtResource("ShortBurst")
+drop_mode = 1
+drop_scene = ExtResource("bomb")
+
+[node name="Wave45_Z1" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(27308, 280)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("Z1")
+spawn_offset = Vector2(90, 0)
+
+[node name="Wave46_Z3" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(28028, 532)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("Z3")
+count = 1
+drop_mode = 1
+drop_scene = ExtResource("power_up")
+
+[node name="Wave47_Z3" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(28388, 532)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("Z3")
+count = 1
+drop_mode = 1
+drop_scene = ExtResource("shield")
+
+[node name="Wave48_N2_Support" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(5312, 760)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("N2")
+count = 1
+
+[node name="Wave49_N1_Support" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(6194, 300)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("N1")
+count = 1
+
+[node name="Wave50_N2_Support" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(10118, 730)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("N2")
+count = 1
+
+[node name="Wave51_N3_Support" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(11018, 300)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("N3")
+count = 1
+movement_profile = ExtResource("HoldHigh")
+
+[node name="Wave52_N2_Support" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(12098, 300)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("N2")
+count = 1
+
+[node name="Wave53_N5_Support" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(12980, 400)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("N5")
+count = 1
+
+[node name="Wave54_N2_Support" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(17372, 730)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("N2")
+count = 1
+
+[node name="Wave55_N3_Support" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(18578, 760)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("N3")
+count = 1
+movement_profile = ExtResource("HoldLow")
+
+[node name="Wave56_N1_Support" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(19478, 300)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("N1")
+count = 1
+
+[node name="Wave57_N3_Support" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(20594, 300)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("N3")
+count = 1
+movement_profile = ExtResource("HoldHigh")
+
+[node name="Wave58_N2_Support" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(24734, 730)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("N2")
+count = 1
+
+[node name="Wave59_N5_Support" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(25454, 300)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("N5")
+count = 1
+
+[node name="Wave60_N3_Support" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(26318, 440)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("N3")
+count = 1
+
+[node name="Wave61_N1_Support" type="Marker2D" parent="Simulation/WaveSequence"]
+position = Vector2(27254, 760)
+script = ExtResource("Wave")
+enemy_scene = ExtResource("N1")
+count = 1
 
 [node name="PlacedEnemies" type="Node2D" parent="Simulation"]
 
-[node name="HunterTop" parent="Simulation/PlacedEnemies" instance=ExtResource("hunter")]
-position = Vector2(11450, 370)
+[node name="N5Upper" parent="Simulation/PlacedEnemies" instance=ExtResource("N5")]
+position = Vector2(18488, 290)
 
-[node name="HunterBottom" parent="Simulation/PlacedEnemies" instance=ExtResource("hunter")]
-position = Vector2(11810, 460)
+[node name="N5Lower" parent="Simulation/PlacedEnemies" instance=ExtResource("N5")]
+position = Vector2(26228, 760)
 
 [node name="Actors" type="Node2D" parent="Simulation"]
 

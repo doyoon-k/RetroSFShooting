@@ -47,10 +47,12 @@ func _draw_ruler() -> void:
 func _draw_group(wave: EnemyWave) -> void:
 	if wave.enemy_scene == null:
 		return
-	var enemy := wave.enemy_scene.instantiate() as Node2D
+	var enemy := wave.enemy_scene.instantiate() as EnemyShip
 	if enemy == null:
 		return
-	var movement := enemy.get_node_or_null("Movement")
+	var movement := enemy.get_node("Movement") as EnemyMovement
+	if wave.movement_profile != null:
+		movement.apply_profile(wave.movement_profile)
 	var route := wave.get_node_or_null("Path2D") as Path2D
 	var color := _enemy_color(enemy)
 	for index in wave.count:
@@ -137,6 +139,14 @@ func _movement_points(movement: Node, start: Vector2) -> PackedVector2Array:
 						held += preview_step
 						if held >= hold_seconds:
 							position += exit_direction.normalized() * speed * preview_step
+			EnemyMovement.Mode.VERTICAL_SWEEP:
+				if index > 0:
+					if not reached_hold:
+						position = position.move_toward(hold_position, speed * preview_step)
+						reached_hold = position.is_equal_approx(hold_position)
+					else:
+						held += preview_step
+						position = hold_position + Vector2(0.0, sin(held * TAU * frequency) * amplitude)
 			EnemyMovement.Mode.PATH:
 				return points
 		points.append(to_local(position))
@@ -171,7 +181,7 @@ func _enemy_color(enemy: Node2D) -> Color:
 	if visual != null:
 		return visual.color
 	var sprite := enemy.get_node_or_null("Visual") as Sprite2D
-	return sprite.modulate if sprite != null else Color(0.7, 0.85, 0.9)
+	return Color(0.74, 0.35, 0.95) if sprite != null else Color(0.7, 0.85, 0.9)
 
 func _draw_enemy_visual(enemy: Node2D, start: Vector2) -> void:
 	for name in ["Visual", "Core"]:
@@ -191,8 +201,8 @@ func _draw_enemy_visual(enemy: Node2D, start: Vector2) -> void:
 		var frame := clampi(sprite.frame, 0, columns * rows - 1)
 		source = Rect2(source.position + Vector2(frame % columns, floori(float(frame) / float(columns))) * size, size)
 		var top_left := -size * 0.5 if sprite.centered else Vector2.ZERO
-		draw_set_transform(to_local(start) + sprite.position + sprite.offset, sprite.rotation, sprite.scale)
-		draw_texture_rect_region(sprite.texture, Rect2(top_left, size), source, sprite.modulate)
+		draw_set_transform(to_local(start) + sprite.position, sprite.rotation, sprite.scale)
+		draw_texture_rect_region(sprite.texture, Rect2(top_left + sprite.offset, size), source, sprite.modulate)
 		draw_set_transform(Vector2.ZERO)
 
 func _draw_label(start: Vector2, label: String, color: Color) -> void:

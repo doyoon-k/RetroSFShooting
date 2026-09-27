@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="AttackSequence" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/attack_sequence.gd" id="Sequence"]
+
+[resource]
+resource_name = "No attack"
+script = ExtResource("Sequence")
