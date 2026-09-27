@@ -1,16 +1,13 @@
-[gd_resource type="Resource" script_class="PilotData" format=3 uid="uid://ci0so1hhj0d16"]
+[gd_resource type="Resource" script_class="PilotData" load_steps=9 format=3 uid="uid://ci0so1hhj0d16"]
 
 [ext_resource type="Texture2D" uid="uid://dhdcjagylx8hl" path="res://assets/Pilots_sprites/pilots/P1_Nomal.png" id="7_e3uqc"]
-[ext_resource type="Texture2D" uid="uid://k15ucvko4gjx" path="res://assets/Pilots_sprites/pilots/P1_alone.svg" id="alone"]
-[ext_resource type="Texture2D" uid="uid://cnfcjtu2182k" path="res://assets/Pilots_sprites/pilots/P1_angry.svg" id="angry"]
-[ext_resource type="Texture2D" uid="uid://bsdb3ifsukg6r" path="res://assets/Pilots_sprites/pilots/P1_anxious.svg" id="anxious"]
-[ext_resource type="Texture2D" uid="uid://bt66h8d43aovs" path="res://assets/Pilots_sprites/pilots/P1_cockpit.svg" id="cockpit"]
-[ext_resource type="Texture2D" uid="uid://cmjqd6an1udo7" path="res://assets/Pilots_sprites/pilots/P1_dead.svg" id="dead"]
-[ext_resource type="Texture2D" uid="uid://bqgs4cqvv6yks" path="res://assets/Pilots_sprites/pilots/P1_despair.svg" id="despair"]
+[ext_resource type="Texture2D" uid="uid://dswnv0aa2fgen" path="res://assets/Pilots_sprites/pilots/P1_Demaged.png" id="damaged"]
+[ext_resource type="Texture2D" uid="uid://csmxiuopnrpsp" path="res://assets/Pilots_sprites/pilots/P1_dead.png" id="dead"]
+[ext_resource type="Texture2D" uid="uid://bnqvid77wj4dc" path="res://assets/Pilots_sprites/pilots/P1_4Die.png" id="four_dead"]
+[ext_resource type="Texture2D" uid="uid://6h0r8g68aqdq" path="res://assets/Pilots_sprites/pilots/P1_1Die.png" id="one_dead"]
 [ext_resource type="Script" path="res://scripts/data/pilot_data.gd" id="Script"]
 [ext_resource type="PackedScene" uid="uid://dic0gywmamdu8" path="res://scenes/player/P1_ship.tscn" id="Ship"]
-[ext_resource type="Texture2D" uid="uid://csokftgm0c41a" path="res://assets/Pilots_sprites/pilots/P1_shocked.svg" id="shocked"]
-[ext_resource type="Texture2D" uid="uid://dd4uy5ob7n3dj" path="res://assets/Pilots_sprites/pilots/P1_victory.svg" id="victory"]
+[ext_resource type="Texture2D" uid="uid://cxnqebmjaxvah" path="res://assets/Pilots_sprites/pilots/P1_2Die.png" id="two_dead"]
 
 [resource]
 script = ExtResource("Script")
@@ -24,13 +21,10 @@ accent = Color(0.42745, 0.89804, 0.92941, 1)
 ship_scene = ExtResource("Ship")
 hangar_animation = &"idle"
 normal = ExtResource("7_e3uqc")
-shocked = ExtResource("shocked")
-anxious = ExtResource("anxious")
-angry = ExtResource("angry")
-despair = ExtResource("despair")
-alone = ExtResource("alone")
-victory = ExtResource("victory")
+one_dead = ExtResource("one_dead")
+two_dead = ExtResource("two_dead")
+four_dead = ExtResource("four_dead")
+damaged = ExtResource("damaged")
 dead = ExtResource("dead")
-cockpit = ExtResource("cockpit")
 death_line = "다들… 항로를 잊지 마."
 victory_line = "모두 들려? 이제 집으로 가자."

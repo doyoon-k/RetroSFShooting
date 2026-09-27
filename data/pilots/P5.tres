@@ -1,16 +1,13 @@
-[gd_resource type="Resource" script_class="PilotData" format=3 uid="uid://dc5chan1q6qli"]
+[gd_resource type="Resource" script_class="PilotData" load_steps=9 format=3 uid="uid://dc5chan1q6qli"]
 
 [ext_resource type="Texture2D" uid="uid://c3expv0d8onyk" path="res://assets/Pilots_sprites/pilots/P5_nomal.png" id="7_dm0p5"]
-[ext_resource type="Texture2D" uid="uid://8lucu7rmf2hy" path="res://assets/Pilots_sprites/pilots/P5_alone.svg" id="alone"]
-[ext_resource type="Texture2D" uid="uid://n4j2t5p4j4cp" path="res://assets/Pilots_sprites/pilots/P5_angry.svg" id="angry"]
-[ext_resource type="Texture2D" uid="uid://ntb12if5ajjl" path="res://assets/Pilots_sprites/pilots/P5_anxious.svg" id="anxious"]
-[ext_resource type="Texture2D" uid="uid://uv2w410nikdp" path="res://assets/Pilots_sprites/pilots/P5_cockpit.svg" id="cockpit"]
-[ext_resource type="Texture2D" uid="uid://bnau17ohg7e2x" path="res://assets/Pilots_sprites/pilots/P5_dead.svg" id="dead"]
-[ext_resource type="Texture2D" uid="uid://fhklwha6cv2e" path="res://assets/Pilots_sprites/pilots/P5_despair.svg" id="despair"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/P5_1Die.png" id="one_dead"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/P5_2Die.png" id="two_dead"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/P5_4Die.png" id="four_dead"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/P5_Demaged.png" id="damaged"]
+[ext_resource type="Texture2D" uid="uid://o8jjceep6od6" path="res://assets/Pilots_sprites/pilots/P5_dead.png" id="dead"]
 [ext_resource type="Script" path="res://scripts/data/pilot_data.gd" id="Script"]
 [ext_resource type="PackedScene" uid="uid://2d1rtuog2a2c" path="res://scenes/player/P5_ship.tscn" id="Ship"]
-[ext_resource type="Texture2D" uid="uid://c4dsea2mhlyuh" path="res://assets/Pilots_sprites/pilots/P5_shocked.svg" id="shocked"]
-[ext_resource type="Texture2D" uid="uid://j4al0kfcfmp" path="res://assets/Pilots_sprites/pilots/P5_victory.svg" id="victory"]
 
 [resource]
 script = ExtResource("Script")
@@ -23,13 +20,10 @@ accent = Color(0.60784, 0.85098, 0.64706, 1)
 ship_scene = ExtResource("Ship")
 hangar_animation = &"idle"
 normal = ExtResource("7_dm0p5")
-shocked = ExtResource("shocked")
-anxious = ExtResource("anxious")
-angry = ExtResource("angry")
-despair = ExtResource("despair")
-alone = ExtResource("alone")
-victory = ExtResource("victory")
+one_dead = ExtResource("one_dead")
+two_dead = ExtResource("two_dead")
+four_dead = ExtResource("four_dead")
+damaged = ExtResource("damaged")
 dead = ExtResource("dead")
-cockpit = ExtResource("cockpit")
 death_line = "혼자 남겨서… 미안해."
 victory_line = "저 빛… 사진에서 본 것보다 예쁘다."

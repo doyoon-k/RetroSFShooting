@@ -143,7 +143,7 @@ func _enter(next_phase: Phase, seconds: float = 0.0) -> void:
 
 func _launch_current() -> void:
 	_enter(Phase.LAUNCHING, rules.launch_seconds)
-	roster.expression_override = &""
+	roster.show_survived_status = false
 	roster.highlighted_id = run.current_pilot_id
 	roster.refresh()
 	var pilot := catalog.pilot_by_id(run.current_pilot_id)
@@ -293,14 +293,12 @@ func _start_death() -> void:
 	if is_instance_valid(player):
 		player.queue_free()
 	player = null
-	roster.expression_override = &"shocked"
 	roster.refresh()
 	var pilot := catalog.pilot_by_id(dying_pilot_id)
-	_show_message("SIGNAL LOST / " + pilot.display_name, pilot.death_line, pilot.portrait(&"cockpit"))
+	_show_message("SIGNAL LOST / " + pilot.display_name, pilot.death_line, roster.portrait_for(pilot))
 
 func _finish_death() -> void:
 	run.mark_dead(dying_pilot_id)
-	roster.expression_override = &""
 	roster.refresh()
 	if run.survivors().is_empty():
 		_finish()
@@ -320,7 +318,7 @@ func _start_clear() -> void:
 	_enter(Phase.CLEARING, clear_intro_seconds)
 	_clear_projectiles(true)
 	%BossBar.hide()
-	roster.expression_override = &"victory"
+	roster.show_survived_status = true
 	roster.refresh()
 	victory_index = -1
 	_effect(boss_death_position, explosion_scene, true)
@@ -335,7 +333,7 @@ func _next_victory_line() -> void:
 	var pilot := survivors[victory_index]
 	phase_left = rules.victory_line_seconds
 	var pilot_label := pilot.display_name if pilot.display_name == pilot.callsign else pilot.display_name + " / " + pilot.callsign
-	_show_message(pilot_label, pilot.victory_line, pilot.portrait(&"victory"))
+	_show_message(pilot_label, pilot.victory_line, roster.portrait_for(pilot))
 
 func _finish() -> void:
 	_enter(Phase.FINISHED)

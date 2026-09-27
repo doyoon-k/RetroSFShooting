@@ -33,6 +33,7 @@ func _run() -> void:
 	save_test_path = "user://test_endings_%d.cfg" % OS.get_process_id()
 	_test_endings()
 	_test_sorties()
+	_test_portraits()
 	_test_patterns()
 	_test_input_map()
 	await _test_proximity_damage()
@@ -99,6 +100,41 @@ func _test_sorties() -> void:
 	check(not durable.damage(0) and durable.hp == 2, "Zero damage does not consume health or shield")
 	durable.damage(2)
 	check(durable.hp == 0, "Authored projectile damage amount is honored")
+
+func _test_portraits() -> void:
+	for pilot in content.pilots:
+		check(pilot.normal != null and pilot.one_dead != null and pilot.two_dead != null and pilot.four_dead != null and pilot.damaged != null and pilot.dead != null, "All portrait states are assigned for " + String(pilot.id))
+		check(pilot.portrait(0) == pilot.normal and pilot.portrait(1) == pilot.one_dead, "Zero and one loss portraits match " + String(pilot.id))
+		check(pilot.portrait(2) == pilot.two_dead and pilot.portrait(3) == pilot.two_dead, "Two and three losses share the portrait for " + String(pilot.id))
+		check(pilot.portrait(4) == pilot.four_dead and pilot.portrait(5) == pilot.four_dead, "Four and five losses share the portrait for " + String(pilot.id))
+		check(pilot.portrait(5, true) == pilot.damaged and pilot.portrait(5, true, true) == pilot.dead, "Damaged and dead portraits take precedence for " + String(pilot.id))
+
+	var run := RunState.new(content)
+	var roster := load("res://scenes/ui/pilot_roster.tscn").instantiate() as PilotRoster
+	root.add_child(roster)
+	roster.configure(content, run)
+	check(roster.cards.size() == 6, "Roster creates six portrait cards")
+	var first_portrait := roster.cards[0].get_node("Portrait") as TextureRect
+	check(first_portrait.texture == content.pilots[0].normal, "Roster starts with the zero-loss portrait")
+	run.begin_sortie(&"P1")
+	run.current_sortie.collect(2, 3)
+	run.current_sortie.damage()
+	check(first_portrait.texture == content.pilots[0].normal, "Shield hit leaves portrait normal")
+	run.current_sortie.damage()
+	check(first_portrait.texture == content.pilots[0].damaged, "Half HP changes the active portrait to damaged")
+	run.current_sortie.damage()
+	check(first_portrait.texture == content.pilots[0].dead, "Fatal hit shows the dead portrait")
+	run.mark_dead(&"P1")
+	check((roster.cards[1].get_node("Portrait") as TextureRect).texture == content.pilots[1].one_dead, "One death updates every survivor")
+	run.mark_dead(&"P2")
+	check((roster.cards[2].get_node("Portrait") as TextureRect).texture == content.pilots[2].two_dead, "Two deaths use the two-loss portrait")
+	run.mark_dead(&"P3")
+	check((roster.cards[3].get_node("Portrait") as TextureRect).texture == content.pilots[3].two_dead, "Three deaths keep the two-loss portrait")
+	run.mark_dead(&"P4")
+	check((roster.cards[4].get_node("Portrait") as TextureRect).texture == content.pilots[4].four_dead, "Four deaths use the four-loss portrait")
+	run.mark_dead(&"P5")
+	check((roster.cards[5].get_node("Portrait") as TextureRect).texture == content.pilots[5].four_dead, "Five deaths keep the four-loss portrait")
+	roster.free()
 
 func _test_patterns() -> void:
 	var fan := load("res://data/patterns/fan.tres") as AttackPattern
@@ -491,6 +527,7 @@ func _test_stage() -> void:
 	stage.player.invincibility = 0
 	stage.player.take_damage()
 	check(stage.run.current_sortie.hp == 1 and stage.run.current_sortie.current_power_level() == 2, "A nonlethal hit lowers both weapons from LV3 to LV2")
+	check((stage.roster.cards[0].get_node("Portrait") as TextureRect).texture == content.pilots[0].damaged, "Actual player hit shows the damaged Flight Crew portrait")
 	stage.player.collect(Pickup.Kind.POWER)
 	check(stage.run.current_sortie.current_power_level() == 3, "Power pickup restores both weapons after damage")
 	var item_count := stage.items.get_child_count()
@@ -498,6 +535,7 @@ func _test_stage() -> void:
 	stage.player.take_damage()
 	await frames(3)
 	check(stage.phase == StageController.Phase.PLAYER_DYING, "Lethal hit enters death presentation")
+	check((stage.roster.cards[0].get_node("Portrait") as TextureRect).texture == content.pilots[0].dead, "Lethal player hit shows the dead Flight Crew portrait")
 	check(stage.items.get_child_count() == item_count + 4, "Death drops two power-ups and two unspent bombs")
 	var death_powerups := 0
 	var death_bombs := 0

@@ -153,9 +153,11 @@ Hold Position의 X는 등장 당시 화면을 기준으로 한 좌표이며, Y�
 
 ## 파일럿·스토리·연출 교체
 
-PilotData에서 초상화를 드래그해 교체할 수 있습니다. `Hangar Portrait`는 선택 화면 격납고에,
-`Normal`과 다른 표정은 선택·스테이지의 파일럿 카드에 사용합니다. 격납고 초상화가 비어 있으면
-`Normal`을 표시합니다. 표정 에셋이 비어 있으면 `Normal`로 대체합니다.
+PilotData에서 초상화를 드래그해 교체할 수 있습니다. `Hangar Portrait`는 선택 화면 격납고에
+사용하며, 비어 있으면 `Normal`을 표시합니다. 파일럿 카드의 일반 초상화는 전체 사망자 수에
+따라 `Normal`(0명), `One Dead`(1명), `Two Dead`(2~3명), `Four Dead`(4~5명)로 바뀝니다.
+출격 중인 파일럿의 HP가 절반 이하로 떨어지면 `Damaged`를, 사망하면 `Dead`를 표시합니다.
+전용 초상화가 비어 있으면 일반 초상화로 대체합니다.
 
 각 PilotData의 Ship Scene은 공통 player_ship의 변형 씬을 가리킵니다. `Ship Scale`은 외형
 크기만 바꾸므로 피격 범위를 바꾸려면 CollisionShape2D를 별도로 수정하세요.

@@ -22,18 +22,23 @@ extends Resource
 	set(value):
 		normal = value
 		changed.emit()
-@export var shocked: Texture2D
-@export var anxious: Texture2D
-@export var angry: Texture2D
-@export var despair: Texture2D
-@export var alone: Texture2D
-@export var victory: Texture2D
+@export var one_dead: Texture2D
+@export var two_dead: Texture2D
+@export var four_dead: Texture2D
+@export var damaged: Texture2D
 @export var dead: Texture2D
-@export var cockpit: Texture2D
 @export_group("Dialogue")
 @export_multiline var death_line: String
 @export_multiline var victory_line: String
 
-func portrait(expression: StringName) -> Texture2D:
-	var texture: Texture2D = get(String(expression)) as Texture2D
-	return texture if texture != null else normal
+func portrait(dead_count: int, is_damaged: bool = false, is_dead: bool = false) -> Texture2D:
+	if is_dead:
+		return dead if dead != null else normal
+	var normal_texture: Texture2D = normal
+	if dead_count >= 4 and four_dead != null:
+		normal_texture = four_dead
+	elif dead_count >= 2 and two_dead != null:
+		normal_texture = two_dead
+	elif dead_count >= 1 and one_dead != null:
+		normal_texture = one_dead
+	return damaged if is_damaged and damaged != null else normal_texture
