@@ -1,7 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://cgav6dq4bps0o"]
+[gd_scene load_steps=10 format=3 uid="uid://cgav6dq4bps0o"]
 
 [ext_resource type="Resource" path="res://data/patterns/burst_step.tres" id="burst"]
-[ext_resource type="PackedScene" uid="uid://crf6oscbynrkg" path="res://scenes/gameplay/explosion.tscn" id="Explosion"]
 [ext_resource type="Resource" path="res://data/patterns/fan_step.tres" id="fan"]
 [ext_resource type="Script" path="res://scenes/enemies/enemy_movement.gd" id="Movement"]
 [ext_resource type="Script" path="res://scenes/enemies/enemy_ship.gd" id="Script"]
@@ -38,7 +37,6 @@ collision_mask = 0
 monitoring = false
 script = ExtResource("Script")
 maximum_hp = 10
-death_effect = ExtResource("Explosion")
 death_animation = &"death"
 death_animation_seconds = 0.45
 

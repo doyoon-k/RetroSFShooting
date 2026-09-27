@@ -1,0 +1,33 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scenes/gameplay/enemy_hit.gd" id="Script"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Fx/BloodyAttacked_S1.png" id="Frame1"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Fx/BloodyAttacked_S2.png" id="Frame2"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Fx/BloodyAttacked_S3.png" id="Frame3"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Fx/BloodyAttacked_S4.png" id="Frame4"]
+
+[sub_resource type="SpriteFrames" id="HitFrames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("Frame1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("Frame2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("Frame3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("Frame4")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 12.0
+}]
+
+[node name="EnemyHit" type="AnimatedSprite2D"]
+rotation = -1.57079632679
+sprite_frames = SubResource("HitFrames")
+animation = &"hit"
+script = ExtResource("Script")

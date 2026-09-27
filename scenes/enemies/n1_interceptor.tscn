@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://scenes/enemies/enemy_ship.gd" id="Ship"]
 [ext_resource type="Script" path="res://scenes/enemies/enemy_movement.gd" id="Movement"]
-[ext_resource type="PackedScene" path="res://scenes/gameplay/explosion.tscn" id="Explosion"]
 [ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Enemy/M1.png" id="EnemyTexture"]
 [ext_resource type="Script" path="res://scenes/enemies/enemy_shooter.gd" id="Shooter"]
 [ext_resource type="Script" path="res://scripts/data/pattern_step.gd" id="StepType"]
@@ -17,7 +16,6 @@ collision_mask = 0
 monitoring = false
 script = ExtResource("Ship")
 maximum_hp = 12
-death_effect = ExtResource("Explosion")
 
 [node name="Visual" type="Sprite2D" parent="."]
 offset = Vector2(4.5, 0.0)

@@ -9,6 +9,7 @@ enum Phase { LAUNCHING, PLAYING, BOSS_INTRO, PLAYER_DYING, SELECTING_NEXT, CLEAR
 @export var recovery_pickup: PackedScene
 @export var recovery_bomb: PackedScene
 @export var explosion_scene: PackedScene
+@export var enemy_hit_scene: PackedScene
 @export_range(0.1, 10.0, 0.1) var boss_intro_seconds: float = 2.0
 @export_range(0.1, 10.0, 0.1) var clear_intro_seconds: float = 1.5
 @export_range(1.0, 1000.0, 1.0) var scroll_speed: float = 180.0
@@ -23,7 +24,6 @@ var mid_enemy: EnemyShip
 var pending_death: Dictionary = {}
 var pending_boss: bool = false
 var boss_waiting_to_enter: bool = false
-var boss_death_position: Vector2
 var resolution_queued: bool = false
 var dying_pilot_id: StringName
 var victory_index: int = -1
@@ -231,6 +231,7 @@ func _configure_enemy(enemy: EnemyShip, drop: PackedScene, chance: float) -> voi
 	enemy.bounds = view_bounds
 	enemy.drop_scene = drop
 	enemy.drop_chance = chance
+	enemy.damaged.connect(_enemy_damaged)
 	enemy.destroyed.connect(_enemy_destroyed)
 	if enemy.movement.mode == EnemyMovement.Mode.ENTER_HOLD_EXIT or enemy.movement.mode == EnemyMovement.Mode.VERTICAL_SWEEP:
 		enemy.movement.hold_position.x += progress_x
@@ -258,6 +259,9 @@ func _begin_boss_intro() -> void:
 	_enter(Phase.BOSS_INTRO, boss_intro_seconds)
 	_show_message("WARNING / THE WARDEN", "고에너지 반응 접근. 방주의 항로를 확보하라.", null)
 
+func _enemy_damaged(enemy: EnemyShip) -> void:
+	_effect(enemy.global_position, enemy_hit_scene, enemy.is_boss and enemy.hp <= 0.0)
+
 func _enemy_destroyed(enemy: EnemyShip) -> void:
 	defeated += 1
 	if enemy == mid_enemy:
@@ -265,12 +269,10 @@ func _enemy_destroyed(enemy: EnemyShip) -> void:
 		_clear_projectiles(false)
 		if is_instance_valid(player) and phase == Phase.PLAYING:
 			player.auto_advance_speed = scroll_speed
-	_effect(enemy.global_position, enemy.death_effect if enemy.death_effect != null else explosion_scene)
 	if enemy.drop_scene != null and randf() < enemy.drop_chance:
 		# Area2D callbacks run while the physics server flushes overlap queries.
 		_spawn_pickup.call_deferred(enemy.drop_scene, enemy.global_position)
 	if enemy.is_boss:
-		boss_death_position = enemy.global_position
 		pending_boss = true
 		_queue_resolution()
 
@@ -344,7 +346,6 @@ func _start_clear() -> void:
 	roster.show_survived_status = true
 	roster.refresh()
 	victory_index = -1
-	_effect(boss_death_position, explosion_scene, true)
 	_show_message("SECTOR CLEAR", "침묵이 걷히고, 살아남은 목소리들이 돌아온다.", null)
 
 func _next_victory_line() -> void:

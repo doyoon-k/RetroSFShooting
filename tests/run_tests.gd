@@ -39,6 +39,7 @@ func _run() -> void:
 	await _test_attack_fairness()
 	_test_input_map()
 	await _test_proximity_damage()
+	await _test_enemy_hit_effect()
 	await _test_ship_sprites()
 	_test_save()
 	await _test_game_flow()
@@ -478,11 +479,18 @@ func _test_game_flow() -> void:
 	first_pilot.hangar_portrait = original_hangar_portrait
 	check(first_portrait.texture == first_pilot.normal, "Clearing hangar portrait restores the normal fallback")
 	await capture("03_character_select")
+	var select_screen: Node = main.current_screen
+	var select_roster := select_screen.get_node("Roster") as PilotRoster
+	select_roster.cards[1].pressed.emit()
+	select_roster.cards[5].mouse_entered.emit()
+	check(select_screen.get("selected") == &"P2" and select_roster.highlighted_id == &"P2", "Passing over another card does not change the selected pilot")
 	main.current_screen.get_node("Sortie").pressed.emit()
 	await frames(100)
 	check(main.current_screen is StageController and main.current_screen.phase == StageController.Phase.PLAYING, "Sortie opens playable Stage")
 	# Drive the normal boss-clear and ending signals without waiting for the full wave schedule.
 	var stage := main.current_screen as StageController
+	check(stage.run.current_pilot_id == &"P2" and stage.roster.cards[1].get_node("Status").text == "IN FLIGHT", "Selected P2 remains the active pilot in Stage")
+	check(stage.player.scene_file_path == "res://scenes/player/P2_ship.tscn", "Stage instantiates the selected pilot's ship scene")
 	stage.run.boss_cleared = true
 	stage._start_clear()
 	stage.phase_left = 0.0
@@ -516,6 +524,29 @@ func _create_stage() -> StageController:
 	stage.boss_intro_seconds = 0.1
 	root.add_child(stage)
 	return stage
+
+
+func _test_enemy_hit_effect() -> void:
+	var stage := _create_stage()
+	await frames(16)
+	var enemy := stage._spawn_enemy(load("res://scenes/enemies/scout.tscn"), Vector2(1000, 500))
+	enemy.movement.set_physics_process(false)
+	var effects := stage.get_node("Simulation/Effects")
+	enemy.take_damage(1)
+	check(effects.get_child_count() == 1, "A nonlethal enemy hit creates one sprite effect")
+	if effects.get_child_count() == 1:
+		var effect := effects.get_child(0) as AnimatedSprite2D
+		check(effect != null and effect.is_playing() and effect.sprite_frames.get_frame_count(&"hit") == 4, "Enemy hit plays four sprite frames")
+		if effect != null:
+			for index in 4:
+				var texture := load("res://assets/Pilots_sprites/Fx/BloodyAttacked_S%d.png" % (index + 1)) as Texture2D
+				check(effect.sprite_frames.get_frame_texture(&"hit", index) == texture, "Enemy hit frame %d uses the requested image" % (index + 1))
+	await frames(25)
+	check(effects.get_child_count() == 0, "Enemy hit effect frees itself after playback")
+	enemy.take_damage(1)
+	check(effects.get_child_count() == 1 and effects.get_child(0) is AnimatedSprite2D, "Lethal enemy hit has no old explosion effect")
+	stage.queue_free()
+	await frames()
 
 func _test_bad_ending_flow() -> void:
 	var main: Node = load("res://scenes/main/main.tscn").instantiate()

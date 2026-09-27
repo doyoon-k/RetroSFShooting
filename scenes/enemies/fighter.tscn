@@ -1,7 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://bgxei4xcj30fw"]
+[gd_scene load_steps=9 format=3 uid="uid://bgxei4xcj30fw"]
 
 [ext_resource type="Resource" path="res://data/patterns/aimed_step.tres" id="aimed"]
-[ext_resource type="PackedScene" uid="uid://crf6oscbynrkg" path="res://scenes/gameplay/explosion.tscn" id="Explosion"]
 [ext_resource type="Script" path="res://scenes/enemies/enemy_movement.gd" id="Movement"]
 [ext_resource type="Script" path="res://scenes/enemies/enemy_ship.gd" id="Script"]
 [ext_resource type="Script" path="res://scenes/enemies/enemy_shooter.gd" id="Shooter"]
@@ -37,7 +36,6 @@ collision_mask = 0
 monitoring = false
 script = ExtResource("Script")
 maximum_hp = 5
-death_effect = ExtResource("Explosion")
 
 [node name="Visual" type="Polygon2D" parent="."]
 color = Color(0.94118, 0.72157, 0.48627, 1)

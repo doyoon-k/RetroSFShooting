@@ -1,9 +1,10 @@
-[gd_scene load_steps=32 format=3 uid="uid://mfi362jrfrvm"]
+[gd_scene load_steps=33 format=3 uid="uid://mfi362jrfrvm"]
 
 [ext_resource type="PackedScene" path="res://scenes/items/bomb.tscn" id="bomb"]
 [ext_resource type="PackedScene" uid="uid://go6dxu1qx1bf" path="res://scenes/enemies/boss.tscn" id="boss"]
 [ext_resource type="Resource" path="res://data/game_catalog.tres" id="Catalog"]
 [ext_resource type="Resource" path="res://data/sequences/diagonal_up.tres" id="DiagUp"]
+[ext_resource type="PackedScene" path="res://scenes/gameplay/enemy_hit.tscn" id="EnemyHit"]
 [ext_resource type="PackedScene" uid="uid://crf6oscbynrkg" path="res://scenes/gameplay/explosion.tscn" id="Explosion"]
 [ext_resource type="Script" path="res://scenes/gameplay/stage/stage_guide.gd" id="Guide"]
 [ext_resource type="Resource" uid="uid://n1sf5sy2l8bw" path="res://data/movement/hold_high.tres" id="HoldHigh"]
@@ -39,6 +40,7 @@ catalog = ExtResource("Catalog")
 recovery_pickup = ExtResource("power_up")
 recovery_bomb = ExtResource("bomb")
 explosion_scene = ExtResource("Explosion")
+enemy_hit_scene = ExtResource("EnemyHit")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(960, 540)

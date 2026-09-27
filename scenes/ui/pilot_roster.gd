@@ -33,7 +33,6 @@ func _build() -> void:
 		add_child(card)
 		cards.append(card)
 		card.focus_entered.connect(_focus.bind(pilot.id))
-		card.mouse_entered.connect(_focus.bind(pilot.id))
 		card.pressed.connect(_select.bind(pilot.id))
 	refresh()
 

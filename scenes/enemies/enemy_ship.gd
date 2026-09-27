@@ -2,12 +2,12 @@ class_name EnemyShip
 extends Area2D
 
 signal destroyed(enemy: EnemyShip)
+signal damaged(enemy: EnemyShip)
 signal health_changed(current: float, maximum: int)
 
 @export_range(1, 2000) var maximum_hp: int = 3
 @export_range(0, 10) var contact_damage: int = 1
 @export_range(0.0, 1000.0, 10.0) var despawn_margin: float = 320.0
-@export var death_effect: PackedScene
 @export var death_animation: StringName = &""
 @export_range(0.0, 5.0, 0.05) var death_animation_seconds: float = 0.0
 @export var is_boss: bool = false
@@ -52,8 +52,11 @@ func _physics_process(delta: float) -> void:
 func take_damage(amount: float) -> void:
 	if dying or hp <= 0 or get_tree().paused:
 		return
+	var previous_hp := hp
 	hp = maxf(0.0, hp - amount)
 	health_changed.emit(hp, maximum_hp)
+	if hp < previous_hp:
+		damaged.emit(self)
 	if is_boss and not phase_two and float(hp) / maximum_hp <= phase_threshold:
 		phase_two = true
 		if shooter != null and not second_phase.is_empty():

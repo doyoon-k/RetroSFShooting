@@ -1,6 +1,5 @@
-[gd_scene load_steps=7 format=3 uid="uid://btmuklv0dnsmp"]
+[gd_scene load_steps=6 format=3 uid="uid://btmuklv0dnsmp"]
 
-[ext_resource type="PackedScene" uid="uid://crf6oscbynrkg" path="res://scenes/gameplay/explosion.tscn" id="Explosion"]
 [ext_resource type="Script" path="res://scenes/enemies/enemy_movement.gd" id="Movement"]
 [ext_resource type="Script" path="res://scenes/enemies/enemy_ship.gd" id="Script"]
 
@@ -34,7 +33,6 @@ collision_mask = 0
 monitoring = false
 script = ExtResource("Script")
 maximum_hp = 2
-death_effect = ExtResource("Explosion")
 
 [node name="Visual" type="Polygon2D" parent="."]
 color = Color(0.92941, 0.60784, 0.58039, 1)

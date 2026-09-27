@@ -1,8 +1,7 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://scenes/enemies/enemy_ship.gd" id="Ship"]
 [ext_resource type="Script" path="res://scenes/enemies/enemy_movement.gd" id="Movement"]
-[ext_resource type="PackedScene" path="res://scenes/gameplay/explosion.tscn" id="Explosion"]
 [ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Enemy/L3.png" id="EnemyTexture"]
 [ext_resource type="Script" path="res://scenes/enemies/enemy_shooter.gd" id="Shooter"]
 [ext_resource type="Script" path="res://scenes/enemies/spinning_shell.gd" id="Spin"]
@@ -20,7 +19,6 @@ monitoring = false
 script = ExtResource("Ship")
 maximum_hp = 260
 is_midboss = true
-death_effect = ExtResource("Explosion")
 despawn_margin = 500.0
 
 [node name="Visual" type="Sprite2D" parent="."]
