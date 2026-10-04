@@ -14,6 +14,7 @@ enum Phase { LAUNCHING, PLAYING, BOSS_INTRO, PLAYER_DYING, SELECTING_NEXT, CLEAR
 @export_range(0.1, 10.0, 0.1) var clear_intro_seconds: float = 1.5
 @export_range(1.0, 1000.0, 1.0) var scroll_speed: float = 180.0
 @export_range(0.0, 500.0, 1.0) var activation_margin: float = 80.0
+@export var presentation_bounds: Rect2 = Rect2(440, 24, 1464, 952)
 var run: RunState
 var phase: Phase = Phase.LAUNCHING
 var user_paused: bool = false
@@ -41,6 +42,7 @@ var view_bounds: Rect2
 @onready var items: Node2D = $Simulation/Items
 @onready var waves: WaveSequence = $Simulation/WaveSequence
 @onready var roster: PilotRoster = %Roster
+@onready var hud: CombatHUD = %CombatHUD
 
 func _ready() -> void:
 	if run == null:
@@ -60,11 +62,15 @@ func _ready() -> void:
 	waves.enemy_requested.connect(_spawn_wave_enemy)
 	waves.boss_requested.connect(_request_boss_intro)
 	%Resume.pressed.connect(toggle_pause)
+	hud.bomb_requested.connect(_bomb)
+	hud.weapon_change_requested.connect(_switch_weapon)
+	hud.pause_requested.connect(toggle_pause)
 	%Playfield.size = rules.playfield.size
-	%PauseDimmer.position = rules.playfield.position
-	%PauseDimmer.size = rules.playfield.size
-	%BombFlash.position = rules.playfield.position
-	%BombFlash.size = rules.playfield.size
+	$Simulation/Background.field_size = presentation_bounds.size
+	%PauseDimmer.position = presentation_bounds.position
+	%PauseDimmer.size = presentation_bounds.size
+	%BombFlash.position = presentation_bounds.position
+	%BombFlash.size = presentation_bounds.size
 	_sync_world_bounds()
 	_launch_current()
 
@@ -83,7 +89,7 @@ func _sync_world_bounds() -> void:
 	view_bounds = Rect2(rules.playfield.position + Vector2(progress_x, 0.0), rules.playfield.size)
 	camera.position = get_viewport_rect().size * 0.5 + Vector2(progress_x, 0.0)
 	%Playfield.position = view_bounds.position
-	$Simulation/Background.position = view_bounds.position
+	$Simulation/Background.position = presentation_bounds.position + Vector2(progress_x, 0.0)
 	if is_instance_valid(player):
 		player.bounds = view_bounds
 		player.weapon.bounds = view_bounds
@@ -152,6 +158,8 @@ func _launch_current() -> void:
 	player.state = run.current_sortie
 	player.rules = rules
 	player.bounds = view_bounds
+	# Keep the 128px ship clear of the frame and lower console.
+	player.boundary_padding = player.boundary_padding.max(Vector2(64, 64))
 	player.position = Vector2(progress_x + rules.playfield.position.x - 80, rules.spawn_position.y)
 	actors.add_child(player)
 	player.weapon.state = run.current_sortie
@@ -167,21 +175,9 @@ func _update_hud() -> void:
 	if run == null or run.current_sortie == null:
 		return
 	var sortie := run.current_sortie
-	var weapon := player.weapon.active_data() if is_instance_valid(player) else null
-	var weapon_name: String = weapon.display_name if weapon != null else "—"
-	%StatusLine.text = "HULL  %d/%d     %s  LV.%d     BOMB  %02d     SHIELD  %s" % [sortie.hp, rules.starting_hp, weapon_name, sortie.current_power_level(), sortie.bombs, "ON" if sortie.shield else "—"]
-	%StageTime.text = "SECTOR 01  /  DIST %05d     DOWN %03d" % [int(progress_x), defeated]
-	%SurvivorCount.text = "CREW  %d / %d" % [run.survivors().size(), catalog.pilots.size()]
-	if is_instance_valid(boss):
-		%BossBar.visible = true
-		%BossBar.max_value = boss.maximum_hp
-		%BossBar.value = boss.hp
-	elif is_instance_valid(mid_enemy):
-		%BossBar.visible = true
-		%BossBar.max_value = mid_enemy.maximum_hp
-		%BossBar.value = mid_enemy.hp
-	else:
-		%BossBar.hide()
+	var pilot := catalog.pilot_by_id(run.current_pilot_id)
+	if pilot != null:
+		hud.display(sortie, roster.portrait_for(pilot), phase == Phase.PLAYING and not user_paused)
 
 func get_target() -> Node2D:
 	return player if is_instance_valid(player) and not player.death_reported else null
@@ -221,6 +217,7 @@ func _spawn_enemy(scene: PackedScene, location: Vector2, drop: PackedScene = nul
 func _activate_placed_enemy(enemy: EnemyShip) -> void:
 	placed_activated += 1
 	enemy.reparent(actors, true)
+	enemy.movement.origin = enemy.position
 	enemy.process_mode = Node.PROCESS_MODE_INHERIT
 	enemy.visible = true
 	enemy.collision_layer = placed_layers.get(enemy, 2)
@@ -234,7 +231,8 @@ func _configure_enemy(enemy: EnemyShip, drop: PackedScene, chance: float) -> voi
 	enemy.damaged.connect(_enemy_damaged)
 	enemy.destroyed.connect(_enemy_destroyed)
 	if enemy.movement.mode == EnemyMovement.Mode.ENTER_HOLD_EXIT or enemy.movement.mode == EnemyMovement.Mode.VERTICAL_SWEEP:
-		enemy.movement.hold_position.x += progress_x
+		# Encounters keep their authored local coordinates as the arena moves.
+		enemy.movement.hold_position += waves.position + Vector2(progress_x, 0.0)
 	if enemy.shooter != null:
 		enemy.shooter.projectiles = projectiles
 		enemy.shooter.target_provider = get_target
@@ -342,7 +340,6 @@ func select_next(id: StringName) -> void:
 func _start_clear() -> void:
 	_enter(Phase.CLEARING, clear_intro_seconds)
 	_clear_projectiles(true)
-	%BossBar.hide()
 	roster.show_survived_status = true
 	roster.refresh()
 	victory_index = -1
@@ -416,6 +413,12 @@ func toggle_pause() -> void:
 	%PauseDimmer.visible = user_paused
 	if user_paused:
 		%Resume.grab_focus()
+
+func _switch_weapon() -> void:
+	if phase != Phase.PLAYING or user_paused or not is_instance_valid(player):
+		return
+	run.current_sortie.switch_weapon()
+	player.weapon.cooldown = 0.0
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause") and not event.is_echo():

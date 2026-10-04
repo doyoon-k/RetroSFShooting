@@ -45,6 +45,7 @@ func _run() -> void:
 	await _test_game_flow()
 	await _test_bad_ending_flow()
 	await _test_stage()
+	await _test_combat_layout()
 	await _test_simultaneous_outcomes()
 	await _test_full_stage()
 	await frames(3)
@@ -217,7 +218,7 @@ func _test_enemy_profiles() -> void:
 	await frames(16)
 	var wave := EnemyWave.new()
 	wave.enemy_scene = load("res://scenes/enemies/scout.tscn")
-	wave.position = Vector2(1260, 532)
+	wave.position = Vector2(1260, 532) + stage.waves.position
 	wave.movement_profile = sine
 	wave.attack_sequence = aimed
 	stage._spawn_wave_enemy(wave, 0)
@@ -234,7 +235,7 @@ func _test_enemy_profiles() -> void:
 	wave.attack_sequence = silent
 	stage._spawn_wave_enemy(wave, 0)
 	var fighter := stage.actors.get_child(stage.actors.get_child_count() - 1) as EnemyShip
-	check(fighter.movement.mode == EnemyMovement.Mode.ENTER_HOLD_EXIT and is_equal_approx(fighter.movement.hold_position.x, hold.hold_position.x + stage.progress_x), "Hold preset receives the current world offset")
+	check(fighter.movement.mode == EnemyMovement.Mode.ENTER_HOLD_EXIT and fighter.movement.hold_position.is_equal_approx(hold.hold_position + stage.waves.position + Vector2(stage.progress_x, 0)), "Hold preset receives the arena and current world offset")
 	check(fighter.shooter.steps.is_empty(), "An empty attack preset disables a scene's default shooter")
 	var route := Path2D.new()
 	route.name = "Path2D"
@@ -346,7 +347,7 @@ func _test_input_map() -> void:
 	var old_switch_key := InputEventKey.new()
 	old_switch_key.physical_keycode = KEY_C
 	check(not InputMap.event_is_action(old_switch_key, "switch_weapon"), "Old C key no longer switches weapons")
-	for entry in [[KEY_LEFT, "move_left"], [KEY_RIGHT, "move_right"], [KEY_UP, "move_up"], [KEY_DOWN, "move_down"], [KEY_ESCAPE, "pause"], [KEY_SPACE, "story_advance"], [KEY_W, "ui_up"], [KEY_D, "ui_right"], [KEY_H, "switch_weapon"]]:
+	for entry in [[KEY_LEFT, "move_left"], [KEY_RIGHT, "move_right"], [KEY_UP, "move_up"], [KEY_DOWN, "move_down"], [KEY_ESCAPE, "pause"], [KEY_SPACE, "story_advance"], [KEY_W, "ui_up"], [KEY_D, "ui_right"], [KEY_K, "switch_weapon"]]:
 		var event := InputEventKey.new()
 		event.physical_keycode = entry[0]
 		check(InputMap.event_is_action(event, entry[1]), "Expected physical key is mapped to " + entry[1])
@@ -834,6 +835,50 @@ func _test_simultaneous_outcomes() -> void:
 		check(is_instance_valid(stage.boss), "Boss spawn survives death in either callback order")
 		stage.queue_free()
 		await frames()
+
+func _test_combat_layout() -> void:
+	var stage := _create_stage()
+	await frames(16)
+	var hud := stage.hud
+	var card := stage.roster.cards[0]
+	check(stage.roster.get_global_rect().end.x < stage.rules.playfield.position.x, "Combat roster stays left of the playable arena")
+	check(card.get_node("OnSortie").visible and not card.get_node("Portrait").visible, "Active pilot slot shows the sortie artwork")
+	check(hud.get_node("ActivePilot/ActivePortrait").texture == content.pilots[0].normal, "Cockpit initially shows the active pilot")
+	var first_wave := stage.waves.get_node("Wave01_Z1") as EnemyWave
+	var first_activation := first_wave.global_position.x - stage.rules.playfield.end.x - stage.activation_margin
+	check(is_equal_approx(first_activation / stage.scroll_speed, 1.0), "Moving the arena preserves the first wave's one-second arrival")
+	# Existing keyboard actions and the console buttons share the same state.
+	hud.get_node("BombButton").pressed.emit()
+	await frames(2)
+	check(stage.run.current_sortie.bombs == 1 and hud.get_node("BombButton/BombTwo").texture == hud.bomb_off, "Bomb console spends one bomb and switches off the second indicator")
+	stage.run.current_sortie.collect(Pickup.Kind.BOMB, 3)
+	stage.run.current_sortie.collect(Pickup.Kind.BOMB, 3)
+	await frames(2)
+	check(hud.get_node("BombButton/BombCount").text == "×3", "Bomb readout retains stock above the two icon slots")
+	hud.get_node("WeaponChange").pressed.emit()
+	await frames(2)
+	check(stage.run.current_sortie.active_weapon == SortieState.WeaponType.SPREAD and hud.get_node("WeaponBox/WeaponOne").texture == hud.spread_icon, "Change console selects the spread weapon and updates its icon")
+	hud.get_node("PauseButton").pressed.emit()
+	await frames(2)
+	var bombs := stage.run.current_sortie.bombs
+	hud.get_node("BombButton").pressed.emit()
+	hud.get_node("WeaponChange").pressed.emit()
+	check(stage.user_paused and stage.run.current_sortie.bombs == bombs and stage.run.current_sortie.active_weapon == SortieState.WeaponType.SPREAD, "Paused console cannot spend bombs or change weapons")
+	hud.get_node("PauseButton").pressed.emit()
+	stage.player.invincibility = 0
+	stage.player.take_damage()
+	await frames(2)
+	check(hud.get_node("ActivePilot/ActivePortrait").texture == content.pilots[0].damaged and card.get_node("OnSortie").visible, "Damage changes the cockpit portrait while keeping the sortie slot")
+	stage.run.current_sortie.bombs = 0
+	await frames(2)
+	check(hud.get_node("BombButton").disabled and hud.get_node("BombButton/BombOne").texture == hud.bomb_off, "Empty bomb stock disables the console and both indicators")
+	await capture("04_combat_damage")
+	stage.player.invincibility = 0
+	stage.player.take_damage()
+	await frames(3)
+	check(card.get_node("Portrait").visible and not card.get_node("OnSortie").visible and hud.get_node("ActivePilot/ActivePortrait").texture == content.pilots[0].dead, "Pilot death restores the lost slot and cockpit portrait")
+	stage.queue_free()
+	await frames()
 
 func _test_full_stage() -> void:
 	var stage := _create_stage()

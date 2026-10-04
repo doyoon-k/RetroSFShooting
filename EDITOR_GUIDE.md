@@ -23,6 +23,8 @@
 | 아이템 성능 | `scenes/items/*.tscn` |
 | 일러스트·본문·타이핑 속도 | `data/stories/*.tres` |
 | 메뉴·HUD 스타일 | `scenes/ui/game_theme.tres` |
+| 전투 프레임·파일럿 슬롯 배치 | `stage_01.tscn`의 Interface / Root |
+| 전투 하단 콘솔·확대 초상화 | `scenes/ui/combat_hud.tscn` |
 | 키보드·게임패드 | Project Settings → Input Map |
 
 ## 새 적 공격 만들기
@@ -106,6 +108,14 @@ Attack Presets 배열에 새 파일을 넣으면 선택지에 추가됩니다.
 바뀐 공격 목록은 첫 단계부터 시작합니다.
 
 ## 스테이지의 적과 보스 배치
+
+전투 창의 이동 가능 범위는 `data/rules/default.tres`의 Playfield이고, 프레임 안쪽 전체
+표시 범위는 Stage의 Presentation Bounds입니다. 하단 콘솔과 프레임에 기체가 가려지지
+않도록 이동 범위를 안쪽에 둡니다. 레퍼런스 배치를 위해 WaveSequence와 PlacedEnemies에
+동일한 `(400, -68)` 위치 오프셋을 적용했습니다. 편대 마커의 기존 로컬 좌표와 등장 간격은
+유지하며, 진입 후 정지 위치에도 런타임과 에디터 미리보기에서 같은 오프셋을 적용합니다.
+`Battle_Bg.png`의 흰 창은 `battle_frame.gdshader`로 투명하게 표시하므로 원본 PNG를 수정할
+필요가 없습니다. 전투 전용 초상화 씬은 선택·결과 화면의 초상화 표시와 별개입니다.
 
 `stage_01.tscn`은 오른쪽으로 이어지는 월드입니다. 플레이어와 카메라는 전투 중
 `Stage.Scroll Speed`(기본 180px/초)로 전진합니다. 적의 등장 기준은 경과 시간이 아니라

@@ -1,0 +1,259 @@
+[gd_scene load_steps=13 format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/combat_hud.gd" id="Script"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/Boom_Box.png" id="BombBox"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/Weapon_Box.png" id="WeaponBox"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/Change.png" id="Change"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/Button.png" id="Button"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/Boom_On.png" id="BombOn"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/Boom_OnLight.png" id="BombReady"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/Boom_off.png" id="BombOff"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Player/Projectile_Strait.png" id="Straight"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Player/Projectile_Radial.png" id="Spread"]
+
+[sub_resource type="AtlasTexture" id="StraightIcon"]
+atlas = ExtResource("Straight")
+region = Rect2(32, 42, 64, 44)
+
+[sub_resource type="AtlasTexture" id="SpreadIcon"]
+atlas = ExtResource("Spread")
+region = Rect2(36, 50, 54, 29)
+
+[node name="CombatHUD" type="Control"]
+layout_mode = 0
+offset_right = 1920
+offset_bottom = 1080
+mouse_filter = 2
+script = ExtResource("Script")
+bomb_on = ExtResource("BombOn")
+bomb_ready = ExtResource("BombReady")
+bomb_off = ExtResource("BombOff")
+straight_icon = SubResource("StraightIcon")
+spread_icon = SubResource("SpreadIcon")
+
+[node name="ActivePilot" type="Control" parent="."]
+z_index = -2
+layout_mode = 0
+offset_left = 14
+offset_top = 817
+offset_right = 452
+offset_bottom = 1059
+mouse_filter = 2
+clip_contents = true
+
+[node name="ActivePortrait" type="TextureRect" parent="ActivePilot"]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_right = 1
+anchor_bottom = 1
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="BombButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 480
+offset_top = 937
+offset_right = 809
+offset_bottom = 1078
+mouse_filter = 0
+unique_name_in_owner = true
+focus_mode = 0
+tooltip_text = "폭탄 / H · 게임패드 B"
+texture_normal = ExtResource("BombBox")
+texture_disabled = ExtResource("BombBox")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="BombOne" type="TextureRect" parent="BombButton"]
+layout_mode = 0
+offset_left = 132
+offset_top = 24
+offset_right = 180
+offset_bottom = 103
+mouse_filter = 2
+texture = ExtResource("BombReady")
+expand_mode = 1
+stretch_mode = 5
+unique_name_in_owner = true
+
+[node name="BombTwo" type="TextureRect" parent="BombButton"]
+layout_mode = 0
+offset_left = 218
+offset_top = 24
+offset_right = 266
+offset_bottom = 103
+mouse_filter = 2
+texture = ExtResource("BombOn")
+expand_mode = 1
+stretch_mode = 5
+unique_name_in_owner = true
+
+[node name="BombCount" type="Label" parent="BombButton"]
+layout_mode = 0
+offset_left = 20
+offset_top = 86
+offset_right = 84
+offset_bottom = 116
+mouse_filter = 2
+text = "×2"
+theme_override_font_sizes/font_size = 20
+unique_name_in_owner = true
+horizontal_alignment = 1
+
+[node name="BombKey" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 817
+offset_top = 994
+offset_right = 895
+offset_bottom = 1076
+mouse_filter = 2
+texture = ExtResource("Button")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Key" type="Label" parent="BombKey"]
+layout_mode = 0
+offset_left = 0
+offset_top = 0
+offset_right = 78
+offset_bottom = 82
+mouse_filter = 2
+text = "H"
+theme_override_font_sizes/font_size = 26
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WeaponBox" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 936
+offset_top = 941
+offset_right = 1075
+offset_bottom = 1073
+mouse_filter = 2
+texture = ExtResource("WeaponBox")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="WeaponOne" type="TextureRect" parent="WeaponBox"]
+layout_mode = 0
+offset_left = 38
+offset_top = 20
+offset_right = 102
+offset_bottom = 60
+mouse_filter = 2
+unique_name_in_owner = true
+texture = SubResource("StraightIcon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="WeaponTwo" type="TextureRect" parent="WeaponBox"]
+layout_mode = 0
+offset_left = 38
+offset_top = 53
+offset_right = 102
+offset_bottom = 93
+mouse_filter = 2
+unique_name_in_owner = true
+pivot_offset = Vector2(32, 20)
+texture = SubResource("StraightIcon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="WeaponLevel" type="Label" parent="WeaponBox"]
+layout_mode = 0
+offset_left = 14
+offset_top = 96
+offset_right = 125
+offset_bottom = 124
+mouse_filter = 2
+text = "LV.1"
+theme_override_font_sizes/font_size = 17
+unique_name_in_owner = true
+horizontal_alignment = 1
+
+[node name="ShootKey" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 1091
+offset_top = 994
+offset_right = 1169
+offset_bottom = 1076
+mouse_filter = 2
+texture = ExtResource("Button")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Key" type="Label" parent="ShootKey"]
+layout_mode = 0
+offset_left = 0
+offset_top = 0
+offset_right = 78
+offset_bottom = 82
+mouse_filter = 2
+text = "J"
+theme_override_font_sizes/font_size = 26
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WeaponChange" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 1178
+offset_top = 941
+offset_right = 1317
+offset_bottom = 1073
+mouse_filter = 0
+unique_name_in_owner = true
+focus_mode = 0
+tooltip_text = "무기 변경 / K · 게임패드 Y"
+texture_normal = ExtResource("WeaponBox")
+texture_disabled = ExtResource("WeaponBox")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Change" type="TextureRect" parent="WeaponChange"]
+layout_mode = 0
+offset_left = 29
+offset_top = 22
+offset_right = 109
+offset_bottom = 104
+mouse_filter = 2
+texture = ExtResource("Change")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ChangeKey" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 1330
+offset_top = 994
+offset_right = 1408
+offset_bottom = 1076
+mouse_filter = 2
+texture = ExtResource("Button")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Key" type="Label" parent="ChangeKey"]
+layout_mode = 0
+offset_left = 0
+offset_top = 0
+offset_right = 78
+offset_bottom = 82
+mouse_filter = 2
+text = "K"
+theme_override_font_sizes/font_size = 26
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PauseButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 1685
+offset_top = 927
+offset_right = 1804
+offset_bottom = 1052
+mouse_filter = 0
+unique_name_in_owner = true
+focus_mode = 0
+tooltip_text = "일시정지 / ESC · 게임패드 Start"
+texture_normal = ExtResource("Button")
+ignore_texture_size = true
+stretch_mode = 0

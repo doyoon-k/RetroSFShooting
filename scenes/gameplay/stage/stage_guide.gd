@@ -38,10 +38,13 @@ func _draw() -> void:
 				_draw_placed(child as Node2D)
 
 func _draw_ruler() -> void:
-	var area := Rect2(48.0, 100.0, length, 864.0)
+	var playfield := get_parent().get_node_or_null("Playfield") as Control
+	var origin := playfield.position if playfield != null else Vector2(48, 100)
+	var field_size := playfield.size if playfield != null else Vector2(1440, 864)
+	var area := Rect2(origin, Vector2(length, field_size.y))
 	draw_rect(area, Color(0.24, 0.62, 0.74, 0.5), false, 3.0)
-	for index in ceili(length / 1440.0):
-		var x := area.position.x + index * 1440.0
+	for index in ceili(length / field_size.x):
+		var x := area.position.x + index * field_size.x
 		draw_line(Vector2(x, area.position.y), Vector2(x, area.end.y), Color(0.24, 0.62, 0.74, 0.2), 2.0)
 
 func _draw_group(wave: EnemyWave) -> void:
@@ -115,6 +118,9 @@ func _movement_points(movement: Node, start: Vector2) -> PackedVector2Array:
 	var steps := maxi(1, ceili(preview_seconds / preview_step))
 	var position := start
 	var hold_position: Vector2 = movement.get("hold_position")
+	var sequence := get_parent().get_node_or_null("WaveSequence") as Node2D
+	if sequence != null:
+		hold_position += sequence.position
 	hold_position.x += _activation_progress(start.x)
 	var hold_seconds: float = movement.get("hold_seconds")
 	var stay_forever: bool = movement.get("stay_forever")

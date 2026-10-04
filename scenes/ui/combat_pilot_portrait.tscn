@@ -1,0 +1,80 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/combat_pilot_portrait.gd" id="Script"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/Pilot_Bg.png" id="Background"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/On a sortie.png" id="Sortie"]
+
+[sub_resource type="StyleBoxEmpty" id="Empty"]
+
+[sub_resource type="StyleBoxFlat" id="Focus"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.85, 0.93, 0.95, 1)
+
+[sub_resource type="StyleBoxFlat" id="Hover"]
+bg_color = Color(1, 1, 1, 0.08)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.85, 0.93, 0.95, 0.8)
+
+[node name="CombatPilotPortrait" type="Button"]
+custom_minimum_size = Vector2(196, 242)
+clip_contents = true
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/disabled = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Hover")
+theme_override_styles/hover = SubResource("Hover")
+theme_override_styles/focus = SubResource("Focus")
+script = ExtResource("Script")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture = ExtResource("Background")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Portrait" type="TextureRect" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="OnSortie" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture = ExtResource("Sortie")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PilotName" type="Label" parent="."]
+visible = false
+mouse_filter = 2
+
+[node name="Status" type="Label" parent="."]
+visible = false
+mouse_filter = 2
+
+[node name="Accent" type="ColorRect" parent="."]
+visible = false
+mouse_filter = 2
+
+[node name="Selection" type="Panel" parent="."]
+visible = false
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Focus")
