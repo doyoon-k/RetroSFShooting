@@ -11,6 +11,8 @@ signal pause_requested
 @export var straight_icon: Texture2D
 @export var spread_icon: Texture2D
 
+@onready var bomb_slots: Array[TextureRect] = [%BombOne, %BombTwo, %BombThree, %BombFour]
+
 func _ready() -> void:
 	%BombButton.pressed.connect(func(): bomb_requested.emit())
 	%WeaponChange.pressed.connect(func(): weapon_change_requested.emit())
@@ -18,9 +20,8 @@ func _ready() -> void:
 
 func display(sortie: SortieState, portrait: Texture2D, can_use: bool) -> void:
 	%ActivePortrait.texture = portrait
-	%BombCount.text = "×%d" % sortie.bombs
-	%BombOne.texture = bomb_ready if sortie.bombs > 0 else bomb_off
-	%BombTwo.texture = bomb_on if sortie.bombs > 1 else bomb_off
+	for index in bomb_slots.size():
+		bomb_slots[index].texture = bomb_off if index >= sortie.bombs else (bomb_ready if index == 0 else bomb_on)
 	%BombButton.disabled = not can_use or sortie.bombs <= 0
 	%WeaponChange.disabled = not can_use
 	var icon := spread_icon if sortie.active_weapon == SortieState.WeaponType.SPREAD else straight_icon

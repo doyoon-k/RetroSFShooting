@@ -26,6 +26,7 @@ distance = 640.0
 multiplier = 1.0
 
 [node name="PlayerShip" type="Area2D"]
+scale = Vector2(1.5, 1.5)
 collision_mask = 2
 script = ExtResource("Script")
 normal_sprite = ExtResource("Normal")

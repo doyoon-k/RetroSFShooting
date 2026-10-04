@@ -60,10 +60,10 @@ process_mode = 1
 
 [node name="Playfield" type="Panel" parent="Simulation"]
 unique_name_in_owner = true
-offset_left = 480.0
-offset_top = 32.0
-offset_right = 1888.0
-offset_bottom = 896.0
+offset_left = 440.0
+offset_top = 24.0
+offset_right = 1904.0
+offset_bottom = 976.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("PlayfieldBackground")
 
@@ -78,7 +78,7 @@ script = ExtResource("Guide")
 length = 30000.0
 
 [node name="WaveSequence" type="Node2D" parent="Simulation"]
-position = Vector2(400, -68)
+position = Vector2(416, -32)
 script = ExtResource("Sequence")
 boss_scene = ExtResource("boss")
 
@@ -496,7 +496,7 @@ enemy_scene = ExtResource("N1")
 count = 1
 
 [node name="PlacedEnemies" type="Node2D" parent="Simulation"]
-position = Vector2(400, -68)
+position = Vector2(416, -32)
 
 [node name="N5Upper" parent="Simulation/PlacedEnemies" instance=ExtResource("N5")]
 position = Vector2(18488, 290)

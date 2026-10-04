@@ -12,9 +12,11 @@ var bounds: Rect2
 var target: PlayerShip
 var velocity: Vector2
 var taken: bool = false
+var previous_bounds_position: Vector2
 
 func _ready() -> void:
 	velocity = initial_velocity
+	previous_bounds_position = bounds.position
 	area_entered.connect(_on_area_entered)
 
 func _physics_process(delta: float) -> void:
@@ -22,15 +24,22 @@ func _physics_process(delta: float) -> void:
 	if lifetime <= 0.0:
 		queue_free()
 		return
+	# Drift and bounce in screen space while the stage scrolls in world space.
+	position += bounds.position - previous_bounds_position
+	previous_bounds_position = bounds.position
 	if is_instance_valid(target) and not target.death_reported:
 		velocity += global_position.direction_to(target.global_position) * attraction * delta
 	velocity = velocity.limit_length(maximum_speed)
 	position += velocity * delta
 	var area := bounds.grow(-boundary_padding)
-	if position.x < area.position.x or position.x > area.end.x:
-		velocity.x = -velocity.x
-	if position.y < area.position.y or position.y > area.end.y:
-		velocity.y = -velocity.y
+	if position.x <= area.position.x:
+		velocity.x = absf(velocity.x)
+	elif position.x >= area.end.x:
+		velocity.x = -absf(velocity.x)
+	if position.y <= area.position.y:
+		velocity.y = absf(velocity.y)
+	elif position.y >= area.end.y:
+		velocity.y = -absf(velocity.y)
 	position = position.clamp(area.position, area.end)
 	modulate.a = 0.35 if lifetime < 2.0 and fmod(lifetime, 0.25) < 0.125 else 1.0
 

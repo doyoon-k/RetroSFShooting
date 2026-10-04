@@ -39,8 +39,8 @@ func _draw() -> void:
 
 func _draw_ruler() -> void:
 	var playfield := get_parent().get_node_or_null("Playfield") as Control
-	var origin := playfield.position if playfield != null else Vector2(48, 100)
-	var field_size := playfield.size if playfield != null else Vector2(1440, 864)
+	var origin := playfield.position if playfield != null else Vector2(440, 24)
+	var field_size := playfield.size if playfield != null else Vector2(1464, 952)
 	var area := Rect2(origin, Vector2(length, field_size.y))
 	draw_rect(area, Color(0.24, 0.62, 0.74, 0.5), false, 3.0)
 	for index in ceili(length / field_size.x):
@@ -164,7 +164,7 @@ func _activation_progress(spawn_x: float) -> float:
 	var simulation := get_parent()
 	var playfield := simulation.get_node_or_null("Playfield") as Control
 	var stage := simulation.get_parent()
-	var right := playfield.offset_right if playfield != null else 1488.0
+	var right := playfield.offset_right if playfield != null else 1904.0
 	var margin := float(stage.get("activation_margin")) if stage != null else 80.0
 	return maxf(0.0, spawn_x - right - margin)
 
@@ -190,12 +190,14 @@ func _enemy_color(enemy: Node2D) -> Color:
 	return Color(0.74, 0.35, 0.95) if sprite != null else Color(0.7, 0.85, 0.9)
 
 func _draw_enemy_visual(enemy: Node2D, start: Vector2) -> void:
+	var actor_transform := enemy.transform
+	actor_transform.origin = to_local(start)
 	for name in ["Visual", "Core"]:
 		var polygon := enemy.get_node_or_null(name) as Polygon2D
 		if polygon != null:
 			var points := PackedVector2Array()
 			for point in polygon.polygon:
-				points.append(to_local(start + polygon.transform * point))
+				points.append(actor_transform * polygon.transform * point)
 			if points.size() >= 3:
 				draw_colored_polygon(points, polygon.color)
 	var sprite := enemy.get_node_or_null("Visual") as Sprite2D
@@ -207,7 +209,7 @@ func _draw_enemy_visual(enemy: Node2D, start: Vector2) -> void:
 		var frame := clampi(sprite.frame, 0, columns * rows - 1)
 		source = Rect2(source.position + Vector2(frame % columns, floori(float(frame) / float(columns))) * size, size)
 		var top_left := -size * 0.5 if sprite.centered else Vector2.ZERO
-		draw_set_transform(to_local(start) + sprite.position, sprite.rotation, sprite.scale)
+		draw_set_transform_matrix(actor_transform * sprite.transform)
 		draw_texture_rect_region(sprite.texture, Rect2(top_left + sprite.offset, size), source, sprite.modulate)
 		draw_set_transform(Vector2.ZERO)
 

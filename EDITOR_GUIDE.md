@@ -27,6 +27,13 @@
 | 전투 하단 콘솔·확대 초상화 | `scenes/ui/combat_hud.tscn` |
 | 키보드·게임패드 | Project Settings → Input Map |
 
+전투 기체는 기본 `player_ship.tscn` 루트의 Scale이 1.5이며, 모든 적 씬의 루트 Scale은
+2입니다. 이미지·충돌 영역·발사 위치가 함께 확대됩니다. 플레이어의 이동 영역은
+`data/rules/default.tres`의 Playfield이며 전투 프레임 안쪽 `(440, 24)`부터
+`(1904, 976)`까지입니다. `PlayerShip`의 Boundary Padding은 투명 여백을 제외한
+기체 반크기이며 Scale에 맞춰 적용됩니다. 이동 경계는 하나의 직사각형입니다.
+좌하단 프레임이나 하단 콘솔과 겹쳐도 기체 위치를 밀어내거나 추가로 제한하지 않습니다.
+
 ## 새 적 공격 만들기
 
 1. `data/patterns/fan.tres`를 복제하고 이름을 바꿉니다.
@@ -64,6 +71,10 @@
 → `Straight Shot Spacing`에서 조절합니다. 방사형은 같은 부채꼴 안의 `Angles`를 늘려
 3/5/7발을 쏩니다. 두 무기는 하나의 강화 레벨을 공유하므로 Power Up이나 실드 없는 피격이 두 패턴에 함께 적용됩니다.
 사망 시 회수 아이템은 `stage_01.tscn`의 `Recovery Pickup`과 `Recovery Bomb`에 연결된 씬으로 생성됩니다.
+폭탄·레벨업 아이템은 카메라 전진을 따라가면서 전투 영역의 네 가장자리에서 반사됩니다.
+아이템 씬의 `Initial Velocity`는 화면 기준 이동 방향·속도이며, `Boundary Padding`은
+경계에서 아이템이 잘리지 않게 남기는 여백입니다. `Attraction`은 플레이어 쪽으로
+방향을 서서히 틀어주는 정도입니다.
 
 `Weapon` 노드의 `Proximity Damage > Proximity Tiers` 배열에서 거리(px)와 배율을
 한 쌍씩 추가·제거합니다. 배열 순서와 상관없이 거리순으로 적용되며, 단계 사이에서는

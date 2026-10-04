@@ -6,7 +6,8 @@ signal bomb_requested
 signal hit
 
 @export_range(50.0, 1200.0, 10.0) var move_speed: float = 490.0
-@export var boundary_padding: Vector2 = Vector2(24, 24)
+# Local-space half extents of the visible ship, excluding transparent texture margins.
+@export var boundary_padding: Vector2 = Vector2(40, 30)
 @export_group("Ship Sprites")
 @export var normal_sprite: Texture2D
 @export var normal_back_sprite: Texture2D
@@ -36,7 +37,8 @@ func _physics_process(delta: float) -> void:
 	var motion := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	horizontal_input = motion.x
 	position += (Vector2(auto_advance_speed, 0.0) + motion * move_speed) * delta
-	position = position.clamp(bounds.position + boundary_padding, bounds.end - boundary_padding)
+	var padding := boundary_padding * scale.abs()
+	position = position.clamp(bounds.position + padding, bounds.end - padding)
 	_update_sprite()
 	visuals.modulate.a = 0.4 if invincibility > 0.0 and fmod(invincibility, 0.14) < 0.07 else 1.0
 	$Shield.visible = state.shield

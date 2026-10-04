@@ -11,6 +11,7 @@
 radius = 36.0
 
 [node name="EnemyShip" type="Area2D"]
+scale = Vector2(2, 2)
 collision_layer = 2
 collision_mask = 0
 monitoring = false

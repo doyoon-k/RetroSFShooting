@@ -67,9 +67,9 @@ stretch_mode = 0
 
 [node name="BombOne" type="TextureRect" parent="BombButton"]
 layout_mode = 0
-offset_left = 132
+offset_left = 44
 offset_top = 24
-offset_right = 180
+offset_right = 92
 offset_bottom = 103
 mouse_filter = 2
 texture = ExtResource("BombReady")
@@ -79,9 +79,9 @@ unique_name_in_owner = true
 
 [node name="BombTwo" type="TextureRect" parent="BombButton"]
 layout_mode = 0
-offset_left = 218
+offset_left = 108
 offset_top = 24
-offset_right = 266
+offset_right = 156
 offset_bottom = 103
 mouse_filter = 2
 texture = ExtResource("BombOn")
@@ -89,17 +89,29 @@ expand_mode = 1
 stretch_mode = 5
 unique_name_in_owner = true
 
-[node name="BombCount" type="Label" parent="BombButton"]
+[node name="BombThree" type="TextureRect" parent="BombButton"]
 layout_mode = 0
-offset_left = 20
-offset_top = 86
-offset_right = 84
-offset_bottom = 116
+offset_left = 172
+offset_top = 24
+offset_right = 220
+offset_bottom = 103
 mouse_filter = 2
-text = "×2"
-theme_override_font_sizes/font_size = 20
+texture = ExtResource("BombOff")
+expand_mode = 1
+stretch_mode = 5
 unique_name_in_owner = true
-horizontal_alignment = 1
+
+[node name="BombFour" type="TextureRect" parent="BombButton"]
+layout_mode = 0
+offset_left = 236
+offset_top = 24
+offset_right = 284
+offset_bottom = 103
+mouse_filter = 2
+texture = ExtResource("BombOff")
+expand_mode = 1
+stretch_mode = 5
+unique_name_in_owner = true
 
 [node name="BombKey" type="TextureRect" parent="."]
 layout_mode = 0

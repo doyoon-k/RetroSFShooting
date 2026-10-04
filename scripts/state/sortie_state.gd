@@ -5,10 +5,14 @@ signal changed
 
 enum WeaponType { STRAIGHT, SPREAD }
 
+const MAX_BOMBS: int = 4
+
 var hp: int
 var active_weapon: WeaponType = WeaponType.STRAIGHT
 var power_level: int = 1
-var bombs: int
+var bombs: int = 0:
+	set(value):
+		bombs = clampi(value, 0, MAX_BOMBS)
 var shield: bool = false
 
 func _init(rules: GameRules = null) -> void:

@@ -5,5 +5,5 @@
 
 [resource]
 script = ExtResource("Script")
-playfield = Rect2(480, 32, 1408, 864)
-spawn_position = Vector2(662, 464)
+playfield = Rect2(440, 24, 1464, 952)
+spawn_position = Vector2(662, 500)

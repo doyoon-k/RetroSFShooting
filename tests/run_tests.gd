@@ -41,11 +41,13 @@ func _run() -> void:
 	await _test_proximity_damage()
 	await _test_enemy_hit_effect()
 	await _test_ship_sprites()
+	await _test_pickup_bounces()
 	_test_save()
 	await _test_game_flow()
 	await _test_bad_ending_flow()
 	await _test_stage()
 	await _test_combat_layout()
+	await _test_playfield_edges()
 	await _test_simultaneous_outcomes()
 	await _test_full_stage()
 	await frames(3)
@@ -144,6 +146,16 @@ func _test_sorties() -> void:
 	run.begin_sortie(&"P2")
 	check(run.current_sortie != old and run.current_sortie.hp == 2 and run.current_sortie.current_power_level() == 1 and run.current_sortie.active_weapon == SortieState.WeaponType.STRAIGHT and run.current_sortie.bombs == 2 and not run.current_sortie.shield, "New sortie resets all transient stats")
 	check(content.rules.starting_hp == 2 and content.rules.starting_bombs == 2, "Runtime changes do not mutate shared rules")
+	var stocked := SortieState.new(content.rules)
+	for pickup in 6:
+		stocked.collect(Pickup.Kind.BOMB, 3)
+	check(stocked.bombs == 4, "Repeated bomb pickups cannot exceed four stocks")
+	check(stocked.spend_bomb() and stocked.bombs == 3, "A full bomb stock still spends exactly one bomb")
+	stocked.collect(Pickup.Kind.BOMB, 3)
+	check(stocked.bombs == 4, "A spent slot can be refilled after reaching the cap")
+	var overstocked_rules := content.rules.duplicate() as GameRules
+	overstocked_rules.starting_bombs = 6
+	check(SortieState.new(overstocked_rules).bombs == 4 and overstocked_rules.starting_bombs == 6, "Starting stocks are capped without mutating authored rules")
 	var durable := SortieState.new(content.rules)
 	check(not durable.damage(0) and durable.hp == 2, "Zero damage does not consume health or shield")
 	durable.damage(2)
@@ -437,6 +449,49 @@ func _test_ship_sprites() -> void:
 		ship.queue_free()
 		await frames()
 
+func _test_pickup_bounces() -> void:
+	var stage := _create_stage()
+	await frames(16)
+	stage.set_physics_process(false)
+	stage.simulation.process_mode = Node.PROCESS_MODE_DISABLED
+	for scene in [stage.recovery_pickup, stage.recovery_bomb]:
+		var item := stage._spawn_pickup(scene, stage.view_bounds.get_center())
+		item.attraction = 0.0
+		var area := item.bounds.grow(-item.boundary_padding)
+		var center := area.get_center()
+		var cases: Array[Dictionary] = [
+			{"position": Vector2(area.position.x + 10, center.y), "velocity": Vector2(-40, 30), "expected": Vector2(40, 30)},
+			{"position": Vector2(area.end.x - 10, center.y), "velocity": Vector2(40, 30), "expected": Vector2(-40, 30)},
+			{"position": Vector2(center.x, area.position.y + 10), "velocity": Vector2(30, -40), "expected": Vector2(30, 40)},
+			{"position": Vector2(center.x, area.end.y - 10), "velocity": Vector2(30, 40), "expected": Vector2(30, -40)},
+			{"position": area.position + Vector2(10, 10), "velocity": Vector2(-40, -40), "expected": Vector2(40, 40)},
+			{"position": area.end - Vector2(10, 10), "velocity": Vector2(40, 40), "expected": Vector2(-40, -40)},
+		]
+		for entry in cases:
+			item.position = entry.position
+			item.velocity = entry.velocity
+			item._physics_process(0.25)
+			check(item.velocity.is_equal_approx(entry.expected), "Bomb and power pickups reflect the contacted axes, including exact edge and corner contact")
+			check(is_equal_approx(item.velocity.length(), entry.velocity.length()), "Boundary reflection preserves pickup speed")
+			var contact_position := item.position
+			item._physics_process(0.1)
+			check(item.position.is_equal_approx(contact_position + Vector2(entry.expected) * 0.1), "Pickup moves back into the arena after bouncing")
+		# Begin just inside the moving left edge: the old world-space drift stuck here.
+		item.position = Vector2(area.position.x + 1, center.y)
+		item.velocity = Vector2(-50, 40)
+		var initial_screen_x := item.position.x - stage.progress_x
+		for frame_index in 120:
+			stage.progress_x += stage.scroll_speed / 60.0
+			stage._sync_world_bounds()
+			item._physics_process(1.0 / 60.0)
+		check(item.velocity.x > 0.0 and item.position.x - stage.progress_x > initial_screen_x + 90.0, "Pickup bounces away from the left edge while the camera advances faster than its drift")
+		var before_stop := item.position
+		item._physics_process(0.1)
+		check(item.position.is_equal_approx(before_stop + item.velocity * 0.1), "Pickup keeps drifting normally when camera scrolling stops")
+		item.queue_free()
+	stage.queue_free()
+	await frames()
+
 func _test_game_flow() -> void:
 	var main: Node = load("res://scenes/main/main.tscn").instantiate()
 	main.get_node("SaveStore").save_path = save_test_path
@@ -655,7 +710,7 @@ func _test_stage() -> void:
 	check(stage.projectiles.get_child_count() == bullet_count + 2, "Straight LV1 fires two projectiles")
 	var straight_bullet := stage.projectiles.get_child(bullet_count) as Projectile
 	var second_straight_bullet := stage.projectiles.get_child(bullet_count + 1) as Projectile
-	check(is_equal_approx(straight_bullet.global_position.x, second_straight_bullet.global_position.x) and is_equal_approx(straight_bullet.global_position.y, stage.player.weapon.global_position.y - 14.0) and is_equal_approx(second_straight_bullet.global_position.y, stage.player.weapon.global_position.y + 14.0), "Straight bullets spawn in two parallel rows")
+	check(is_equal_approx(straight_bullet.global_position.x, second_straight_bullet.global_position.x) and is_equal_approx(straight_bullet.global_position.y, stage.player.weapon.global_position.y - 21.0) and is_equal_approx(second_straight_bullet.global_position.y, stage.player.weapon.global_position.y + 21.0), "Straight bullets spawn in two parallel rows on the enlarged ship")
 	check((straight_bullet.get_node("Visual") as Sprite2D).texture == straight_texture, "Fired straight bullet shows the straight image")
 	check(straight_bullet.proximity_points.size() == 2 and straight_bullet.proximity_points[0].y == 2.0 and straight_bullet.damage_origin.is_equal_approx(straight_bullet.global_position), "Straight shot captures proximity tiers and its own firing origin")
 	await capture("straight_lv1")
@@ -722,7 +777,7 @@ func _test_stage() -> void:
 	bullet_count = stage.projectiles.get_child_count()
 	stage.player.weapon.fire()
 	check(stage.projectiles.get_child_count() == bullet_count + 4 and (stage.projectiles.get_child(bullet_count) as Projectile).damage == 1, "Straight LV3 fires four base-damage projectiles")
-	check(is_equal_approx((stage.projectiles.get_child(bullet_count) as Projectile).global_position.y, stage.player.weapon.global_position.y - 42.0) and is_equal_approx((stage.projectiles.get_child(bullet_count + 3) as Projectile).global_position.y, stage.player.weapon.global_position.y + 42.0), "Straight LV3 keeps four visibly separated rows")
+	check(is_equal_approx((stage.projectiles.get_child(bullet_count) as Projectile).global_position.y, stage.player.weapon.global_position.y - 63.0) and is_equal_approx((stage.projectiles.get_child(bullet_count + 3) as Projectile).global_position.y, stage.player.weapon.global_position.y + 63.0), "Straight LV3 keeps four visibly separated rows on the enlarged ship")
 	await capture("straight_lv3")
 	stage.player.collect(Pickup.Kind.BOMB)
 	check(stage.run.current_sortie.bombs == 2, "Bomb pickup restores one spent bomb")
@@ -844,6 +899,7 @@ func _test_combat_layout() -> void:
 	check(stage.roster.get_global_rect().end.x < stage.rules.playfield.position.x, "Combat roster stays left of the playable arena")
 	check(card.get_node("OnSortie").visible and not card.get_node("Portrait").visible, "Active pilot slot shows the sortie artwork")
 	check(hud.get_node("ActivePilot/ActivePortrait").texture == content.pilots[0].normal, "Cockpit initially shows the active pilot")
+	check(hud.bomb_slots.size() == 4 and hud.bomb_slots[0].texture == hud.bomb_ready and hud.bomb_slots[1].texture == hud.bomb_on and hud.bomb_slots[2].texture == hud.bomb_off and hud.bomb_slots[3].texture == hud.bomb_off, "Four bomb slots initially show two filled stocks and two empty stocks")
 	var first_wave := stage.waves.get_node("Wave01_Z1") as EnemyWave
 	var first_activation := first_wave.global_position.x - stage.rules.playfield.end.x - stage.activation_margin
 	check(is_equal_approx(first_activation / stage.scroll_speed, 1.0), "Moving the arena preserves the first wave's one-second arrival")
@@ -854,7 +910,17 @@ func _test_combat_layout() -> void:
 	stage.run.current_sortie.collect(Pickup.Kind.BOMB, 3)
 	stage.run.current_sortie.collect(Pickup.Kind.BOMB, 3)
 	await frames(2)
-	check(hud.get_node("BombButton/BombCount").text == "×3", "Bomb readout retains stock above the two icon slots")
+	check(stage.run.current_sortie.bombs == 3 and hud.bomb_slots[2].texture == hud.bomb_on and hud.bomb_slots[3].texture == hud.bomb_off, "A third bomb fills the third slot and leaves the fourth empty")
+	stage.run.current_sortie.collect(Pickup.Kind.BOMB, 3)
+	await frames(2)
+	check(stage.run.current_sortie.bombs == 4 and hud.bomb_slots[3].texture == hud.bomb_on, "A fourth bomb fills all four console slots")
+	await capture("04_combat_bombs_full")
+	stage.run.current_sortie.collect(Pickup.Kind.BOMB, 3)
+	await frames(2)
+	check(stage.run.current_sortie.bombs == 4 and hud.bomb_slots[3].texture == hud.bomb_on, "An extra bomb pickup keeps the full console at four")
+	hud.get_node("BombButton").pressed.emit()
+	await frames(2)
+	check(stage.run.current_sortie.bombs == 3 and hud.bomb_slots[2].texture == hud.bomb_on and hud.bomb_slots[3].texture == hud.bomb_off, "Spending from full stock turns off only the fourth slot")
 	hud.get_node("WeaponChange").pressed.emit()
 	await frames(2)
 	check(stage.run.current_sortie.active_weapon == SortieState.WeaponType.SPREAD and hud.get_node("WeaponBox/WeaponOne").texture == hud.spread_icon, "Change console selects the spread weapon and updates its icon")
@@ -871,12 +937,58 @@ func _test_combat_layout() -> void:
 	check(hud.get_node("ActivePilot/ActivePortrait").texture == content.pilots[0].damaged and card.get_node("OnSortie").visible, "Damage changes the cockpit portrait while keeping the sortie slot")
 	stage.run.current_sortie.bombs = 0
 	await frames(2)
-	check(hud.get_node("BombButton").disabled and hud.get_node("BombButton/BombOne").texture == hud.bomb_off, "Empty bomb stock disables the console and both indicators")
+	check(hud.get_node("BombButton").disabled and hud.bomb_slots.all(func(slot: TextureRect) -> bool: return slot.texture == hud.bomb_off), "Empty bomb stock disables the console and all four indicators")
 	await capture("04_combat_damage")
 	stage.player.invincibility = 0
 	stage.player.take_damage()
 	await frames(3)
 	check(card.get_node("Portrait").visible and not card.get_node("OnSortie").visible and hud.get_node("ActivePilot/ActivePortrait").texture == content.pilots[0].dead, "Pilot death restores the lost slot and cockpit portrait")
+	stage.queue_free()
+	await frames()
+
+func _test_playfield_edges() -> void:
+	var stage := _create_stage()
+	await frames(16)
+	stage.set_physics_process(false)
+	stage.simulation.process_mode = Node.PROCESS_MODE_DISABLED
+	stage.player.invincibility = 0.0
+	stage.player.auto_advance_speed = 0.0
+	check(stage.rules.playfield == stage.presentation_bounds, "Movement covers the complete battle frame interior")
+	for progress in [0.0, 1200.0]:
+		stage.progress_x = progress
+		stage._sync_world_bounds()
+		for corner in [Vector2(-10000, -10000), Vector2(10000, -10000), Vector2(-10000, 10000), Vector2(10000, 10000)]:
+			stage.player.position = corner + Vector2(progress, 0)
+			stage.player._physics_process(0.0)
+			var expected_x := 1844.0 if corner.x > 0 else 500.0
+			var expected_y := 931.0 if corner.y > 0 else 69.0
+			check(stage.player.position.is_equal_approx(Vector2(expected_x + progress, expected_y)), "Ship reaches the frame edge at each corner before and after scrolling")
+			for texture in [stage.player.normal_sprite, stage.player.normal_back_sprite, stage.player.normal_forward_sprite, stage.player.damaged_sprite, stage.player.damaged_back_sprite, stage.player.damaged_forward_sprite]:
+				var artwork := Rect2(texture.get_image().get_used_rect())
+				artwork.position -= Vector2(texture.get_size()) * 0.5
+				var world_artwork: Rect2 = stage.player.visuals.global_transform * artwork
+				check(stage.view_bounds.encloses(world_artwork), "Every normal and damaged pose remains inside the expanded playfield")
+			if is_zero_approx(progress):
+				await capture("playfield_edge_%s_%s" % ["right" if corner.x > 0 else "left", "bottom" if corner.y > 0 else "top"])
+		for location in [Vector2(510, 850), Vector2(650, 925), Vector2(1000, 925), Vector2(1250, 925), Vector2(1740, 925)]:
+			stage.player.position = location + Vector2(progress, 0)
+			stage.player._physics_process(0.0)
+			check(stage.player.position.is_equal_approx(location + Vector2(progress, 0)), "Overlapping the cockpit frame or any console does not displace the ship")
+		stage.player.position = Vector2(500 + progress, 931)
+		Input.action_press("move_right")
+		var stayed_at_bottom := true
+		for frame_index in 180:
+			stage.player._physics_process(1.0 / 60.0)
+			stayed_at_bottom = stayed_at_bottom and is_equal_approx(stage.player.position.y, 931.0)
+		Input.action_release("move_right")
+		check(stayed_at_bottom and is_equal_approx(stage.player.position.x, 1844 + progress), "Ship crosses the entire bottom edge without being pushed by UI")
+	stage.progress_x = 0.0
+	stage._sync_world_bounds()
+	stage.player.position = Vector2(850, 500)
+	stage._spawn_enemy(load("res://scenes/enemies/z1_wedge.tscn"), Vector2(1200, 260))
+	stage._spawn_enemy(load("res://scenes/enemies/n1_interceptor.tscn"), Vector2(1550, 270))
+	stage._spawn_enemy(load("res://scenes/enemies/m2_wing.tscn"), Vector2(1500, 620))
+	await capture("04_ship_sizes")
 	stage.queue_free()
 	await frames()
 

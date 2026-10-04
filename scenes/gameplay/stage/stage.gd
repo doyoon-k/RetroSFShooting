@@ -158,8 +158,6 @@ func _launch_current() -> void:
 	player.state = run.current_sortie
 	player.rules = rules
 	player.bounds = view_bounds
-	# Keep the 128px ship clear of the frame and lower console.
-	player.boundary_padding = player.boundary_padding.max(Vector2(64, 64))
 	player.position = Vector2(progress_x + rules.playfield.position.x - 80, rules.spawn_position.y)
 	actors.add_child(player)
 	player.weapon.state = run.current_sortie
