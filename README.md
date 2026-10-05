@@ -109,4 +109,5 @@ godot --headless --path . --script tests/run_tests.gd --fixed-fps 60
 
 보스 패턴의 정지 안전지대 표본 검사까지 실행하려면 `python tools/balance.py --boss-patterns`를 사용합니다.
 
-근접 화력의 이전/현재 곡선을 실제 충돌로 비교하려면 `python tools/weapon_pressure.py`를 실행합니다. 첫 미들 전의 일반 강화 공급은 7초 한 번이며, 17초 추가 공급은 제거했습니다.
+근접 화력의 이전/현재 곡선을 실제 충돌로 비교하려면 `python tools/weapon_pressure.py
+python tools/durability.py`를 실행합니다. 첫 미들 전의 일반 강화 공급은 7초 한 번이며, 17초 추가 공급은 제거했습니다.

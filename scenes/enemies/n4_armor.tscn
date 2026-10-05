@@ -16,7 +16,7 @@ collision_layer = 2
 collision_mask = 0
 monitoring = false
 script = ExtResource("Ship")
-maximum_hp = 28
+maximum_hp = 46
 
 [node name="Visual" type="Sprite2D" parent="."]
 offset = Vector2(-3.0, -0.5)

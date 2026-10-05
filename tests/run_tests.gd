@@ -268,8 +268,8 @@ func _test_enemy_profiles() -> void:
 	check(sine != null and aimed != null and aimed.steps.size() == 1, "Movement and attack presets load as editable resources")
 	var planned_enemies := {
 		"z1_wedge": 2, "z2_spine": 2, "z3_eye": 3, "z4_crescent": 2, "z5_chain": 3,
-		"n1_interceptor": 10, "n2_crawler": 18, "n3_claw": 22, "n4_armor": 28, "n5_tendril": 20,
-		"m1_carapace": 160, "m2_wing": 150, "m3_star_eye": 180,
+		"n1_interceptor": 26, "n2_crawler": 30, "n3_claw": 40, "n4_armor": 46, "n5_tendril": 32,
+		"m1_carapace": 360, "m2_wing": 330, "m3_star_eye": 390,
 	}
 	for enemy_name in planned_enemies:
 		var planned_scene := load("res://scenes/enemies/%s.tscn" % enemy_name) as PackedScene

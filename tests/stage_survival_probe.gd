@@ -29,10 +29,12 @@ var power_frames := {1: 0, 2: 0, 3: 0}
 var observed_enemies := {}
 var shooter_kills := 0
 var killed_before_firing := 0
+var killed_before_burst := 0
 
 func record_enemy_kill(enemy: EnemyShip) -> void:
 	if enemy.shooter != null and not enemy.shooter.steps.is_empty() and not enemy.is_midboss and not enemy.is_boss:
 		shooter_kills += 1
+		if enemy.shooter.bursts_completed == 0: killed_before_burst += 1
 		if enemy.shooter.volleys_fired == 0: killed_before_firing += 1
 
 func finish_empty_span() -> void:
@@ -298,6 +300,7 @@ func run_probe() -> void:
 	report["reads_incubation_cues"] = args.has("--read-cues")
 	report["power_history"] = power_history
 	report["power_combat_seconds"] = {"lv1": snappedf(power_frames[1] / 60.0, 0.1), "lv2": snappedf(power_frames[2] / 60.0, 0.1), "lv3": snappedf(power_frames[3] / 60.0, 0.1)}
+	report["normal_killed_before_burst"] = killed_before_burst
 	report["normal_shooter_kills"] = shooter_kills
 	report["normal_killed_before_firing"] = killed_before_firing
 	var name := "survival_" + pilot_id + "_" + weapon_mode + ("_lv1" if args.has("--power1") else ("_lv3" if starting_power == 3 else "_natural")) + ("_recovery" if args.has("--recovery") else "") + ("_nobombs" if args.has("--no-bombs") else "") + ("_aggressive" if args.has("--aggressive") else "")

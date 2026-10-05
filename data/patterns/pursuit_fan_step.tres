@@ -4,3 +4,4 @@
 [resource]
 script = ExtResource("Script")
 pattern = ExtResource("Pattern")
+wait_after = 2.4

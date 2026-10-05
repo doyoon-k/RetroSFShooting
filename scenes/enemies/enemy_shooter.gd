@@ -17,6 +17,7 @@ var locked_angle: float = PI
 var starting: bool = true
 var warning: bool = false
 var volleys_fired: int = 0
+var bursts_completed: int = 0
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
@@ -70,6 +71,7 @@ func _physics_process(delta: float) -> void:
 	if volley < pattern.volley_count:
 		timer = maxf(0.02, pattern.volley_interval)
 		return
+	bursts_completed += 1
 	volley = 0
 	starting = true
 	repetition += 1

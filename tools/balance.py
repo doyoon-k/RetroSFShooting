@@ -60,19 +60,22 @@ def main():
     failures = []
     for name, report in reports.items():
         if not report['clear']:
-            failures.append(f'{name}: did not clear within the trial limit')
+            failures.append(f'{name}: did not clear (game over or trial timeout)')
     weak = reports['aim_lv1']['encounters']
-    if len(weak) != 4 or any(e['duration'] > 18 for e in weak[:3]) or weak[-1]['duration'] > 42:
-        failures.append('LV1 encounter duration exceeds the authored 18s middle / 42s boss budget')
+    if len(weak) != 4 or any(e['duration'] > 38 for e in weak[:3]) or weak[-1]['duration'] > 70:
+        failures.append('LV1 encounter duration exceeds the authored 38s middle / 70s boss budget')
     strong = reports['aim_lv3']['encounters']
-    if len(strong) != 4 or any(e['duration'] < 3 for e in strong[:3]) or strong[-1]['duration'] < 12:
-        failures.append('LV3 skips too much of a major encounter')
+    if len(strong) != 4 or any(not 12 <= e['duration'] <= 18 for e in strong[:3]) or not 25 <= strong[-1]['duration'] <= 40:
+        failures.append('LV3 misses the 12–18s middle / 25–40s boss duration target')
     if not reports['recovery']['forced_recovery'] or reports['recovery']['deaths'] > 2:
         failures.append('Recovery trial did not inject its death or suffered more than one additional death')
     if reports['weak_no_bombs']['deaths'] > 2:
         failures.append('Weak no-bomb trial exceeded the two-loss budget')
     for section in ('middle_50_120', 'late_120_150'):
-        density = reports['slow_reactive']['density'][section]
+        density = reports['slow_reactive']['density'].get(section)
+        if density is None:
+            failures.append(f'{section}: trial ended before reaching this section')
+            continue
         if density['no_target_percent'] > 20 or density['mean_visible'] < 1.5:
             failures.append(f'{section}: engagement density below the authored target')
         if density['two_source_window_percent'] < 15:
