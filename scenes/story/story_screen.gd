@@ -18,9 +18,12 @@ func _show_page() -> void:
 	%Heading.text = story.title
 	%Illustration.texture = page.illustration
 	%Caption.text = page.caption
+	%Caption.visible = not page.caption.is_empty()
+	%StoryPanel.visible = not page.text.is_empty()
 	%StoryText.characters_per_second = story.characters_per_second
 	%StoryText.reveal(page.text)
 	%PageNumber.text = "%02d / %02d" % [page_index + 1, story.pages.size()]
+	%Next.text = "SPACE / A / 완료" if page_index == story.pages.size() - 1 else "SPACE / A / 다음"
 
 func advance() -> void:
 	if ended:

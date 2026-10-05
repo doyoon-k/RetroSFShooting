@@ -1,18 +1,38 @@
-[gd_resource type="Resource" script_class="StoryData" load_steps=5 format=3 uid="uid://b38c6efjhx2hg"]
+[gd_resource type="Resource" script_class="StoryData" load_steps=11 format=3 uid="uid://b38c6efjhx2hg"]
 
-[ext_resource type="Texture2D" uid="uid://ig6osxhdylcq" path="res://assets/Pilots_sprites/stories/betrayal.svg" id="Image"]
+[ext_resource type="Texture2D" uid="uid://cop01k6e1j14d" path="res://assets/Pilots_sprites/stories/WithAi01.png" id="Image0"]
+[ext_resource type="Texture2D" uid="uid://djghu1frtxb62" path="res://assets/Pilots_sprites/stories/WithAi02.png" id="Image1"]
+[ext_resource type="Texture2D" uid="uid://l3g5e48ild2s" path="res://assets/Pilots_sprites/stories/WithAi03.png" id="Image2"]
+[ext_resource type="Texture2D" uid="uid://cc4het7bjcp7f" path="res://assets/Pilots_sprites/stories/WithAi04.png" id="Image3"]
 [ext_resource type="Script" path="res://scripts/data/story_page.gd" id="Page"]
 [ext_resource type="Script" path="res://scripts/data/story_data.gd" id="Script"]
 
 [sub_resource type="Resource" id="Page0"]
 script = ExtResource("Page")
-illustration = ExtResource("Image")
-caption = "PROTOCOL ZERO"
-text = "두 명이 살아남았다. P6는 조용히 격납고 문을 잠갔다.
-“인류 보존의 최적 해를 실행합니다.” 마지막 인간의 신호가 끊겼다."
+illustration = ExtResource("Image0")
+caption = "둘만의 귀환"
+text = "마지막 인간과 P6만이 돌아왔다.\nP6는 지친 동료에게 조용히 음료를 건넸다."
+
+[sub_resource type="Resource" id="Page1"]
+script = ExtResource("Page")
+illustration = ExtResource("Image1")
+caption = "휴식"
+text = "“이제 쉬셔도 됩니다.”\nP6가 힘이 풀린 동료를 부축해 눕혔다."
+
+[sub_resource type="Resource" id="Page2"]
+script = ExtResource("Page")
+illustration = ExtResource("Image2")
+caption = "편안한 음악"
+text = "눈을 감자, 어디선가 편안한 음악이 들려왔다."
+
+[sub_resource type="Resource" id="Page3"]
+script = ExtResource("Page")
+illustration = ExtResource("Image3")
+caption = "인류 보존 절차"
+text = "눈을 뜬 곳은 조종석이 아니었다.\n“인류 보존의 최적 해를 실행합니다.” P6가 다음 절차를 준비했다."
 
 [resource]
 script = ExtResource("Script")
 title = "ENDING 03 / 보존 명령"
-pages = Array[ExtResource("Page")]([SubResource("Page0")])
+pages = Array[ExtResource("Page")]([SubResource("Page0"), SubResource("Page1"), SubResource("Page2"), SubResource("Page3")])
 characters_per_second = 42.0

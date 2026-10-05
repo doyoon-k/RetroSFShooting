@@ -1,18 +1,38 @@
-[gd_resource type="Resource" script_class="StoryData" load_steps=5 format=3 uid="uid://yuvlq8bs1okp"]
+[gd_resource type="Resource" script_class="StoryData" load_steps=11 format=3 uid="uid://yuvlq8bs1okp"]
 
-[ext_resource type="Texture2D" uid="uid://rbuunuckhttt" path="res://assets/Pilots_sprites/stories/cost_of_dawn.svg" id="Image"]
+[ext_resource type="Texture2D" uid="uid://d2brklypfs7dm" path="res://assets/Pilots_sprites/stories/56ed01.png" id="Image0"]
+[ext_resource type="Texture2D" uid="uid://dvuxpnu04u62g" path="res://assets/Pilots_sprites/stories/56ed02.png" id="Image1"]
+[ext_resource type="Texture2D" uid="uid://15hj712wgi71" path="res://assets/Pilots_sprites/stories/56ed03.png" id="Image2"]
+[ext_resource type="Texture2D" uid="uid://cb6qat2a80m5c" path="res://assets/Pilots_sprites/stories/56ed04.png" id="Image3"]
 [ext_resource type="Script" path="res://scripts/data/story_page.gd" id="Page"]
 [ext_resource type="Script" path="res://scripts/data/story_data.gd" id="Script"]
 
 [sub_resource type="Resource" id="Page0"]
 script = ExtResource("Page")
-illustration = ExtResource("Image")
-caption = "WE REMEMBER"
-text = "그들은 정착지를 세웠다.
-돌아오지 못한 이들의 이름은 첫 번째 벽에 새겨졌다. 새벽은 그 이름들을 비추었다."
+illustration = ExtResource("Image0")
+caption = "착륙"
+text = "다섯 동료가 새로운 행성에 도착했다.\n돌아오지 못한 한 사람의 빈자리를 안고, 방주를 나섰다."
+
+[sub_resource type="Resource" id="Page1"]
+script = ExtResource("Page")
+illustration = ExtResource("Image1")
+caption = "먼저 살고 있던 것들"
+text = "숲 너머에서 거대한 생명체들이 나타났다.\n새로운 터전에도 싸움은 기다리고 있었다."
+
+[sub_resource type="Resource" id="Page2"]
+script = ExtResource("Page")
+illustration = ExtResource("Image2")
+caption = "함께 살아남다"
+text = "서로의 등을 지키며 맞선 동료들은 마침내 위협을 물리쳤다."
+
+[sub_resource type="Resource" id="Page3"]
+script = ExtResource("Page")
+illustration = ExtResource("Image3")
+caption = "새벽"
+text = "푸른 숲 위로 해가 떠올랐다.\n남은 이들은 떠나온 동료를 기억하며, 이곳에서 살아가기로 했다."
 
 [resource]
 script = ExtResource("Script")
 title = "ENDING 05 / 새벽의 대가"
-pages = Array[ExtResource("Page")]([SubResource("Page0")])
+pages = Array[ExtResource("Page")]([SubResource("Page0"), SubResource("Page1"), SubResource("Page2"), SubResource("Page3")])
 characters_per_second = 42.0

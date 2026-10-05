@@ -32,6 +32,7 @@ func _run() -> void:
 	content = load("res://data/game_catalog.tres") as GameCatalog
 	save_test_path = "user://test_endings_%d.cfg" % OS.get_process_id()
 	_test_endings()
+	await _test_story_playback()
 	_test_sorties()
 	_test_portraits()
 	_test_patterns()
@@ -169,8 +170,76 @@ func _test_endings() -> void:
 		run.boss_cleared = true
 		var ending := EndingResolver.resolve(run)
 		check(content.ending_by_id(ending) != null, "Every survivor combination has authored ending data")
+		var story := content.ending_by_id(ending).story
+		var living := run.survivors()
+		var expected_image: String
+		match living.size():
+			0: expected_image = "extinction.svg"
+			1: expected_image = "last_signal.svg"
+			2:
+				expected_image = "WithAi01.png" if living.any(func(pilot: PilotData) -> bool: return pilot.is_ai) else "234ed01.png"
+			3, 4: expected_image = "234ed01.png"
+			5, 6: expected_image = "56ed01.png"
+		check(story.pages[0].illustration.resource_path.get_file() == expected_image, "Survivor combination selects its illustrated ending: %d" % mask)
 		counts[ending] += 1
-	check(counts == {&"extinction": 1, &"last_signal": 6, &"betrayal": 5, &"unknown_horizon": 30, &"cost_of_dawn": 21, &"new_home": 1}, "All 64 survivor combinations partition into the six expected endings")
+	check(counts == {&"extinction": 1, &"last_signal": 6, &"betrayal": 5, &"unknown_horizon": 45, &"cost_of_dawn": 6, &"new_home": 1}, "All 64 survivor combinations partition into the six expected endings")
+
+func _test_story_playback() -> void:
+	var sequences := [[content.intro, "introStory", 9],
+		[content.ending_by_id(&"betrayal").story, "WithAi", 4],
+		[content.ending_by_id(&"unknown_horizon").story, "234ed", 4],
+		[content.ending_by_id(&"cost_of_dawn").story, "56ed", 4],
+		[content.ending_by_id(&"new_home").story, "56ed", 4],
+		[content.ending_by_id(&"extinction").story, "", 1],
+		[content.ending_by_id(&"last_signal").story, "", 1]]
+	for entry in sequences:
+		var authored_story := entry[0] as StoryData
+		check(authored_story.pages.size() == entry[2], "Story has every authored cut: " + authored_story.title)
+		var screen: Control = load("res://scenes/story/story_screen.tscn").instantiate()
+		screen.story = authored_story
+		var completions: Array[int] = [0]
+		screen.finished.connect(func(): completions[0] += 1)
+		root.add_child(screen)
+		var label := screen.get_node("StoryPanel/StoryText") as TypewriterLabel
+		label.set_process(false)
+		await frames()
+		var illustration := screen.get_node("Illustration") as TextureRect
+		check(illustration.size.is_equal_approx(screen.size) and illustration.stretch_mode == TextureRect.STRETCH_KEEP_ASPECT_CENTERED, "Cutscene fills its viewport without cropping the artwork")
+		for index in authored_story.pages.size():
+			var page := authored_story.pages[index]
+			if not entry[1].is_empty():
+				var expected := "%s%02d.png" % [entry[1], index + 1]
+				check(page.illustration.resource_path.get_file() == expected, "Story preserves numbered artwork order: " + expected)
+			check(screen.page_index == index and illustration.texture == page.illustration, "Playback displays the current illustration")
+			check(screen.get_node("PageNumber").text == "%02d / %02d" % [index + 1, authored_story.pages.size()], "Page counter follows the complete sequence")
+			if index == 0:
+				var space := InputEventKey.new()
+				space.physical_keycode = KEY_SPACE
+				space.pressed = true
+				screen._unhandled_input(space)
+			else:
+				screen.get_node("Next").pressed.emit()
+			check(screen.page_index == index and not label.typing, "Advance reveals subtitles before leaving a cut")
+			await frames()
+			check(label.get_content_height() <= label.size.y, "Full subtitles fit without scrolling: " + page.caption)
+			await capture("story_%s_%02d" % ["intro" if entry[1] == "introStory" else authored_story.title.get_slice(" / ", 0).replace(" ", "_"), index + 1])
+			var confirm := InputEventJoypadButton.new()
+			confirm.button_index = JOY_BUTTON_A
+			confirm.pressed = true
+			screen._unhandled_input(confirm)
+			if index < authored_story.pages.size() - 1:
+				check(completions[0] == 0, "Intermediate cuts do not finish the story")
+		screen.advance()
+		check(screen.ended and completions[0] == 1, "Story finishes exactly once after its final illustration")
+		screen.queue_free()
+		await frames()
+
+func _finish_story(screen: Node) -> void:
+	for i in screen.story.pages.size() * 2:
+		if screen.ended:
+			break
+		screen.advance()
+	check(screen.ended, "All cuts finish before transitioning to the next screen")
 
 func _test_sorties() -> void:
 	var run := RunState.new(content)
@@ -584,10 +653,7 @@ func _test_game_flow() -> void:
 	check(story.page_index == 0 and not story.get_node("StoryPanel/StoryText").typing, "First advance completes typing without changing page")
 	story.advance()
 	check(story.page_index == 1, "Second advance changes page")
-	story.advance()
-	story.advance()
-	story.advance()
-	story.advance()
+	_finish_story(story)
 	await frames(25)
 	check(main.current_screen.name == "CharacterSelect", "Intro ends in Character Select")
 	var hangar: Node = main.current_screen.get_node("Hangar")
@@ -629,8 +695,7 @@ func _test_game_flow() -> void:
 		await frames()
 	await frames(25)
 	check(main.current_screen.name == "StoryScreen", "Clear proceeds to Ending story")
-	main.current_screen.advance()
-	main.current_screen.advance()
+	_finish_story(main.current_screen)
 	await frames(25)
 	check(main.current_screen.name == "Result", "Ending completes into Result")
 	await capture("08_result")

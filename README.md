@@ -32,6 +32,7 @@ Godot 4.7.2 / GDScript / Forward+를 기준으로 검증합니다. 설계 해상
 ## 구현된 흐름
 
 - Title → Intro → Character Select → Stage → Ending → Result → Title
+- 오프닝 9컷과 AI·2~4명·5~6명 생존 엔딩 각 4컷을 원본 PNG 순서로 표시하는 전체 화면 컷신·하단 자막
 - HP 2, 피격 무적, 출격 무적, 직선형·3갈래 방사형 무기, 공유 LV1~3 강화, 폭탄 2개 시작·최대 4개 보유
 - 6명의 파일럿, 파괴·콕핏 연출, 생존자 표정, 5초 선택, 강화·폭탄 아이템 회수
 - Power Up / Bomb / Shield, 약한 유도 이동, 경계 반사, 수명

@@ -14,7 +14,7 @@ static func resolve(run: RunState) -> StringName:
 				if pilot.is_ai:
 					return &"betrayal"
 			return &"unknown_horizon"
-		3: return &"unknown_horizon"
-		4, 5: return &"cost_of_dawn"
+		3, 4: return &"unknown_horizon"
+		5: return &"cost_of_dawn"
 		_: return &"new_home"
 

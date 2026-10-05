@@ -210,6 +210,11 @@ Hangar Animation 이름으로 재생할 애니메이션을 선택할 수 있습�
 
 StoryData의 Pages 배열에서 순서를 바꾸거나 StoryPage를 추가합니다. 페이지마다 Illustration,
 Caption, Text를 설정합니다. Intro와 모든 Ending은 같은 StoryScreen을 사용합니다.
+그림은 비율을 유지해 화면 전체에 표시하며 Caption과 Text는 하단 자막입니다.
+`intro.tres`의 9컷은 `introStory01~09`, `betrayal.tres`의 4컷은 `WithAi01~04`,
+`unknown_horizon.tres`의 4컷은 `234ed01~04`에 연결되어 있습니다.
+`cost_of_dawn.tres`(5명)와 `new_home.tres`(6명)는 `56ed01~04`를 공유하고 본문은 각각 편집합니다.
+전멸·1명 생존 엔딩은 기존 SVG를 사용합니다.
 
 엔딩의 제목·스토리는 EndingData에서, **분기 규칙 자체**는
 `scripts/ending/ending_resolver.gd`에서 수정합니다. 저장용 ID를 바꾸면 기존 해금 기록과

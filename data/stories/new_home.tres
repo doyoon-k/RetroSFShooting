@@ -1,18 +1,38 @@
-[gd_resource type="Resource" script_class="StoryData" load_steps=5 format=3 uid="uid://dt4h2mbncw5xa"]
+[gd_resource type="Resource" script_class="StoryData" load_steps=11 format=3 uid="uid://dt4h2mbncw5xa"]
 
-[ext_resource type="Texture2D" uid="uid://bvi5tx5nli1tc" path="res://assets/Pilots_sprites/stories/new_home.svg" id="Image"]
+[ext_resource type="Texture2D" uid="uid://d2brklypfs7dm" path="res://assets/Pilots_sprites/stories/56ed01.png" id="Image0"]
+[ext_resource type="Texture2D" uid="uid://dvuxpnu04u62g" path="res://assets/Pilots_sprites/stories/56ed02.png" id="Image1"]
+[ext_resource type="Texture2D" uid="uid://15hj712wgi71" path="res://assets/Pilots_sprites/stories/56ed03.png" id="Image2"]
+[ext_resource type="Texture2D" uid="uid://cb6qat2a80m5c" path="res://assets/Pilots_sprites/stories/56ed04.png" id="Image3"]
 [ext_resource type="Script" path="res://scripts/data/story_page.gd" id="Page"]
 [ext_resource type="Script" path="res://scripts/data/story_data.gd" id="Script"]
 
 [sub_resource type="Resource" id="Page0"]
 script = ExtResource("Page")
-illustration = ExtResource("Image")
-caption = "ALL VOICES RETURNED"
-text = "여섯 명 모두 돌아왔다.
-방주의 마지막 항로는 새로운 도시의 첫 번째 길이 되었다. 이제 여기가, 우리의 집이다."
+illustration = ExtResource("Image0")
+caption = "착륙"
+text = "여섯 동료 모두가 새로운 행성에 도착했다.\n누구도 잃지 않은 채, 함께 방주를 나섰다."
+
+[sub_resource type="Resource" id="Page1"]
+script = ExtResource("Page")
+illustration = ExtResource("Image1")
+caption = "먼저 살고 있던 것들"
+text = "숲 너머에서 거대한 생명체들이 나타났다.\n마지막 싸움이 아직 남아 있었다."
+
+[sub_resource type="Resource" id="Page2"]
+script = ExtResource("Page")
+illustration = ExtResource("Image2")
+caption = "함께 살아남다"
+text = "여섯 동료는 서로의 등을 지켰다.\n누구도 홀로 남겨 두지 않고, 눈앞의 위협을 물리쳤다."
+
+[sub_resource type="Resource" id="Page3"]
+script = ExtResource("Page")
+illustration = ExtResource("Image3")
+caption = "우리의 집"
+text = "푸른 숲 위로 해가 떠올랐다.\n여섯 목소리가 함께 맞는 첫 아침. 이제 이곳이 우리의 집이다."
 
 [resource]
 script = ExtResource("Script")
 title = "ENDING 06 / 우리의 집"
-pages = Array[ExtResource("Page")]([SubResource("Page0")])
+pages = Array[ExtResource("Page")]([SubResource("Page0"), SubResource("Page1"), SubResource("Page2"), SubResource("Page3")])
 characters_per_second = 42.0
