@@ -2,7 +2,7 @@ class_name EnemyMovement
 extends Node
 ## Exactly one movement mode writes the actor position.
 
-enum Mode { LINEAR, PATH, SINE, ENTER_HOLD_EXIT, VERTICAL_SWEEP }
+enum Mode { LINEAR, PATH, SINE, ENTER_HOLD_EXIT, VERTICAL_SWEEP, STRAFE_EXIT }
 @export var mode: Mode = Mode.LINEAR
 @export var direction: Vector2 = Vector2.LEFT
 @export_range(0.0, 1000.0, 5.0) var speed: float = 180.0
@@ -14,6 +14,7 @@ enum Mode { LINEAR, PATH, SINE, ENTER_HOLD_EXIT, VERTICAL_SWEEP }
 @export_range(0.0, 300.0, 0.1) var hold_seconds: float = 4.0
 @export var stay_forever: bool = false
 @export var exit_direction: Vector2 = Vector2.LEFT
+@export var follow_scroll: bool = false
 var path: Path2D
 var path_offset: Vector2 = Vector2.ZERO
 var distance: float = 0.0
@@ -22,10 +23,13 @@ var hold_elapsed: float = 0.0
 var reached_hold: bool = false
 var origin: Vector2
 var actor: Node2D
+var last_arena_x: float = 0.0
 
 func _ready() -> void:
 	actor = get_parent() as Node2D
 	origin = actor.position
+	if actor is EnemyShip:
+		last_arena_x = actor.bounds.position.x
 
 func apply_profile(profile: MovementProfile) -> void:
 	if profile == null:
@@ -39,6 +43,8 @@ func apply_profile(profile: MovementProfile) -> void:
 			mode = Mode.ENTER_HOLD_EXIT
 		MovementProfile.Mode.VERTICAL_SWEEP:
 			mode = Mode.VERTICAL_SWEEP
+		MovementProfile.Mode.STRAFE_EXIT:
+			mode = Mode.STRAFE_EXIT
 	direction = profile.direction
 	speed = profile.speed
 	amplitude = profile.amplitude
@@ -47,6 +53,7 @@ func apply_profile(profile: MovementProfile) -> void:
 	hold_seconds = profile.hold_seconds
 	stay_forever = profile.stay_forever
 	exit_direction = profile.exit_direction
+	follow_scroll = profile.follow_scroll
 	path = null
 	distance = 0.0
 	age = 0.0
@@ -63,6 +70,13 @@ func use_path(route: Path2D, offset: Vector2 = Vector2.ZERO) -> void:
 
 func _physics_process(delta: float) -> void:
 	age += delta
+	if actor is EnemyShip:
+		var arena_x: float = actor.bounds.position.x
+		if follow_scroll and (not reached_hold or stay_forever or hold_elapsed < hold_seconds):
+			var shift := arena_x - last_arena_x
+			hold_position.x += shift
+			actor.position.x += shift
+		last_arena_x = arena_x
 	match mode:
 		Mode.LINEAR:
 			actor.position += direction.normalized() * speed * delta
@@ -91,3 +105,13 @@ func _physics_process(delta: float) -> void:
 			else:
 				hold_elapsed += delta
 				actor.position = hold_position + Vector2(0.0, sin(hold_elapsed * TAU * frequency) * amplitude)
+		Mode.STRAFE_EXIT:
+			if not reached_hold:
+				actor.position = actor.position.move_toward(hold_position, speed * delta)
+				reached_hold = actor.position.is_equal_approx(hold_position)
+			else:
+				hold_elapsed += delta
+				if hold_elapsed < hold_seconds or stay_forever:
+					actor.position = hold_position + Vector2(0.0, sin(hold_elapsed * TAU * frequency) * amplitude)
+				else:
+					actor.position += exit_direction.normalized() * speed * delta

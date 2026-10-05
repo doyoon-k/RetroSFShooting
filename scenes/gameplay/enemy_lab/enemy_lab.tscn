@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3]
+[gd_scene load_steps=43 format=3]
 
 [ext_resource type="Script" path="res://scenes/gameplay/enemy_lab/enemy_lab.gd" id="Lab"]
 [ext_resource type="PackedScene" path="res://scenes/player/P1_ship.tscn" id="Player"]
@@ -33,12 +33,24 @@
 [ext_resource type="Resource" path="res://data/sequences/short_burst.tres" id="ShortBurst"]
 [ext_resource type="Theme" path="res://scenes/ui/game_theme.tres" id="Theme"]
 
+[ext_resource type="Resource" path="res://data/movement/strafe_center.tres" id="Strafe"]
+[ext_resource type="Resource" path="res://data/sequences/tracking_stream.tres" id="Tracking"]
+[ext_resource type="Resource" path="res://data/sequences/gate_fan.tres" id="Gate"]
+[ext_resource type="Resource" path="res://data/sequences/sweep_fan.tres" id="SweepFan"]
+
+[ext_resource type="Resource" path="res://data/sequences/fleet_lattice.tres" id="fleet_lattice"]
+[ext_resource type="Resource" path="res://data/sequences/pursuit_fan.tres" id="pursuit_fan"]
+[ext_resource type="Resource" path="res://data/sequences/siege_curtain.tres" id="siege_curtain"]
+[ext_resource type="Resource" path="res://data/sequences/command_curtain.tres" id="command_curtain"]
+[ext_resource type="Resource" path="res://data/sequences/brood_launch.tres" id="brood_launch"]
+[ext_resource type="Resource" path="res://data/sequences/brood_spiral.tres" id="brood_spiral"]
+
 [node name="EnemyLab" type="Node2D"]
 script = ExtResource("Lab")
 player_scene = ExtResource("Player")
 enemy_scenes = Array[PackedScene]([ExtResource("Z1"), ExtResource("Z2"), ExtResource("Z3"), ExtResource("Z4"), ExtResource("Z5"), ExtResource("N1"), ExtResource("N2"), ExtResource("N3"), ExtResource("N4"), ExtResource("N5"), ExtResource("M1"), ExtResource("M2"), ExtResource("M3"), ExtResource("Boss")])
-movement_presets = Array[ExtResource("MovementType")]([ExtResource("Linear"), ExtResource("Sine"), ExtResource("Hold"), ExtResource("Sweep")])
-attack_presets = Array[ExtResource("AttackType")]([ExtResource("Silent"), ExtResource("Aimed"), ExtResource("Fan"), ExtResource("Homing"), ExtResource("Ring"), ExtResource("FanBurst"), ExtResource("DiagDown"), ExtResource("DiagUp"), ExtResource("ShortBurst")])
+movement_presets = Array[ExtResource("MovementType")]([ExtResource("Linear"), ExtResource("Sine"), ExtResource("Hold"), ExtResource("Sweep"), ExtResource("Strafe")])
+attack_presets = Array[ExtResource("AttackType")]([ExtResource("Silent"), ExtResource("Aimed"), ExtResource("Fan"), ExtResource("Homing"), ExtResource("Ring"), ExtResource("FanBurst"), ExtResource("DiagDown"), ExtResource("DiagUp"), ExtResource("ShortBurst"), ExtResource("Tracking"), ExtResource("Gate"), ExtResource("SweepFan"), ExtResource("fleet_lattice"), ExtResource("pursuit_fan"), ExtResource("siege_curtain"), ExtResource("command_curtain"), ExtResource("brood_launch"), ExtResource("brood_spiral")])
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(960, 540)

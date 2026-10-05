@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="AttackSequence" load_steps=4 format=3]
+[ext_resource type="Script" path="res://scripts/data/attack_sequence.gd" id="Script"]
+[ext_resource type="Script" path="res://scripts/data/pattern_step.gd" id="Step"]
+[ext_resource type="Resource" path="res://data/patterns/command_curtain_step.tres" id="Pattern"]
+[resource]
+script = ExtResource("Script")
+resource_name = "Flagship / closing blockade"
+steps = Array[ExtResource("Step")]([ExtResource("Pattern")])
+initial_delay = 0.8

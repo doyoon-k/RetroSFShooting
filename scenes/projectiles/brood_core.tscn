@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scenes/projectiles/brood_core.gd" id="Script"]
+[ext_resource type="PackedScene" path="res://scenes/projectiles/enemy_bullet.tscn" id="Child"]
+[sub_resource type="CircleShape2D" id="Shape"]
+radius = 14.0
+[node name="BroodCore" type="Area2D"]
+collision_layer = 8
+monitorable = false
+script = ExtResource("Script")
+speed = 300.0
+lifetime = 3.0
+child_scene = ExtResource("Child")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("Shape")

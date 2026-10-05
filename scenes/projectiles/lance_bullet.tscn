@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+[ext_resource type="PackedScene" path="res://scenes/projectiles/enemy_bullet.tscn" id="Base"]
+[node name="Projectile" instance=ExtResource("Base")]
+speed = 420.0
+[node name="Visual" parent="." index="1"]
+color = Color(1, 0.72, 0.32, 1)

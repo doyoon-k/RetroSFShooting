@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="MovementProfile" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/movement_profile.gd" id="Script"]
+
+[resource]
+resource_name = "Strafe then retreat (strafe_center)"
+script = ExtResource("Script")
+mode = 4
+speed = 260.0
+amplitude = 85.0
+frequency = 0.18
+hold_position = Vector2(1160, 532)
+hold_seconds = 4.0
+exit_direction = Vector2(1, 0)
+follow_scroll = true

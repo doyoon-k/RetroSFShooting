@@ -17,12 +17,12 @@ radius = 14.0
 
 [sub_resource type="Resource" id="NearDamageTier"]
 script = ExtResource("ProximityTier")
-distance = 160.0
-multiplier = 2.0
+distance = 80.0
+multiplier = 1.6
 
 [sub_resource type="Resource" id="FarDamageTier"]
 script = ExtResource("ProximityTier")
-distance = 640.0
+distance = 360.0
 multiplier = 1.0
 
 [node name="PlayerShip" type="Area2D"]

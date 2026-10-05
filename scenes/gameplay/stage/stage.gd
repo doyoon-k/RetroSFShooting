@@ -224,11 +224,12 @@ func _activate_placed_enemy(enemy: EnemyShip) -> void:
 
 func _configure_enemy(enemy: EnemyShip, drop: PackedScene, chance: float) -> void:
 	enemy.bounds = view_bounds
+	enemy.movement.last_arena_x = view_bounds.position.x
 	enemy.drop_scene = drop
 	enemy.drop_chance = chance
 	enemy.damaged.connect(_enemy_damaged)
 	enemy.destroyed.connect(_enemy_destroyed)
-	if enemy.movement.mode == EnemyMovement.Mode.ENTER_HOLD_EXIT or enemy.movement.mode == EnemyMovement.Mode.VERTICAL_SWEEP:
+	if enemy.movement.mode in [EnemyMovement.Mode.ENTER_HOLD_EXIT, EnemyMovement.Mode.VERTICAL_SWEEP, EnemyMovement.Mode.STRAFE_EXIT]:
 		# Encounters keep their authored local coordinates as the arena moves.
 		enemy.movement.hold_position += waves.position + Vector2(progress_x, 0.0)
 	if enemy.shooter != null:

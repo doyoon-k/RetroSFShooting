@@ -1,13 +1,15 @@
-[gd_scene load_steps=12 format=3 uid="uid://go6dxu1qx1bf"]
+[gd_scene load_steps=13 format=3 uid="uid://go6dxu1qx1bf"]
 
-[ext_resource type="Resource" path="res://data/patterns/burst_step.tres" id="burst"]
-[ext_resource type="Resource" path="res://data/patterns/fan_step.tres" id="fan"]
+[ext_resource type="Resource" path="res://data/patterns/pursuit_fan_step.tres" id="burst"]
+[ext_resource type="Resource" path="res://data/patterns/siege_curtain_step.tres" id="fan"]
 [ext_resource type="Script" path="res://scenes/enemies/enemy_movement.gd" id="Movement"]
-[ext_resource type="Resource" path="res://data/patterns/ring_step.tres" id="ring"]
+[ext_resource type="Resource" path="res://data/patterns/fleet_lattice_step.tres" id="ring"]
 [ext_resource type="Script" path="res://scenes/enemies/enemy_ship.gd" id="Script"]
 [ext_resource type="Script" path="res://scenes/enemies/enemy_shooter.gd" id="Shooter"]
-[ext_resource type="Resource" path="res://data/patterns/spiral_step.tres" id="spiral"]
+[ext_resource type="Resource" path="res://data/patterns/brood_launch_step.tres" id="spiral"]
 [ext_resource type="Script" path="res://scripts/data/pattern_step.gd" id="StepType"]
+
+[ext_resource type="Resource" path="res://data/patterns/command_curtain_step.tres" id="Command"]
 
 [sub_resource type="CircleShape2D" id="Shape"]
 radius = 75.0
@@ -39,11 +41,11 @@ collision_layer = 2
 collision_mask = 0
 monitoring = false
 script = ExtResource("Script")
-maximum_hp = 520
+maximum_hp = 400
 death_animation = &"death"
 death_animation_seconds = 0.45
 is_boss = true
-second_phase = Array[ExtResource("StepType")]([ExtResource("spiral"), ExtResource("ring"), ExtResource("burst")])
+second_phase = Array[ExtResource("StepType")]([ExtResource("spiral"), ExtResource("Command"), ExtResource("burst")])
 
 [node name="Visual" type="Polygon2D" parent="."]
 color = Color(0.93333, 0.62745, 0.63922, 1)

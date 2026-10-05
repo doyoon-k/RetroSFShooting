@@ -53,10 +53,12 @@ func take_damage(amount: int = 1) -> void:
 		return
 	var powerups_before_hit := state.recoverable_powerups()
 	var bombs_before_hit := state.bombs
+	var hp_before_hit := state.hp
 	if not state.damage(amount):
 		return
-	has_taken_hit = true
-	_update_sprite()
+	if state.hp < hp_before_hit:
+		has_taken_hit = true
+		_update_sprite()
 	hit.emit()
 	grant_invincibility(rules.hit_invincibility)
 	if state.hp == 0:

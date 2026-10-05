@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AttackPattern" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/data/attack_pattern.gd" id="Script"]
+[ext_resource type="PackedScene" path="res://scenes/projectiles/siege_bullet.tscn" id="Bullet"]
+[resource]
+script = ExtResource("Script")
+display_name = "Siege ship / shifting corridor"
+projectile_scene = ExtResource("Bullet")
+aim = 0
+shape = 2
+bullet_count = 16
+volley_count = 3
+volley_interval = 0.85
+recovery = 0.5
+corridor_center = 0.38
+corridor_shift = 0.22
+corridor_width = 180.0
