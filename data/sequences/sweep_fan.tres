@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AttackSequence" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/attack_sequence.gd" id="Script"]
+[ext_resource type="Script" path="res://scripts/data/pattern_step.gd" id="StepType"]
+[ext_resource type="Resource" path="res://data/patterns/sweep_fan_step.tres" id="Step"]
+
+[resource]
+resource_name = "Locked sweep, then approach window"
+script = ExtResource("Script")
+initial_delay = 0.8
+steps = Array[ExtResource("StepType")]([ExtResource("Step")])

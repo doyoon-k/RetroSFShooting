@@ -2,7 +2,7 @@ class_name MovementProfile
 extends Resource
 ## Reusable movement settings. A wave Path2D overrides this mode at spawn time.
 
-enum Mode { LINEAR, SINE, ENTER_HOLD_EXIT, VERTICAL_SWEEP }
+enum Mode { LINEAR, SINE, ENTER_HOLD_EXIT, VERTICAL_SWEEP, STRAFE_EXIT }
 
 @export var mode: Mode = Mode.LINEAR
 @export var direction: Vector2 = Vector2.LEFT
@@ -15,3 +15,5 @@ enum Mode { LINEAR, SINE, ENTER_HOLD_EXIT, VERTICAL_SWEEP }
 @export_range(0.0, 300.0, 0.1) var hold_seconds: float = 4.0
 @export var stay_forever: bool = false
 @export var exit_direction: Vector2 = Vector2.LEFT
+## Follow arena scrolling while entering/holding; exit remains in world space.
+@export var follow_scroll: bool = false

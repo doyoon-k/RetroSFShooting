@@ -32,11 +32,14 @@ func _run() -> void:
 	content = load("res://data/game_catalog.tres") as GameCatalog
 	save_test_path = "user://test_endings_%d.cfg" % OS.get_process_id()
 	_test_endings()
+	await _test_story_playback()
 	_test_sorties()
 	_test_portraits()
 	_test_patterns()
 	await _test_enemy_profiles()
 	await _test_attack_fairness()
+	await _test_redesigned_encounters()
+	await _test_fleet_patterns()
 	_test_input_map()
 	await _test_proximity_damage()
 	await _test_enemy_hit_effect()
@@ -58,8 +61,53 @@ func _run() -> void:
 		print(" - " + failure)
 	quit(0 if failures.is_empty() else 1)
 
+func _test_fleet_patterns() -> void:
+	var arena := Rect2(440, 24, 1464, 952)
+	var curtain := load("res://data/patterns/command_curtain.tres") as AttackPattern
+	var last_gap := curtain.corridor_y(arena, 0)
+	for volley in curtain.volley_count:
+		var gap := curtain.corridor_y(arena, volley)
+		var shots := curtain.shots_for_volley(Vector2(1600, 500), arena, PI, volley)
+		check(shots.size() > 8, "Blockade covers both sides of its corridor")
+		for shot in shots:
+			check(absf(shot.position.y - gap) >= curtain.corridor_width * 0.5, "Curtain leaves its authored corridor open")
+		check(absf(gap - last_gap) / 460.0 < curtain.volley_interval - 0.2, "Slow pilot can move between successive stationary blockade corridors")
+		last_gap = gap
+	var container := Node2D.new()
+	root.add_child(container)
+	var core := load("res://scenes/projectiles/brood_core.tscn").instantiate() as BroodCore
+	core.position = Vector2(1500, 500)
+	core.bounds = arena
+	container.add_child(core)
+	core.set_physics_process(false)
+	core._physics_process(core.travel_seconds)
+	var stop := core.position
+	core._physics_process(core.incubation_seconds * 0.5)
+	check(container.get_child_count() == 1 and core.position.is_equal_approx(stop), "Brood core stops and gives a visible incubation interval before hatching")
+	var expected := core.child_count
+	core._physics_process(core.incubation_seconds * 0.5 + 0.001)
+	core.hatch()
+	check(container.get_child_count() == expected + 1, "Core hatches one bounded generation, never duplicates on repeated calls")
+	for child in container.get_children():
+		if child == core: continue
+		check(child is Projectile and not child is BroodCore and child.bounds == arena, "Offspring are ordinary bounded projectiles")
+	container.queue_free()
+	await frames()
+	var stage := load("res://scenes/gameplay/stage/stage_01.tscn").instantiate() as StageController
+	root.add_child(stage)
+	var cancelled := load("res://scenes/projectiles/brood_core.tscn").instantiate() as BroodCore
+	cancelled.position = stage.view_bounds.get_center()
+	cancelled.bounds = stage.view_bounds
+	stage.projectiles.add_child(cancelled)
+	stage._clear_projectiles(false)
+	cancelled.hatch()
+	await frames()
+	check(stage.projectiles.get_child_count() == 0, "Clearing a brood core cancels pending offspring")
+	stage.queue_free()
+	await frames()
+
 func _test_attack_fairness() -> void:
-	var enemy := load("res://scenes/enemies/n2_crawler.tscn").instantiate() as EnemyShip
+	var enemy := load("res://scenes/enemies/n1_interceptor.tscn").instantiate() as EnemyShip
 	var target := Node2D.new()
 	var bullets := Node2D.new()
 	root.add_child(target)
@@ -87,6 +135,13 @@ func _test_attack_fairness() -> void:
 	target.position.y = 800
 	shooter._physics_process(shooter.telegraph_seconds + 0.01)
 	check(bullets.get_child_count() == 1 and (bullets.get_child(0) as Projectile).direction.is_equal_approx(Vector2.from_angle(angle)), "Locked burst keeps its warned aim after player movement")
+	shooter.set_sequence((load("res://data/sequences/tracking_stream.tres") as AttackSequence).steps)
+	shooter.timer = 0.0
+	shooter._physics_process(0.01)
+	target.position.y = 300
+	shooter._physics_process(shooter.telegraph_seconds + 0.01)
+	var tracked_direction := shooter.global_position.direction_to(target.position)
+	check((bullets.get_child(1) as Projectile).direction.is_equal_approx(tracked_direction), "Tracking stream deliberately resamples the target after its warning")
 	var homing := load("res://scenes/projectiles/homing_bullet.tscn").instantiate() as Projectile
 	root.add_child(homing)
 	homing.set_physics_process(false)
@@ -115,8 +170,76 @@ func _test_endings() -> void:
 		run.boss_cleared = true
 		var ending := EndingResolver.resolve(run)
 		check(content.ending_by_id(ending) != null, "Every survivor combination has authored ending data")
+		var story := content.ending_by_id(ending).story
+		var living := run.survivors()
+		var expected_image: String
+		match living.size():
+			0: expected_image = "extinction.svg"
+			1: expected_image = "last_signal.svg"
+			2:
+				expected_image = "WithAi01.png" if living.any(func(pilot: PilotData) -> bool: return pilot.is_ai) else "234ed01.png"
+			3, 4: expected_image = "234ed01.png"
+			5, 6: expected_image = "56ed01.png"
+		check(story.pages[0].illustration.resource_path.get_file() == expected_image, "Survivor combination selects its illustrated ending: %d" % mask)
 		counts[ending] += 1
-	check(counts == {&"extinction": 1, &"last_signal": 6, &"betrayal": 5, &"unknown_horizon": 30, &"cost_of_dawn": 21, &"new_home": 1}, "All 64 survivor combinations partition into the six expected endings")
+	check(counts == {&"extinction": 1, &"last_signal": 6, &"betrayal": 5, &"unknown_horizon": 45, &"cost_of_dawn": 6, &"new_home": 1}, "All 64 survivor combinations partition into the six expected endings")
+
+func _test_story_playback() -> void:
+	var sequences := [[content.intro, "introStory", 9],
+		[content.ending_by_id(&"betrayal").story, "WithAi", 4],
+		[content.ending_by_id(&"unknown_horizon").story, "234ed", 4],
+		[content.ending_by_id(&"cost_of_dawn").story, "56ed", 4],
+		[content.ending_by_id(&"new_home").story, "56ed", 4],
+		[content.ending_by_id(&"extinction").story, "", 1],
+		[content.ending_by_id(&"last_signal").story, "", 1]]
+	for entry in sequences:
+		var authored_story := entry[0] as StoryData
+		check(authored_story.pages.size() == entry[2], "Story has every authored cut: " + authored_story.title)
+		var screen: Control = load("res://scenes/story/story_screen.tscn").instantiate()
+		screen.story = authored_story
+		var completions: Array[int] = [0]
+		screen.finished.connect(func(): completions[0] += 1)
+		root.add_child(screen)
+		var label := screen.get_node("StoryPanel/StoryText") as TypewriterLabel
+		label.set_process(false)
+		await frames()
+		var illustration := screen.get_node("Illustration") as TextureRect
+		check(illustration.size.is_equal_approx(screen.size) and illustration.stretch_mode == TextureRect.STRETCH_KEEP_ASPECT_CENTERED, "Cutscene fills its viewport without cropping the artwork")
+		for index in authored_story.pages.size():
+			var page := authored_story.pages[index]
+			if not entry[1].is_empty():
+				var expected := "%s%02d.png" % [entry[1], index + 1]
+				check(page.illustration.resource_path.get_file() == expected, "Story preserves numbered artwork order: " + expected)
+			check(screen.page_index == index and illustration.texture == page.illustration, "Playback displays the current illustration")
+			check(screen.get_node("PageNumber").text == "%02d / %02d" % [index + 1, authored_story.pages.size()], "Page counter follows the complete sequence")
+			if index == 0:
+				var space := InputEventKey.new()
+				space.physical_keycode = KEY_SPACE
+				space.pressed = true
+				screen._unhandled_input(space)
+			else:
+				screen.get_node("Next").pressed.emit()
+			check(screen.page_index == index and not label.typing, "Advance reveals subtitles before leaving a cut")
+			await frames()
+			check(label.get_content_height() <= label.size.y, "Full subtitles fit without scrolling: " + page.caption)
+			await capture("story_%s_%02d" % ["intro" if entry[1] == "introStory" else authored_story.title.get_slice(" / ", 0).replace(" ", "_"), index + 1])
+			var confirm := InputEventJoypadButton.new()
+			confirm.button_index = JOY_BUTTON_A
+			confirm.pressed = true
+			screen._unhandled_input(confirm)
+			if index < authored_story.pages.size() - 1:
+				check(completions[0] == 0, "Intermediate cuts do not finish the story")
+		screen.advance()
+		check(screen.ended and completions[0] == 1, "Story finishes exactly once after its final illustration")
+		screen.queue_free()
+		await frames()
+
+func _finish_story(screen: Node) -> void:
+	for i in screen.story.pages.size() * 2:
+		if screen.ended:
+			break
+		screen.advance()
+	check(screen.ended, "All cuts finish before transitioning to the next screen")
 
 func _test_sorties() -> void:
 	var run := RunState.new(content)
@@ -214,8 +337,8 @@ func _test_enemy_profiles() -> void:
 	check(sine != null and aimed != null and aimed.steps.size() == 1, "Movement and attack presets load as editable resources")
 	var planned_enemies := {
 		"z1_wedge": 2, "z2_spine": 2, "z3_eye": 3, "z4_crescent": 2, "z5_chain": 3,
-		"n1_interceptor": 12, "n2_crawler": 24, "n3_claw": 32, "n4_armor": 44, "n5_tendril": 26,
-		"m1_carapace": 240, "m2_wing": 220, "m3_star_eye": 260,
+		"n1_interceptor": 26, "n2_crawler": 30, "n3_claw": 40, "n4_armor": 46, "n5_tendril": 32,
+		"m1_carapace": 360, "m2_wing": 330, "m3_star_eye": 390,
 	}
 	for enemy_name in planned_enemies:
 		var planned_scene := load("res://scenes/enemies/%s.tscn" % enemy_name) as PackedScene
@@ -276,7 +399,7 @@ func _test_enemy_profiles() -> void:
 	var lab := load("res://scenes/gameplay/enemy_lab/enemy_lab.tscn").instantiate() as EnemyLab
 	root.add_child(lab)
 	await frames()
-	check(lab.enemy_scenes.size() == 14 and lab.movement_presets.size() == 4 and lab.attack_presets.size() == 9, "F6 lab exposes all 13 enemies, boss, movement, and attack choices")
+	check(lab.enemy_scenes.size() == 14 and lab.movement_presets.size() == 5 and lab.attack_presets.size() == 18, "F6 lab exposes all enemies and new strafe, tracking, gate and sweep presets")
 	lab.get_node("Canvas/Panel/Controls/MovementPicker").select(2)
 	lab.get_node("Canvas/Panel/Controls/AttackPicker").select(2)
 	var lab_enemy := lab.spawn_sample() as EnemyShip
@@ -438,7 +561,20 @@ func _test_ship_sprites() -> void:
 		await frames()
 		ship.state.shield = true
 		ship.take_damage()
-		check(sprite.texture == damaged_forward, label + " switches to damaged art after a shielded hit")
+		check(sprite.texture == normal_forward, label + " keeps normal forward art after a shielded hit")
+		check(ship.state.hp == content.rules.starting_hp and not ship.state.shield and not ship.has_taken_hit, label + " consumes only the shield without marking hull damage")
+		Input.action_release("move_right")
+		Input.action_press("move_left")
+		await frames()
+		check(sprite.texture == normal_back, label + " keeps normal back art after the shield breaks")
+		Input.action_release("move_left")
+		await frames()
+		check(sprite.texture == normal, label + " keeps normal idle art after the shield breaks")
+		Input.action_press("move_right")
+		await frames()
+		ship.invincibility = 0.0
+		ship.take_damage()
+		check(ship.state.hp == content.rules.starting_hp - 1 and sprite.texture == damaged_forward, label + " switches to damaged art only after losing HP")
 		Input.action_release("move_right")
 		Input.action_press("move_left")
 		await frames()
@@ -446,6 +582,10 @@ func _test_ship_sprites() -> void:
 		Input.action_release("move_left")
 		await frames()
 		check(sprite.texture == damaged, label + " keeps damaged art when movement stops")
+		ship.state.shield = true
+		ship.invincibility = 0.0
+		ship.take_damage(99)
+		check(ship.state.hp == content.rules.starting_hp - 1 and not ship.state.shield and sprite.texture == damaged, label + " keeps existing hull damage when a new shield absorbs a hit")
 		ship.queue_free()
 		await frames()
 
@@ -513,10 +653,7 @@ func _test_game_flow() -> void:
 	check(story.page_index == 0 and not story.get_node("StoryPanel/StoryText").typing, "First advance completes typing without changing page")
 	story.advance()
 	check(story.page_index == 1, "Second advance changes page")
-	story.advance()
-	story.advance()
-	story.advance()
-	story.advance()
+	_finish_story(story)
 	await frames(25)
 	check(main.current_screen.name == "CharacterSelect", "Intro ends in Character Select")
 	var hangar: Node = main.current_screen.get_node("Hangar")
@@ -558,8 +695,7 @@ func _test_game_flow() -> void:
 		await frames()
 	await frames(25)
 	check(main.current_screen.name == "StoryScreen", "Clear proceeds to Ending story")
-	main.current_screen.advance()
-	main.current_screen.advance()
+	_finish_story(main.current_screen)
 	await frames(25)
 	check(main.current_screen.name == "Result", "Ending completes into Result")
 	await capture("08_result")
@@ -687,7 +823,7 @@ func _test_stage() -> void:
 	var radial_texture := load("res://assets/Pilots_sprites/Player/Projectile_Radial.png") as Texture2D
 	check(straight.levels.size() == 3 and spread.levels.size() == 3, "Both weapons have three authored levels")
 	var authored_tiers := stage.player.weapon.proximity_tiers
-	check(authored_tiers.size() == 2 and authored_tiers[0].distance == 160.0 and authored_tiers[1].distance == 640.0, "Player ship authors two editable proximity damage tiers")
+	check(authored_tiers.size() == 2 and authored_tiers[0].distance == 80.0 and authored_tiers[1].distance == 360.0, "Player ship limits bonus damage to close range")
 	for level_index in straight.levels.size():
 		var level := straight.levels[level_index]
 		check(level.angles.size() == level_index + 2, "Straight weapon gains one parallel shot per level")
@@ -712,7 +848,8 @@ func _test_stage() -> void:
 	var second_straight_bullet := stage.projectiles.get_child(bullet_count + 1) as Projectile
 	check(is_equal_approx(straight_bullet.global_position.x, second_straight_bullet.global_position.x) and is_equal_approx(straight_bullet.global_position.y, stage.player.weapon.global_position.y - 21.0) and is_equal_approx(second_straight_bullet.global_position.y, stage.player.weapon.global_position.y + 21.0), "Straight bullets spawn in two parallel rows on the enlarged ship")
 	check((straight_bullet.get_node("Visual") as Sprite2D).texture == straight_texture, "Fired straight bullet shows the straight image")
-	check(straight_bullet.proximity_points.size() == 2 and straight_bullet.proximity_points[0].y == 2.0 and straight_bullet.damage_origin.is_equal_approx(straight_bullet.global_position), "Straight shot captures proximity tiers and its own firing origin")
+	check(straight_bullet.proximity_points.size() == 2 and is_equal_approx(straight_bullet.proximity_points[0].y, 1.6) and straight_bullet.damage_origin.is_equal_approx(straight_bullet.global_position), "Straight shot captures proximity tiers and its own firing origin")
+	check(is_equal_approx(straight_bullet.proximity_multiplier(360), 1.0) and is_equal_approx(straight_bullet.proximity_multiplier(80), 1.6), "Fired shots retain base damage at range and cap the close bonus at 1.6")
 	await capture("straight_lv1")
 	Input.action_press("switch_weapon")
 	await frames(2)
@@ -725,7 +862,7 @@ func _test_stage() -> void:
 	check(stage.projectiles.get_child(bullet_count).direction.y < 0.0 and stage.projectiles.get_child(bullet_count + 1).direction.y == 0.0 and stage.projectiles.get_child(bullet_count + 2).direction.y > 0.0, "Spread projectiles fan above, forward, and below")
 	check((stage.projectiles.get_child(bullet_count) as Projectile).proximity_points.size() == 2 and (stage.projectiles.get_child(bullet_count + 2) as Projectile).damage_origin.is_equal_approx(stage.player.weapon.global_position), "All spread shots inherit proximity tiers")
 	var extra_tier := ProximityDamageTier.new()
-	extra_tier.distance = 400.0
+	extra_tier.distance = 200.0
 	extra_tier.multiplier = 1.8
 	var custom_tiers := authored_tiers.duplicate()
 	custom_tiers.insert(0, extra_tier)
@@ -733,7 +870,7 @@ func _test_stage() -> void:
 	bullet_count = stage.projectiles.get_child_count()
 	stage.player.weapon.fire()
 	var custom_bullet := stage.projectiles.get_child(bullet_count) as Projectile
-	check(custom_bullet.proximity_points.size() == 3 and custom_bullet.proximity_points[1] == Vector2(400.0, 1.8), "Weapon sorts and applies a newly added tier to fired shots")
+	check(custom_bullet.proximity_points.size() == 3 and custom_bullet.proximity_points[1] == Vector2(200.0, 1.8), "Weapon sorts and applies a newly added tier to fired shots")
 	custom_tiers.erase(extra_tier)
 	bullet_count = stage.projectiles.get_child_count()
 	stage.player.weapon.fire()
@@ -931,6 +1068,14 @@ func _test_combat_layout() -> void:
 	hud.get_node("WeaponChange").pressed.emit()
 	check(stage.user_paused and stage.run.current_sortie.bombs == bombs and stage.run.current_sortie.active_weapon == SortieState.WeaponType.SPREAD, "Paused console cannot spend bombs or change weapons")
 	hud.get_node("PauseButton").pressed.emit()
+	stage.run.current_sortie.collect(Pickup.Kind.SHIELD, 3)
+	stage.player.invincibility = 0
+	stage.player.take_damage()
+	stage.player.take_damage()
+	await frames(2)
+	check(stage.run.current_sortie.hp == content.rules.starting_hp and not stage.run.current_sortie.shield, "Shield hit preserves HP and protects against simultaneous hits")
+	check(stage.player.visuals.texture == stage.player.normal_sprite, "Shield hit keeps the combat ship's normal sprite")
+	check(hud.get_node("ActivePilot/ActivePortrait").texture == content.pilots[0].normal and card.get_node("Portrait").texture == content.pilots[0].normal, "Shield hit keeps both cockpit and roster portraits normal")
 	stage.player.invincibility = 0
 	stage.player.take_damage()
 	await frames(2)
@@ -998,15 +1143,21 @@ func _test_full_stage() -> void:
 	var authored_waves := 0
 	var authored_enemies := 0
 	var featured_types := {}
+	var early_power_supplies := 0
+	var total_power_supplies := 0
 	for wave in stage.waves.get_children():
 		if wave is EnemyWave:
+			if wave.drop_scene != null and wave.drop_scene.resource_path == "res://scenes/items/power_up.tscn" and wave.drop_mode == EnemyWave.DropMode.GUARANTEED:
+				total_power_supplies += wave.count
+				if wave.position.x < 1568 + 34 * 180: early_power_supplies += wave.count
 			authored_waves += 1
 			authored_enemies += wave.count
 			check(wave.enemy_scene != null, "Authored wave has an enemy scene: " + wave.name)
 			if wave.enemy_scene != null:
 				featured_types[wave.enemy_scene.resource_path.get_file().get_basename()] = true
-	check(authored_waves == 61 and authored_enemies == 144, "Stage keeps all 61 configured waves and 144 wave enemies")
+	check(authored_waves == 97 and authored_enemies == 298, "Stage keeps all 97 configured waves and 298 wave enemies")
 	check(featured_types.size() == 13, "Every planned enemy type appears in the one stage")
+	check(early_power_supplies == 1 and total_power_supplies == 5, "Authored supplies reach only LV2 before the first middle and retain later recovery drops")
 	stage.player.invincibility = 300.0
 	# Fast-forward traversal for the longer one-stage route; keep the ship with the camera.
 	stage.scroll_speed = 720.0
@@ -1031,7 +1182,7 @@ func _test_full_stage() -> void:
 		if wave is EnemyWave:
 			check(wave.emitted == wave.count, "Spatial group emits all enemies: " + wave.name)
 			emitted += wave.emitted
-	check(emitted + stage.placed_activated == 146, "Spatial groups and placed enemies activate all 146 non-boss enemies")
+	check(emitted + stage.placed_activated == 300, "Spatial groups and placed enemies activate all 300 non-boss enemies")
 	check(stage.placed_activated == 2 and stage.placed_enemies.get_child_count() == 0, "Placed enemy scenes activate when the camera reaches them")
 	var boss := stage.boss
 	if is_instance_valid(boss):
@@ -1043,5 +1194,50 @@ func _test_full_stage() -> void:
 		boss.take_damage(9999)
 		await frames(3)
 		check(stage.phase == StageController.Phase.CLEARING and stage.run.boss_cleared, "Boss damage, death signal and clear transition are connected")
+	stage.queue_free()
+	await frames()
+
+func _test_redesigned_encounters() -> void:
+	var enemy := load("res://scenes/enemies/n4_armor.tscn").instantiate() as EnemyShip
+	var profile := load("res://data/movement/strafe_center.tres") as MovementProfile
+	enemy.position = profile.hold_position
+	enemy.bounds = Rect2(48, 100, 1440, 864)
+	enemy.get_node("Movement").apply_profile(profile)
+	root.add_child(enemy)
+	enemy.set_physics_process(false)
+	enemy.shooter.set_physics_process(false)
+	var movement := enemy.movement
+	movement.set_physics_process(false)
+	movement._physics_process(0.1)
+	check(movement.reached_hold, "Strafing enemy reaches its firing station")
+	var original := enemy.position
+	enemy.bounds.position.x += 18.0
+	movement._physics_process(0.1)
+	check(is_equal_approx(enemy.position.x - original.x, 18.0), "Strafing enemy follows camera motion while holding")
+	check(enemy.position.y > original.y, "Strafe creates a moving muzzle rather than a static hold")
+	check(is_equal_approx(profile.hold_position.x, 1160.0), "Movement does not mutate the shared profile")
+	check(enemy.shooter.can_fire(), "Strafing battery can attack while stationed")
+	movement.hold_elapsed = movement.hold_seconds
+	var exit_x := enemy.position.x
+	movement._physics_process(0.1)
+	check(enemy.position.x > exit_x, "Unkilled strafing enemy retreats forward instead of trapping the rear")
+	check(not enemy.shooter.can_fire(), "Retreating battery stops shooting before the recovery lane")
+	enemy.queue_free()
+	var gate := load("res://data/patterns/gate_fan.tres") as AttackPattern
+	var gate_angles := gate.angles_for_volley(PI, 0)
+	var centre_gap := 2.0 * 300.0 * sin((gate_angles[2] - gate_angles[1]) * 0.5)
+	check(gate_angles[1] < PI and gate_angles[2] > PI and centre_gap > 90.0, "Gate leaves a usable centre gap at 300px before combining other hazards")
+	var sweep := load("res://data/patterns/sweep_fan.tres") as AttackPattern
+	check(sweep.recovery > (sweep.volley_count - 1) * sweep.volley_interval + 1.0, "Sweeping battery has a deliberate approach window after its burst")
+	var stage := _create_stage()
+	await frames(2)
+	var first_homing := INF
+	for wave in stage.waves.get_children():
+		if wave is EnemyWave and wave.enemy_scene.resource_path.ends_with("n5_tendril.tscn"):
+			first_homing = minf(first_homing, (wave.global_position.x - stage.rules.playfield.end.x - stage.activation_margin) / stage.scroll_speed)
+	for placed in stage.placed_enemies.get_children():
+		if placed is EnemyShip and placed.scene_file_path.ends_with("n5_tendril.tscn"):
+			first_homing = minf(first_homing, (placed.global_position.x - stage.rules.playfield.end.x - stage.activation_margin) / stage.scroll_speed)
+	check(is_equal_approx(first_homing, 85.0), "Homing enemies cannot precede their isolated lesson at scroll second 85")
 	stage.queue_free()
 	await frames()

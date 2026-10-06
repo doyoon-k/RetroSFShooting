@@ -1,32 +1,73 @@
-[gd_resource type="Resource" script_class="StoryData" load_steps=7 format=3 uid="uid://dw3n83fo2xv00"]
+[gd_resource type="Resource" script_class="StoryData" load_steps=21 format=3 uid="uid://dw3n83fo2xv00"]
 
-[ext_resource type="Texture2D" uid="uid://bgrqbfens3sh7" path="res://assets/Pilots_sprites/stories/intro.svg" id="Image"]
+[ext_resource type="Texture2D" uid="uid://byjowcqls38we" path="res://assets/Pilots_sprites/stories/introStory01.png" id="Image0"]
+[ext_resource type="Texture2D" uid="uid://dvhmaih8sg8py" path="res://assets/Pilots_sprites/stories/introStory02.png" id="Image1"]
+[ext_resource type="Texture2D" uid="uid://c8kadidsq1sy0" path="res://assets/Pilots_sprites/stories/introStory03.png" id="Image2"]
+[ext_resource type="Texture2D" uid="uid://c0uq6hegqxu5l" path="res://assets/Pilots_sprites/stories/introStory04.png" id="Image3"]
+[ext_resource type="Texture2D" uid="uid://bm2ku8pgvxvtj" path="res://assets/Pilots_sprites/stories/introStory05.png" id="Image4"]
+[ext_resource type="Texture2D" uid="uid://euyuvwyqhgb0" path="res://assets/Pilots_sprites/stories/introStory06.png" id="Image5"]
+[ext_resource type="Texture2D" uid="uid://crk83psqrg88f" path="res://assets/Pilots_sprites/stories/introStory07.png" id="Image6"]
+[ext_resource type="Texture2D" uid="uid://iporrgwfetw3" path="res://assets/Pilots_sprites/stories/introStory08.png" id="Image7"]
+[ext_resource type="Texture2D" uid="uid://dlxi5qcrjn3bt" path="res://assets/Pilots_sprites/stories/introStory09.png" id="Image8"]
 [ext_resource type="Script" path="res://scripts/data/story_page.gd" id="Page"]
 [ext_resource type="Script" path="res://scripts/data/story_data.gd" id="Script"]
 
 [sub_resource type="Resource" id="Page0"]
 script = ExtResource("Page")
-illustration = ExtResource("Image")
-caption = "THE LAST ARK"
-text = "인류가 마지막으로 남긴 생존 모함은
-목적지를 잃은 채 우주를 떠돌고 있었다."
+illustration = ExtResource("Image0")
+caption = "2030 / 지구"
+text = "2030년, 인류의 터전은 여전히 지구였다."
 
 [sub_resource type="Resource" id="Page1"]
 script = ExtResource("Page")
-illustration = ExtResource("Image")
-caption = "SIX VOICES"
-text = "남은 파일럿은 여섯 명.
-여섯 개의 목소리가 꺼지기 전에, 새로운 터전을 찾아야 한다."
+illustration = ExtResource("Image1")
+caption = "침공"
+text = "어느 날, 정체를 알 수 없는 침략자들이 하늘을 뒤덮었다."
 
 [sub_resource type="Resource" id="Page2"]
 script = ExtResource("Page")
-illustration = ExtResource("Image")
-caption = "A SIGNAL BEYOND"
-text = "마침내 수신된 행성의 신호.
-그 앞을 가로막는 기계 군단을 돌파하라. 방주의 마지막 출격이 시작된다."
+illustration = ExtResource("Image2")
+caption = "불타는 고향"
+text = "도시는 무너졌고, 지구에는 더 이상 머물 곳이 없었다."
+
+[sub_resource type="Resource" id="Page3"]
+script = ExtResource("Page")
+illustration = ExtResource("Image3")
+caption = "마지막 방주"
+text = "생존자들을 태운 마지막 모선이 불타는 고향을 떠났다."
+
+[sub_resource type="Resource" id="Page4"]
+script = ExtResource("Page")
+illustration = ExtResource("Image4")
+caption = "남겨진 사람들"
+text = "방주의 격납고에는 여섯 파일럿과 마지막 전투기들이 남아 있었다."
+
+[sub_resource type="Resource" id="Page5"]
+script = ExtResource("Page")
+illustration = ExtResource("Image5")
+caption = "여섯 개의 목소리"
+text = "살아온 길은 달랐지만, 모두에게 필요한 것은 새로운 터전이었다."
+
+[sub_resource type="Resource" id="Page6"]
+script = ExtResource("Page")
+illustration = ExtResource("Image6")
+caption = "같은 목적지"
+text = "돌아갈 고향을 잃은 이들은 서로에게 남은 동료가 되었다."
+
+[sub_resource type="Resource" id="Page7"]
+script = ExtResource("Page")
+illustration = ExtResource("Image7")
+caption = "마지막 동료"
+text = "인간들과 함께, 인류를 보존하도록 만들어진 AI도 항로를 지켰다."
+
+[sub_resource type="Resource" id="Page8"]
+script = ExtResource("Page")
+illustration = ExtResource("Image8")
+caption = "출격"
+text = "새로운 행성으로 향하는 길을 열어라.\n방주의 마지막 출격이 시작된다."
 
 [resource]
 script = ExtResource("Script")
-title = "PROLOGUE / 남겨진 항로"
-pages = Array[ExtResource("Page")]([SubResource("Page0"), SubResource("Page1"), SubResource("Page2")])
+title = "PROLOGUE / 마지막 출격"
+pages = Array[ExtResource("Page")]([SubResource("Page0"), SubResource("Page1"), SubResource("Page2"), SubResource("Page3"), SubResource("Page4"), SubResource("Page5"), SubResource("Page6"), SubResource("Page7"), SubResource("Page8")])
 characters_per_second = 42.0

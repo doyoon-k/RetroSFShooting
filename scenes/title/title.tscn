@@ -1,6 +1,5 @@
-[gd_scene load_steps=6 format=3 uid="uid://xu1ybjw215vl"]
+[gd_scene load_steps=5 format=3 uid="uid://xu1ybjw215vl"]
 
-[ext_resource type="Texture2D" uid="uid://bxa2fa56r5wcb" path="res://assets/Pilots_sprites/crew_silhouettes.svg" id="CrewArt"]
 [ext_resource type="Resource" path="res://data/game_catalog.tres" id="PreviewCatalog"]
 [ext_resource type="Script" path="res://scenes/title/title.gd" id="Script"]
 [ext_resource type="Theme" uid="uid://wbownrqyfplv" path="res://scenes/ui/game_theme.tres" id="Theme"]
@@ -26,61 +25,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("TitleBackground")
-
-[node name="Designation" type="Label" parent="."]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 96.0
-offset_top = 65.0
-offset_right = 1046.0
-offset_bottom = 110.0
-theme_override_colors/font_color = Color(0.42745, 0.89804, 0.92941, 1)
-theme_override_font_sizes/font_size = 22
-text = "ARK-06  /  DEEP SPACE SURVIVAL"
-
-[node name="Logo" type="Label" parent="."]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 88.0
-offset_top = 190.0
-offset_right = 838.0
-offset_bottom = 530.0
-theme_override_colors/font_color = Color(0.86275, 0.93333, 0.95686, 1)
-theme_override_font_sizes/font_size = 125
-text = "LAST
-ARK"
-
-[node name="Subtitle" type="Label" parent="."]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 100.0
-offset_top = 560.0
-offset_right = 800.0
-offset_bottom = 625.0
-theme_override_font_sizes/font_size = 38
-text = "최후의 방주"
-
-[node name="Tagline" type="Label" parent="."]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 100.0
-offset_top = 636.0
-offset_right = 860.0
-offset_bottom = 676.0
-theme_override_font_sizes/font_size = 24
-text = "여섯 개의 목소리. 단 한 번의 귀환."
-
-[node name="Telemetry" type="Label" parent="."]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 1510.0
-offset_top = 70.0
-offset_right = 1870.0
-offset_bottom = 150.0
-theme_override_colors/font_color = Color(0.53333, 0.69804, 0.75294, 1)
-theme_override_font_sizes/font_size = 25
-text = "HUMANITY
-IN TRANSIT"
 
 [node name="Menu" type="Control" parent="."]
 unique_name_in_owner = true
@@ -112,28 +56,6 @@ offset_top = 164.0
 offset_right = 390.0
 offset_bottom = 228.0
 text = "EXIT"
-
-[node name="Footer" type="Label" parent="."]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 100.0
-offset_top = 1010.0
-offset_right = 1150.0
-offset_bottom = 1046.0
-theme_override_colors/font_color = Color(0.46275, 0.58039, 0.66275, 1)
-theme_override_font_sizes/font_size = 20
-text = "이동  ↑↓ / WASD     선택  Enter / A"
-
-[node name="CrewSilhouette" type="Label" parent="."]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 1110.0
-offset_top = 977.0
-offset_right = 1850.0
-offset_bottom = 1022.0
-theme_override_colors/font_color = Color(0.28627, 0.40784, 0.49412, 1)
-theme_override_font_sizes/font_size = 28
-text = "SIX PILOTS / ONE LAST SORTIE"
 
 [node name="Collection" type="Panel" parent="."]
 unique_name_in_owner = true
@@ -171,7 +93,3 @@ offset_top = 663.0
 offset_right = 402.0
 offset_bottom = 725.0
 text = "BACK / 돌아가기"
-
-[node name="CrewSilhouettes" type="Sprite2D" parent="."]
-position = Vector2(1435, 889)
-texture = ExtResource("CrewArt")

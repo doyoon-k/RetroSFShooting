@@ -5,8 +5,8 @@
 [ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Enemy/L2.png" id="EnemyTexture"]
 [ext_resource type="Script" path="res://scenes/enemies/enemy_shooter.gd" id="Shooter"]
 [ext_resource type="Script" path="res://scripts/data/pattern_step.gd" id="StepType"]
-[ext_resource type="Resource" path="res://data/patterns/short_burst_step.tres" id="short_burst"]
-[ext_resource type="Resource" path="res://data/patterns/aimed_step.tres" id="aimed"]
+[ext_resource type="Resource" path="res://data/patterns/fleet_lattice_step.tres" id="short_burst"]
+[ext_resource type="Resource" path="res://data/patterns/pursuit_fan_step.tres" id="aimed"]
 
 [sub_resource type="CircleShape2D" id="Shape"]
 radius = 87.0
@@ -17,7 +17,7 @@ collision_layer = 2
 collision_mask = 0
 monitoring = false
 script = ExtResource("Ship")
-maximum_hp = 220
+maximum_hp = 330
 is_midboss = true
 despawn_margin = 500.0
 

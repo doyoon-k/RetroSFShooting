@@ -127,10 +127,16 @@ func _movement_points(movement: Node, start: Vector2) -> PackedVector2Array:
 	var exit_direction: Vector2 = movement.get("exit_direction")
 	var amplitude: float = movement.get("amplitude")
 	var frequency: float = movement.get("frequency")
+	var follow_scroll: bool = movement.get("follow_scroll")
+	var stage := get_parent().get_parent()
+	var scroll := float(stage.get("scroll_speed")) if stage != null else 0.0
 	var reached_hold := false
 	var held := 0.0
 	for index in steps + 1:
 		var age := float(index) * preview_step
+		if index > 0 and follow_scroll and (not reached_hold or stay_forever or held < hold_seconds):
+			hold_position.x += scroll * preview_step
+			position.x += scroll * preview_step
 		match mode:
 			EnemyMovement.Mode.LINEAR:
 				position = start + direction * speed * age
@@ -145,14 +151,17 @@ func _movement_points(movement: Node, start: Vector2) -> PackedVector2Array:
 						held += preview_step
 						if held >= hold_seconds:
 							position += exit_direction.normalized() * speed * preview_step
-			EnemyMovement.Mode.VERTICAL_SWEEP:
+			EnemyMovement.Mode.VERTICAL_SWEEP, EnemyMovement.Mode.STRAFE_EXIT:
 				if index > 0:
 					if not reached_hold:
 						position = position.move_toward(hold_position, speed * preview_step)
 						reached_hold = position.is_equal_approx(hold_position)
 					else:
 						held += preview_step
-						position = hold_position + Vector2(0.0, sin(held * TAU * frequency) * amplitude)
+						if mode == EnemyMovement.Mode.STRAFE_EXIT and held >= hold_seconds and not stay_forever:
+							position += exit_direction.normalized() * speed * preview_step
+						else:
+							position = hold_position + Vector2(0.0, sin(held * TAU * frequency) * amplitude)
 			EnemyMovement.Mode.PATH:
 				return points
 		points.append(to_local(position))

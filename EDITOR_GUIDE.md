@@ -80,7 +80,7 @@
 한 쌍씩 추가·제거합니다. 배열 순서와 상관없이 거리순으로 적용되며, 단계 사이에서는
 발사 위치에서 충돌 지점까지의 거리에 따라 배율이 선형으로 변합니다. 가장 가까운
 단계 안쪽은 그 단계의 배율, 가장 먼 단계 바깥쪽은 기본 피해 1배입니다.
-기본 설정은 160px 이내 2배, 640px 이상 1배입니다. 배열이 비어 있으면 항상 1배이며,
+기본 설정은 80px 이내 1.6배, 360px 이상 1배입니다. 배열이 비어 있으면 항상 1배이며,
 단계가 하나면 해당 거리 안쪽에만 그 배율을 적용합니다. 소수 피해도 적 체력에 누적됩니다.
 
 **공유 리소스에 주의:** 같은 `.tres`를 참조하는 모든 적에게 수정이 적용됩니다. 특정 적만
@@ -210,6 +210,11 @@ Hangar Animation 이름으로 재생할 애니메이션을 선택할 수 있습�
 
 StoryData의 Pages 배열에서 순서를 바꾸거나 StoryPage를 추가합니다. 페이지마다 Illustration,
 Caption, Text를 설정합니다. Intro와 모든 Ending은 같은 StoryScreen을 사용합니다.
+그림은 비율을 유지해 화면 전체에 표시하며 Caption과 Text는 하단 자막입니다.
+`intro.tres`의 9컷은 `introStory01~09`, `betrayal.tres`의 4컷은 `WithAi01~04`,
+`unknown_horizon.tres`의 4컷은 `234ed01~04`에 연결되어 있습니다.
+`cost_of_dawn.tres`(5명)와 `new_home.tres`(6명)는 `56ed01~04`를 공유하고 본문은 각각 편집합니다.
+전멸·1명 생존 엔딩은 기존 SVG를 사용합니다.
 
 엔딩의 제목·스토리는 EndingData에서, **분기 규칙 자체**는
 `scripts/ending/ending_resolver.gd`에서 수정합니다. 저장용 ID를 바꾸면 기존 해금 기록과
@@ -225,3 +230,29 @@ Caption, Text를 설정합니다. Intro와 모든 Ending은 같은 StoryScreen�
 ## 스테이지 템포 조정
 
 최신 배치표와 연구 근거는 [STAGE_DESIGN.md](docs/STAGE_DESIGN.md)를 참고하세요. 기본 속도에서 출현 초는 `(Wave X - 1568) / 180`입니다. 미들 교전 동안 이 시간은 멈춥니다. `hold_high.tres` / `hold_low.tres`는 상하 정지 사격용 프리셋입니다. `Shooter`의 `Telegraph Seconds`는 공격 묶음 전 예고(기본 0.35초), 탄환의 `Homing Seconds`는 추적 지속 시간(기본 1.2초)입니다.
+
+
+## 2026-10-05 레벨 개정 프리셋
+
+Enemy Lab(F6)에 `Tracking three-shot stream`, `Four-way gate`, `Locked sweep` 공격과 `Strafe then retreat` 이동을 추가했습니다. 실제 스테이지의 N4는 상단/하단/중앙 포대 프리셋을 사용하며 진입·퇴장 중에는 사격하지 않습니다.
+
+- `data/movement/strafe_*.tres`: 진입 속도, 상하 진폭/주기, 주둔 시간, 퇴장 방향.
+- `follow_scroll`: 진입·주둔 위치가 카메라 전진을 따라갑니다. 기존 월드 고정 동작은 false로 유지합니다.
+- `data/patterns/tracking_stream.tres`: 매 회차 재조준, 연사 간격과 회복.
+- `data/patterns/gate_fan.tres`: 중앙을 비운 고정 4방향.
+- `data/patterns/sweep_fan.tres`: 예고 때 조준 고정, 이후 회차별 회전, 긴 회복.
+
+총구 예고는 고정 방향 청록 / 조준 고정 노랑 / 재조준 분홍이며 방향선도 표시합니다. 적탄 판정은 기존 값이고 외곽·밝은 중심만 추가했습니다. 전체 배치와 검증 결과는 [스테이지 설계](docs/STAGE_DESIGN.md)를 참고하세요.
+
+
+## 보스와 외계 함대 공격
+
+Enemy Lab의 `Scene default`로 M2/M1/M3/Boss를 선택하면 각각 쌍익 교차 사격/봉쇄벽/부화탄/기함 조합을 시험할 수 있습니다. 새 Attack 프리셋 6개는 `fleet_lattice`, `pursuit_fan`, `siege_curtain`, `command_curtain`, `brood_launch`, `brood_spiral`입니다.
+
+- `AttackPattern > Muzzle Offsets`: 발사점을 분리합니다. 단위는 **월드 px**이므로 적 스프라이트의 2배 스케일을 다시 곱하지 않습니다.
+- `Shape = CURTAIN`: 화면 높이에 탄을 배치합니다. `Corridor Center/Shift/Width`는 통로의 위치·이동 폭·폭(px)입니다. 고정 수평 발사(`Aim=FIXED`, 각도180°)로 사용합니다. `Bullet Count`는 통로를 비우기 전 후보 탄 수입니다.
+- `brood_core.tscn`: 300px/s로 0.85초 이동, 0.65초 정지 예고 후 120°에 7발을 발사합니다. `Travel Seconds`, `Incubation Seconds`, `Child Count`, `Child Spread`를 수정할 수 있습니다. `Child Scene`은 보통 탄만 허용하며 부화탄의 재귀 생성을 막습니다.
+- 부모 탄을 폭탄/탄 소거로 제거하면 부화가 취소됩니다. 부모 탄이 부화 전에 플레이어에 충돌한 경우도 자식 탄을 만들지 않습니다.
+- 보스 단계는 `EnemyShip > Second Phase`에서 변경합니다. 기본은 HP 50%에서 부화탄→기함 봉쇄벽→재조준 연사로 전환합니다.
+
+`python tools/balance.py --boss-patterns`는 기존 6개 조건에 25개 보스 정지 위치 계측을 추가합니다. 한 지점에서 안 맞는지 보는 표본 검사이므로, 전체 패턴의 인간 회피 가능성을 증명하는 검사는 아닙니다.

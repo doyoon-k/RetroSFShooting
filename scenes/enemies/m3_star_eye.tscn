@@ -6,8 +6,8 @@
 [ext_resource type="Script" path="res://scenes/enemies/enemy_shooter.gd" id="Shooter"]
 [ext_resource type="Script" path="res://scenes/enemies/spinning_shell.gd" id="Spin"]
 [ext_resource type="Script" path="res://scripts/data/pattern_step.gd" id="StepType"]
-[ext_resource type="Resource" path="res://data/patterns/ring_step.tres" id="ring"]
-[ext_resource type="Resource" path="res://data/patterns/spiral_step.tres" id="spiral"]
+[ext_resource type="Resource" path="res://data/patterns/brood_launch_step.tres" id="ring"]
+[ext_resource type="Resource" path="res://data/patterns/brood_spiral_step.tres" id="spiral"]
 
 [sub_resource type="CircleShape2D" id="Shape"]
 radius = 95.0
@@ -18,7 +18,7 @@ collision_layer = 2
 collision_mask = 0
 monitoring = false
 script = ExtResource("Ship")
-maximum_hp = 260
+maximum_hp = 390
 is_midboss = true
 despawn_margin = 500.0
 

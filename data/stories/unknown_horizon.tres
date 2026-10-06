@@ -1,18 +1,38 @@
-[gd_resource type="Resource" script_class="StoryData" load_steps=5 format=3 uid="uid://d0sgit0ijolup"]
+[gd_resource type="Resource" script_class="StoryData" load_steps=11 format=3 uid="uid://d0sgit0ijolup"]
 
-[ext_resource type="Texture2D" uid="uid://pjff73fbrgtu" path="res://assets/Pilots_sprites/stories/unknown_horizon.svg" id="Image"]
+[ext_resource type="Texture2D" uid="uid://djsjd21mdeyr0" path="res://assets/Pilots_sprites/stories/234ed01.png" id="Image0"]
+[ext_resource type="Texture2D" uid="uid://dl18jmdqo24bt" path="res://assets/Pilots_sprites/stories/234ed02.png" id="Image1"]
+[ext_resource type="Texture2D" uid="uid://djff1wa1ndysv" path="res://assets/Pilots_sprites/stories/234ed03.png" id="Image2"]
+[ext_resource type="Texture2D" uid="uid://cf2doc5syulsb" path="res://assets/Pilots_sprites/stories/234ed04.png" id="Image3"]
 [ext_resource type="Script" path="res://scripts/data/story_page.gd" id="Page"]
 [ext_resource type="Script" path="res://scripts/data/story_data.gd" id="Script"]
 
 [sub_resource type="Resource" id="Page0"]
 script = ExtResource("Page")
-illustration = ExtResource("Image")
-caption = "FIRST CONTACT"
-text = "생존자들은 푸른 행성에 착륙했다.
-처음 밟는 대지 너머에서, 누군가의 거대한 발자국이 이어지고 있었다."
+illustration = ExtResource("Image0")
+caption = "착륙"
+text = "남은 동료들이 낯선 행성의 대지를 밟았다.\n긴 항해가 끝났다고 생각했다."
+
+[sub_resource type="Resource" id="Page1"]
+script = ExtResource("Page")
+illustration = ExtResource("Image1")
+caption = "먼저 살고 있던 것들"
+text = "숲 너머에서 거대한 생명체들이 모습을 드러냈다.\n이 땅은 비어 있지 않았다."
+
+[sub_resource type="Resource" id="Page2"]
+script = ExtResource("Page")
+illustration = ExtResource("Image2")
+caption = "부족했던 손길"
+text = "생존자들은 서로를 지키려 했지만, 밀려드는 위협을 막기에는 너무 적었다."
+
+[sub_resource type="Resource" id="Page3"]
+script = ExtResource("Page")
+illustration = ExtResource("Image3")
+caption = "남겨진 흔적"
+text = "마지막 외침마저 잦아들었다.\n낯선 대지에는 그들이 남긴 물건만 떨어져 있었다."
 
 [resource]
 script = ExtResource("Script")
 title = "ENDING 04 / 낯선 지평선"
-pages = Array[ExtResource("Page")]([SubResource("Page0")])
+pages = Array[ExtResource("Page")]([SubResource("Page0"), SubResource("Page1"), SubResource("Page2"), SubResource("Page3")])
 characters_per_second = 42.0

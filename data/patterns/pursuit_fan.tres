@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AttackPattern" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/data/attack_pattern.gd" id="Script"]
+[ext_resource type="PackedScene" path="res://scenes/projectiles/lance_bullet.tscn" id="Bullet"]
+[resource]
+script = ExtResource("Script")
+display_name = "Interceptor / pursuit fork"
+projectile_scene = ExtResource("Bullet")
+aim = 2
+bullet_count = 3
+spread_degrees = 20.0
+volley_count = 5
+volley_interval = 0.24
+recovery = 0.9

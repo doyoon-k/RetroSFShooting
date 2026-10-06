@@ -17,6 +17,7 @@ var locked_angle: float = PI
 var starting: bool = true
 var warning: bool = false
 var volleys_fired: int = 0
+var bursts_completed: int = 0
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
@@ -70,6 +71,7 @@ func _physics_process(delta: float) -> void:
 	if volley < pattern.volley_count:
 		timer = maxf(0.02, pattern.volley_interval)
 		return
+	bursts_completed += 1
 	volley = 0
 	starting = true
 	repetition += 1
@@ -83,6 +85,10 @@ func can_fire() -> bool:
 	if bounds.has_area() and not bounds.grow(-32.0).has_point(global_position):
 		return false
 	var ship := get_parent() as EnemyShip
+	if ship != null and ship.movement != null and ship.movement.mode == EnemyMovement.Mode.STRAFE_EXIT:
+		# The strafing battery commits to one firing station, then visibly retreats.
+		if not ship.movement.reached_hold or (not ship.movement.stay_forever and ship.movement.hold_elapsed >= ship.movement.hold_seconds):
+			return false
 	if ship != null and not ship.is_boss and not ship.is_midboss and target_provider.is_valid():
 		var target: Node2D = target_provider.call()
 		if is_instance_valid(target):
@@ -92,7 +98,25 @@ func can_fire() -> bool:
 func _draw() -> void:
 	if warning and not Engine.is_editor_hint():
 		var progress := 1.0 - clampf(timer / maxf(telegraph_seconds, 0.01), 0.0, 1.0)
-		draw_arc(Vector2.ZERO, lerpf(22.0, 8.0, progress), 0.0, TAU, 24, Color(1.0, 0.95, 0.5, 0.9), 2.5)
+		var pattern := steps[step_index].pattern
+		var tint := Color(1.0, 0.95, 0.5, 0.9)
+		if pattern.aim == AttackPattern.Aim.FIXED:
+			tint = Color(0.4, 0.95, 1.0, 0.9)
+		elif pattern.aim == AttackPattern.Aim.TRACK_EACH_VOLLEY:
+			tint = Color(1.0, 0.5, 0.75, 0.9)
+		var aim_angle := _aim_angle(pattern) if pattern.aim == AttackPattern.Aim.TRACK_EACH_VOLLEY else locked_angle
+		var forward := Vector2.from_angle(aim_angle - global_rotation)
+		draw_arc(Vector2.ZERO, lerpf(22.0, 8.0, progress), 0.0, TAU, 24, tint, 2.5)
+		draw_line(forward * 12.0, forward * 36.0, tint, 2.0)
+		if pattern.shape == AttackPattern.Shape.CURTAIN:
+			# Show the actual remote emitter positions before the first wall.
+			for shot in pattern.shots_for_volley(global_position, bounds, locked_angle, 0):
+				var point := to_local(shot.position)
+				draw_circle(point, 5.0, tint)
+				draw_line(point, point + Vector2.LEFT * 18.0, tint, 2.0)
+		else:
+			for offset in pattern.muzzle_offsets:
+				draw_arc(to_local(global_position + offset), 8.0, 0.0, TAU, 16, tint, 2.0)
 
 func _aim_angle(pattern: AttackPattern) -> float:
 	if pattern.aim != AttackPattern.Aim.FIXED and target_provider.is_valid():
@@ -105,14 +129,16 @@ func _fire_volley(pattern: AttackPattern, angle: float) -> void:
 	if pattern.projectile_scene == null:
 		return
 	volleys_fired += 1
-	for shot_angle in pattern.angles_for_volley(angle, volley):
+	for shot in pattern.shots_for_volley(global_position, bounds, angle, volley):
+		# A remote muzzle outside the arena never fires inward without a cue.
+		if not bounds.grow(-16.0).has_point(shot.position): continue
 		var bullet := pattern.projectile_scene.instantiate() as Projectile
-		bullet.direction = Vector2.from_angle(shot_angle)
+		bullet.direction = Vector2.from_angle(shot.angle)
 		bullet.bounds = bounds
+		bullet.position = projectiles.to_local(shot.position)
 		if target_provider.is_valid():
 			bullet.target = target_provider.call()
 		projectiles.add_child(bullet)
-		bullet.global_position = global_position
 
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings := PackedStringArray()
