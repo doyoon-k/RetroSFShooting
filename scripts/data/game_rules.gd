@@ -12,6 +12,8 @@ extends Resource
 @export_range(0.1, 10.0, 0.1) var death_seconds: float = 2.8
 @export_range(0.1, 10.0, 0.1) var victory_line_seconds: float = 2.0
 @export_group("Bomb")
+@export_range(0.0, 5.0, 0.05) var bomb_activation_delay: float = 0.2
+@export_range(0.0, 10.0, 0.05) var bomb_cooldown: float = 1.5
 @export_range(1, 100, 1) var bomb_damage: int = 10
 @export_range(0.0, 5.0, 0.05) var bomb_invincibility: float = 1.0
 @export var bomb_clears_bullets: bool = true

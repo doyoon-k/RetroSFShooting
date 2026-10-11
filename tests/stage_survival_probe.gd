@@ -202,8 +202,8 @@ func steer() -> void:
 				best_cost = cost
 				best_move = direction
 	if not args.has("--no-bombs") and danger_now < 65.0 and best_cost > 7000.0 and player.invincibility <= 0 and player.state.bombs > 0:
-		stage._bomb()
-		bombs += 1
+		if stage._bomb():
+			bombs += 1
 	last_direction = best_move
 	for action in ["move_left", "move_right", "move_up", "move_down"]:
 		Input.action_release(action)

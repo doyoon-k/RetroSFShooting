@@ -48,6 +48,7 @@ func _run() -> void:
 	_test_save()
 	await _test_game_flow()
 	await _test_bad_ending_flow()
+	await _test_bomb_timing()
 	await _test_stage()
 	await _test_combat_layout()
 	await _test_playfield_edges()
@@ -772,6 +773,78 @@ func _test_bad_ending_flow() -> void:
 	main.queue_free()
 	await frames()
 
+func _test_bomb_timing() -> void:
+	var stage := _create_stage()
+	await frames(16)
+	# Step combat time explicitly so the delay boundaries are deterministic.
+	stage.set_physics_process(false)
+	stage.player.set_physics_process(false)
+	stage.player.invincibility = 0.0
+	var enemy := stage._spawn_enemy(load("res://scenes/enemies/n4_armor.tscn"), Vector2(1400, 400))
+	enemy.set_physics_process(false)
+	enemy.movement.set_physics_process(false)
+	enemy.shooter.set_physics_process(false)
+	stage.mid_enemy = enemy
+	var hp_before := enemy.hp
+	var bullet := load("res://scenes/projectiles/enemy_bullet.tscn").instantiate() as Projectile
+	bullet.position = Vector2(1500, 700)
+	bullet.bounds = stage.view_bounds
+	stage.projectiles.add_child(bullet)
+	bullet.set_physics_process(false)
+	var friendly := load("res://scenes/projectiles/player_bullet.tscn").instantiate() as Projectile
+	friendly.friendly = true
+	friendly.position = Vector2(1000, 800)
+	friendly.bounds = stage.view_bounds
+	stage.projectiles.add_child(friendly)
+	friendly.set_physics_process(false)
+	check(stage._bomb() and stage.run.current_sortie.bombs == 1, "Bomb input reserves exactly one stock")
+	check(enemy.hp == hp_before and not bullet.spent and is_zero_approx(stage.player.invincibility), "Bomb preparation applies no damage, bullet clear, or protection")
+	check(not stage._bomb() and stage.run.current_sortie.bombs == 1, "Repeated inputs during preparation cannot spend another bomb")
+	check(stage.hud.get_node("BombButton").disabled and stage.hud.bomb_slots[3].texture == stage.hud.bomb_on and not stage.hud.get_node("WeaponChange").disabled, "Bomb preparation disables only bomb controls and the ready light")
+	var progress_before := stage.progress_x
+	stage._physics_process(0.1)
+	check(is_equal_approx(stage.progress_x, progress_before) and enemy.hp == hp_before, "Bomb delay advances during a stationary middle encounter without exploding early")
+	var delay_before := stage.bomb_delay_left
+	var cooldown_before := stage.bomb_cooldown_left
+	stage.toggle_pause()
+	stage._physics_process(1.0)
+	await frames(20)
+	check(is_equal_approx(stage.bomb_delay_left, delay_before) and is_equal_approx(stage.bomb_cooldown_left, cooldown_before) and not bullet.spent, "Pause freezes both bomb timers and the reserved explosion")
+	stage.toggle_pause()
+	stage._enter(StageController.Phase.BOSS_INTRO, 5.0)
+	stage._physics_process(1.0)
+	check(is_equal_approx(stage.bomb_delay_left, delay_before) and is_equal_approx(stage.bomb_cooldown_left, cooldown_before), "Boss introduction freezes both bomb timers")
+	stage._enter(StageController.Phase.PLAYING)
+	stage._physics_process(0.09)
+	check(enemy.hp == hp_before and not bullet.spent and is_zero_approx(stage.player.invincibility), "Bomb remains inactive just before its 0.2-second delay expires")
+	stage._physics_process(0.01)
+	check(is_equal_approx(enemy.hp, hp_before - stage.rules.bomb_damage) and bullet.spent and not friendly.spent, "Delayed explosion damages enemies and clears only enemy projectiles")
+	check(is_equal_approx(stage.player.invincibility, stage.rules.bomb_invincibility), "The full one-second bomb protection starts at detonation")
+	check(not stage._bomb() and stage.run.current_sortie.bombs == 1 and is_equal_approx(stage.bomb_cooldown_left, 1.3), "Bomb cooldown starts at input and still blocks another bomb after detonation")
+	stage._physics_process(1.29)
+	check(not stage.can_use_bomb(), "Bomb stays unavailable just before 1.5 seconds of combat time")
+	stage._physics_process(0.01)
+	stage._update_hud()
+	check(stage.can_use_bomb() and not stage.hud.get_node("BombButton").disabled and stage.hud.bomb_slots[3].texture == stage.hud.bomb_ready, "At 1.5 seconds the bomb button and next-bomb light become available again")
+	stage._bomb()
+	stage.player.invincibility = 0.0
+	stage.run.current_sortie.hp = 1
+	stage.player.take_damage()
+	await frames(3)
+	stage._physics_process(0.5)
+	check(stage.phase == StageController.Phase.PLAYER_DYING and is_equal_approx(enemy.hp, hp_before - stage.rules.bomb_damage) and is_zero_approx(stage.get_node("Interface/Root/BombFlash").modulate.a), "Dying during preparation cancels the reserved explosion and its cue")
+	stage.phase_left = 0.0
+	await frames(3)
+	stage.select_next(&"P2")
+	await frames(16)
+	check(stage.can_use_bomb() and stage.run.current_sortie.bombs == 2, "A replacement pilot starts with fresh bombs and no inherited pending explosion or cooldown")
+	stage._bomb()
+	stage._start_clear()
+	stage._physics_process(0.5)
+	check(not stage.bomb_pending and is_equal_approx(enemy.hp, hp_before - stage.rules.bomb_damage), "Stage clear cancels a reserved bomb before it can damage actors")
+	stage.queue_free()
+	await frames()
+
 func _test_stage() -> void:
 	var stage := _create_stage()
 	await frames(16)
@@ -1043,10 +1116,10 @@ func _test_combat_layout() -> void:
 	# Existing keyboard actions and the console buttons share the same state.
 	hud.get_node("BombButton").pressed.emit()
 	await frames(2)
-	check(stage.run.current_sortie.bombs == 1 and hud.bomb_slots[2].texture == hud.bomb_off and hud.bomb_slots[3].texture == hud.bomb_ready, "Bomb console empties the leftmost filled slot and highlights the remaining bomb")
+	check(stage.run.current_sortie.bombs == 1 and hud.bomb_slots[2].texture == hud.bomb_off and hud.bomb_slots[3].texture == hud.bomb_on and hud.get_node("BombButton").disabled, "Bomb console empties the leftmost filled slot and removes the ready light during cooldown")
 	stage.run.current_sortie.collect(Pickup.Kind.BOMB, 3)
 	stage.run.current_sortie.collect(Pickup.Kind.BOMB, 3)
-	await frames(2)
+	await frames(94)
 	check(stage.run.current_sortie.bombs == 3 and hud.bomb_slots[0].texture == hud.bomb_off and hud.bomb_slots[1].texture == hud.bomb_ready and hud.bomb_slots[2].texture == hud.bomb_on and hud.bomb_slots[3].texture == hud.bomb_on, "Bomb pickups refill slots toward the left and highlight the next bomb to spend")
 	stage.run.current_sortie.collect(Pickup.Kind.BOMB, 3)
 	await frames(2)
@@ -1057,7 +1130,8 @@ func _test_combat_layout() -> void:
 	check(stage.run.current_sortie.bombs == 4 and hud.bomb_slots[3].texture == hud.bomb_on, "An extra bomb pickup keeps the full console at four")
 	hud.get_node("BombButton").pressed.emit()
 	await frames(2)
-	check(stage.run.current_sortie.bombs == 3 and hud.bomb_slots[0].texture == hud.bomb_off and hud.bomb_slots[1].texture == hud.bomb_ready and hud.bomb_slots[2].texture == hud.bomb_on and hud.bomb_slots[3].texture == hud.bomb_on, "Spending from full stock turns off the first slot and advances the ready indicator")
+	check(stage.run.current_sortie.bombs == 3 and hud.bomb_slots[0].texture == hud.bomb_off and hud.bomb_slots[1].texture == hud.bomb_on and hud.bomb_slots[2].texture == hud.bomb_on and hud.bomb_slots[3].texture == hud.bomb_on, "Spending from full stock turns off the first slot and dims remaining bombs during cooldown")
+	await frames(94)
 	hud.get_node("WeaponChange").pressed.emit()
 	await frames(2)
 	check(stage.run.current_sortie.active_weapon == SortieState.WeaponType.SPREAD and hud.get_node("WeaponBox/WeaponOne").texture == hud.spread_icon, "Change console selects the spread weapon and updates its icon")

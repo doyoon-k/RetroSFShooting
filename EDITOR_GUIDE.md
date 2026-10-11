@@ -76,6 +76,8 @@
 경계에서 아이템이 잘리지 않게 남기는 여백입니다. `Attraction`은 플레이어 쪽으로
 방향을 서서히 틀어주는 정도입니다.
 
+폭탄 시간은 `data/rules/default.tres`의 `Bomb` 그룹에서 조절합니다. `Bomb Activation Delay`는 입력부터 폭발까지의 시간(0.2초), `Bomb Cooldown`은 입력부터 다음 사용까지의 시간(1.5초), `Bomb Invincibility`는 폭발 후 무적 시간(1초)입니다.
+
 `Weapon` 노드의 `Proximity Damage > Proximity Tiers` 배열에서 거리(px)와 배율을
 한 쌍씩 추가·제거합니다. 배열 순서와 상관없이 거리순으로 적용되며, 단계 사이에서는
 발사 위치에서 충돌 지점까지의 거리에 따라 배율이 선형으로 변합니다. 가장 가까운

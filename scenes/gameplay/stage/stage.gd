@@ -34,6 +34,10 @@ var placed_layers: Dictionary = {}
 var rules: GameRules
 var progress_x: float = 0.0
 var view_bounds: Rect2
+var bomb_pending: bool = false
+var bomb_delay_left: float = 0.0
+var bomb_cooldown_left: float = 0.0
+var bomb_flash_tween: Tween
 @onready var simulation: Node2D = $Simulation
 @onready var camera: Camera2D = $Camera2D
 @onready var placed_enemies: Node2D = $Simulation/PlacedEnemies
@@ -75,7 +79,10 @@ func _ready() -> void:
 	_launch_current()
 
 func _physics_process(delta: float) -> void:
-	if phase != Phase.PLAYING or user_paused or is_instance_valid(boss) or is_instance_valid(mid_enemy) or boss_waiting_to_enter:
+	if phase != Phase.PLAYING or user_paused:
+		return
+	_advance_bomb(delta)
+	if is_instance_valid(boss) or is_instance_valid(mid_enemy) or boss_waiting_to_enter:
 		return
 	progress_x += scroll_speed * delta
 	_sync_world_bounds()
@@ -135,6 +142,8 @@ func _process(delta: float) -> void:
 			_next_victory_line()
 
 func _enter(next_phase: Phase, seconds: float = 0.0) -> void:
+	if next_phase in [Phase.PLAYER_DYING, Phase.CLEARING, Phase.FINISHED]:
+		_cancel_bomb()
 	phase = next_phase
 	phase_left = seconds
 	get_tree().paused = phase != Phase.PLAYING or user_paused
@@ -149,6 +158,8 @@ func _enter(next_phase: Phase, seconds: float = 0.0) -> void:
 		_begin_boss_intro.call_deferred()
 
 func _launch_current() -> void:
+	_cancel_bomb()
+	bomb_cooldown_left = 0.0
 	_enter(Phase.LAUNCHING, rules.launch_seconds)
 	roster.show_survived_status = false
 	roster.highlighted_id = run.current_pilot_id
@@ -175,7 +186,7 @@ func _update_hud() -> void:
 	var sortie := run.current_sortie
 	var pilot := catalog.pilot_by_id(run.current_pilot_id)
 	if pilot != null:
-		hud.display(sortie, roster.portrait_for(pilot), phase == Phase.PLAYING and not user_paused)
+		hud.display(sortie, roster.portrait_for(pilot), phase == Phase.PLAYING and not user_paused, can_use_bomb())
 
 func get_target() -> Node2D:
 	return player if is_instance_valid(player) and not player.death_reported else null
@@ -276,6 +287,7 @@ func _enemy_destroyed(enemy: EnemyShip) -> void:
 func _player_died(location: Vector2, recovery_powerups: int, recovery_bombs: int) -> void:
 	if phase != Phase.PLAYING or not pending_death.is_empty():
 		return
+	_cancel_bomb()
 	pending_death = {"position": location, "powerups": recovery_powerups, "bombs": recovery_bombs, "pilot": run.current_pilot_id}
 	_queue_resolution()
 
@@ -370,17 +382,59 @@ func _spawn_pickup(scene: PackedScene, location: Vector2) -> Pickup:
 	items.add_child(pickup)
 	return pickup
 
-func _bomb() -> void:
-	if phase != Phase.PLAYING or user_paused or not run.current_sortie.spend_bomb():
+func can_use_bomb() -> bool:
+	return phase == Phase.PLAYING and not user_paused and not bomb_pending and bomb_cooldown_left <= 0.0 and is_instance_valid(player) and not player.death_reported and run.current_sortie.hp > 0 and run.current_sortie.bombs > 0
+
+func _bomb() -> bool:
+	if not can_use_bomb() or not run.current_sortie.spend_bomb():
+		return false
+	bomb_pending = true
+	bomb_delay_left = rules.bomb_activation_delay
+	bomb_cooldown_left = rules.bomb_cooldown
+	%BombFlash.modulate.a = 0.04
+	if bomb_delay_left <= 0.0:
+		_detonate_bomb()
+	_update_hud()
+	return true
+
+func _advance_bomb(delta: float) -> void:
+	bomb_cooldown_left = maxf(0.0, bomb_cooldown_left - delta)
+	if is_zero_approx(bomb_cooldown_left):
+		bomb_cooldown_left = 0.0
+	if not bomb_pending:
 		return
+	if not is_instance_valid(player) or player.death_reported:
+		_cancel_bomb()
+		return
+	bomb_delay_left = maxf(0.0, bomb_delay_left - delta)
+	%BombFlash.modulate.a = lerpf(0.04, 0.14, 1.0 - bomb_delay_left / maxf(rules.bomb_activation_delay, 0.001))
+	if is_zero_approx(bomb_delay_left):
+		_detonate_bomb()
+
+func _cancel_bomb() -> void:
+	bomb_pending = false
+	bomb_delay_left = 0.0
+	if bomb_flash_tween != null and bomb_flash_tween.is_valid():
+		bomb_flash_tween.kill()
+	%BombFlash.modulate.a = 0.0
+
+func _detonate_bomb() -> void:
+	if not bomb_pending or not is_instance_valid(player) or player.death_reported:
+		_cancel_bomb()
+		return
+	bomb_pending = false
+	bomb_delay_left = 0.0
 	player.grant_invincibility(rules.bomb_invincibility)
 	for actor in actors.get_children():
 		if actor is EnemyShip and view_bounds.has_point(actor.global_position):
 			actor.take_damage(rules.bomb_damage)
 	if rules.bomb_clears_bullets:
 		_clear_projectiles(false)
+	if bomb_flash_tween != null and bomb_flash_tween.is_valid():
+		bomb_flash_tween.kill()
 	%BombFlash.modulate.a = 0.65
-	create_tween().tween_property(%BombFlash, "modulate:a", 0.0, 0.4)
+	bomb_flash_tween = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_STOP)
+	bomb_flash_tween.tween_property(%BombFlash, "modulate:a", 0.0, 0.4)
 
 func _clear_projectiles(include_friendly: bool) -> void:
 	for bullet in projectiles.get_children():

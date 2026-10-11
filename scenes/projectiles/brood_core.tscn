@@ -5,6 +5,7 @@
 [sub_resource type="CircleShape2D" id="Shape"]
 radius = 14.0
 [node name="BroodCore" type="Area2D"]
+scale = Vector2(1.2, 1.2)
 collision_layer = 8
 monitorable = false
 script = ExtResource("Script")
