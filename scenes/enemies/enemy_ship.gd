@@ -1,12 +1,15 @@
 class_name EnemyShip
 extends Area2D
 
+const HIT_FLASH_SHADER: Shader = preload("res://scenes/enemies/hit_flash.gdshader")
+
 signal destroyed(enemy: EnemyShip)
 signal damaged(enemy: EnemyShip)
 signal health_changed(current: float, maximum: int)
 
 @export_range(1, 2000) var maximum_hp: int = 3
 @export_range(0, 10) var contact_damage: int = 1
+@export_range(0.0, 1.0, 0.01) var hit_flash_seconds: float = 0.08
 @export_range(0.0, 1000.0, 10.0) var despawn_margin: float = 320.0
 @export var death_animation: StringName = &""
 @export_range(0.0, 5.0, 0.05) var death_animation_seconds: float = 0.0
@@ -21,11 +24,19 @@ var bounds: Rect2
 var phase_two: bool = false
 var dying: bool = false
 var death_left: float = 0.0
+var _hit_flash_left: float = 0.0
+var _hit_flash_material: ShaderMaterial
 @onready var movement: EnemyMovement = $Movement
 @onready var shooter: EnemyShooter = get_node_or_null("Shooter") as EnemyShooter
 
 func _ready() -> void:
 	hp = maximum_hp
+	_hit_flash_material = ShaderMaterial.new()
+	_hit_flash_material.shader = HIT_FLASH_SHADER
+	for visual_name in ["Visual", "Core"]:
+		var visual := get_node_or_null(visual_name) as CanvasItem
+		if visual != null:
+			visual.material = _hit_flash_material
 
 func apply_attack_sequence(sequence: AttackSequence) -> void:
 	if sequence == null:
@@ -42,6 +53,10 @@ func apply_attack_sequence(sequence: AttackSequence) -> void:
 			shooter = emitter
 
 func _physics_process(delta: float) -> void:
+	if _hit_flash_left > 0.0:
+		_hit_flash_left = maxf(0.0, _hit_flash_left - delta)
+		if _hit_flash_left == 0.0:
+			_hit_flash_material.set_shader_parameter("flash_amount", 0.0)
 	if dying:
 		death_left -= delta
 		if death_left <= 0.0:
@@ -56,6 +71,8 @@ func take_damage(amount: float) -> void:
 	hp = maxf(0.0, hp - amount)
 	health_changed.emit(hp, maximum_hp)
 	if hp < previous_hp:
+		_hit_flash_left = hit_flash_seconds
+		_hit_flash_material.set_shader_parameter("flash_amount", 1.0 if _hit_flash_left > 0.0 else 0.0)
 		damaged.emit(self)
 	if is_boss and not phase_two and float(hp) / maximum_hp <= phase_threshold:
 		phase_two = true
