@@ -930,7 +930,7 @@ func _test_stage() -> void:
 	await frames(3)
 	check(stage.phase == StageController.Phase.PLAYER_DYING, "Lethal hit enters death presentation")
 	check((stage.roster.cards[0].get_node("Portrait") as TextureRect).texture == content.pilots[0].dead, "Lethal player hit shows the dead Flight Crew portrait")
-	check(stage.items.get_child_count() == item_count + 4, "Death drops two power-ups and two unspent bombs")
+	check(stage.items.get_child_count() == item_count + 2, "Death drops one fewer power-up and bomb than the pre-hit stocks")
 	var death_powerups := 0
 	var death_bombs := 0
 	var recovery_power: Pickup
@@ -945,7 +945,7 @@ func _test_stage() -> void:
 			death_bombs += 1
 			if recovery_bomb == null:
 				recovery_bomb = dropped
-	check(death_powerups == 2 and death_bombs == 2, "Death recovery items contain the correct power and bomb types")
+	check(death_powerups == 1 and death_bombs == 1, "LV3 with two bombs drops one power-up and one bomb")
 	await capture("06_death")
 	stage.phase_left = 0
 	await frames(3)
@@ -977,7 +977,7 @@ func _test_stage() -> void:
 	stage.player.invincibility = 0
 	stage.player.take_damage()
 	await frames(3)
-	check(stage.items.get_child_count() == item_count + 2, "Death at LV1 with zero bombs still drops one of each recovery item")
+	check(stage.items.get_child_count() == item_count, "Death at LV1 with zero bombs creates no recovery items")
 	stage.queue_free()
 	await frames()
 
@@ -1036,28 +1036,28 @@ func _test_combat_layout() -> void:
 	check(stage.roster.get_global_rect().end.x < stage.rules.playfield.position.x, "Combat roster stays left of the playable arena")
 	check(card.get_node("OnSortie").visible and not card.get_node("Portrait").visible, "Active pilot slot shows the sortie artwork")
 	check(hud.get_node("ActivePilot/ActivePortrait").texture == content.pilots[0].normal, "Cockpit initially shows the active pilot")
-	check(hud.bomb_slots.size() == 4 and hud.bomb_slots[0].texture == hud.bomb_ready and hud.bomb_slots[1].texture == hud.bomb_on and hud.bomb_slots[2].texture == hud.bomb_off and hud.bomb_slots[3].texture == hud.bomb_off, "Four bomb slots initially show two filled stocks and two empty stocks")
+	check(hud.bomb_slots.size() == 4 and hud.bomb_slots[0].texture == hud.bomb_off and hud.bomb_slots[1].texture == hud.bomb_off and hud.bomb_slots[2].texture == hud.bomb_ready and hud.bomb_slots[3].texture == hud.bomb_on, "Starting bombs occupy the rightmost two slots and highlight the next bomb to spend")
 	var first_wave := stage.waves.get_node("Wave01_Z1") as EnemyWave
 	var first_activation := first_wave.global_position.x - stage.rules.playfield.end.x - stage.activation_margin
 	check(is_equal_approx(first_activation / stage.scroll_speed, 1.0), "Moving the arena preserves the first wave's one-second arrival")
 	# Existing keyboard actions and the console buttons share the same state.
 	hud.get_node("BombButton").pressed.emit()
 	await frames(2)
-	check(stage.run.current_sortie.bombs == 1 and hud.get_node("BombButton/BombTwo").texture == hud.bomb_off, "Bomb console spends one bomb and switches off the second indicator")
+	check(stage.run.current_sortie.bombs == 1 and hud.bomb_slots[2].texture == hud.bomb_off and hud.bomb_slots[3].texture == hud.bomb_ready, "Bomb console empties the leftmost filled slot and highlights the remaining bomb")
 	stage.run.current_sortie.collect(Pickup.Kind.BOMB, 3)
 	stage.run.current_sortie.collect(Pickup.Kind.BOMB, 3)
 	await frames(2)
-	check(stage.run.current_sortie.bombs == 3 and hud.bomb_slots[2].texture == hud.bomb_on and hud.bomb_slots[3].texture == hud.bomb_off, "A third bomb fills the third slot and leaves the fourth empty")
+	check(stage.run.current_sortie.bombs == 3 and hud.bomb_slots[0].texture == hud.bomb_off and hud.bomb_slots[1].texture == hud.bomb_ready and hud.bomb_slots[2].texture == hud.bomb_on and hud.bomb_slots[3].texture == hud.bomb_on, "Bomb pickups refill slots toward the left and highlight the next bomb to spend")
 	stage.run.current_sortie.collect(Pickup.Kind.BOMB, 3)
 	await frames(2)
-	check(stage.run.current_sortie.bombs == 4 and hud.bomb_slots[3].texture == hud.bomb_on, "A fourth bomb fills all four console slots")
+	check(stage.run.current_sortie.bombs == 4 and hud.bomb_slots[0].texture == hud.bomb_ready and hud.bomb_slots[3].texture == hud.bomb_on, "A fourth bomb fills all four console slots")
 	await capture("04_combat_bombs_full")
 	stage.run.current_sortie.collect(Pickup.Kind.BOMB, 3)
 	await frames(2)
 	check(stage.run.current_sortie.bombs == 4 and hud.bomb_slots[3].texture == hud.bomb_on, "An extra bomb pickup keeps the full console at four")
 	hud.get_node("BombButton").pressed.emit()
 	await frames(2)
-	check(stage.run.current_sortie.bombs == 3 and hud.bomb_slots[2].texture == hud.bomb_on and hud.bomb_slots[3].texture == hud.bomb_off, "Spending from full stock turns off only the fourth slot")
+	check(stage.run.current_sortie.bombs == 3 and hud.bomb_slots[0].texture == hud.bomb_off and hud.bomb_slots[1].texture == hud.bomb_ready and hud.bomb_slots[2].texture == hud.bomb_on and hud.bomb_slots[3].texture == hud.bomb_on, "Spending from full stock turns off the first slot and advances the ready indicator")
 	hud.get_node("WeaponChange").pressed.emit()
 	await frames(2)
 	check(stage.run.current_sortie.active_weapon == SortieState.WeaponType.SPREAD and hud.get_node("WeaponBox/WeaponOne").texture == hud.spread_icon, "Change console selects the spread weapon and updates its icon")

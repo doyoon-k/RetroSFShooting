@@ -63,7 +63,7 @@ func take_damage(amount: int = 1) -> void:
 	grant_invincibility(rules.hit_invincibility)
 	if state.hp == 0:
 		death_reported = true
-		died.emit(global_position, maxi(1, powerups_before_hit), maxi(1, bombs_before_hit))
+		died.emit(global_position, maxi(0, powerups_before_hit - 1), maxi(0, bombs_before_hit - 1))
 
 func collect(kind: int) -> void:
 	if state != null and state.hp > 0:
