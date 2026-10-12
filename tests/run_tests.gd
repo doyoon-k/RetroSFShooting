@@ -40,6 +40,7 @@ func _run() -> void:
 	await _test_attack_fairness()
 	await _test_redesigned_encounters()
 	await _test_fleet_patterns()
+	await _test_curtain_motion()
 	_test_input_map()
 	await _test_proximity_damage()
 	await _test_enemy_hit_effect()
@@ -72,7 +73,8 @@ func _test_fleet_patterns() -> void:
 		check(shots.size() > 8, "Blockade covers both sides of its corridor")
 		for shot in shots:
 			check(absf(shot.position.y - gap) >= curtain.corridor_width * 0.5, "Curtain leaves its authored corridor open")
-		check(absf(gap - last_gap) / 460.0 < curtain.volley_interval - 0.2, "Slow pilot can move between successive stationary blockade corridors")
+		var sway_allowance := curtain.sway_for_volley(volley) + curtain.sway_for_volley(volley - 1)
+		check((absf(gap - last_gap) + sway_allowance) / 460.0 < curtain.volley_interval - 0.2, "Slow pilot can change curtain corridors even at the sway extremes")
 		last_gap = gap
 	var container := Node2D.new()
 	root.add_child(container)
@@ -105,6 +107,67 @@ func _test_fleet_patterns() -> void:
 	await frames()
 	check(stage.projectiles.get_child_count() == 0, "Clearing a brood core cancels pending offspring")
 	stage.queue_free()
+	await frames()
+
+func _test_curtain_motion() -> void:
+	var arena := Rect2(440, 24, 1464, 952)
+	var bullets := Node2D.new()
+	var shooter := EnemyShooter.new()
+	shooter.bounds = arena
+	shooter.position = Vector2(1600, 500)
+	shooter.projectiles = bullets
+	root.add_child(bullets)
+	root.add_child(shooter)
+	shooter.set_physics_process(false)
+	for name in ["siege_curtain", "command_curtain"]:
+		var pattern := load("res://data/patterns/" + name + ".tres") as AttackPattern
+		for volley in pattern.volley_count:
+			shooter.volley = volley
+			shooter._fire_volley(pattern, PI)
+			var moving := volley == 1
+			var top := INF
+			var bottom := -INF
+			for bullet: CurtainBullet in bullets.get_children():
+				bullet.set_physics_process(false)
+				check((bullet.sway_amplitude > 0.0) == moving, "Only the second curtain wall moves: " + name)
+				var origin := bullet.global_position
+				# Wide horizontal bounds let the test observe a complete six-second cycle.
+				bullet.bounds = Rect2(-10000, arena.position.y, 20000, arena.size.y)
+				for phase in 4:
+					bullet._physics_process(1.5)
+					var expected_y: float = origin.y + ([72.0, 0.0, -72.0, 0.0][phase] if moving else 0.0)
+					check(absf(bullet.global_position.y - expected_y) < 0.01 and absf(bullet.global_position.x - (origin.x - 450.0 * (phase + 1))) < 0.01, "Curtain rows retain their spacing and horizontal speed through a full sway cycle")
+					check(not bullet.is_queued_for_deletion(), "Guard row survives its offscreen vertical excursion")
+				top = minf(top, origin.y)
+				bottom = maxf(bottom, origin.y)
+				bullet.free()
+			if moving:
+				check(top < arena.position.y and bottom > arena.end.y, "Moving wall continues beyond both arena edges")
+	var pattern := load("res://data/patterns/siege_curtain.tres") as AttackPattern
+	var step := PatternStep.new()
+	step.pattern = pattern
+	shooter.set_sequence([step])
+	shooter.timer = 0.0
+	shooter._physics_process(0.01)
+	shooter._physics_process(shooter.telegraph_seconds)
+	var first_count := bullets.get_child_count()
+	for bullet in bullets.get_children(): bullet.set_physics_process(false)
+	shooter._physics_process(pattern.volley_interval - shooter.telegraph_seconds - 0.01)
+	check(not shooter.warning, "Later curtain preview waits until the last 0.35 seconds of the interval")
+	shooter._physics_process(0.02)
+	check(shooter.warning and bullets.get_child_count() == first_count, "Second wall is previewed without firing early")
+	shooter._physics_process(shooter.telegraph_seconds)
+	check(shooter.volley == 2 and bullets.get_child_count() > first_count, "Preview preserves the existing curtain firing interval")
+	for bullet in bullets.get_children(): bullet.set_physics_process(false)
+	var moving := bullets.get_child(first_count) as CurtainBullet
+	moving.set_physics_process(true)
+	var before_pause := moving.global_position
+	paused = true
+	await frames(5)
+	check(moving.global_position == before_pause and is_zero_approx(moving.age), "Pause freezes curtain flight and sway together")
+	paused = false
+	bullets.queue_free()
+	shooter.queue_free()
 	await frames()
 
 func _test_attack_fairness() -> void:
@@ -338,7 +401,7 @@ func _test_enemy_profiles() -> void:
 	check(sine != null and aimed != null and aimed.steps.size() == 1, "Movement and attack presets load as editable resources")
 	var planned_enemies := {
 		"z1_wedge": 2, "z2_spine": 2, "z3_eye": 3, "z4_crescent": 2, "z5_chain": 3,
-		"n1_interceptor": 26, "n2_crawler": 30, "n3_claw": 40, "n4_armor": 46, "n5_tendril": 32,
+		"n1_interceptor": 12, "n2_crawler": 16, "n3_claw": 20, "n4_armor": 22, "n5_tendril": 16,
 		"m1_carapace": 360, "m2_wing": 330, "m3_star_eye": 390,
 	}
 	for enemy_name in planned_enemies:
@@ -483,7 +546,7 @@ func _test_input_map() -> void:
 	var old_switch_key := InputEventKey.new()
 	old_switch_key.physical_keycode = KEY_C
 	check(not InputMap.event_is_action(old_switch_key, "switch_weapon"), "Old C key no longer switches weapons")
-	for entry in [[KEY_LEFT, "move_left"], [KEY_RIGHT, "move_right"], [KEY_UP, "move_up"], [KEY_DOWN, "move_down"], [KEY_ESCAPE, "pause"], [KEY_SPACE, "story_advance"], [KEY_W, "ui_up"], [KEY_D, "ui_right"], [KEY_K, "switch_weapon"]]:
+	for entry in [[KEY_LEFT, "move_left"], [KEY_RIGHT, "move_right"], [KEY_UP, "move_up"], [KEY_DOWN, "move_down"], [KEY_ESCAPE, "pause"], [KEY_SPACE, "story_advance"], [KEY_W, "ui_up"], [KEY_D, "ui_right"], [KEY_J, "switch_weapon"], [KEY_K, "shoot"], [KEY_L, "bomb"]]:
 		var event := InputEventKey.new()
 		event.physical_keycode = entry[0]
 		check(InputMap.event_is_action(event, entry[1]), "Expected physical key is mapped to " + entry[1])

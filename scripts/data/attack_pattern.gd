@@ -23,6 +23,14 @@ enum Shape { FAN, RING, CURTAIN }
 @export_range(0.15, 0.85, 0.01) var corridor_center: float = 0.5
 @export_range(0.0, 0.3, 0.01) var corridor_shift: float = 0.18
 @export_range(100.0, 400.0, 5.0) var corridor_width: float = 180.0
+@export_group("Curtain motion")
+## Zero-based volley; -1 keeps every wall stationary.
+@export_range(-1, 99) var curtain_sway_volley: int = -1
+@export_range(0.0, 120.0, 1.0) var curtain_sway_amplitude: float = 0.0
+@export_range(2.0, 12.0, 0.1) var curtain_sway_period: float = 6.0
+
+func sway_for_volley(volley: int) -> float:
+	return curtain_sway_amplitude if shape == Shape.CURTAIN and volley == curtain_sway_volley else 0.0
 
 func corridor_y(arena: Rect2, volley: int) -> float:
 	return arena.position.y + arena.size.y * clampf(corridor_center + sin(volley * PI * 0.5) * corridor_shift, 0.15, 0.85)
@@ -31,8 +39,12 @@ func shots_for_volley(origin: Vector2, arena: Rect2, angle: float, volley: int) 
 	var shots: Array[Dictionary] = []
 	if shape == Shape.CURTAIN:
 		var gap := corridor_y(arena, volley)
-		for index in bullet_count:
-			var y := arena.position.y + 45.0 + (arena.size.y - 90.0) * index / maxi(1, bullet_count - 1)
+		var sway := sway_for_volley(volley)
+		var spacing := (arena.size.y - 90.0) / maxi(1, bullet_count - 1)
+		# Continue moving rows past the edges, so only the authored corridor opens.
+		var guard_rows := ceili(sway / maxf(spacing, 1.0))
+		for index in range(-guard_rows, bullet_count + guard_rows):
+			var y := arena.position.y + 45.0 + spacing * index
 			if absf(y - gap) < corridor_width * 0.5: continue
 			shots.append({"position": Vector2(origin.x, y), "angle": angle})
 	else:

@@ -52,14 +52,14 @@ stretch_mode = 6
 
 [node name="BombButton" type="TextureButton" parent="."]
 layout_mode = 0
-offset_left = 480
+offset_left = 980
 offset_top = 937
-offset_right = 809
+offset_right = 1309
 offset_bottom = 1078
 mouse_filter = 0
 unique_name_in_owner = true
 focus_mode = 0
-tooltip_text = "폭탄 / H · 게임패드 B"
+tooltip_text = "폭탄 / L · 게임패드 B"
 texture_normal = ExtResource("BombBox")
 texture_disabled = ExtResource("BombBox")
 ignore_texture_size = true
@@ -115,9 +115,9 @@ unique_name_in_owner = true
 
 [node name="BombKey" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 817
+offset_left = 1305
 offset_top = 994
-offset_right = 895
+offset_right = 1383
 offset_bottom = 1076
 mouse_filter = 2
 texture = ExtResource("Button")
@@ -131,16 +131,16 @@ offset_top = 0
 offset_right = 78
 offset_bottom = 82
 mouse_filter = 2
-text = "H"
+text = "L"
 theme_override_font_sizes/font_size = 26
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="WeaponBox" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 936
+offset_left = 722
 offset_top = 941
-offset_right = 1075
+offset_right = 861
 offset_bottom = 1073
 mouse_filter = 2
 texture = ExtResource("WeaponBox")
@@ -186,9 +186,9 @@ horizontal_alignment = 1
 
 [node name="ShootKey" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 1091
+offset_left = 865
 offset_top = 994
-offset_right = 1169
+offset_right = 943
 offset_bottom = 1076
 mouse_filter = 2
 texture = ExtResource("Button")
@@ -202,21 +202,21 @@ offset_top = 0
 offset_right = 78
 offset_bottom = 82
 mouse_filter = 2
-text = "J"
+text = "K"
 theme_override_font_sizes/font_size = 26
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="WeaponChange" type="TextureButton" parent="."]
 layout_mode = 0
-offset_left = 1178
+offset_left = 490
 offset_top = 941
-offset_right = 1317
+offset_right = 629
 offset_bottom = 1073
 mouse_filter = 0
 unique_name_in_owner = true
 focus_mode = 0
-tooltip_text = "무기 변경 / K · 게임패드 Y"
+tooltip_text = "무기 변경 / J · 게임패드 Y"
 texture_normal = ExtResource("WeaponBox")
 texture_disabled = ExtResource("WeaponBox")
 ignore_texture_size = true
@@ -235,9 +235,9 @@ stretch_mode = 5
 
 [node name="ChangeKey" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 1330
+offset_left = 635
 offset_top = 994
-offset_right = 1408
+offset_right = 713
 offset_bottom = 1076
 mouse_filter = 2
 texture = ExtResource("Button")
@@ -251,7 +251,7 @@ offset_top = 0
 offset_right = 78
 offset_bottom = 82
 mouse_filter = 2
-text = "K"
+text = "J"
 theme_override_font_sizes/font_size = 26
 horizontal_alignment = 1
 vertical_alignment = 1

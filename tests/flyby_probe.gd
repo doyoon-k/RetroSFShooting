@@ -5,7 +5,7 @@ func _initialize() -> void:
 
 func run() -> void:
 	var report: Array[Dictionary] = []
-	var old_hp := {"n1_interceptor": 52, "n2_crawler": 60, "n5_tendril": 64}
+	var old_hp := {"n1_interceptor": 26, "n2_crawler": 30, "n5_tendril": 32}
 	for baseline in [true, false]:
 		for enemy_name in old_hp:
 			for weapon in [0, 1]:

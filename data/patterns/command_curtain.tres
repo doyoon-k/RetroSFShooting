@@ -14,3 +14,6 @@ recovery = 1.05
 corridor_center = 0.5
 corridor_shift = 0.2
 corridor_width = 160.0
+curtain_sway_volley = 1
+curtain_sway_amplitude = 72.0
+curtain_sway_period = 6.0

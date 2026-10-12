@@ -47,6 +47,14 @@ func _physics_process(delta: float) -> void:
 		queue_redraw()
 		return
 	timer -= delta
+	# Preview later curtain rows during their existing interval, without delaying
+	# the burst. The second wall also shows that it will move vertically.
+	if not starting and volley > 0 and steps[step_index] != null and steps[step_index].pattern != null:
+		if steps[step_index].pattern.shape == AttackPattern.Shape.CURTAIN:
+			var next_warning := timer > 0.0 and timer <= telegraph_seconds
+			if next_warning != warning:
+				warning = next_warning
+				queue_redraw()
 	if warning:
 		queue_redraw()
 	if timer > 0.0:
@@ -109,11 +117,19 @@ func _draw() -> void:
 		draw_arc(Vector2.ZERO, lerpf(22.0, 8.0, progress), 0.0, TAU, 24, tint, 2.5)
 		draw_line(forward * 12.0, forward * 36.0, tint, 2.0)
 		if pattern.shape == AttackPattern.Shape.CURTAIN:
-			# Show the actual remote emitter positions before the first wall.
-			for shot in pattern.shots_for_volley(global_position, bounds, locked_angle, 0):
+			# Show the upcoming wall's actual remote emitter positions.
+			for shot in pattern.shots_for_volley(global_position, bounds, locked_angle, volley):
+				if not bounds.grow(-16.0).has_point(shot.position): continue
 				var point := to_local(shot.position)
 				draw_circle(point, 5.0, tint)
 				draw_line(point, point + Vector2.LEFT * 18.0, tint, 2.0)
+				if pattern.sway_for_volley(volley) > 0.0:
+					for side in [-1.0, 1.0]:
+						var tip: Vector2 = shot.position + Vector2(0, side * 22)
+						draw_polyline(PackedVector2Array([
+							to_local(tip + Vector2(-6, -side * 7)), to_local(tip),
+							to_local(tip + Vector2(6, -side * 7))
+						]), tint, 1.5)
 		else:
 			for offset in pattern.muzzle_offsets:
 				draw_arc(to_local(global_position + offset), 8.0, 0.0, TAU, 16, tint, 2.0)
@@ -130,12 +146,22 @@ func _fire_volley(pattern: AttackPattern, angle: float) -> void:
 		return
 	volleys_fired += 1
 	for shot in pattern.shots_for_volley(global_position, bounds, angle, volley):
-		# A remote muzzle outside the arena never fires inward without a cue.
-		if not bounds.grow(-16.0).has_point(shot.position): continue
+		# Only a curtain's edge continuation may start above/below the arena.
+		# Its x emitter must still be visible, and can_fire gates the whole burst.
+		var sway := pattern.sway_for_volley(volley)
+		var spawn_bounds := bounds.grow(-16.0)
+		if sway > 0.0:
+			spawn_bounds.position.y = bounds.position.y - sway
+			spawn_bounds.size.y = bounds.size.y + sway * 2.0
+		if not spawn_bounds.has_point(shot.position): continue
 		var bullet := pattern.projectile_scene.instantiate() as Projectile
 		bullet.direction = Vector2.from_angle(shot.angle)
 		bullet.bounds = bounds
 		bullet.position = projectiles.to_local(shot.position)
+		if bullet is CurtainBullet:
+			bullet.sway_amplitude = sway
+			bullet.sway_period = pattern.curtain_sway_period
+			bullet.despawn_margin = maxf(bullet.despawn_margin, sway)
 		if target_provider.is_valid():
 			bullet.target = target_provider.call()
 		projectiles.add_child(bullet)

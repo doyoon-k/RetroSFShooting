@@ -31,13 +31,16 @@ def main():
     for row in rows:
         if not row["defeated"]:
             failures.append(f"Timed out: {row}")
-        if row["power"] != 3 or not row["enemy"].startswith("n"):
+        if not row["enemy"].startswith("n"):
             continue
-        lower, upper = (1.5, 2.5) if row["enemy"] in ("n3_claw", "n4_armor") else (0.9, 1.6)
         seconds = row["seconds_to_kill"]
-        if seconds is None or not lower <= seconds <= upper:
+        # Full-clear routing now takes priority over guaranteeing an enemy burst.
+        # LV1 straight must leave time to change lanes; LV3 can interrupt attacks.
+        upper = 2.2 if row["enemy"] in ("n3_claw", "n4_armor") else 1.5
+        check_budget = row["power"] == 3 or row["weapon"] == "straight"
+        if check_budget and (seconds is None or not 0.0 < seconds <= upper):
             failures.append(f"Role TTK missed: {row}")
-        print(f'{row["enemy"]} / {row["weapon"]}: {seconds}s, {row["bursts_completed"]} completed bursts')
+        print(f'{row["enemy"]} / {row["weapon"]} LV{row["power"]}: {seconds}s')
     if failures:
         raise SystemExit("\n".join(failures))
     print("Durability targets: PASS. Stationary invincible trials; not survival validation.")

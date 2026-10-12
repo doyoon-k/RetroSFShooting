@@ -253,6 +253,7 @@ Enemy Lab의 `Scene default`로 M2/M1/M3/Boss를 선택하면 각각 쌍익 교�
 
 - `AttackPattern > Muzzle Offsets`: 발사점을 분리합니다. 단위는 **월드 px**이므로 적 스프라이트의 2배 스케일을 다시 곱하지 않습니다.
 - `Shape = CURTAIN`: 화면 높이에 탄을 배치합니다. `Corridor Center/Shift/Width`는 통로의 위치·이동 폭·폭(px)입니다. 고정 수평 발사(`Aim=FIXED`, 각도180°)로 사용합니다. `Bullet Count`는 통로를 비우기 전 후보 탄 수입니다.
+- `Curtain Motion`: `Curtain Sway Volley`는 0부터 세는 회차입니다(1=두 번째 벽, -1=모두 고정). `Amplitude`는 상하 진폭(px), `Period`는 한 주기의 초입니다. 기본 봉쇄 패턴 두 종류는 두 번째 벽만 ±72px/6초로 움직입니다. `siege_bullet.tscn`의 `CurtainBullet`이 탄열 전체에 같은 이동량을 적용하며, 움직이는 벽은 화면 끝에 추가 탄을 배치하고 상하 표시를 보여줍니다. 발사 전 예고는 각 벽의 기존 발사 간격 안에서 표시됩니다.
 - `brood_core.tscn`: 300px/s로 0.85초 이동, 0.65초 정지 예고 후 120°에 7발을 발사합니다. `Travel Seconds`, `Incubation Seconds`, `Child Count`, `Child Spread`를 수정할 수 있습니다. `Child Scene`은 보통 탄만 허용하며 부화탄의 재귀 생성을 막습니다.
 - 부모 탄을 폭탄/탄 소거로 제거하면 부화가 취소됩니다. 부모 탄이 부화 전에 플레이어에 충돌한 경우도 자식 탄을 만들지 않습니다.
 - 보스 단계는 `EnemyShip > Second Phase`에서 변경합니다. 기본은 HP 50%에서 부화탄→기함 봉쇄벽→재조준 연사로 전환합니다.

@@ -153,4 +153,4 @@ text = "PLAYER"
 
 [node name="Help" type="Label" parent="Canvas/Panel/Controls"]
 layout_mode = 2
-text = "F6: run this scene\nWASD: move    J: shoot\nH: switch weapon\nEnemies respawn after leaving\nClear stops respawning\nPick a preset, then Spawn / Retry"
+text = "F6: run this scene\nWASD: move    K: shoot\nJ: switch weapon\nEnemies respawn after leaving\nClear stops respawning\nPick a preset, then Spawn / Retry"
