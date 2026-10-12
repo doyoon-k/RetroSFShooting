@@ -3,7 +3,7 @@ extends Resource
 ## Describes an attack, never stores an emitter's timer or target.
 
 enum Aim { FIXED, LOCK_ON_START, TRACK_EACH_VOLLEY }
-enum Shape { FAN, RING, CURTAIN }
+enum Shape { FAN, RING, CURTAIN, RICOCHET }
 
 @export var display_name: String = "Aimed shot"
 @export var projectile_scene: PackedScene
@@ -17,12 +17,19 @@ enum Shape { FAN, RING, CURTAIN }
 @export_range(0.02, 10.0, 0.01) var volley_interval: float = 0.2
 @export_range(-180.0, 180.0, 1.0) var rotation_per_volley: float = 0.0
 @export_range(0.05, 20.0, 0.05) var recovery: float = 1.5
+## -1 uses the emitter's default. Recovery starts after family clearance when enabled.
+@export_range(-1.0, 2.0, 0.05) var telegraph_seconds: float = -1.0
+@export var wait_for_clear: bool = false
 @export_group("Fleet geometry")
 ## World-pixel offsets: independent of the ship's visual scale.
 @export var muzzle_offsets: Array[Vector2] = [Vector2.ZERO]
 @export_range(0.15, 0.85, 0.01) var corridor_center: float = 0.5
 @export_range(0.0, 0.3, 0.01) var corridor_shift: float = 0.18
 @export_range(100.0, 400.0, 5.0) var corridor_width: float = 180.0
+@export_group("Curtain routes")
+## Each route stores one normalized corridor height per volley.
+## Empty keeps the legacy center/shift layout. Emitters select a route per burst.
+@export var corridor_routes: Array[PackedFloat32Array] = []
 @export_group("Curtain motion")
 ## Zero-based volley; -1 keeps every wall stationary.
 @export_range(-1, 99) var curtain_sway_volley: int = -1
@@ -32,13 +39,17 @@ enum Shape { FAN, RING, CURTAIN }
 func sway_for_volley(volley: int) -> float:
 	return curtain_sway_amplitude if shape == Shape.CURTAIN and volley == curtain_sway_volley else 0.0
 
-func corridor_y(arena: Rect2, volley: int) -> float:
+func corridor_y(arena: Rect2, volley: int, route_index: int = 0) -> float:
+	if not corridor_routes.is_empty():
+		var route := corridor_routes[clampi(route_index, 0, corridor_routes.size() - 1)]
+		if not route.is_empty():
+			return arena.position.y + arena.size.y * clampf(route[clampi(volley, 0, route.size() - 1)], 0.15, 0.85)
 	return arena.position.y + arena.size.y * clampf(corridor_center + sin(volley * PI * 0.5) * corridor_shift, 0.15, 0.85)
 
-func shots_for_volley(origin: Vector2, arena: Rect2, angle: float, volley: int) -> Array[Dictionary]:
+func shots_for_volley(origin: Vector2, arena: Rect2, angle: float, volley: int, route_index: int = 0) -> Array[Dictionary]:
 	var shots: Array[Dictionary] = []
 	if shape == Shape.CURTAIN:
-		var gap := corridor_y(arena, volley)
+		var gap := corridor_y(arena, volley, route_index)
 		var sway := sway_for_volley(volley)
 		var spacing := (arena.size.y - 90.0) / maxi(1, bullet_count - 1)
 		# Continue moving rows past the edges, so only the authored corridor opens.

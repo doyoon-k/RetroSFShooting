@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 [ext_resource type="PackedScene" path="res://scenes/projectiles/enemy_bullet.tscn" id="Base"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Projectile/Projectile_C.png" id="BulletTexture"]
 [node name="Projectile" instance=ExtResource("Base")]
 speed = 420.0
-[node name="Visual" parent="." index="1"]
-color = Color(1, 0.72, 0.32, 1)
+[node name="Visual" parent="." index="0"]
+scale = Vector2(0.50980395, 0.50980395)
+texture = ExtResource("BulletTexture")

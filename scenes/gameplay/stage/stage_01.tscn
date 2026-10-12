@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://mfi362jrfrvm"]
+[gd_scene load_steps=39 format=3 uid="uid://mfi362jrfrvm"]
 
 [ext_resource type="Texture2D" uid="uid://bbjgaohud1ikn" path="res://assets/Pilots_sprites/UI/Battle_Bg.png" id="BattleFrame"]
 [ext_resource type="PackedScene" path="res://scenes/items/bomb.tscn" id="bomb"]
@@ -26,7 +26,6 @@
 [ext_resource type="Script" path="res://scenes/gameplay/waves/wave_sequence.gd" id="Sequence"]
 [ext_resource type="PackedScene" path="res://scenes/items/shield.tscn" id="shield"]
 [ext_resource type="Resource" path="res://data/sequences/silent.tres" id="Silent"]
-[ext_resource type="Script" path="res://scenes/ui/starfield.gd" id="Stars"]
 [ext_resource type="Theme" uid="uid://wbownrqyfplv" path="res://scenes/ui/game_theme.tres" id="Theme"]
 [ext_resource type="Script" path="res://scenes/ui/typewriter_label.gd" id="Typewriter"]
 [ext_resource type="Script" path="res://scenes/gameplay/waves/wave.gd" id="Wave"]
@@ -41,9 +40,6 @@
 [ext_resource type="Resource" path="res://data/movement/strafe_low.tres" id="StrafeLow"]
 
 [ext_resource type="Resource" path="res://data/movement/strafe_center.tres" id="StrafeCenter"]
-
-[sub_resource type="StyleBoxFlat" id="PlayfieldBackground"]
-bg_color = Color(0.012, 0.018, 0.043, 1)
 
 [sub_resource type="ShaderMaterial" id="FrameMaterial"]
 shader = ExtResource("FrameShader")
@@ -64,20 +60,14 @@ position = Vector2(960, 540)
 [node name="Simulation" type="Node2D" parent="."]
 process_mode = 1
 
-[node name="Playfield" type="Panel" parent="Simulation"]
+[node name="Playfield" type="ColorRect" parent="Simulation"]
 unique_name_in_owner = true
 offset_left = 440.0
 offset_top = 24.0
 offset_right = 1904.0
 offset_bottom = 976.0
 mouse_filter = 2
-theme_override_styles/panel = SubResource("PlayfieldBackground")
-
-[node name="Background" type="Node2D" parent="Simulation"]
-position = Vector2(440, 24)
-script = ExtResource("Stars")
-field_size = Vector2(1464, 952)
-scroll_speed = 75.0
+color = Color(0, 0, 0, 1)
 
 [node name="StageGuide" type="Node2D" parent="Simulation"]
 script = ExtResource("Guide")
@@ -859,7 +849,6 @@ offset_left = 286.0
 offset_top = 36.0
 offset_right = 1012.0
 offset_bottom = 128.0
-theme_override_colors/font_color = Color(0.42745, 0.89804, 0.92941, 1)
 theme_override_font_sizes/font_size = 31
 autowrap_mode = 2
 
@@ -937,17 +926,6 @@ offset_right = 504.0
 offset_bottom = 108.0
 theme_override_font_sizes/font_size = 48
 text = "PAUSED"
-horizontal_alignment = 1
-
-[node name="PauseSubtitle" type="Label" parent="Interface/Root/PauseMenu"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 24.0
-offset_top = 130.0
-offset_right = 516.0
-offset_bottom = 178.0
-theme_override_font_sizes/font_size = 22
-text = "아직 우리의 항로는 끝나지 않았다."
 horizontal_alignment = 1
 
 [node name="Resume" type="Button" parent="Interface/Root/PauseMenu"]

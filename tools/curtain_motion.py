@@ -28,16 +28,17 @@ def main():
     directory.mkdir(parents=True, exist_ok=True)
     (directory / 'curtain_motion.log').write_text(log, encoding='utf-8')
     if result.returncode or re.search(r'SCRIPT ERROR|ERROR:|WARNING:', log):
-        raise SystemExit(log)
+        raise SystemExit(f'Curtain engine exit={result.returncode}; see {directory / "curtain_motion.log"}\n{result.stderr[:2000]}')
     report = next((json.loads(line) for line in result.stdout.splitlines() if line.startswith('{')), None)
-    if report is None or len(report['trials']) != 24:
+    if report is None or len(report['trials']) != 208:
         raise SystemExit('Curtain probe did not run every trial')
     failures = [trial for trial in report['trials'] if trial['hits'] or trial['move_speed'] != 460
                 or trial['walls_crossed'] != trial['expected_walls']
-                or trial['fired_walls'] != trial['expected_walls']]
+                or trial['fired_walls'] != trial['expected_walls']
+                or trial['selected_routes'] != trial['expected_routes']]
     if failures:
         raise SystemExit(f'Curtain route failures: {failures}')
-    print('Curtain routes: 24/24 no-hit (P2, 460px/s; isolated curtains)')
+    print('Curtain routes: 208/208 no-hit (P2, 460px/s; all four routes and consecutive pairs)')
 
 
 if __name__ == '__main__':

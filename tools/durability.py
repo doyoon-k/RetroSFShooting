@@ -36,7 +36,8 @@ def main():
         seconds = row["seconds_to_kill"]
         # Full-clear routing now takes priority over guaranteeing an enemy burst.
         # LV1 straight must leave time to change lanes; LV3 can interrupt attacks.
-        upper = 2.2 if row["enemy"] in ("n3_claw", "n4_armor") else 1.5
+        # Larger enemies/bullets use 50% more normal-enemy HP; keep lane-change room.
+        upper = 3.3 if row["enemy"] in ("n3_claw", "n4_armor") else 2.2
         check_budget = row["power"] == 3 or row["weapon"] == "straight"
         if check_budget and (seconds is None or not 0.0 < seconds <= upper):
             failures.append(f"Role TTK missed: {row}")

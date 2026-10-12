@@ -13,14 +13,9 @@ extends Node2D
 
 @onready var portrait: Sprite2D = $Portrait
 @onready var name_label: Label = $Name
-@onready var animation: AnimationPlayer = $AnimationPlayer
 
 func _ready() -> void:
 	_refresh()
-	if Engine.is_editor_hint() or pilot == null:
-		return
-	if animation.has_animation(pilot.hangar_animation):
-		animation.play(pilot.hangar_animation)
 
 func _refresh() -> void:
 	if not is_node_ready():

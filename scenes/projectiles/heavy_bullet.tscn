@@ -1,12 +1,13 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scenes/projectiles/projectile.gd" id="Script"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Projectile/Projectile_A.png" id="BulletTexture"]
 
 [sub_resource type="CircleShape2D" id="Shape"]
 radius = 10.0
 
 [node name="Projectile" type="Area2D"]
-scale = Vector2(1.2, 1.2)
+scale = Vector2(2.4, 2.4)
 script = ExtResource("Script")
 speed = 250.0
 homing_radians_per_second = 0
@@ -15,9 +16,10 @@ collision_mask = 1
 monitorable = false
 
 
-[node name="Visual" type="Polygon2D" parent="."]
-polygon = PackedVector2Array(-11, 0, 0, -11, 11, 0, 0, 11)
-color = Color(1.0, 0.93, 0.48, 1)
+[node name="Visual" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(0.42307693, 0.42307693)
+texture = ExtResource("BulletTexture")
 
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

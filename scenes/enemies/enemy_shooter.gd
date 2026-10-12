@@ -18,6 +18,11 @@ var starting: bool = true
 var warning: bool = false
 var volleys_fired: int = 0
 var bursts_completed: int = 0
+var curtain_route_index: int = -1
+var last_curtain_route: int = -1
+var ricochet_starts_above: bool = true
+var _burst_projectiles: Array[Projectile] = []
+var _waiting_for_clear := false
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
@@ -30,13 +35,27 @@ func set_sequence(sequence: Array[PatternStep]) -> void:
 	step_index = 0
 	repetition = 0
 	volley = 0
+	curtain_route_index = -1
 	starting = true
 	warning = false
 	queue_redraw()
-	timer = initial_delay
+	# A boss phase change must still wait for a pending bank shot's offspring.
+	timer = maxf(timer, initial_delay) if _waiting_for_clear else initial_delay
+	if not _waiting_for_clear: _burst_projectiles.clear()
 
 func _physics_process(delta: float) -> void:
 	if steps.is_empty() or not is_instance_valid(projectiles):
+		return
+	for index in range(_burst_projectiles.size() - 1, -1, -1):
+		if not is_instance_valid(_burst_projectiles[index]) or _burst_projectiles[index].is_queued_for_deletion():
+			_burst_projectiles.remove_at(index)
+	# Give the bank charge its own stage even if the preceding wall still travels.
+	if starting and steps[step_index] != null and steps[step_index].pattern != null:
+		if steps[step_index].pattern.shape == AttackPattern.Shape.RICOCHET and not _burst_projectiles.is_empty(): return
+	if _waiting_for_clear:
+		if not _burst_projectiles.is_empty(): return
+		_waiting_for_clear = false
+		# Preserve the complete counter window after the last hazard disappears.
 		return
 	if not can_fire():
 		# Re-enter with a readable warning, never release a stored burst off screen.
@@ -65,10 +84,11 @@ func _physics_process(delta: float) -> void:
 	var pattern := step.pattern
 	if starting:
 		locked_angle = _aim_angle(pattern)
+		_choose_curtain_route(pattern)
 		starting = false
-		if telegraph_seconds > 0.0:
+		if _telegraph_duration() > 0.0:
 			warning = true
-			timer = telegraph_seconds
+			timer = _telegraph_duration()
 			queue_redraw()
 			return
 	warning = false
@@ -84,10 +104,22 @@ func _physics_process(delta: float) -> void:
 	starting = true
 	repetition += 1
 	timer = maxf(0.05, pattern.recovery)
+	_waiting_for_clear = pattern.wait_for_clear and not _burst_projectiles.is_empty()
 	if repetition >= step.repetitions:
 		repetition = 0
 		timer += step.wait_after
 		step_index = (step_index + 1) % steps.size()
+
+func _choose_curtain_route(pattern: AttackPattern) -> void:
+	curtain_route_index = -1
+	if pattern.shape != AttackPattern.Shape.CURTAIN or pattern.corridor_routes.is_empty(): return
+	var count := pattern.corridor_routes.size()
+	if count > 1 and last_curtain_route >= 0 and last_curtain_route < count:
+		curtain_route_index = randi_range(0, count - 2)
+		if curtain_route_index >= last_curtain_route: curtain_route_index += 1
+	else:
+		curtain_route_index = randi_range(0, count - 1)
+	last_curtain_route = curtain_route_index
 
 func can_fire() -> bool:
 	if bounds.has_area() and not bounds.grow(-32.0).has_point(global_position):
@@ -105,8 +137,11 @@ func can_fire() -> bool:
 
 func _draw() -> void:
 	if warning and not Engine.is_editor_hint():
-		var progress := 1.0 - clampf(timer / maxf(telegraph_seconds, 0.01), 0.0, 1.0)
+		var progress := 1.0 - clampf(timer / maxf(_telegraph_duration(), 0.01), 0.0, 1.0)
 		var pattern := steps[step_index].pattern
+		if pattern.shape == AttackPattern.Shape.RICOCHET:
+			_draw_ricochet_charge(progress)
+			return
 		var tint := Color(1.0, 0.95, 0.5, 0.9)
 		if pattern.aim == AttackPattern.Aim.FIXED:
 			tint = Color(0.4, 0.95, 1.0, 0.9)
@@ -118,7 +153,7 @@ func _draw() -> void:
 		draw_line(forward * 12.0, forward * 36.0, tint, 2.0)
 		if pattern.shape == AttackPattern.Shape.CURTAIN:
 			# Show the upcoming wall's actual remote emitter positions.
-			for shot in pattern.shots_for_volley(global_position, bounds, locked_angle, volley):
+			for shot in pattern.shots_for_volley(global_position, bounds, locked_angle, volley, curtain_route_index):
 				if not bounds.grow(-16.0).has_point(shot.position): continue
 				var point := to_local(shot.position)
 				draw_circle(point, 5.0, tint)
@@ -135,6 +170,8 @@ func _draw() -> void:
 				draw_arc(to_local(global_position + offset), 8.0, 0.0, TAU, 16, tint, 2.0)
 
 func _aim_angle(pattern: AttackPattern) -> float:
+	if pattern.shape == AttackPattern.Shape.RICOCHET:
+		return RicochetCore.launch_direction(global_position, bounds, ricochet_starts_above).angle()
 	if pattern.aim != AttackPattern.Aim.FIXED and target_provider.is_valid():
 		var target: Node2D = target_provider.call()
 		if is_instance_valid(target):
@@ -145,7 +182,7 @@ func _fire_volley(pattern: AttackPattern, angle: float) -> void:
 	if pattern.projectile_scene == null:
 		return
 	volleys_fired += 1
-	for shot in pattern.shots_for_volley(global_position, bounds, angle, volley):
+	for shot in pattern.shots_for_volley(global_position, bounds, angle, volley, curtain_route_index):
 		# Only a curtain's edge continuation may start above/below the arena.
 		# Its x emitter must still be visible, and can_fire gates the whole burst.
 		var sway := pattern.sway_for_volley(volley)
@@ -158,6 +195,9 @@ func _fire_volley(pattern: AttackPattern, angle: float) -> void:
 		bullet.direction = Vector2.from_angle(shot.angle)
 		bullet.bounds = bounds
 		bullet.position = projectiles.to_local(shot.position)
+		if bullet is RicochetCore:
+			bullet.starts_above = ricochet_starts_above
+			ricochet_starts_above = not ricochet_starts_above
 		if bullet is CurtainBullet:
 			bullet.sway_amplitude = sway
 			bullet.sway_period = pattern.curtain_sway_period
@@ -165,6 +205,26 @@ func _fire_volley(pattern: AttackPattern, angle: float) -> void:
 		if target_provider.is_valid():
 			bullet.target = target_provider.call()
 		projectiles.add_child(bullet)
+		_track_burst_projectile(bullet)
+		if bullet.has_signal("offspring_spawned"):
+			bullet.connect("offspring_spawned", _track_burst_projectile)
+
+func _track_burst_projectile(bullet: Projectile) -> void:
+	_burst_projectiles.append(bullet)
+
+func _telegraph_duration() -> float:
+	if step_index < steps.size() and steps[step_index] != null and steps[step_index].pattern != null:
+		var duration := steps[step_index].pattern.telegraph_seconds
+		if duration >= 0.0: return duration
+	return telegraph_seconds
+
+func _draw_ricochet_charge(progress: float) -> void:
+	var forward := RicochetCore.launch_direction(global_position, bounds, ricochet_starts_above).rotated(-global_rotation)
+	var tint := RicochetCore.CUE_COLOR
+	draw_arc(Vector2.ZERO, lerpf(20.0, 10.0, progress), 0.0, TAU, 32, tint, 2.0)
+	draw_line(forward * 12.0, forward * 42.0, tint, 2.0)
+	for index in 3:
+		draw_circle(Vector2(-24.0, (index - 1) * 6.0), 2.0, tint)
 
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings := PackedStringArray()
@@ -175,4 +235,8 @@ func _get_configuration_warnings() -> PackedStringArray:
 			warnings.append("각 Step에 AttackPattern이 필요합니다.")
 		elif step.pattern.projectile_scene == null:
 			warnings.append("AttackPattern에 탄환 씬을 연결하세요.")
+		elif step.pattern.shape == AttackPattern.Shape.CURTAIN:
+			for route in step.pattern.corridor_routes:
+				if route.size() != step.pattern.volley_count:
+					warnings.append("각 Corridor Route에는 Volley Count만큼의 통로 높이(0~1)를 넣으세요.")
 	return warnings

@@ -7,6 +7,7 @@
 radius = 5.0
 
 [node name="Projectile" type="Area2D"]
+scale = Vector2(1.8, 1.8)
 script = ExtResource("Script")
 speed = 1050.0
 homing_radians_per_second = 0

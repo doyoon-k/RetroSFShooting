@@ -34,8 +34,6 @@ mouse_filter = 2
 anchor_right = 1.0
 offset_right = -8.0
 horizontal_alignment = 1
-
-
 [node name="Status" type="Label" parent="."]
 unique_name_in_owner = true
 offset_left = 8.0
@@ -48,10 +46,3 @@ mouse_filter = 2
 anchor_right = 1.0
 offset_right = -8.0
 horizontal_alignment = 1
-
-
-[node name="Accent" type="ColorRect" parent="."]
-anchor_right = 1.0
-offset_bottom = 3.0
-mouse_filter = 2
-color = Color(0.42745, 0.89804, 0.92941, 1)

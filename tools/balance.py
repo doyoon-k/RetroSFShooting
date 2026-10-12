@@ -62,11 +62,19 @@ def main():
         if not report['clear']:
             failures.append(f'{name}: did not clear (game over or trial timeout)')
     weak = reports['aim_lv1']['encounters']
-    if len(weak) != 4 or any(e['duration'] > 38 for e in weak[:3]) or weak[-1]['duration'] > 70:
-        failures.append('LV1 encounter duration exceeds the authored 38s middle / 70s boss budget')
+    # M1 returns to 360 HP after feedback about an overly long wall encounter.
+    weak_limits = {'m1_carapace.tscn': 38, 'm2_wing.tscn': 57,
+                   'm3_star_eye.tscn': 57, 'boss.tscn': 105}
+    if len(weak) != 4 or {e['scene'] for e in weak} != set(weak_limits) or any(
+            e['duration'] > weak_limits[e['scene']] for e in weak):
+        failures.append('LV1 exceeds its encounter budget: M1 38s / M2–M3 57s / boss 105s')
     strong = reports['aim_lv3']['encounters']
-    if len(strong) != 4 or any(not 12 <= e['duration'] <= 18 for e in strong[:3]) or not 25 <= strong[-1]['duration'] <= 40:
-        failures.append('LV3 misses the 12–18s middle / 25–40s boss duration target')
+    strong_limits = {'m1_carapace.tscn': (12, 18), 'm2_wing.tscn': (18, 27),
+                     'm3_star_eye.tscn': (18, 27), 'boss.tscn': (37.5, 60)}
+    if len(strong) != 4 or {e['scene'] for e in strong} != set(strong_limits) or any(
+            not strong_limits[e['scene']][0] <= e['duration'] <= strong_limits[e['scene']][1]
+            for e in strong):
+        failures.append('LV3 misses its target: M1 12–18s / M2–M3 18–27s / boss 37.5–60s')
     if not reports['recovery']['forced_recovery'] or reports['recovery']['deaths'] > 2:
         failures.append('Recovery trial did not inject its death or suffered more than one additional death')
     if reports['weak_no_bombs']['deaths'] > 2:

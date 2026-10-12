@@ -12,7 +12,6 @@ extends Resource
 @export var is_ai: bool = false
 @export var accent: Color = Color("6de5ed")
 @export var ship_scene: PackedScene
-@export var hangar_animation: StringName = &"idle"
 @export_group("Portraits")
 @export var hangar_portrait: Texture2D:
 	set(value):

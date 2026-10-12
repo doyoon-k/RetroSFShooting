@@ -1,10 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://bgxei4xcj30fw"]
+[gd_scene load_steps=10 format=3 uid="uid://bgxei4xcj30fw"]
 
 [ext_resource type="Resource" path="res://data/patterns/aimed_step.tres" id="aimed"]
 [ext_resource type="Script" path="res://scenes/enemies/enemy_movement.gd" id="Movement"]
 [ext_resource type="Script" path="res://scenes/enemies/enemy_ship.gd" id="Script"]
 [ext_resource type="Script" path="res://scenes/enemies/enemy_shooter.gd" id="Shooter"]
 [ext_resource type="Script" path="res://scripts/data/pattern_step.gd" id="StepType"]
+
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Enemy/M1.png" id="EnemyTexture"]
 
 [sub_resource type="CircleShape2D" id="Shape"]
 radius = 26.25
@@ -31,20 +33,17 @@ _data = {
 }
 
 [node name="EnemyShip" type="Area2D"]
-scale = Vector2(2, 2)
+scale = Vector2(3, 3)
 collision_layer = 2
 collision_mask = 0
 monitoring = false
 script = ExtResource("Script")
 maximum_hp = 5
 
-[node name="Visual" type="Polygon2D" parent="."]
-color = Color(0.94118, 0.72157, 0.48627, 1)
-polygon = PackedVector2Array(35, -22.75, 0, -14, -35, -28, -24.5, 0, -35, 28, 0, 14, 35, 22.75, 24.5, 0)
-
-[node name="Core" type="Polygon2D" parent="."]
-color = Color(0.17647, 0.12941, 0.23529, 1)
-polygon = PackedVector2Array(-14, 0, 0, -8.75, 12.25, 0, 0, 8.75)
+[node name="Visual" type="Sprite2D" parent="."]
+offset = Vector2(4.5, 0)
+texture = ExtResource("EnemyTexture")
+scale = Vector2(0.42, 0.42)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("Shape")

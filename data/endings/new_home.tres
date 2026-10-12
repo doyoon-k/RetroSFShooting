@@ -8,5 +8,5 @@
 script = ExtResource("Script")
 id = &"new_home"
 number = "ENDING 06"
-title = "우리의 집"
+title = "엔딩 6"
 story = ExtResource("Story")

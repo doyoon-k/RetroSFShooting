@@ -3,7 +3,6 @@
 
 [ext_resource type="Script" path="res://scenes/ui/result.gd" id="Script"]
 [ext_resource type="Theme" path="res://scenes/ui/game_theme.tres" id="Theme"]
-[ext_resource type="Script" path="res://scenes/ui/starfield.gd" id="Stars"]
 [ext_resource type="PackedScene" path="res://scenes/ui/pilot_roster.tscn" id="Roster"]
 
 [node name="Result" type="Control"]
@@ -15,10 +14,6 @@ grow_vertical = 2
 theme = ExtResource("Theme")
 script = ExtResource("Script")
 preview_catalog = ExtResource("PreviewCatalog")
-
-
-[node name="Starfield" type="Node2D" parent="."]
-script = ExtResource("Stars")
 
 
 [node name="Debrief" type="Label" parent="."]
@@ -51,18 +46,6 @@ offset_right = 970.0
 offset_bottom = 413.0
 text = "SURVIVORS"
 theme_override_font_sizes/font_size = 66
-mouse_filter = 2
-theme_override_colors/font_color = Color(0.42745, 0.89804, 0.92941, 1)
-
-
-[node name="ReturnLine" type="Label" parent="."]
-unique_name_in_owner = true
-offset_left = 120.0
-offset_top = 479.0
-offset_right = 970.0
-offset_bottom = 649.0
-text = "우리가 지나온 항로는\n남겨진 목소리로 기억된다."
-theme_override_font_sizes/font_size = 32
 mouse_filter = 2
 
 

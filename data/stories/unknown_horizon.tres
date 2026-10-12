@@ -10,29 +10,29 @@
 [sub_resource type="Resource" id="Page0"]
 script = ExtResource("Page")
 illustration = ExtResource("Image0")
-caption = "착륙"
-text = "남은 동료들이 낯선 행성의 대지를 밟았다.\n긴 항해가 끝났다고 생각했다."
+caption = ""
+text = "대사 1"
 
 [sub_resource type="Resource" id="Page1"]
 script = ExtResource("Page")
 illustration = ExtResource("Image1")
-caption = "먼저 살고 있던 것들"
-text = "숲 너머에서 거대한 생명체들이 모습을 드러냈다.\n이 땅은 비어 있지 않았다."
+caption = ""
+text = "대사 2"
 
 [sub_resource type="Resource" id="Page2"]
 script = ExtResource("Page")
 illustration = ExtResource("Image2")
-caption = "부족했던 손길"
-text = "생존자들은 서로를 지키려 했지만, 밀려드는 위협을 막기에는 너무 적었다."
+caption = ""
+text = "대사 3"
 
 [sub_resource type="Resource" id="Page3"]
 script = ExtResource("Page")
 illustration = ExtResource("Image3")
-caption = "남겨진 흔적"
-text = "마지막 외침마저 잦아들었다.\n낯선 대지에는 그들이 남긴 물건만 떨어져 있었다."
+caption = ""
+text = "대사 4"
 
 [resource]
 script = ExtResource("Script")
-title = "ENDING 04 / 낯선 지평선"
+title = "ENDING 04"
 pages = Array[ExtResource("Page")]([SubResource("Page0"), SubResource("Page1"), SubResource("Page2"), SubResource("Page3")])
 characters_per_second = 42.0

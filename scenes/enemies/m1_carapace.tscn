@@ -1,18 +1,21 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://scenes/enemies/enemy_ship.gd" id="Ship"]
 [ext_resource type="Script" path="res://scenes/enemies/enemy_movement.gd" id="Movement"]
 [ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Enemy/L1.png" id="EnemyTexture"]
-[ext_resource type="Script" path="res://scenes/enemies/enemy_shooter.gd" id="Shooter"]
+[ext_resource type="Script" path="res://scenes/enemies/siege_shooter.gd" id="Shooter"]
 [ext_resource type="Script" path="res://scripts/data/pattern_step.gd" id="StepType"]
 [ext_resource type="Resource" path="res://data/patterns/siege_curtain_step.tres" id="fan"]
-[ext_resource type="Resource" path="res://data/patterns/pursuit_fan_step.tres" id="short_burst"]
+[ext_resource type="PackedScene" path="res://scenes/projectiles/lance_bullet.tscn" id="LureBullet"]
+[ext_resource type="PackedScene" path="res://scenes/projectiles/enemy_bullet.tscn" id="CrossBullet"]
+[ext_resource type="PackedScene" path="res://scenes/projectiles/siege_core.tscn" id="Core"]
+[ext_resource type="Resource" path="res://data/patterns/ricochet_step.tres" id="Ricochet"]
 
 [sub_resource type="CircleShape2D" id="Shape"]
 radius = 70.0
 
 [node name="EnemyShip" type="Area2D"]
-scale = Vector2(2, 2)
+scale = Vector2(3, 3)
 collision_layer = 2
 collision_mask = 0
 monitoring = false
@@ -40,5 +43,9 @@ stay_forever = true
 [node name="Shooter" type="Node2D" parent="."]
 position = Vector2(-70, 0)
 script = ExtResource("Shooter")
-steps = Array[ExtResource("StepType")]([ExtResource("fan"), ExtResource("short_burst")])
+steps = Array[ExtResource("StepType")]([ExtResource("fan")])
 initial_delay = 1.1
+opening_bullet_scene = ExtResource("LureBullet")
+cross_bullet_scene = ExtResource("CrossBullet")
+core_scene = ExtResource("Core")
+ricochet_step = ExtResource("Ricochet")

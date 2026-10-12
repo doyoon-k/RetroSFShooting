@@ -67,10 +67,6 @@ mouse_filter = 2
 visible = false
 mouse_filter = 2
 
-[node name="Accent" type="ColorRect" parent="."]
-visible = false
-mouse_filter = 2
-
 [node name="Selection" type="Panel" parent="."]
 visible = false
 layout_mode = 0

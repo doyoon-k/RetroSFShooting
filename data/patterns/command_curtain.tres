@@ -14,6 +14,7 @@ recovery = 1.05
 corridor_center = 0.5
 corridor_shift = 0.2
 corridor_width = 160.0
+corridor_routes = Array[PackedFloat32Array]([PackedFloat32Array(0.32, 0.52, 0.42, 0.54), PackedFloat32Array(0.42, 0.62, 0.52, 0.40), PackedFloat32Array(0.68, 0.48, 0.58, 0.46), PackedFloat32Array(0.58, 0.38, 0.48, 0.60)])
 curtain_sway_volley = 1
 curtain_sway_amplitude = 72.0
 curtain_sway_period = 6.0

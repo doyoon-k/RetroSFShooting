@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/projectiles/brood_core.tscn" id="Base"]
+
+[node name="BroodCore" instance=ExtResource("Base")]
+lifetime = 14.0
+child_count = 5
+child_spread = 44.0

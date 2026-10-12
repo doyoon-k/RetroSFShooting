@@ -13,12 +13,12 @@
 radius = 95.0
 
 [node name="EnemyShip" type="Area2D"]
-scale = Vector2(2, 2)
+scale = Vector2(3, 3)
 collision_layer = 2
 collision_mask = 0
 monitoring = false
 script = ExtResource("Ship")
-maximum_hp = 390
+maximum_hp = 585
 is_midboss = true
 despawn_margin = 500.0
 

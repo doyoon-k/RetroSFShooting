@@ -10,29 +10,29 @@
 [sub_resource type="Resource" id="Page0"]
 script = ExtResource("Page")
 illustration = ExtResource("Image0")
-caption = "착륙"
-text = "다섯 동료가 새로운 행성에 도착했다.\n돌아오지 못한 한 사람의 빈자리를 안고, 방주를 나섰다."
+caption = ""
+text = "대사 1"
 
 [sub_resource type="Resource" id="Page1"]
 script = ExtResource("Page")
 illustration = ExtResource("Image1")
-caption = "먼저 살고 있던 것들"
-text = "숲 너머에서 거대한 생명체들이 나타났다.\n새로운 터전에도 싸움은 기다리고 있었다."
+caption = ""
+text = "대사 2"
 
 [sub_resource type="Resource" id="Page2"]
 script = ExtResource("Page")
 illustration = ExtResource("Image2")
-caption = "함께 살아남다"
-text = "서로의 등을 지키며 맞선 동료들은 마침내 위협을 물리쳤다."
+caption = ""
+text = "대사 3"
 
 [sub_resource type="Resource" id="Page3"]
 script = ExtResource("Page")
 illustration = ExtResource("Image3")
-caption = "새벽"
-text = "푸른 숲 위로 해가 떠올랐다.\n남은 이들은 떠나온 동료를 기억하며, 이곳에서 살아가기로 했다."
+caption = ""
+text = "대사 4"
 
 [resource]
 script = ExtResource("Script")
-title = "ENDING 05 / 새벽의 대가"
+title = "ENDING 05"
 pages = Array[ExtResource("Page")]([SubResource("Page0"), SubResource("Page1"), SubResource("Page2"), SubResource("Page3")])
 characters_per_second = 42.0

@@ -70,7 +70,6 @@ func _ready() -> void:
 	hud.weapon_change_requested.connect(_switch_weapon)
 	hud.pause_requested.connect(toggle_pause)
 	%Playfield.size = rules.playfield.size
-	$Simulation/Background.field_size = presentation_bounds.size
 	%PauseDimmer.position = presentation_bounds.position
 	%PauseDimmer.size = presentation_bounds.size
 	%BombFlash.position = presentation_bounds.position
@@ -96,7 +95,6 @@ func _sync_world_bounds() -> void:
 	view_bounds = Rect2(rules.playfield.position + Vector2(progress_x, 0.0), rules.playfield.size)
 	camera.position = get_viewport_rect().size * 0.5 + Vector2(progress_x, 0.0)
 	%Playfield.position = view_bounds.position
-	$Simulation/Background.position = presentation_bounds.position + Vector2(progress_x, 0.0)
 	if is_instance_valid(player):
 		player.bounds = view_bounds
 		player.weapon.bounds = view_bounds
@@ -178,7 +176,7 @@ func _launch_current() -> void:
 	player.died.connect(_player_died)
 	for item in items.get_children():
 		item.target = player
-	_show_message("SORTIE / " + pilot.callsign, "발진 시퀀스 가동. 귀환을 기다릴게.", null)
+	_show_message("SORTIE / " + pilot.callsign, "대사 1", null)
 
 func _update_hud() -> void:
 	if run == null or run.current_sortie == null:
@@ -265,10 +263,12 @@ func _begin_boss_intro() -> void:
 	_clear_projectiles(false)
 	boss = _spawn_enemy(waves.boss_scene, (waves.get_node("BossMarker") as Marker2D).global_position)
 	_enter(Phase.BOSS_INTRO, boss_intro_seconds)
-	_show_message("WARNING / THE WARDEN", "고에너지 반응 접근. 방주의 항로를 확보하라.", null)
+	_show_message("WARNING / BOSS", "대사 2", null)
 
 func _enemy_damaged(enemy: EnemyShip) -> void:
-	_effect(enemy.global_position, enemy_hit_scene, enemy.is_boss and enemy.hp <= 0.0)
+	var effect := _effect(enemy.global_position, enemy_hit_scene, enemy.is_boss and enemy.hp <= 0.0) as EnemyHitEffect
+	if effect != null:
+		effect.fit_to_enemy(enemy)
 
 func _enemy_destroyed(enemy: EnemyShip) -> void:
 	defeated += 1
@@ -354,7 +354,7 @@ func _start_clear() -> void:
 	roster.show_survived_status = true
 	roster.refresh()
 	victory_index = -1
-	_show_message("SECTOR CLEAR", "침묵이 걷히고, 살아남은 목소리들이 돌아온다.", null)
+	_show_message("SECTOR CLEAR", "대사 3", null)
 
 func _next_victory_line() -> void:
 	victory_index += 1
@@ -442,13 +442,14 @@ func _clear_projectiles(include_friendly: bool) -> void:
 			bullet.spent = true
 			bullet.queue_free()
 
-func _effect(location: Vector2, scene: PackedScene, presentation: bool = false) -> void:
+func _effect(location: Vector2, scene: PackedScene, presentation: bool = false) -> Node2D:
 	if scene == null:
-		return
+		return null
 	var effect := scene.instantiate() as Node2D
 	var container := $Presentation/Effects if presentation else $Simulation/Effects
 	container.add_child(effect)
 	effect.global_position = location
+	return effect
 
 func _show_message(title: String, message: String, portrait: Texture2D) -> void:
 	%SequencePanel.show()

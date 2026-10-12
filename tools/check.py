@@ -4,6 +4,7 @@ python tools/check.py [--godot PATH] [--screenshots]
 Uses the GUI executable directly because some Windows console shims fail.
 """
 import argparse
+import json
 from pathlib import Path
 import re
 import shutil
@@ -25,6 +26,9 @@ commands = [
     ('tests', (['--rendering-method', 'gl_compatibility'] if args.screenshots else ['--headless'])
      + ['--audio-driver', 'Dummy', '--script', 'tests/run_tests.gd', '--fixed-fps', '60']
      + (['--', '--screenshots'] if args.screenshots else [])),
+    ('ricochet', (['--rendering-method', 'gl_compatibility'] if args.screenshots else ['--headless'])
+     + ['--audio-driver', 'Dummy', '--script', 'tests/ricochet_probe.gd', '--fixed-fps', '60']
+     + (['--', '--screenshots'] if args.screenshots else [])),
 ]
 for name, command in commands:
     result = subprocess.run([engine, '--path', str(ROOT), *command], cwd=ROOT,
@@ -38,4 +42,7 @@ for name, command in commands:
     for line in output.splitlines():
         if line.startswith('TEST RESULT:'):
             print(line)
+        elif name == 'ricochet' and line.startswith('{'):
+            report = json.loads(line)
+            print(f"Bank shot: {report['checks']} checks, {len(report['failures'])} failures")
 print(f'Logs: {log_dir}')

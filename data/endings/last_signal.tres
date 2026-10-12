@@ -8,5 +8,5 @@
 script = ExtResource("Script")
 id = &"last_signal"
 number = "ENDING 02"
-title = "마지막 신호"
+title = "엔딩 2"
 story = ExtResource("Story")

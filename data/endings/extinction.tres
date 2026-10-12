@@ -8,5 +8,5 @@
 script = ExtResource("Script")
 id = &"extinction"
 number = "ENDING 01"
-title = "침묵의 방주"
+title = "엔딩 1"
 story = ExtResource("Story")

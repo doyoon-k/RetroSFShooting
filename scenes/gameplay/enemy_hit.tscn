@@ -27,7 +27,7 @@ animations = [{
 }]
 
 [node name="EnemyHit" type="AnimatedSprite2D"]
-rotation = -1.57079632679
+rotation = 1.57079632679
 sprite_frames = SubResource("HitFrames")
 animation = &"hit"
 script = ExtResource("Script")

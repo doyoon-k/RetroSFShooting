@@ -41,6 +41,7 @@ func _run() -> void:
 	await _test_redesigned_encounters()
 	await _test_fleet_patterns()
 	await _test_curtain_motion()
+	await _test_curtain_routes()
 	_test_input_map()
 	await _test_proximity_damage()
 	await _test_enemy_hit_effect()
@@ -170,6 +171,70 @@ func _test_curtain_motion() -> void:
 	shooter.queue_free()
 	await frames()
 
+func _test_curtain_routes() -> void:
+	var arena := Rect2(440, 24, 1464, 952)
+	var bullets := Node2D.new()
+	var shooter := EnemyShooter.new()
+	shooter.bounds = arena
+	shooter.position = Vector2(1600, 500)
+	shooter.projectiles = bullets
+	root.add_child(bullets)
+	root.add_child(shooter)
+	shooter.set_physics_process(false)
+	seed(20261012)
+	var previous := -1
+	for name in ["siege_curtain", "command_curtain"]:
+		var pattern := load("res://data/patterns/" + name + ".tres") as AttackPattern
+		var authored := pattern.corridor_routes.duplicate(true)
+		check(authored.size() == 4, "Each curtain has four authored routes")
+		for route_index in authored.size():
+			var route: PackedFloat32Array = authored[route_index]
+			check(route.size() == pattern.volley_count and route[0] != route[2], "Every route changes height between the first and third walls")
+			for other_index in route_index:
+				check(route[0] != authored[other_index][0] and route[2] != authored[other_index][2], "Changing routes changes both fixed entrances")
+			var last_gap := pattern.corridor_y(arena, 0, route_index)
+			for volley in range(1, pattern.volley_count):
+				var gap := pattern.corridor_y(arena, volley, route_index)
+				var sway := pattern.sway_for_volley(volley) + pattern.sway_for_volley(volley - 1)
+				check((absf(gap - last_gap) + sway) / 460.0 < pattern.volley_interval - 0.2, "Every route leaves P2 time to change corridors at the sway extremes")
+				last_gap = gap
+			for next_route in authored.size():
+				var next_gap := pattern.corridor_y(arena, 0, next_route)
+				check(absf(next_gap - last_gap) / 460.0 < pattern.recovery + shooter.telegraph_seconds - 0.2, "Repeated curtain bursts leave P2 time to enter every next route")
+		for burst in 12:
+			var step := PatternStep.new()
+			step.pattern = pattern
+			shooter.set_sequence([step])
+			shooter.timer = 0.0
+			shooter._physics_process(0.01)
+			var selected := shooter.curtain_route_index
+			check(shooter.warning and selected >= 0 and selected < authored.size() and selected != previous, "Route is selected before its first preview and never immediately repeats, including phase changes")
+			previous = selected
+			shooter._physics_process(shooter.telegraph_seconds + 0.01)
+			for volley in pattern.volley_count:
+				if volley > 0:
+					shooter._physics_process(pattern.volley_interval - shooter.telegraph_seconds + 0.01)
+					check(shooter.warning and shooter.curtain_route_index == selected, "Later wall preview keeps the burst's selected route")
+					shooter._physics_process(shooter.telegraph_seconds)
+				var gap := pattern.corridor_y(arena, volley, selected)
+				var expected := pattern.shots_for_volley(shooter.global_position, arena, PI, volley, selected)
+				check(bullets.get_child_count() == expected.size(), "Selected route emits the complete authored wall")
+				for bullet in bullets.get_children():
+					check(absf(bullet.position.y - gap) >= pattern.corridor_width * 0.5, "Actual emitted wall leaves the selected entrance open")
+					bullet.free()
+				check(shooter.curtain_route_index == selected and pattern.corridor_routes == authored, "A burst neither rerolls its route nor mutates shared pattern data")
+	var legacy := AttackPattern.new()
+	legacy.shape = AttackPattern.Shape.CURTAIN
+	shooter._choose_curtain_route(legacy)
+	check(shooter.curtain_route_index == -1 and is_equal_approx(legacy.corridor_y(arena, 0), arena.get_center().y), "Patterns without routes retain their original corridor layout")
+	legacy.corridor_routes = [PackedFloat32Array([0.4, 0.6, 0.5])]
+	shooter._choose_curtain_route(legacy)
+	shooter._choose_curtain_route(legacy)
+	check(shooter.curtain_route_index == 0, "A single authored route remains usable without rerolling forever")
+	bullets.queue_free()
+	shooter.queue_free()
+	await frames()
+
 func _test_attack_fairness() -> void:
 	var enemy := load("res://scenes/enemies/n1_interceptor.tscn").instantiate() as EnemyShip
 	var target := Node2D.new()
@@ -236,15 +301,18 @@ func _test_endings() -> void:
 		check(content.ending_by_id(ending) != null, "Every survivor combination has authored ending data")
 		var story := content.ending_by_id(ending).story
 		var living := run.survivors()
-		var expected_image: String
+		var expected_image := ""
 		match living.size():
-			0: expected_image = "extinction.svg"
-			1: expected_image = "last_signal.svg"
+			0, 1: pass
 			2:
 				expected_image = "WithAi01.png" if living.any(func(pilot: PilotData) -> bool: return pilot.is_ai) else "234ed01.png"
 			3, 4: expected_image = "234ed01.png"
 			5, 6: expected_image = "56ed01.png"
-		check(story.pages[0].illustration.resource_path.get_file() == expected_image, "Survivor combination selects its illustrated ending: %d" % mask)
+		var illustration := story.pages[0].illustration
+		if expected_image.is_empty():
+			check(illustration == null, "Ending without original artwork uses a blank background: %d" % mask)
+		else:
+			check(illustration != null and illustration.resource_path.get_file() == expected_image, "Survivor combination selects its illustrated ending: %d" % mask)
 		counts[ending] += 1
 	check(counts == {&"extinction": 1, &"last_signal": 6, &"betrayal": 5, &"unknown_horizon": 45, &"cost_of_dawn": 6, &"new_home": 1}, "All 64 survivor combinations partition into the six expected endings")
 
@@ -401,8 +469,8 @@ func _test_enemy_profiles() -> void:
 	check(sine != null and aimed != null and aimed.steps.size() == 1, "Movement and attack presets load as editable resources")
 	var planned_enemies := {
 		"z1_wedge": 2, "z2_spine": 2, "z3_eye": 3, "z4_crescent": 2, "z5_chain": 3,
-		"n1_interceptor": 12, "n2_crawler": 16, "n3_claw": 20, "n4_armor": 22, "n5_tendril": 16,
-		"m1_carapace": 360, "m2_wing": 330, "m3_star_eye": 390,
+		"n1_interceptor": 18, "n2_crawler": 24, "n3_claw": 30, "n4_armor": 33, "n5_tendril": 24,
+		"m1_carapace": 360, "m2_wing": 495, "m3_star_eye": 585,
 	}
 	for enemy_name in planned_enemies:
 		var planned_scene := load("res://scenes/enemies/%s.tscn" % enemy_name) as PackedScene
@@ -463,7 +531,7 @@ func _test_enemy_profiles() -> void:
 	var lab := load("res://scenes/gameplay/enemy_lab/enemy_lab.tscn").instantiate() as EnemyLab
 	root.add_child(lab)
 	await frames()
-	check(lab.enemy_scenes.size() == 14 and lab.movement_presets.size() == 5 and lab.attack_presets.size() == 18, "F6 lab exposes all enemies and new strafe, tracking, gate and sweep presets")
+	check(lab.enemy_scenes.size() == 14 and lab.movement_presets.size() == 5 and lab.attack_presets.size() == 19, "F6 lab exposes all enemies and the bank-shot preset")
 	lab.get_node("Canvas/Panel/Controls/MovementPicker").select(2)
 	lab.get_node("Canvas/Panel/Controls/AttackPicker").select(2)
 	var lab_enemy := lab.spawn_sample() as EnemyShip
@@ -713,6 +781,7 @@ func _test_game_flow() -> void:
 	var story: Node = main.current_screen
 	check(story.name == "StoryScreen", "New Game opens Intro")
 	await capture("02_intro")
+	story.get_node("StoryPanel/StoryText").reveal(story.story.pages[0].text)
 	story.advance()
 	check(story.page_index == 0 and not story.get_node("StoryPanel/StoryText").typing, "First advance completes typing without changing page")
 	story.advance()
@@ -794,6 +863,7 @@ func _test_enemy_hit_effect() -> void:
 		var effect := effects.get_child(0) as AnimatedSprite2D
 		check(effect != null and effect.is_playing() and effect.sprite_frames.get_frame_count(&"hit") == 4, "Enemy hit plays four sprite frames")
 		if effect != null:
+			check(is_equal_approx(effect.global_rotation, PI * 0.5), "Blood effect turns 180 degrees from its previous direction")
 			for index in 4:
 				var texture := load("res://assets/Pilots_sprites/Fx/BloodyAttacked_S%d.png" % (index + 1)) as Texture2D
 				check(effect.sprite_frames.get_frame_texture(&"hit", index) == texture, "Enemy hit frame %d uses the requested image" % (index + 1))
@@ -801,6 +871,35 @@ func _test_enemy_hit_effect() -> void:
 	check(effects.get_child_count() == 0, "Enemy hit effect frees itself after playback")
 	enemy.take_damage(1)
 	check(effects.get_child_count() == 1 and effects.get_child(0) is AnimatedSprite2D, "Lethal enemy hit has no old explosion effect")
+	var hit_sizes: Array[float] = []
+	for enemy_name in ["z1_wedge", "n1_interceptor", "m1_carapace"]:
+		var target := stage._spawn_enemy(load("res://scenes/enemies/" + enemy_name + ".tscn"), Vector2(1100, 500))
+		target.movement.set_physics_process(false)
+		target.take_damage(1)
+		var effect := effects.get_child(effects.get_child_count() - 1) as EnemyHitEffect
+		hit_sizes.append(effect.global_scale.x)
+		check(effect.global_position.x < target.global_position.x, "Blood begins on the player-facing front of " + enemy_name)
+		var first_frame := effect.sprite_frames.get_frame_texture(&"hit", 0)
+		var burst_center := Vector2(first_frame.get_image().get_used_rect().get_center()) - Vector2(first_frame.get_size()) * 0.5 + effect.offset
+		check(effect.to_global(burst_center).distance_to(effect.global_position) < 2.0, "First visible blood frame is aligned with the impact point")
+		if enemy_name == "z1_wedge":
+			target.scale *= 1.5
+			(target.get_node("Visual") as Sprite2D).scale *= 1.2
+			target.take_damage(0.25)
+			var resized := effects.get_child(effects.get_child_count() - 1) as EnemyHitEffect
+			check(resized.global_scale.x > effect.global_scale.x and resized.global_scale.x < effect.global_scale.x * 1.8, "Blood follows enemy scale edits with gentler growth")
+	check(hit_sizes[0] < hit_sizes[1] and hit_sizes[1] < hit_sizes[2] and hit_sizes[2] < hit_sizes[0] * 2.1, "Large enemies have larger blood effects without proportional oversizing")
+	var boss := stage._spawn_enemy(load("res://scenes/enemies/boss.tscn"), Vector2(1400, 500))
+	boss.movement.set_physics_process(false)
+	boss.take_damage(boss.maximum_hp)
+	var presentation := stage.get_node("Presentation/Effects")
+	check(presentation.get_child_count() == 1 and presentation.get_child(0) is EnemyHitEffect, "Lethal boss blood plays in the presentation layer")
+	if presentation.get_child_count() == 1:
+		var effect := presentation.get_child(0) as EnemyHitEffect
+		check(effect.global_scale.x > hit_sizes[0] and effect.global_position.x < boss.global_position.x - 150.0 and is_equal_approx(effect.global_rotation, PI * 0.5), "Boss sprite blood uses its front edge and keeps the reversed direction")
+		boss.scale *= 4.0
+		effect.fit_to_enemy(boss)
+		check(is_equal_approx(effect.global_scale.x, effect.max_scale * effect.size_ratio), "Blood scale is capped even for an oversized boss")
 	stage.queue_free()
 	await frames()
 

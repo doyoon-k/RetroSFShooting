@@ -1,6 +1,30 @@
-[gd_scene load_steps=2 format=3 uid="uid://crf6oscbynrkg"]
+[gd_scene load_steps=9 format=3 uid="uid://crf6oscbynrkg"]
 
 [ext_resource type="Script" path="res://scenes/gameplay/effect.gd" id="Script"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Fx/PilotDieFx/PilotDieFx_0001.png" id="Frame1"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Fx/PilotDieFx/PilotDieFx_0002.png" id="Frame2"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Fx/PilotDieFx/PilotDieFx_0003.png" id="Frame3"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Fx/PilotDieFx/PilotDieFx_0004.png" id="Frame4"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Fx/PilotDieFx/PilotDieFx_0005.png" id="Frame5"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Fx/PilotDieFx/PilotDieFx_0006.png" id="Frame6"]
 
-[node name="Explosion" type="Node2D"]
+[sub_resource type="SpriteFrames" id="Frames"]
+animations = [{
+"frames": [
+{"duration": 1.0, "texture": ExtResource("Frame1")},
+{"duration": 1.0, "texture": ExtResource("Frame2")},
+{"duration": 1.0, "texture": ExtResource("Frame3")},
+{"duration": 1.0, "texture": ExtResource("Frame4")},
+{"duration": 1.0, "texture": ExtResource("Frame5")},
+{"duration": 1.0, "texture": ExtResource("Frame6")}
+],
+"loop": false,
+"name": &"death",
+"speed": 12.0
+}]
+
+[node name="Explosion" type="AnimatedSprite2D"]
+scale = Vector2(1.5, 1.5)
+sprite_frames = SubResource("Frames")
+animation = &"death"
 script = ExtResource("Script")

@@ -1,20 +1,9 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scenes/story/story_screen.gd" id="Script"]
 [ext_resource type="Theme" path="res://scenes/ui/game_theme.tres" id="Theme"]
 [ext_resource type="Script" path="res://scenes/ui/typewriter_label.gd" id="Typewriter"]
 [ext_resource type="Resource" path="res://data/stories/intro.tres" id="Intro"]
-
-[sub_resource type="Gradient" id="SubtitleGradient"]
-offsets = PackedFloat32Array(0, 0.55, 1)
-colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.7, 0, 0, 0, 0.9)
-
-[sub_resource type="GradientTexture2D" id="SubtitleShade"]
-gradient = SubResource("SubtitleGradient")
-fill_from = Vector2(0, 0)
-fill_to = Vector2(0, 1)
-
-[sub_resource type="StyleBoxEmpty" id="Empty"]
 
 [node name="StoryScreen" type="Control"]
 anchors_preset = 15
@@ -48,18 +37,6 @@ mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="SubtitleShade" type="TextureRect" parent="."]
-layout_mode = 0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -320.0
-grow_horizontal = 2
-grow_vertical = 0
-mouse_filter = 2
-texture = SubResource("SubtitleShade")
-expand_mode = 1
-
 [node name="Heading" type="Label" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
@@ -70,9 +47,6 @@ offset_right = -64.0
 offset_bottom = 84.0
 grow_horizontal = 2
 mouse_filter = 2
-theme_override_colors/font_color = Color(0.8, 0.85, 0.9, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 6
 theme_override_font_sizes/font_size = 26
 text = "PROLOGUE"
 
@@ -89,12 +63,9 @@ offset_bottom = -198.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
-theme_override_colors/font_color = Color(0.75, 0.9, 0.95, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
 theme_override_font_sizes/font_size = 22
 
-[node name="StoryPanel" type="Control" parent="."]
+[node name="StoryPanel" type="Panel" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
 anchor_top = 1.0
@@ -117,9 +88,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_colors/default_color = Color(0.95, 0.95, 0.95, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
 theme_override_font_sizes/normal_font_size = 30
 script = ExtResource("Typewriter")
 scroll_active = false
@@ -135,7 +103,6 @@ offset_right = 320.0
 offset_bottom = -30.0
 grow_vertical = 0
 mouse_filter = 2
-theme_override_colors/font_color = Color(0.65, 0.7, 0.75, 1)
 theme_override_font_sizes/font_size = 20
 text = "01 / 09"
 
@@ -154,8 +121,5 @@ offset_bottom = -22.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("Empty")
-theme_override_styles/hover = SubResource("Empty")
-theme_override_styles/pressed = SubResource("Empty")
 text = "SPACE / A / 다음"
 focus_mode = 0

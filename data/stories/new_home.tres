@@ -10,29 +10,29 @@
 [sub_resource type="Resource" id="Page0"]
 script = ExtResource("Page")
 illustration = ExtResource("Image0")
-caption = "착륙"
-text = "여섯 동료 모두가 새로운 행성에 도착했다.\n누구도 잃지 않은 채, 함께 방주를 나섰다."
+caption = ""
+text = "대사 1"
 
 [sub_resource type="Resource" id="Page1"]
 script = ExtResource("Page")
 illustration = ExtResource("Image1")
-caption = "먼저 살고 있던 것들"
-text = "숲 너머에서 거대한 생명체들이 나타났다.\n마지막 싸움이 아직 남아 있었다."
+caption = ""
+text = "대사 2"
 
 [sub_resource type="Resource" id="Page2"]
 script = ExtResource("Page")
 illustration = ExtResource("Image2")
-caption = "함께 살아남다"
-text = "여섯 동료는 서로의 등을 지켰다.\n누구도 홀로 남겨 두지 않고, 눈앞의 위협을 물리쳤다."
+caption = ""
+text = "대사 3"
 
 [sub_resource type="Resource" id="Page3"]
 script = ExtResource("Page")
 illustration = ExtResource("Image3")
-caption = "우리의 집"
-text = "푸른 숲 위로 해가 떠올랐다.\n여섯 목소리가 함께 맞는 첫 아침. 이제 이곳이 우리의 집이다."
+caption = ""
+text = "대사 4"
 
 [resource]
 script = ExtResource("Script")
-title = "ENDING 06 / 우리의 집"
+title = "ENDING 06"
 pages = Array[ExtResource("Page")]([SubResource("Page0"), SubResource("Page1"), SubResource("Page2"), SubResource("Page3")])
 characters_per_second = 42.0

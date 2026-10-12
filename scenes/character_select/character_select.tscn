@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://diab46cka0xnd"]
+[gd_scene load_steps=19 format=3 uid="uid://diab46cka0xnd"]
 
 [ext_resource type="Texture2D" uid="uid://dhdcjagylx8hl" path="res://assets/Pilots_sprites/pilots/P1_Nomal.png" id="7_ugtsa"]
 [ext_resource type="Texture2D" uid="uid://bbvbysn73t2gk" path="res://assets/Pilots_sprites/pilots/P2_Nomal.png" id="9_saw8y"]
@@ -16,141 +16,8 @@
 [ext_resource type="Resource" path="res://data/game_catalog.tres" id="PreviewCatalog"]
 [ext_resource type="PackedScene" path="res://scenes/ui/pilot_roster.tscn" id="Roster"]
 [ext_resource type="Script" path="res://scenes/character_select/character_select.gd" id="Script"]
-[ext_resource type="Script" path="res://scenes/ui/starfield.gd" id="Stars"]
 [ext_resource type="Theme" uid="uid://wbownrqyfplv" path="res://scenes/ui/game_theme.tres" id="Theme"]
 [ext_resource type="Script" path="res://scenes/ui/typewriter_label.gd" id="Typewriter"]
-
-[sub_resource type="Animation" id="Idle0"]
-resource_name = "idle"
-length = 3.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Portrait:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1.5, 3),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, -3), Vector2(0, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="Idle0Library"]
-_data = {
-"idle": SubResource("Idle0")
-}
-
-[sub_resource type="Animation" id="Idle1"]
-resource_name = "idle"
-length = 3.7
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Portrait:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1.85, 3.7),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, -4), Vector2(0, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="Idle1Library"]
-_data = {
-"idle": SubResource("Idle1")
-}
-
-[sub_resource type="Animation" id="Idle2"]
-resource_name = "idle"
-length = 4.4
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Portrait:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 2.2, 4.4),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, -5), Vector2(0, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="Idle2Library"]
-_data = {
-"idle": SubResource("Idle2")
-}
-
-[sub_resource type="Animation" id="Idle3"]
-resource_name = "idle"
-length = 5.1
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Portrait:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 2.55, 5.1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, -3), Vector2(0, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="Idle3Library"]
-_data = {
-"idle": SubResource("Idle3")
-}
-
-[sub_resource type="Animation" id="Idle4"]
-resource_name = "idle"
-length = 5.8
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Portrait:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 2.9, 5.8),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, -4), Vector2(0, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="Idle4Library"]
-_data = {
-"idle": SubResource("Idle4")
-}
-
-[sub_resource type="Animation" id="Idle5"]
-resource_name = "idle"
-length = 6.5
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Portrait:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 3.25, 6.5),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, -5), Vector2(0, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="Idle5Library"]
-_data = {
-"idle": SubResource("Idle5")
-}
 
 [node name="CharacterSelect" type="Control"]
 layout_mode = 3
@@ -163,9 +30,6 @@ theme = ExtResource("Theme")
 script = ExtResource("Script")
 catalog = ExtResource("PreviewCatalog")
 
-[node name="Starfield" type="Node2D" parent="."]
-script = ExtResource("Stars")
-
 [node name="Heading" type="Label" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
@@ -175,36 +39,6 @@ offset_right = 1296.0
 offset_bottom = 136.0
 theme_override_font_sizes/font_size = 56
 text = "SELECT PILOT"
-
-[node name="Subheading" type="Label" parent="."]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 100.0
-offset_top = 146.0
-offset_right = 1360.0
-offset_bottom = 191.0
-theme_override_colors/font_color = Color(0.52941, 0.67843, 0.74902, 1)
-theme_override_font_sizes/font_size = 24
-text = "격납고 06  /  당신의 신호를 기다리는 사람들"
-
-[node name="HangarBackdrop" type="Panel" parent="."]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 96.0
-offset_top = 220.0
-offset_right = 1176.0
-offset_bottom = 700.0
-
-[node name="HangarStatus" type="Label" parent="."]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 128.0
-offset_top = 240.0
-offset_right = 1108.0
-offset_bottom = 285.0
-theme_override_colors/font_color = Color(0.42745, 0.89804, 0.92941, 1)
-theme_override_font_sizes/font_size = 20
-text = "HANGAR 06  •  SYSTEMS READY"
 
 [node name="Hangar" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -218,12 +52,6 @@ pilot = ExtResource("P1")
 scale = Vector2(0.85, 0.85)
 texture = ExtResource("7_ugtsa")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Hangar/Pilot0"]
-libraries = {
-"": SubResource("Idle0Library")
-}
-autoplay = "idle"
-
 [node name="Name" type="Label" parent="Hangar/Pilot0"]
 offset_left = -145.0
 offset_top = 60.0
@@ -231,17 +59,6 @@ offset_right = 145.0
 offset_bottom = 94.0
 theme_override_font_sizes/font_size = 19
 text = "P1"
-horizontal_alignment = 1
-
-[node name="Activity0" type="Label" parent="Hangar/Pilot0"]
-unique_name_in_owner = true
-offset_left = -145.0
-offset_top = 96.0
-offset_right = 145.0
-offset_bottom = 124.0
-theme_override_colors/font_color = Color(0.47059, 0.57647, 0.66275, 1)
-theme_override_font_sizes/font_size = 17
-text = "작전 지도 확인 중"
 horizontal_alignment = 1
 
 [node name="Pilot1" type="Node2D" parent="Hangar"]
@@ -253,12 +70,6 @@ pilot = ExtResource("P2")
 scale = Vector2(0.85, 0.85)
 texture = ExtResource("9_saw8y")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Hangar/Pilot1"]
-libraries = {
-"": SubResource("Idle1Library")
-}
-autoplay = "idle"
-
 [node name="Name" type="Label" parent="Hangar/Pilot1"]
 offset_left = -145.0
 offset_top = 60.0
@@ -266,17 +77,6 @@ offset_right = 145.0
 offset_bottom = 94.0
 theme_override_font_sizes/font_size = 19
 text = "P2"
-horizontal_alignment = 1
-
-[node name="Activity1" type="Label" parent="Hangar/Pilot1"]
-unique_name_in_owner = true
-offset_left = -145.0
-offset_top = 96.0
-offset_right = 145.0
-offset_bottom = 124.0
-theme_override_colors/font_color = Color(0.47059, 0.57647, 0.66275, 1)
-theme_override_font_sizes/font_size = 17
-text = "독서 중"
 horizontal_alignment = 1
 
 [node name="Pilot2" type="Node2D" parent="Hangar"]
@@ -288,12 +88,6 @@ pilot = ExtResource("P3")
 scale = Vector2(0.85, 0.85)
 texture = ExtResource("11_tag0i")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Hangar/Pilot2"]
-libraries = {
-"": SubResource("Idle2Library")
-}
-autoplay = "idle"
-
 [node name="Name" type="Label" parent="Hangar/Pilot2"]
 offset_left = -145.0
 offset_top = 60.0
@@ -301,17 +95,6 @@ offset_right = 145.0
 offset_bottom = 94.0
 theme_override_font_sizes/font_size = 19
 text = "P3"
-horizontal_alignment = 1
-
-[node name="Activity2" type="Label" parent="Hangar/Pilot2"]
-unique_name_in_owner = true
-offset_left = -145.0
-offset_top = 96.0
-offset_right = 145.0
-offset_bottom = 124.0
-theme_override_colors/font_color = Color(0.47059, 0.57647, 0.66275, 1)
-theme_override_font_sizes/font_size = 17
-text = "통신 신호 분석 중"
 horizontal_alignment = 1
 
 [node name="Pilot3" type="Node2D" parent="Hangar"]
@@ -323,12 +106,6 @@ pilot = ExtResource("P4")
 scale = Vector2(0.85, 0.85)
 texture = ExtResource("13_5ypp3")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Hangar/Pilot3"]
-libraries = {
-"": SubResource("Idle3Library")
-}
-autoplay = "idle"
-
 [node name="Name" type="Label" parent="Hangar/Pilot3"]
 offset_left = -145.0
 offset_top = 60.0
@@ -336,17 +113,6 @@ offset_right = 145.0
 offset_bottom = 94.0
 theme_override_font_sizes/font_size = 19
 text = "P4"
-horizontal_alignment = 1
-
-[node name="Activity3" type="Label" parent="Hangar/Pilot3"]
-unique_name_in_owner = true
-offset_left = -145.0
-offset_top = 96.0
-offset_right = 145.0
-offset_bottom = 124.0
-theme_override_colors/font_color = Color(0.47059, 0.57647, 0.66275, 1)
-theme_override_font_sizes/font_size = 17
-text = "기체 정비 중"
 horizontal_alignment = 1
 
 [node name="Pilot4" type="Node2D" parent="Hangar"]
@@ -358,12 +124,6 @@ pilot = ExtResource("P5")
 scale = Vector2(0.85, 0.85)
 texture = ExtResource("15_j15fu")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Hangar/Pilot4"]
-libraries = {
-"": SubResource("Idle4Library")
-}
-autoplay = "idle"
-
 [node name="Name" type="Label" parent="Hangar/Pilot4"]
 offset_left = -145.0
 offset_top = 60.0
@@ -371,17 +131,6 @@ offset_right = 145.0
 offset_bottom = 94.0
 theme_override_font_sizes/font_size = 19
 text = "P5"
-horizontal_alignment = 1
-
-[node name="Activity4" type="Label" parent="Hangar/Pilot4"]
-unique_name_in_owner = true
-offset_left = -145.0
-offset_top = 96.0
-offset_right = 145.0
-offset_bottom = 124.0
-theme_override_colors/font_color = Color(0.47059, 0.57647, 0.66275, 1)
-theme_override_font_sizes/font_size = 17
-text = "동료와 대화 중"
 horizontal_alignment = 1
 
 [node name="Pilot5" type="Node2D" parent="Hangar"]
@@ -393,12 +142,6 @@ pilot = ExtResource("P6")
 scale = Vector2(0.85, 0.85)
 texture = ExtResource("17_ugtgx")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Hangar/Pilot5"]
-libraries = {
-"": SubResource("Idle5Library")
-}
-autoplay = "idle"
-
 [node name="Name" type="Label" parent="Hangar/Pilot5"]
 offset_left = -145.0
 offset_top = 60.0
@@ -406,17 +149,6 @@ offset_right = 145.0
 offset_bottom = 94.0
 theme_override_font_sizes/font_size = 19
 text = "P6"
-horizontal_alignment = 1
-
-[node name="Activity5" type="Label" parent="Hangar/Pilot5"]
-unique_name_in_owner = true
-offset_left = -145.0
-offset_top = 96.0
-offset_right = 145.0
-offset_bottom = 124.0
-theme_override_colors/font_color = Color(0.47059, 0.57647, 0.66275, 1)
-theme_override_font_sizes/font_size = 17
-text = "다음 항로 계산 중"
 horizontal_alignment = 1
 
 [node name="Details" type="Panel" parent="."]

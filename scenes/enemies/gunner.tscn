@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cgav6dq4bps0o"]
+[gd_scene load_steps=11 format=3 uid="uid://cgav6dq4bps0o"]
 
 [ext_resource type="Resource" path="res://data/patterns/burst_step.tres" id="burst"]
 [ext_resource type="Resource" path="res://data/patterns/fan_step.tres" id="fan"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" path="res://scenes/enemies/enemy_ship.gd" id="Script"]
 [ext_resource type="Script" path="res://scenes/enemies/enemy_shooter.gd" id="Shooter"]
 [ext_resource type="Script" path="res://scripts/data/pattern_step.gd" id="StepType"]
+
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Enemy/M3.png" id="EnemyTexture"]
 
 [sub_resource type="CircleShape2D" id="Shape"]
 radius = 34.5
@@ -32,7 +34,7 @@ _data = {
 }
 
 [node name="EnemyShip" type="Area2D"]
-scale = Vector2(2, 2)
+scale = Vector2(3, 3)
 collision_layer = 2
 collision_mask = 0
 monitoring = false
@@ -41,13 +43,10 @@ maximum_hp = 10
 death_animation = &"death"
 death_animation_seconds = 0.45
 
-[node name="Visual" type="Polygon2D" parent="."]
-color = Color(0.76863, 0.6, 0.9098, 1)
-polygon = PackedVector2Array(46, -29.9, 0, -18.4, -46, -36.8, -32.2, 0, -46, 36.8, 0, 18.4, 46, 29.9, 32.2, 0)
-
-[node name="Core" type="Polygon2D" parent="."]
-color = Color(0.17647, 0.12941, 0.23529, 1)
-polygon = PackedVector2Array(-18.4, 0, 0, -11.5, 16.1, 0, 0, 11.5)
+[node name="Visual" type="Sprite2D" parent="."]
+offset = Vector2(-2, 1)
+texture = ExtResource("EnemyTexture")
+scale = Vector2(0.52, 0.52)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("Shape")

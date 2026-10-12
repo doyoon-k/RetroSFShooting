@@ -1,16 +1,25 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scenes/projectiles/brood_core.gd" id="Script"]
 [ext_resource type="PackedScene" path="res://scenes/projectiles/enemy_bullet.tscn" id="Child"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Projectile/Projectile_A.png" id="BulletTexture"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Projectile/Projectile_B.png" id="HintTexture"]
 [sub_resource type="CircleShape2D" id="Shape"]
 radius = 14.0
 [node name="BroodCore" type="Area2D"]
-scale = Vector2(1.2, 1.2)
+scale = Vector2(2.4, 2.4)
 collision_layer = 8
 monitorable = false
 script = ExtResource("Script")
 speed = 300.0
 lifetime = 3.0
 child_scene = ExtResource("Child")
+incubation_hint_texture = ExtResource("HintTexture")
+[node name="Visual" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(0.8076923, 0.8076923)
+texture = ExtResource("BulletTexture")
+[node name="IncubationHints" type="Node2D" parent="."]
+visible = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("Shape")

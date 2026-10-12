@@ -8,5 +8,5 @@
 script = ExtResource("Script")
 id = &"unknown_horizon"
 number = "ENDING 04"
-title = "낯선 지평선"
+title = "엔딩 4"
 story = ExtResource("Story")

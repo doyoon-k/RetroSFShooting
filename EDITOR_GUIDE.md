@@ -16,23 +16,51 @@
 | 3갈래 방사형 공격 LV1~3 | `data/weapons/spread.tres` |
 | 직선형 탄환 이미지 | `scenes/projectiles/player_bullet.tscn`의 `Visual` |
 | 방사형 탄환 이미지 | `scenes/projectiles/radial_bullet.tscn`의 `Visual` |
+| 적 탄환 이미지 | `scenes/projectiles/*_bullet.tscn`, `brood_core.tscn`의 `Visual` |
+| 적의 피 튀는 효과 | `scenes/gameplay/enemy_hit.tscn` 루트의 `Size Ratio`, `Size Growth`, `Max Scale`, `Front Inset` |
 | 근접 사격 배율·거리 | `scenes/player/player_ship.tscn`의 `Weapon` 노드 |
 | 적 성능 | `scenes/enemies/*.tscn` |
 | 공격 패턴 | `data/patterns/*.tres` |
 | 스테이지 배치와 이동 속도 | `scenes/gameplay/stage/stage_01.tscn` |
 | 아이템 성능 | `scenes/items/*.tscn` |
 | 일러스트·본문·타이핑 속도 | `data/stories/*.tres` |
-| 메뉴·HUD 스타일 | `scenes/ui/game_theme.tres` |
+| 메뉴·HUD 글꼴 | `scenes/ui/game_theme.tres` |
 | 전투 프레임·파일럿 슬롯 배치 | `stage_01.tscn`의 Interface / Root |
 | 전투 하단 콘솔·확대 초상화 | `scenes/ui/combat_hud.tscn` |
 | 키보드·게임패드 | Project Settings → Input Map |
 
 전투 기체는 기본 `player_ship.tscn` 루트의 Scale이 1.5이며, 모든 적 씬의 루트 Scale은
-2입니다. 이미지·충돌 영역·발사 위치가 함께 확대됩니다. 플레이어의 이동 영역은
+3입니다. 이미지·충돌 영역·발사 위치가 함께 확대됩니다. 적 탄환의 루트 Scale은 2.4,
+플레이어 탄환은 1.8입니다(2배 확대 후 현재 크기에서 10% 축소).
+적 크기는 확대 전 대비 1.5배, 적 탄환은 2배, 플레이어 탄환은 1.8배이며,
+충돌 판정도 같은 비율로 확대됩니다. `lance_bullet.tscn`과 `siege_bullet.tscn`은
+`enemy_bullet.tscn`의 Scale을 상속합니다. 에디터에서는 각 씬의 루트 노드 →
+Inspector → Transform → Scale에서 크기를 조절합니다. 플레이어의 이동 영역은
 `data/rules/default.tres`의 Playfield이며 전투 프레임 안쪽 `(440, 24)`부터
 `(1904, 976)`까지입니다. `PlayerShip`의 Boundary Padding은 투명 여백을 제외한
 기체 반크기이며 Scale에 맞춰 적용됩니다. 이동 경계는 하나의 직사각형입니다.
 좌하단 프레임이나 하단 콘솔과 겹쳐도 기체 위치를 밀어내거나 추가로 제한하지 않습니다.
+
+모든 적 탄환은 `assets/Pilots_sprites/Projectile/`의 PNG를 Sprite2D로 표시합니다.
+`Projectile_A.png`는 일반탄·굵은 탄·탄벽·부화탄, B는 유도탄, C는 고속탄에 연결되어 있습니다.
+에셋 교체는 `Visual > Texture`, 외형만의 크기는 `Visual > Transform > Scale`에서 조절합니다.
+각 에셋의 비율을 유지하면서 기존 외형의 최대 길이에 맞췄으며, 루트 Scale과 충돌 판정은 유지합니다.
+부화탄은 정지 후 깜빡이며 B 스프라이트로 후속 발사 방향을 예고합니다.
+움직이는 탄벽도 스프라이트가 깜빡입니다.
+
+적의 피 튀는 효과는 `Visual`의 실제 외형 크기에 따라 완만하게 확대됩니다.
+스프라이트의 투명 여백은 제외하며, 루트와 Visual의 Scale을 모두 반영합니다.
+큰 적은 크기 비율의 제곱근을 적용하고 기본 Scale 상한을 2.25로 제한합니다.
+첫 프레임의 피가 적 외형의 왼쪽 앞부분에서 시작해 플레이어 쪽으로 퍼지도록 이미지 원점을 보정합니다.
+시작 위치는 외형의 왼쪽 경계에서 폭의 12%만큼 안쪽이며, 회전은 +90°로 유지합니다.
+`enemy_hit.tscn` 루트에서 다음 값을 조절할 수 있습니다.
+
+| 속성 | 의미 |
+|---|---|
+| Size Ratio | 전체 효과 크기 배율(기본 1), 상한 적용 후 곱함 |
+| Size Growth | 큰 적에서 크기가 증가하는 정도(기본 0.5, 1이면 정비례) |
+| Max Scale | 자동 확대 Scale 상한(기본 2.25) |
+| Front Inset | 왼쪽 앞 경계에서 시작점을 안쪽으로 옮기는 폭 비율(기본 0.12, 0.5이면 중앙) |
 
 ## 새 적 공격 만들기
 
@@ -116,6 +144,12 @@ Attack Presets 배열에 새 파일을 넣으면 선택지에 추가됩니다.
 - 루트 `Phase Threshold`: 2단계 진입 HP 비율
 - 루트 `Maximum HP`: 보스 체력
 - `Movement.Hold Position`: 보스가 자리 잡을 좌표
+
+크기 확대 후 중형 일반 적(N1–N5)과 미들·최종 보스의 체력을 50% 올렸습니다.
+N1–N5의 Maximum HP는 18 / 24 / 30 / 33 / 24,
+M1–M3는 360 / 495 / 585, 최종 보스는 1020입니다.
+M1은 벽 패턴 교전이 길다는 피드백에 따라 540에서 360으로 낮췄습니다.
+자코 Z1–Z5의 체력은 유지합니다. 각 적 씬의 루트 `Maximum HP`에서 추가 조절할 수 있습니다.
 
 각 배열의 순서와 Step의 반복/대기를 편집하면 됩니다. 2단계 진입은 한 번만 일어나고,
 바뀐 공격 목록은 첫 단계부터 시작합니다.
@@ -207,8 +241,8 @@ PilotData에서 초상화를 드래그해 교체할 수 있습니다. `Hangar Po
 
 격납고는 CharacterSelect 씬의 Hangar 아래 여섯 노드에 배치되어 있습니다. 각 노드의
 `Pilot`에 해당 PilotData를 연결하면 이름과 격납고 초상화가 에디터에도 표시됩니다. 노드의
-위치를 바꿔도 파일럿 데이터 연결은 유지됩니다. 각 AnimationPlayer를 편집하고 PilotData의
-Hangar Animation 이름으로 재생할 애니메이션을 선택할 수 있습니다.
+위치를 바꿔도 파일럿 데이터 연결은 유지됩니다. 격납고의 임시 Idle 애니메이션은 제거했으며,
+현재는 제공된 초상화를 정적으로 표시합니다.
 
 StoryData의 Pages 배열에서 순서를 바꾸거나 StoryPage를 추가합니다. 페이지마다 Illustration,
 Caption, Text를 설정합니다. Intro와 모든 Ending은 같은 StoryScreen을 사용합니다.
@@ -216,7 +250,11 @@ Caption, Text를 설정합니다. Intro와 모든 Ending은 같은 StoryScreen�
 `intro.tres`의 9컷은 `introStory01~09`, `betrayal.tres`의 4컷은 `WithAi01~04`,
 `unknown_horizon.tres`의 4컷은 `234ed01~04`에 연결되어 있습니다.
 `cost_of_dawn.tres`(5명)와 `new_home.tres`(6명)는 `56ed01~04`를 공유하고 본문은 각각 편집합니다.
-전멸·1명 생존 엔딩은 기존 SVG를 사용합니다.
+전멸·1명 생존 엔딩은 Illustration을 비워 두었습니다. 원본 그림이 준비되면 연결하세요.
+본문과 파일럿 소개·사망·승리 대사는 “대사 1”, “대사 2” 형식으로 비워 두었고,
+컷별 Caption은 빈 문자열입니다. 기존 PNG 순서와 엔딩 저장 ID는 유지합니다.
+AI가 작성한 SVG, 별 배경, 장식 테마와 임시 기체 도형은 제거했습니다. 보스·샘플 적은
+제공된 적 PNG를 재사용하며, 아이템은 P/B/S 문자로 표시합니다.
 
 엔딩의 제목·스토리는 EndingData에서, **분기 규칙 자체**는
 `scripts/ending/ending_resolver.gd`에서 수정합니다. 저장용 ID를 바꾸면 기존 해금 기록과
@@ -244,18 +282,23 @@ Enemy Lab(F6)에 `Tracking three-shot stream`, `Four-way gate`, `Locked sweep` �
 - `data/patterns/gate_fan.tres`: 중앙을 비운 고정 4방향.
 - `data/patterns/sweep_fan.tres`: 예고 때 조준 고정, 이후 회차별 회전, 긴 회복.
 
-총구 예고는 고정 방향 청록 / 조준 고정 노랑 / 재조준 분홍이며 방향선도 표시합니다. 적탄 판정은 기존 값이고 외곽·밝은 중심만 추가했습니다. 전체 배치와 검증 결과는 [스테이지 설계](docs/STAGE_DESIGN.md)를 참고하세요.
+총구 예고는 고정 방향 청록 / 조준 고정 노랑 / 재조준 분홍이며 방향선도 표시합니다. 적탄 외형은 현재 A/B/C 스프라이트를 사용합니다. 전체 배치와 검증 결과는 [스테이지 설계](docs/STAGE_DESIGN.md)를 참고하세요.
 
 
 ## 보스와 외계 함대 공격
 
-Enemy Lab의 `Scene default`로 M2/M1/M3/Boss를 선택하면 각각 쌍익 교차 사격/봉쇄벽/부화탄/기함 조합을 시험할 수 있습니다. 새 Attack 프리셋 6개는 `fleet_lattice`, `pursuit_fan`, `siege_curtain`, `command_curtain`, `brood_launch`, `brood_spiral`입니다.
+Enemy Lab의 `Scene default`로 M2/M1/M3/Boss를 선택하면 각각 쌍익 교차 사격/삼단 도약탄과 세 가지 벽 조합 순환/부화탄/기함 조합을 시험할 수 있습니다. Attack 프리셋에는 `fleet_lattice`, `pursuit_fan`, `siege_curtain`, `command_curtain`, `brood_launch`, `brood_spiral`, `삼단 도약탄 / Three-cushion`이 있습니다.
 
-- `AttackPattern > Muzzle Offsets`: 발사점을 분리합니다. 단위는 **월드 px**이므로 적 스프라이트의 2배 스케일을 다시 곱하지 않습니다.
-- `Shape = CURTAIN`: 화면 높이에 탄을 배치합니다. `Corridor Center/Shift/Width`는 통로의 위치·이동 폭·폭(px)입니다. 고정 수평 발사(`Aim=FIXED`, 각도180°)로 사용합니다. `Bullet Count`는 통로를 비우기 전 후보 탄 수입니다.
-- `Curtain Motion`: `Curtain Sway Volley`는 0부터 세는 회차입니다(1=두 번째 벽, -1=모두 고정). `Amplitude`는 상하 진폭(px), `Period`는 한 주기의 초입니다. 기본 봉쇄 패턴 두 종류는 두 번째 벽만 ±72px/6초로 움직입니다. `siege_bullet.tscn`의 `CurtainBullet`이 탄열 전체에 같은 이동량을 적용하며, 움직이는 벽은 화면 끝에 추가 탄을 배치하고 상하 표시를 보여줍니다. 발사 전 예고는 각 벽의 기존 발사 간격 안에서 표시됩니다.
+- `AttackPattern > Muzzle Offsets`: 발사점을 분리합니다. 단위는 **월드 px**이므로 적 스프라이트의 스케일을 다시 곱하지 않습니다.
+- `Shape = CURTAIN`: 화면 높이에 탄을 배치합니다. `Corridor Width`는 통로 폭(px)입니다. `Corridor Center/Shift`는 `Corridor Routes`가 비어 있을 때 통로 위치·회차별 변화 폭을 정합니다. 고정 수평 발사(`Aim=FIXED`, 각도180°)로 사용합니다. `Bullet Count`는 통로를 비우기 전 후보 탄 수입니다.
+- `Curtain Routes > Corridor Routes`: 각 배열에 벽 회차별 통로 높이를 0~1로 입력합니다(0=위, 1=아래). 배열 길이는 `Volley Count`와 같아야 합니다. 기본 두 패턴은 네 조합 중 하나를 묶음 시작 전에 선택하며, 바로 직전 조합은 제외합니다. 선택 상태는 적 발사기별로 관리하고 첫 예고부터 마지막 발사까지 유지합니다. 갑각수는 각 배열에 3개, 보스 후반 패턴은 4개의 높이가 들어갑니다.
+- `Curtain Motion`: `Curtain Sway Volley`는 0부터 세는 회차입니다(1=두 번째 벽, -1=모두 고정). `Amplitude`는 상하 진폭(px), `Period`는 한 주기의 초입니다. 기본 봉쇄 패턴 두 종류는 두 번째 벽만 ±72px/6초로 움직입니다. `siege_bullet.tscn`의 `CurtainBullet`이 탄열 전체에 같은 이동량을 적용하며, 움직이는 벽은 화면 끝에 추가 탄을 배치하고 스프라이트가 깜빡입니다. 발사 전 예고는 각 벽의 기존 발사 간격 안에서 표시됩니다.
 - `brood_core.tscn`: 300px/s로 0.85초 이동, 0.65초 정지 예고 후 120°에 7발을 발사합니다. `Travel Seconds`, `Incubation Seconds`, `Child Count`, `Child Spread`를 수정할 수 있습니다. `Child Scene`은 보통 탄만 허용하며 부화탄의 재귀 생성을 막습니다.
 - 부모 탄을 폭탄/탄 소거로 제거하면 부화가 취소됩니다. 부모 탄이 부화 전에 플레이어에 충돌한 경우도 자식 탄을 만들지 않습니다.
 - 보스 단계는 `EnemyShip > Second Phase`에서 변경합니다. 기본은 HP 50%에서 부화탄→기함 봉쇄벽→재조준 연사로 전환합니다.
+
+M1의 `Shooter`는 `SiegeShooter`입니다. 기본 순서는 **삼단 도약탄 / 유인탄→벽 / 벽→교차탄 / 핵→벽→시간차 분열**입니다. 벽 조합은 잔탄 소멸 뒤 `Counter Seconds`(기본2초), 도약탄은 잔탄 소멸 뒤 전용 패턴의 `Recovery`(기본1.5초) 동안 쉽니다. `Lure Interval`, `Opening Pause`, `Cross Interval`, `Cross Angle Degrees`, `Core Stagger`로 추가 공격의 간격·각도·시간차를 조절합니다. 벽 설정은 `Steps[0].Pattern`의 기존 `siege_curtain`, 도약탄 설정은 `Ricochet Step`을 사용합니다. `siege_core.tscn`은 기존 부화탄의 파생 씬이며 5발/44°입니다. 핵은 벽이 사라질 때까지 부화를 보류하고, 해제 후 기존 PNG로 부화 방향을 예고합니다. Attack 선택을 `Scene default`로 두면 네 순환을 시험하고, 명시적 프리셋을 고르면 해당 공격으로 대체합니다. `python tools/siege_cycles.py`는 유인부터 기존 벽 조합을 격리해서 검사하고, `python tools/check.py`는 도약탄과 전체 기능도 검사합니다.
+
+삼단 도약탄은 `data/patterns/ricochet.tres`, `scenes/projectiles/ricochet_core.tscn`에서 편집합니다. 0.6초 충전 후 한 발이 위→왼쪽→아래로 반사하며, 다음 사용은 아래→왼쪽→위입니다. 각 반사점은 도착0.45초 전에 잔탄 방향을 예고하고, 도착 후0.25초 정지한 뒤5·5·7발/60°를 발사합니다. 모탄520px/s, 반사마다 속도90%, 잔탄270px/s·수명2.2초입니다. 테두리64px 안쪽에서 반사하여 탄과 예고가 잘리지 않습니다. 얕은 입사각에서도 부채꼴 전체가 영역 안쪽을 향합니다. 세 번째 반사에서는 모탄 판정을 제거하고 마지막 예고 후 소멸합니다. `Child Count`, `Final Child Count`, `Child Spread`, `Bank Warning Seconds`, `Bank Pause Seconds`, `Speed Retention`으로 조절합니다. 원본 B PNG와 금색 테두리·남은 반사 점으로 모탄을 구분합니다. 최종 보스 양 단계에도 연결되어 있으며, 앞선 공격의 잔탄이 정리된 뒤 충전하고 도약탄 가족 전체가 소멸한 뒤 다음 공격을 진행합니다.
 
 `python tools/balance.py --boss-patterns`는 기존 6개 조건에 25개 보스 정지 위치 계측을 추가합니다. 한 지점에서 안 맞는지 보는 표본 검사이므로, 전체 패턴의 인간 회피 가능성을 증명하는 검사는 아닙니다.
