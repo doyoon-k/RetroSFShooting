@@ -44,7 +44,7 @@ func geometry() -> void:
 						child.set_physics_process(false)
 						counts[core.bank_count - 1] += 1
 						expect(not child is RicochetCore and not child is BroodCore and child.bounds == arena, "Banks spawn only one ordinary generation")
-						expect(is_equal_approx(child.speed, 270.0) and is_equal_approx(child.lifetime, 2.2), "Residual bullets keep their authored speed and bounded lifetime")
+						expect(is_equal_approx(child.speed, 360.0) and is_equal_approx(child.lifetime, 3.8), "Residual bullets keep their stronger speed and bounded lifetime")
 						expect(child.direction.dot(walls[-1]) >= -0.0001, "Every fan bullet travels inward, even for a shallow bank"))
 					var initial_direction := core.direction
 					var bank := core.next_bank()
@@ -56,8 +56,8 @@ func geometry() -> void:
 						core._physics_process(1.0 / 60.0)
 						expect(core.bank_arena.grow(0.01).has_point(core.global_position), "Bank integration never overshoots a wall")
 					var expected_walls := [Vector2.DOWN, Vector2.RIGHT, Vector2.UP] if above else [Vector2.UP, Vector2.RIGHT, Vector2.DOWN]
-					expect(walls == expected_walls and counts == [5, 5, 7] and core.is_queued_for_deletion(), "Both mirrored routes produce exactly three banks and 17 offspring")
-					expect(is_equal_approx(core.speed, 520.0 * pow(0.9, 3)) and core.collision_layer == 0, "Each bank slows the core and exhaustion removes its hitbox")
+					expect(walls == expected_walls and counts == [7, 9, 11] and core.is_queued_for_deletion(), "Both mirrored routes produce exactly three banks and 27 offspring")
+					expect(is_equal_approx(core.speed, 640.0 * pow(0.96, 3)) and core.collision_layer == 0, "The core retains pressure through later banks and exhaustion removes its hitbox")
 					await cleanup(parent)
 
 func cancellation_and_pause() -> void:
@@ -68,7 +68,7 @@ func cancellation_and_pause() -> void:
 		var core := setup_core(parent, arena, arena.position + Vector2(1050, 476), true)
 		if after_bank:
 			core._physics_process(float(core.next_bank().distance) / core.speed + 0.001)
-			expect(core.bank_count == 1 and parent.get_child_count() == 1, "A bank gives a 0.25-second fan cue before creating children")
+			expect(core.bank_count == 1 and parent.get_child_count() == 1, "A bank gives a 0.18-second fan cue before creating children")
 		core.queue_free()
 		core._physics_process(10.0)
 		await process_frame
@@ -127,15 +127,15 @@ func recovery() -> void:
 	core.queue_free()
 	await process_frame
 	shooter._physics_process(30.0)
-	expect(shooter._waiting_for_clear and is_equal_approx(shooter.timer, 1.5) and bullets.get_child_count() == 5, "Recovery waits for offspring even after the core has gone")
+	expect(shooter._waiting_for_clear and is_equal_approx(shooter.timer, 1.0) and bullets.get_child_count() == 7, "Recovery waits for offspring even after the core has gone")
 	shooter.set_sequence((load("res://data/sequences/ricochet.tres") as AttackSequence).steps)
 	shooter._physics_process(10.0)
-	expect(shooter._waiting_for_clear and bullets.get_child_count() == 5, "A sequence or boss phase change preserves the pending family barrier")
+	expect(shooter._waiting_for_clear and bullets.get_child_count() == 7, "A sequence change preserves the pending family barrier")
 	for bullet in bullets.get_children(): bullet.queue_free()
 	await process_frame
 	shooter._physics_process(0.1)
-	shooter._physics_process(1.49)
-	expect(not shooter.warning and bullets.get_child_count() == 0, "The full 1.5-second counter window starts after the final residual bullet")
+	shooter._physics_process(0.99)
+	expect(not shooter.warning and bullets.get_child_count() == 0, "The full one-second counter window starts after the final residual bullet")
 	shooter._physics_process(0.02)
 	expect(shooter.warning and bullets.get_child_count() == 0, "The next charge starts only after the counter window")
 	shooter._physics_process(0.61)
@@ -167,42 +167,72 @@ func recovery() -> void:
 	root.add_child(parent)
 	bullets = Node2D.new()
 	parent.add_child(bullets)
-	var enemy := load("res://scenes/enemies/m1_carapace.tscn").instantiate() as EnemyShip
+	var enemy := load("res://scenes/enemies/m2_wing.tscn").instantiate() as EnemyShip
 	enemy.position = arena.position + Vector2(1260, 476)
 	enemy.bounds = arena
 	parent.add_child(enemy)
 	enemy.set_physics_process(false)
 	enemy.movement.set_physics_process(false)
 	enemy.movement.reached_hold = true
-	var siege := enemy.shooter as SiegeShooter
-	expect(siege.cycle_index == SiegeShooter.Cycle.RICOCHET, "M1 introduces the new pattern in its opening attack")
-	siege.set_physics_process(false)
-	siege.bounds = arena
-	siege.projectiles = bullets
-	siege.cycle_index = SiegeShooter.Cycle.RICOCHET
-	siege.timer = 0.0
-	siege._physics_process(0.01)
-	expect(siege.warning and is_equal_approx(siege.timer, 0.6), "M1 includes the bank cycle with its full charge")
-	siege._physics_process(0.61)
+	shooter = enemy.shooter
+	expect(shooter.steps[0].pattern.shape == AttackPattern.Shape.RICOCHET, "The L2 winged enemy introduces the bank pattern in its opening attack")
+	expect((enemy.get_node("Visual") as Sprite2D).texture.resource_path.ends_with("/Enemy/L2.png"), "The bank attack belongs to the pictured Mutalisk-shaped enemy")
+	shooter.set_physics_process(false)
+	shooter.bounds = arena
+	shooter.projectiles = bullets
+	shooter.timer = 0.0
+	shooter._physics_process(0.01)
+	expect(shooter.warning and is_equal_approx(shooter.timer, 0.6), "M2 includes the bank cycle with its full charge")
+	shooter._physics_process(0.61)
 	core = bullets.get_child(0) as RicochetCore
 	core.set_physics_process(false)
 	core._physics_process(float(core.next_bank().distance) / core.speed + core.bank_pause_seconds + 0.01)
 	for bullet: Projectile in bullets.get_children(): bullet.set_physics_process(false)
-	siege._physics_process(30.0)
-	expect(siege.cycle_phase == SiegeShooter.Phase.WAIT_CLEAR, "M1 does not overlap a bank family with the next wall")
+	shooter._physics_process(30.0)
+	expect(shooter._waiting_for_clear and shooter.volleys_fired == 1, "M2 waits for the bank family before wing-cross volleys")
 	for bullet in bullets.get_children(): bullet.queue_free()
 	await process_frame
-	siege._physics_process(0.01)
-	expect(siege.cycle_phase == SiegeShooter.Phase.RECOVERY and is_equal_approx(siege.timer, 1.5), "M1's bank cycle has a separate 1.5-second counter window")
-	siege._physics_process(1.49)
-	expect(bullets.get_child_count() == 0 and siege.cycle_phase == SiegeShooter.Phase.RECOVERY, "M1 cannot shoot inside the bank counter window")
-	siege._physics_process(0.02)
-	expect(siege.cycle_index == SiegeShooter.Cycle.LURE, "M1 returns to lure after the fourth cycle")
+	shooter._physics_process(0.01)
+	expect(not shooter._waiting_for_clear and is_equal_approx(shooter.timer, 1.0), "M2's counter window starts only after residual bullets disappear")
+	shooter._physics_process(0.99)
+	expect(bullets.get_child_count() == 0 and not shooter.warning, "M2 cannot shoot inside the bank counter window")
+	shooter._physics_process(0.02)
+	expect(shooter.warning and shooter.steps[shooter.step_index].pattern.shape != AttackPattern.Shape.RICOCHET, "M2 resumes its original wing attack after the bank counter window")
 	await cleanup(parent)
 	var boss := load("res://scenes/enemies/boss.tscn").instantiate() as EnemyShip
 	var ricochet_step := load("res://data/patterns/ricochet_step.tres") as PatternStep
-	expect((boss.get_node("Shooter") as EnemyShooter).steps.has(ricochet_step) and boss.second_phase.has(ricochet_step), "Both boss phases include the bank pattern")
+	expect(not (boss.get_node("Shooter") as EnemyShooter).steps.has(ricochet_step) and not boss.second_phase.has(ricochet_step), "The bank pattern is removed from both mistaken boss phases")
 	boss.free()
+	var m1 := load("res://scenes/enemies/m1_carapace.tscn").instantiate() as EnemyShip
+	expect((m1.get_node("Shooter") as SiegeShooter).cycle_index == SiegeShooter.Cycle.LURE, "The mistaken M1 opening is restored to lure and walls")
+	m1.free()
+
+func aimed_fan() -> void:
+	var parent := Node2D.new()
+	root.add_child(parent)
+	var arena := content.rules.playfield
+	var target := Node2D.new()
+	target.position = arena.position + Vector2(450, 680)
+	parent.add_child(target)
+	var core := setup_core(parent, arena, arena.position + Vector2(1050, 476), true)
+	core.target = target
+	var first_bank := core.next_bank()
+	core._physics_process(float(first_bank.distance) / core.speed - 0.4)
+	var expected := RicochetCore.fan_direction(Vector2(first_bank.position).direction_to(target.global_position), first_bank.normal, core.child_spread)
+	expect(core._fan_bank == 1 and core._fan_center.is_equal_approx(expected), "The first bank locks a fan toward the player during the visible warning")
+	var locked := core._fan_center
+	target.position = arena.position + Vector2(380, 120)
+	var children: Array[Projectile] = []
+	core.offspring_spawned.connect(func(child: Projectile):
+		child.set_physics_process(false)
+		children.append(child))
+	core._physics_process(0.4 + core.bank_pause_seconds + 0.01)
+	expect(children.size() == 7 and children[3].direction.is_equal_approx(locked), "A player move after the warning cannot secretly retarget the emitted fan")
+	var second_bank := core.next_bank()
+	core._physics_process(float(second_bank.distance) / core.speed - 0.4)
+	expected = RicochetCore.fan_direction(Vector2(second_bank.position).direction_to(target.global_position), second_bank.normal, core.child_spread)
+	expect(core._fan_bank == 2 and core._fan_center.is_equal_approx(expected), "The second bank reacquires the player's new position for its own warning")
+	await cleanup(parent)
 
 func showcase() -> void:
 	if DisplayServer.get_name() == "headless": return
@@ -213,12 +243,10 @@ func showcase() -> void:
 	stage.player.auto_advance_speed = 0.0
 	stage.player.position = stage.rules.spawn_position
 	stage.player.weapon.set_physics_process(false)
-	var enemy := stage._spawn_enemy(load("res://scenes/enemies/m1_carapace.tscn"), Vector2(stage.view_bounds.end.x - 280, stage.view_bounds.get_center().y))
+	var enemy := stage._spawn_enemy(load("res://scenes/enemies/m2_wing.tscn"), Vector2(stage.view_bounds.end.x - 280, stage.view_bounds.get_center().y))
 	enemy.movement.set_physics_process(false)
 	enemy.movement.reached_hold = true
-	var siege := enemy.shooter as SiegeShooter
-	siege.cycle_index = SiegeShooter.Cycle.RICOCHET
-	siege.timer = 0.0
+	enemy.shooter.timer = 0.0
 	var captured := {}
 	DirAccess.make_dir_recursive_absolute("res://build/screenshots")
 	for frame in 660:
@@ -241,8 +269,9 @@ func run() -> void:
 	await geometry()
 	await cancellation_and_pause()
 	await recovery()
+	await aimed_fan()
 	if OS.get_cmdline_user_args().has("--screenshots"): await showcase()
-	var report := {"checks": checks, "failures": failures, "method": "36 mirrored geometry trials; real contact and pause; family clearance, cancellation and M1/boss integration"}
+	var report := {"checks": checks, "failures": failures, "method": "36 mirrored geometry trials; locked aimed fans; real contact and pause; family clearance, cancellation and M2-only integration"}
 	DirAccess.make_dir_recursive_absolute("res://build/validation")
 	FileAccess.open("res://build/validation/ricochet.json", FileAccess.WRITE).store_string(JSON.stringify(report, "\t"))
 	print(JSON.stringify(report))

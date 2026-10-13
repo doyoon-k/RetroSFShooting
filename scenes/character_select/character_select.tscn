@@ -1,23 +1,67 @@
-[gd_scene load_steps=19 format=3 uid="uid://diab46cka0xnd"]
+[gd_scene load_steps=31 format=3 uid="uid://diab46cka0xnd"]
 
-[ext_resource type="Texture2D" uid="uid://dhdcjagylx8hl" path="res://assets/Pilots_sprites/pilots/P1_Nomal.png" id="7_ugtsa"]
-[ext_resource type="Texture2D" uid="uid://bbvbysn73t2gk" path="res://assets/Pilots_sprites/pilots/P2_Nomal.png" id="9_saw8y"]
-[ext_resource type="Texture2D" uid="uid://dqsvu2gffd6xd" path="res://assets/Pilots_sprites/pilots/P3_Nomal.png" id="11_tag0i"]
-[ext_resource type="Texture2D" uid="uid://c35cb8gdp57ws" path="res://assets/Pilots_sprites/pilots/P4_Nomal.png" id="13_5ypp3"]
-[ext_resource type="Texture2D" uid="uid://c3expv0d8onyk" path="res://assets/Pilots_sprites/pilots/P5_nomal.png" id="15_j15fu"]
-[ext_resource type="Texture2D" uid="uid://owgeyvnencb4" path="res://assets/Pilots_sprites/pilots/P6_Nomal.png" id="17_ugtgx"]
-[ext_resource type="Script" path="res://scenes/character_select/hangar_pilot.gd" id="HangarPilot"]
-[ext_resource type="Resource" uid="uid://ci0so1hhj0d16" path="res://data/pilots/P1.tres" id="P1"]
-[ext_resource type="Resource" uid="uid://cbnk8hp0r0npb" path="res://data/pilots/P2.tres" id="P2"]
-[ext_resource type="Resource" uid="uid://qetf721i8t0k" path="res://data/pilots/P3.tres" id="P3"]
-[ext_resource type="Resource" uid="uid://17vqfwhwgl02" path="res://data/pilots/P4.tres" id="P4"]
-[ext_resource type="Resource" uid="uid://dc5chan1q6qli" path="res://data/pilots/P5.tres" id="P5"]
-[ext_resource type="Resource" uid="uid://dpkdp53nex4ol" path="res://data/pilots/P6.tres" id="P6"]
-[ext_resource type="Resource" path="res://data/game_catalog.tres" id="PreviewCatalog"]
-[ext_resource type="PackedScene" path="res://scenes/ui/pilot_roster.tscn" id="Roster"]
 [ext_resource type="Script" path="res://scenes/character_select/character_select.gd" id="Script"]
-[ext_resource type="Theme" uid="uid://wbownrqyfplv" path="res://scenes/ui/game_theme.tres" id="Theme"]
+[ext_resource type="Script" path="res://scenes/character_select/hangar_pilot.gd" id="HangarPilot"]
+[ext_resource type="Resource" path="res://data/game_catalog.tres" id="Catalog"]
+[ext_resource type="Theme" path="res://scenes/ui/game_theme.tres" id="Theme"]
 [ext_resource type="Script" path="res://scenes/ui/typewriter_label.gd" id="Typewriter"]
+[ext_resource type="Resource" path="res://data/pilots/P1.tres" id="P1"]
+[ext_resource type="Resource" path="res://data/pilots/P2.tres" id="P2"]
+[ext_resource type="Resource" path="res://data/pilots/P3.tres" id="P3"]
+[ext_resource type="Resource" path="res://data/pilots/P4.tres" id="P4"]
+[ext_resource type="Resource" path="res://data/pilots/P5.tres" id="P5"]
+[ext_resource type="Resource" path="res://data/pilots/P6.tres" id="P6"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/PilotSelect_Bg3.png" id="Background"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/SelectPilot_Bg2.png" id="Frame"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/Select Pilot_font.png" id="Heading"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/SixPilot.png" id="Silhouettes"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/Left_Tri.png" id="Arrow"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/SelectTriangle.png" id="Marker"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/Character_inpormation_BG.png" id="Information"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/ButtonA.png" id="Confirm"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/Xbutton.png" id="Close"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/ScreenFX_A.png" id="Scanlines"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/pilots/P1_Nomal.png" id="PreviewPortrait"]
+
+[sub_resource type="AtlasTexture" id="Pilot0"]
+atlas = ExtResource("Silhouettes")
+region = Rect2(120, 0, 108, 230)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Pilot1"]
+atlas = ExtResource("Silhouettes")
+region = Rect2(228, 0, 96, 230)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Pilot2"]
+atlas = ExtResource("Silhouettes")
+region = Rect2(324, 0, 126, 230)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Pilot3"]
+atlas = ExtResource("Silhouettes")
+region = Rect2(450, 0, 102, 230)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Pilot4"]
+atlas = ExtResource("Silhouettes")
+region = Rect2(552, 0, 114, 230)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Pilot5"]
+atlas = ExtResource("Silhouettes")
+region = Rect2(666, 0, 102, 230)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="PlatformLeft"]
+atlas = ExtResource("Silhouettes")
+region = Rect2(0, 0, 120, 230)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="PlatformRight"]
+atlas = ExtResource("Silhouettes")
+region = Rect2(768, 0, 120, 230)
+filter_clip = true
 
 [node name="CharacterSelect" type="Control"]
 layout_mode = 3
@@ -28,180 +72,329 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("Theme")
 script = ExtResource("Script")
-catalog = ExtResource("PreviewCatalog")
+catalog = ExtResource("Catalog")
 
-[node name="Heading" type="Label" parent="."]
+[node name="Letterbox" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.025, 0.025, 1)
+
+[node name="Layout" type="Control" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 96.0
-offset_top = 46.0
-offset_right = 1296.0
-offset_bottom = 136.0
-theme_override_font_sizes/font_size = 56
-text = "SELECT PILOT"
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
 
-[node name="Hangar" type="Node2D" parent="."]
+[node name="Background" type="TextureRect" parent="Layout"]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+expand_mode = 1
+texture = ExtResource("Background")
+
+[node name="Frame" type="TextureRect" parent="Layout"]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+expand_mode = 1
+texture = ExtResource("Frame")
+
+[node name="Heading" type="TextureRect" parent="Layout"]
+layout_mode = 0
+offset_left = 631.0
+offset_top = 57.0
+offset_right = 1290.0
+offset_bottom = 135.0
+mouse_filter = 2
+expand_mode = 1
+texture = ExtResource("Heading")
+
+[node name="PlatformLeft" type="TextureRect" parent="Layout"]
+self_modulate = Color(1.35, 1.35, 1.35, 1)
+layout_mode = 0
+offset_left = 516.0
+offset_top = 752.0
+offset_right = 632.7567567567568
+offset_bottom = 968.0
+mouse_filter = 2
+expand_mode = 1
+texture = SubResource("PlatformLeft")
+
+[node name="Hangar" type="Control" parent="Layout"]
 unique_name_in_owner = true
+modulate = Color(1.35, 1.35, 1.35, 1)
+layout_mode = 0
+offset_left = 516.0
+offset_top = 752.0
+offset_right = 1404.0
+offset_bottom = 982.0
+mouse_filter = 2
+scale = Vector2(0.972973, 0.93913)
 
-[node name="Pilot0" type="Node2D" parent="Hangar"]
-position = Vector2(275, 366)
+[node name="Pilot0" type="TextureButton" parent="Layout/Hangar"]
+layout_mode = 0
+offset_left = 120.0
+offset_right = 228.0
+offset_bottom = 230.0
+mouse_default_cursor_shape = 2
+ignore_texture_size = true
+stretch_mode = 0
+texture_normal = SubResource("Pilot0")
 script = ExtResource("HangarPilot")
 pilot = ExtResource("P1")
 
-[node name="Portrait" type="Sprite2D" parent="Hangar/Pilot0"]
-scale = Vector2(0.85, 0.85)
-texture = ExtResource("7_ugtsa")
-
-[node name="Name" type="Label" parent="Hangar/Pilot0"]
-offset_left = -145.0
-offset_top = 60.0
-offset_right = 145.0
-offset_bottom = 94.0
-theme_override_font_sizes/font_size = 19
-text = "P1"
-horizontal_alignment = 1
-
-[node name="Pilot1" type="Node2D" parent="Hangar"]
-position = Vector2(625, 366)
+[node name="Pilot1" type="TextureButton" parent="Layout/Hangar"]
+layout_mode = 0
+offset_left = 228.0
+offset_right = 324.0
+offset_bottom = 230.0
+mouse_default_cursor_shape = 2
+ignore_texture_size = true
+stretch_mode = 0
+texture_normal = SubResource("Pilot1")
 script = ExtResource("HangarPilot")
 pilot = ExtResource("P2")
 
-[node name="Portrait" type="Sprite2D" parent="Hangar/Pilot1"]
-scale = Vector2(0.85, 0.85)
-texture = ExtResource("9_saw8y")
-
-[node name="Name" type="Label" parent="Hangar/Pilot1"]
-offset_left = -145.0
-offset_top = 60.0
-offset_right = 145.0
-offset_bottom = 94.0
-theme_override_font_sizes/font_size = 19
-text = "P2"
-horizontal_alignment = 1
-
-[node name="Pilot2" type="Node2D" parent="Hangar"]
-position = Vector2(975, 366)
+[node name="Pilot2" type="TextureButton" parent="Layout/Hangar"]
+layout_mode = 0
+offset_left = 324.0
+offset_right = 450.0
+offset_bottom = 230.0
+mouse_default_cursor_shape = 2
+ignore_texture_size = true
+stretch_mode = 0
+texture_normal = SubResource("Pilot2")
 script = ExtResource("HangarPilot")
 pilot = ExtResource("P3")
 
-[node name="Portrait" type="Sprite2D" parent="Hangar/Pilot2"]
-scale = Vector2(0.85, 0.85)
-texture = ExtResource("11_tag0i")
-
-[node name="Name" type="Label" parent="Hangar/Pilot2"]
-offset_left = -145.0
-offset_top = 60.0
-offset_right = 145.0
-offset_bottom = 94.0
-theme_override_font_sizes/font_size = 19
-text = "P3"
-horizontal_alignment = 1
-
-[node name="Pilot3" type="Node2D" parent="Hangar"]
-position = Vector2(275, 570)
+[node name="Pilot3" type="TextureButton" parent="Layout/Hangar"]
+layout_mode = 0
+offset_left = 450.0
+offset_right = 552.0
+offset_bottom = 230.0
+mouse_default_cursor_shape = 2
+ignore_texture_size = true
+stretch_mode = 0
+texture_normal = SubResource("Pilot3")
 script = ExtResource("HangarPilot")
 pilot = ExtResource("P4")
 
-[node name="Portrait" type="Sprite2D" parent="Hangar/Pilot3"]
-scale = Vector2(0.85, 0.85)
-texture = ExtResource("13_5ypp3")
-
-[node name="Name" type="Label" parent="Hangar/Pilot3"]
-offset_left = -145.0
-offset_top = 60.0
-offset_right = 145.0
-offset_bottom = 94.0
-theme_override_font_sizes/font_size = 19
-text = "P4"
-horizontal_alignment = 1
-
-[node name="Pilot4" type="Node2D" parent="Hangar"]
-position = Vector2(625, 570)
+[node name="Pilot4" type="TextureButton" parent="Layout/Hangar"]
+layout_mode = 0
+offset_left = 552.0
+offset_right = 666.0
+offset_bottom = 230.0
+mouse_default_cursor_shape = 2
+ignore_texture_size = true
+stretch_mode = 0
+texture_normal = SubResource("Pilot4")
 script = ExtResource("HangarPilot")
 pilot = ExtResource("P5")
 
-[node name="Portrait" type="Sprite2D" parent="Hangar/Pilot4"]
-scale = Vector2(0.85, 0.85)
-texture = ExtResource("15_j15fu")
-
-[node name="Name" type="Label" parent="Hangar/Pilot4"]
-offset_left = -145.0
-offset_top = 60.0
-offset_right = 145.0
-offset_bottom = 94.0
-theme_override_font_sizes/font_size = 19
-text = "P5"
-horizontal_alignment = 1
-
-[node name="Pilot5" type="Node2D" parent="Hangar"]
-position = Vector2(975, 570)
+[node name="Pilot5" type="TextureButton" parent="Layout/Hangar"]
+layout_mode = 0
+offset_left = 666.0
+offset_right = 768.0
+offset_bottom = 230.0
+mouse_default_cursor_shape = 2
+ignore_texture_size = true
+stretch_mode = 0
+texture_normal = SubResource("Pilot5")
 script = ExtResource("HangarPilot")
 pilot = ExtResource("P6")
 
-[node name="Portrait" type="Sprite2D" parent="Hangar/Pilot5"]
-scale = Vector2(0.85, 0.85)
-texture = ExtResource("17_ugtgx")
-
-[node name="Name" type="Label" parent="Hangar/Pilot5"]
-offset_left = -145.0
-offset_top = 60.0
-offset_right = 145.0
-offset_bottom = 94.0
-theme_override_font_sizes/font_size = 19
-text = "P6"
-horizontal_alignment = 1
-
-[node name="Details" type="Panel" parent="."]
-unique_name_in_owner = true
+[node name="PlatformRight" type="TextureRect" parent="Layout"]
+self_modulate = Color(1.35, 1.35, 1.35, 1)
 layout_mode = 0
-offset_left = 96.0
+offset_left = 1263.2432432432433
 offset_top = 752.0
-offset_right = 1176.0
-offset_bottom = 1000.0
-
-[node name="PilotName" type="Label" parent="Details"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 32.0
-offset_top = 22.0
-offset_right = 1040.0
-offset_bottom = 77.0
-theme_override_font_sizes/font_size = 32
-
-[node name="Description" type="RichTextLabel" parent="Details"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 32.0
-offset_top = 91.0
-offset_right = 1040.0
-offset_bottom = 228.0
+offset_right = 1380.0
+offset_bottom = 968.0
 mouse_filter = 2
+expand_mode = 1
+texture = SubResource("PlatformRight")
+
+[node name="MoveLeft" type="TextureButton" parent="Layout"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 486.0
+offset_top = 805.0
+offset_right = 565.0
+offset_bottom = 899.0
+mouse_default_cursor_shape = 2
+ignore_texture_size = true
+stretch_mode = 0
+tooltip_text = "이전 파일럿 (←)"
+texture_normal = ExtResource("Arrow")
+
+[node name="MoveRight" type="TextureButton" parent="Layout"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 1336.0
+offset_top = 805.0
+offset_right = 1415.0
+offset_bottom = 899.0
+mouse_default_cursor_shape = 2
+ignore_texture_size = true
+stretch_mode = 0
+tooltip_text = "다음 파일럿 (→)"
+texture_normal = ExtResource("Arrow")
+flip_h = true
+
+[node name="SelectionMarker" type="TextureRect" parent="Layout"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 661.2972972972973
+offset_top = 714.0
+offset_right = 709.2972972972973
+offset_bottom = 752.0
+mouse_filter = 2
+expand_mode = 1
+texture = ExtResource("Marker")
+
+[node name="Details" type="Control" parent="Layout"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 266.0
+offset_top = 187.0
+offset_right = 1405.0
+offset_bottom = 649.0
+mouse_filter = 2
+
+[node name="Shadow" type="TextureRect" parent="Layout/Details"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 1147.0
+offset_bottom = 470.0
+mouse_filter = 2
+expand_mode = 1
+texture = ExtResource("Information")
+self_modulate = Color(0, 0, 0, 0.7)
+
+[node name="Background" type="TextureRect" parent="Layout/Details"]
+layout_mode = 0
+offset_right = 1139.0
+offset_bottom = 462.0
+mouse_filter = 2
+expand_mode = 1
+texture = ExtResource("Information")
+
+[node name="PortraitPanel" type="Control" parent="Layout/Details"]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 20.0
+offset_right = 344.0
+offset_bottom = 442.0
+mouse_filter = 2
+clip_contents = true
+
+[node name="Background" type="ColorRect" parent="Layout/Details/PortraitPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.085, 0.08, 0.085, 1)
+
+[node name="Portrait" type="TextureRect" parent="Layout/Details/PortraitPanel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+texture = ExtResource("PreviewPortrait")
+stretch_mode = 6
+
+[node name="PilotName" type="Label" parent="Layout/Details"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 396.0
+offset_top = 42.0
+offset_right = 1097.0
+offset_bottom = 112.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.1, 0.1, 0.1, 1)
+theme_override_font_sizes/font_size = 36
+text = "P1"
+text_overrun_behavior = 3
+
+[node name="Description" type="RichTextLabel" parent="Layout/Details"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 396.0
+offset_top = 130.0
+offset_right = 1097.0
+offset_bottom = 390.0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.1, 0.1, 0.1, 1)
+theme_override_font_sizes/normal_font_size = 28
 scroll_active = false
 script = ExtResource("Typewriter")
 
-[node name="Roster" parent="." instance=ExtResource("Roster")]
+[node name="CloseDetails" type="TextureButton" parent="Layout/Details"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 1280.0
-offset_top = 220.0
-offset_right = 1808.0
-offset_bottom = 822.0
+offset_left = 1132.0
+offset_top = 19.0
+offset_right = 1232.0
+offset_bottom = 134.0
+mouse_default_cursor_shape = 2
+ignore_texture_size = true
+stretch_mode = 0
+tooltip_text = "닫기 (Esc / B)"
+texture_normal = ExtResource("Close")
 
-[node name="SelectHint" type="Label" parent="."]
+[node name="Sortie" type="TextureButton" parent="Layout/Details"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 1280.0
-offset_top = 840.0
-offset_right = 1840.0
-offset_bottom = 882.0
-theme_override_font_sizes/font_size = 21
-text = "↑↓←→  파일럿 선택   /   Enter  확인"
+offset_left = 760.0
+offset_top = 410.0
+offset_right = 1054.0
+offset_bottom = 519.0
+mouse_default_cursor_shape = 2
+ignore_texture_size = true
+stretch_mode = 0
+texture_normal = ExtResource("Confirm")
 
-[node name="Sortie" type="Button" parent="."]
-unique_name_in_owner = true
+[node name="Label" type="Label" parent="Layout/Details/Sortie"]
 layout_mode = 0
-offset_left = 1280.0
-offset_top = 919.0
-offset_right = 1808.0
-offset_bottom = 1000.0
-text = "SORTIE / 출격"
+offset_left = 122.0
+offset_top = 15.0
+offset_right = 280.0
+offset_bottom = 87.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.88, 0.88, 0.86, 1)
+theme_override_font_sizes/font_size = 30
+text = "출격"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScreenEffects" type="Control" parent="Layout"]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+
+[node name="Scanlines" type="TextureRect" parent="Layout/ScreenEffects"]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+expand_mode = 1
+texture = ExtResource("Scanlines")

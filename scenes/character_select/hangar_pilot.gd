@@ -1,6 +1,7 @@
 @tool
 class_name HangarPilot
-extends Node2D
+extends TextureButton
+## A selectable slice of SixPilot.png. Atlas regions retain the shared floor line.
 
 @export var pilot: PilotData:
 	set(value):
@@ -11,18 +12,8 @@ extends Node2D
 			pilot.changed.connect(_refresh)
 		_refresh()
 
-@onready var portrait: Sprite2D = $Portrait
-@onready var name_label: Label = $Name
-
 func _ready() -> void:
 	_refresh()
 
 func _refresh() -> void:
-	if not is_node_ready():
-		return
-	if pilot == null:
-		portrait.texture = null
-		name_label.text = ""
-		return
-	portrait.texture = pilot.hangar_portrait if pilot.hangar_portrait != null else pilot.normal
-	name_label.text = pilot.callsign
+	tooltip_text = "%s 정보 (Enter / A)" % pilot.callsign if pilot != null else ""

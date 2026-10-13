@@ -7,14 +7,13 @@ extends EnemyShooter
 signal cycle_started(index: int)
 signal counter_window_started(index: int)
 
-enum Cycle { LURE, CROSS, CORE, RICOCHET }
-enum Phase { WAIT, LURE, DEPLOY, WALL, WAIT_WALL, CROSS, RELEASE, WAIT_CLEAR, RECOVERY, RICOCHET }
+enum Cycle { LURE, CROSS, CORE }
+enum Phase { WAIT, LURE, DEPLOY, WALL, WAIT_WALL, CROSS, RELEASE, WAIT_CLEAR, RECOVERY }
 
 @export var wall_cycles_enabled: bool = true
 @export var opening_bullet_scene: PackedScene
 @export var cross_bullet_scene: PackedScene
 @export var core_scene: PackedScene
-@export var ricochet_step: PatternStep
 @export_range(0.1, 2.0, 0.05) var lure_interval: float = 0.45
 @export_range(0.1, 2.0, 0.05) var opening_pause: float = 0.6
 @export_range(0.1, 2.0, 0.05) var cross_interval: float = 0.35
@@ -22,7 +21,7 @@ enum Phase { WAIT, LURE, DEPLOY, WALL, WAIT_WALL, CROSS, RELEASE, WAIT_CLEAR, RE
 @export_range(0.1, 2.0, 0.05) var core_stagger: float = 0.6
 @export_range(1.0, 5.0, 0.1) var counter_seconds: float = 2.0
 
-var cycle_index: int = Cycle.RICOCHET
+var cycle_index: int = Cycle.LURE
 var cycle_phase: Phase = Phase.WAIT
 var cycles_completed: int = 0
 var _extra_volley: int = 0
@@ -60,8 +59,8 @@ func _physics_process(delta: float) -> void:
 		return
 	_prune_hazards()
 	timer = maxf(0.0, timer - delta)
-	var previews := cycle_phase in [Phase.LURE, Phase.DEPLOY, Phase.WALL, Phase.CROSS, Phase.RICOCHET]
-	warning = previews and timer > 0.0 and timer <= _cycle_warning_seconds()
+	var previews := cycle_phase in [Phase.LURE, Phase.DEPLOY, Phase.WALL, Phase.CROSS]
+	warning = previews and timer > 0.0 and timer <= telegraph_seconds
 	queue_redraw()
 	if timer > 0.0:
 		return
@@ -123,26 +122,18 @@ func _physics_process(delta: float) -> void:
 		Phase.RELEASE:
 			_release_core(1)
 			_schedule(Phase.WAIT_CLEAR, 0.0)
-		Phase.RICOCHET:
-			if ricochet_step != null and ricochet_step.pattern != null:
-				var core := _spawn_shot(ricochet_step.pattern.projectile_scene, global_position, locked_angle) as RicochetCore
-				if core != null: core.offspring_spawned.connect(_track)
-				volleys_fired += 1
-				bursts_completed += 1
-			_schedule(Phase.WAIT_CLEAR, 0.0)
 		Phase.WAIT_CLEAR:
 			if _active.is_empty():
 				cycles_completed += 1
 				starting = true
-				var recovery := ricochet_step.pattern.recovery if cycle_index == Cycle.RICOCHET and ricochet_step != null and ricochet_step.pattern != null else counter_seconds
-				_schedule(Phase.RECOVERY, recovery)
+				_schedule(Phase.RECOVERY, counter_seconds)
 				counter_window_started.emit(cycle_index)
 		Phase.RECOVERY:
-			cycle_index = (cycle_index + 1) % Cycle.size()
+			cycle_index = (cycle_index + 1) % 3
 			_begin_cycle()
 
 func _begin_cycle() -> void:
-	if cycle_index != Cycle.RICOCHET: _choose_curtain_route(steps[0].pattern)
+	_choose_curtain_route(steps[0].pattern)
 	locked_angle = PI
 	volley = 0
 	_extra_volley = 0
@@ -154,23 +145,14 @@ func _begin_cycle() -> void:
 		if is_instance_valid(target):
 			_lure_angle = global_position.direction_to(target.global_position).angle()
 	var first: Phase = Phase.LURE if cycle_index == Cycle.LURE else (Phase.WALL if cycle_index == Cycle.CROSS else Phase.DEPLOY)
-	if cycle_index == Cycle.RICOCHET:
-		first = Phase.RICOCHET
-		locked_angle = RicochetCore.launch_direction(global_position, bounds, ricochet_starts_above).angle()
-	_schedule(first, _cycle_warning_seconds())
+	_schedule(first, telegraph_seconds)
 	cycle_started.emit(cycle_index)
 
 func _schedule(next: Phase, delay: float) -> void:
 	cycle_phase = next
 	timer = maxf(0.0, delay)
-	warning = next in [Phase.LURE, Phase.DEPLOY, Phase.WALL, Phase.CROSS, Phase.RICOCHET] and timer > 0.0 and timer <= _cycle_warning_seconds()
+	warning = next in [Phase.LURE, Phase.DEPLOY, Phase.WALL, Phase.CROSS] and timer > 0.0 and timer <= telegraph_seconds
 	queue_redraw()
-
-func _cycle_warning_seconds() -> float:
-	if cycle_index == Cycle.RICOCHET and ricochet_step != null and ricochet_step.pattern != null:
-		if ricochet_step.pattern.telegraph_seconds >= 0.0:
-			return ricochet_step.pattern.telegraph_seconds
-	return telegraph_seconds
 
 func _spawn_shot(scene: PackedScene, point: Vector2, angle: float, speed: float = 0.0) -> Projectile:
 	if scene == null or not bounds.grow(-16.0).has_point(point):
@@ -179,9 +161,6 @@ func _spawn_shot(scene: PackedScene, point: Vector2, angle: float, speed: float 
 	bullet.direction = Vector2.from_angle(angle)
 	bullet.bounds = bounds
 	bullet.position = projectiles.to_local(point)
-	if bullet is RicochetCore:
-		bullet.starts_above = ricochet_starts_above
-		ricochet_starts_above = not ricochet_starts_above
 	if speed > 0.0: bullet.speed = speed
 	projectiles.add_child(bullet)
 	_track(bullet)
@@ -230,9 +209,6 @@ func _draw() -> void:
 		super._draw()
 		return
 	if not warning or Engine.is_editor_hint(): return
-	if cycle_phase == Phase.RICOCHET:
-		_draw_ricochet_charge(1.0 - clampf(timer / maxf(_cycle_warning_seconds(), 0.01), 0.0, 1.0))
-		return
 	var tint := Color(1.0, 0.95, 0.5, 0.9)
 	if cycle_phase == Phase.LURE:
 		var forward := Vector2.from_angle(_lure_angle - global_rotation)

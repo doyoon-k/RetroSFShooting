@@ -25,6 +25,7 @@
 | 아이템 성능 | `scenes/items/*.tscn` |
 | 일러스트·본문·타이핑 속도 | `data/stories/*.tres` |
 | 메뉴·HUD 글꼴 | `scenes/ui/game_theme.tres` |
+| 파일럿 선택 배경·실루엣·정보창 배치 | `scenes/character_select/character_select.tscn`의 Layout |
 | 전투 프레임·파일럿 슬롯 배치 | `stage_01.tscn`의 Interface / Root |
 | 전투 하단 콘솔·확대 초상화 | `scenes/ui/combat_hud.tscn` |
 | 키보드·게임패드 | Project Settings → Input Map |
@@ -230,7 +231,7 @@ Hold Position의 X는 등장 당시 화면을 기준으로 한 좌표이며, Y�
 
 ## 파일럿·스토리·연출 교체
 
-PilotData에서 초상화를 드래그해 교체할 수 있습니다. `Hangar Portrait`는 선택 화면 격납고에
+PilotData에서 초상화를 드래그해 교체할 수 있습니다. `Hangar Portrait`는 선택 화면 정보창에
 사용하며, 비어 있으면 `Normal`을 표시합니다. 파일럿 카드의 일반 초상화는 전체 사망자 수에
 따라 `Normal`(0명), `One Dead`(1명), `Two Dead`(2~3명), `Four Dead`(4~5명)로 바뀝니다.
 출격 중인 파일럿의 HP가 절반 이하로 떨어지면 `Damaged`를, 사망하면 `Dead`를 표시합니다.
@@ -239,10 +240,14 @@ PilotData에서 초상화를 드래그해 교체할 수 있습니다. `Hangar Po
 각 PilotData의 Ship Scene은 공통 player_ship의 변형 씬을 가리킵니다. `Ship Scale`은 외형
 크기만 바꾸므로 피격 범위를 바꾸려면 CollisionShape2D를 별도로 수정하세요.
 
-격납고는 CharacterSelect 씬의 Hangar 아래 여섯 노드에 배치되어 있습니다. 각 노드의
-`Pilot`에 해당 PilotData를 연결하면 이름과 격납고 초상화가 에디터에도 표시됩니다. 노드의
-위치를 바꿔도 파일럿 데이터 연결은 유지됩니다. 격납고의 임시 Idle 애니메이션은 제거했으며,
-현재는 제공된 초상화를 정적으로 표시합니다.
+파일럿 선택 화면은 CharacterSelect 씬의 `Layout` 안에서 1920×1080 기준으로 편집합니다.
+`Background`와 `Frame`은 전체 화면 PNG이며, 하단 `Hangar/Pilot0~5`는 `SixPilot.png`의
+AtlasTexture 영역을 사용하는 TextureButton입니다. 바닥선 양 끝은 `PlatformLeft/Right`가
+이어 표시합니다. 파일럿 순서는 GameCatalog의 Pilots 배열을 따릅니다.
+`Details`의 Visible을 켜면 정보창 위치를 편집할 수 있으며 저장할 때는 다시 끕니다.
+초상화는 비율을 유지한 채 왼쪽 영역을 채우고 넘치는 부분은 자릅니다. 이름·소개는
+PilotData에서 가져오며 `Description`의 Characters Per Second로 타이핑 속도를 조절합니다.
+클릭/Enter/A로 정보창을 열고, 출격 버튼/Enter/A로 확인하며 X/Esc/B로 닫습니다.
 
 StoryData의 Pages 배열에서 순서를 바꾸거나 StoryPage를 추가합니다. 페이지마다 Illustration,
 Caption, Text를 설정합니다. Intro와 모든 Ending은 같은 StoryScreen을 사용합니다.
@@ -287,7 +292,7 @@ Enemy Lab(F6)에 `Tracking three-shot stream`, `Four-way gate`, `Locked sweep` �
 
 ## 보스와 외계 함대 공격
 
-Enemy Lab의 `Scene default`로 M2/M1/M3/Boss를 선택하면 각각 쌍익 교차 사격/삼단 도약탄과 세 가지 벽 조합 순환/부화탄/기함 조합을 시험할 수 있습니다. Attack 프리셋에는 `fleet_lattice`, `pursuit_fan`, `siege_curtain`, `command_curtain`, `brood_launch`, `brood_spiral`, `삼단 도약탄 / Three-cushion`이 있습니다.
+Enemy Lab의 `Scene default`로 M2/M1/M3/Boss를 선택하면 각각 삼단 도약탄과 쌍익 교차 사격/세 가지 벽 조합 순환/부화탄/기함 조합을 시험할 수 있습니다. 날개 달린 뮤탈리스크형 외형은 `Enemy/L2.png`를 쓰는 M2입니다. Attack 프리셋에는 `fleet_lattice`, `pursuit_fan`, `siege_curtain`, `command_curtain`, `brood_launch`, `brood_spiral`, `삼단 도약탄 / Three-cushion`이 있습니다.
 
 - `AttackPattern > Muzzle Offsets`: 발사점을 분리합니다. 단위는 **월드 px**이므로 적 스프라이트의 스케일을 다시 곱하지 않습니다.
 - `Shape = CURTAIN`: 화면 높이에 탄을 배치합니다. `Corridor Width`는 통로 폭(px)입니다. `Corridor Center/Shift`는 `Corridor Routes`가 비어 있을 때 통로 위치·회차별 변화 폭을 정합니다. 고정 수평 발사(`Aim=FIXED`, 각도180°)로 사용합니다. `Bullet Count`는 통로를 비우기 전 후보 탄 수입니다.
@@ -297,8 +302,8 @@ Enemy Lab의 `Scene default`로 M2/M1/M3/Boss를 선택하면 각각 쌍익 교�
 - 부모 탄을 폭탄/탄 소거로 제거하면 부화가 취소됩니다. 부모 탄이 부화 전에 플레이어에 충돌한 경우도 자식 탄을 만들지 않습니다.
 - 보스 단계는 `EnemyShip > Second Phase`에서 변경합니다. 기본은 HP 50%에서 부화탄→기함 봉쇄벽→재조준 연사로 전환합니다.
 
-M1의 `Shooter`는 `SiegeShooter`입니다. 기본 순서는 **삼단 도약탄 / 유인탄→벽 / 벽→교차탄 / 핵→벽→시간차 분열**입니다. 벽 조합은 잔탄 소멸 뒤 `Counter Seconds`(기본2초), 도약탄은 잔탄 소멸 뒤 전용 패턴의 `Recovery`(기본1.5초) 동안 쉽니다. `Lure Interval`, `Opening Pause`, `Cross Interval`, `Cross Angle Degrees`, `Core Stagger`로 추가 공격의 간격·각도·시간차를 조절합니다. 벽 설정은 `Steps[0].Pattern`의 기존 `siege_curtain`, 도약탄 설정은 `Ricochet Step`을 사용합니다. `siege_core.tscn`은 기존 부화탄의 파생 씬이며 5발/44°입니다. 핵은 벽이 사라질 때까지 부화를 보류하고, 해제 후 기존 PNG로 부화 방향을 예고합니다. Attack 선택을 `Scene default`로 두면 네 순환을 시험하고, 명시적 프리셋을 고르면 해당 공격으로 대체합니다. `python tools/siege_cycles.py`는 유인부터 기존 벽 조합을 격리해서 검사하고, `python tools/check.py`는 도약탄과 전체 기능도 검사합니다.
+M1의 `Shooter`는 `SiegeShooter`입니다. 기본 순서는 **유인탄→벽 / 벽→교차탄 / 핵→벽→시간차 분열**이고, 각 순환의 잔탄까지 소멸한 뒤 `Counter Seconds`(기본2초) 동안 쉽니다. `Lure Interval`, `Opening Pause`, `Cross Interval`, `Cross Angle Degrees`, `Core Stagger`로 추가 공격의 간격·각도·시간차를 조절합니다. 벽 설정은 `Steps[0].Pattern`의 기존 `siege_curtain`을 사용합니다. `siege_core.tscn`은 기존 부화탄의 파생 씬이며 5발/44°입니다. 핵은 벽이 사라질 때까지 부화를 보류하고, 해제 후 기존 PNG로 부화 방향을 예고합니다. Attack 선택을 `Scene default`로 두면 세 순환을 시험하고, 명시적 프리셋을 고르면 해당 공격으로 대체합니다. `python tools/siege_cycles.py`로 실제 충돌과 순환·반격·부화 취소를 검사합니다.
 
-삼단 도약탄은 `data/patterns/ricochet.tres`, `scenes/projectiles/ricochet_core.tscn`에서 편집합니다. 0.6초 충전 후 한 발이 위→왼쪽→아래로 반사하며, 다음 사용은 아래→왼쪽→위입니다. 각 반사점은 도착0.45초 전에 잔탄 방향을 예고하고, 도착 후0.25초 정지한 뒤5·5·7발/60°를 발사합니다. 모탄520px/s, 반사마다 속도90%, 잔탄270px/s·수명2.2초입니다. 테두리64px 안쪽에서 반사하여 탄과 예고가 잘리지 않습니다. 얕은 입사각에서도 부채꼴 전체가 영역 안쪽을 향합니다. 세 번째 반사에서는 모탄 판정을 제거하고 마지막 예고 후 소멸합니다. `Child Count`, `Final Child Count`, `Child Spread`, `Bank Warning Seconds`, `Bank Pause Seconds`, `Speed Retention`으로 조절합니다. 원본 B PNG와 금색 테두리·남은 반사 점으로 모탄을 구분합니다. 최종 보스 양 단계에도 연결되어 있으며, 앞선 공격의 잔탄이 정리된 뒤 충전하고 도약탄 가족 전체가 소멸한 뒤 다음 공격을 진행합니다.
+삼단 도약탄은 M2의 첫 공격이며 `data/patterns/ricochet.tres`, `scenes/projectiles/ricochet_core.tscn`에서 편집합니다. 0.6초 충전 후 한 발이 위→왼쪽→아래로 반사하며, 다음 사용은 아래→왼쪽→위입니다. 각 반사점은 도착0.45초 전에 플레이어 위치로 잔탄 조준을 확정하고 예고합니다. 도착 후0.18초 정지한 뒤7·9·11발/70°를 발사하며, 예고 뒤에는 해당 조준을 바꾸지 않습니다. 모탄640px/s, 반사마다 속도96%, 잔탄360px/s·수명3.8초입니다. 테두리64px 안쪽에서 반사하며 얕은 조준 각도에서도 부채꼴 전체가 영역 안쪽을 향합니다. 세 번째 반사에서는 모탄 판정을 제거하고 마지막 예고 후 소멸합니다. `Child Count`, `Middle Child Count`, `Final Child Count`, `Child Spread`, `Aimed Fans`, `Bank Warning Seconds`, `Bank Pause Seconds`, `Speed Retention`으로 조절합니다. 원본 B PNG와 금색 테두리·남은 반사 점으로 모탄을 구분합니다. 잔탄 정리 뒤1초 반격 시간을 주고 기존 쌍익/재조준 공격을 이어 갑니다. M1과 최종 보스에서는 제거했습니다. `python tools/ricochet_pressure.py`로 초기/강화판의 접촉 압박과 P2 입력 회피를 비교할 수 있습니다.
 
 `python tools/balance.py --boss-patterns`는 기존 6개 조건에 25개 보스 정지 위치 계측을 추가합니다. 한 지점에서 안 맞는지 보는 표본 검사이므로, 전체 패턴의 인간 회피 가능성을 증명하는 검사는 아닙니다.

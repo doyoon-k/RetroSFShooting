@@ -11,4 +11,4 @@ bullet_count = 1
 volley_count = 1
 telegraph_seconds = 0.6
 wait_for_clear = true
-recovery = 1.5
+recovery = 1.0

@@ -21,8 +21,6 @@ func setup_enemy(container: Node2D, bullets: Node2D, target: Node2D) -> EnemyShi
 	enemy.movement.set_physics_process(false)
 	enemy.movement.reached_hold = true
 	var shooter := enemy.shooter as SiegeShooter
-	# Isolate the three existing wall combinations, then observe the bank charge.
-	shooter.cycle_index = SiegeShooter.Cycle.LURE
 	shooter.projectiles = bullets
 	shooter.bounds = catalog.rules.playfield
 	shooter.target_provider = func(): return target
@@ -224,10 +222,10 @@ func run() -> void:
 			for fraction in [0.15, 0.5, 0.85]:
 				var result := await trial(route, distance, fraction)
 				trials.append(result)
-				expect(result.hits == 0 and result.order == [0, 1, 2, 3] and result.recovery_ok and result.walls_crossed == 9 and result.lure_shots == 2 and result.cross_shots == 6 and result.cores == 2 and result.offspring == 10, "M1 input-only cycle failed: " + JSON.stringify(result))
+				expect(result.hits == 0 and result.order == [0, 1, 2, 0] and result.recovery_ok and result.walls_crossed == 9 and result.lure_shots == 2 and result.cross_shots == 6 and result.cores == 2 and result.offspring == 10, "M1 input-only cycle failed: " + JSON.stringify(result))
 				expect(result.followup_overlap == 0 and result.unsafe_shots == 0 and result.hatches.size() == 2 and float(result.hatches[1]) - float(result.hatches[0]) >= 0.55 and result.starts[0].route == route and result.starts[1].route == result.expected_cross_route, "M1 wall clearance, stagger, or route coverage failed: " + JSON.stringify(result))
 	expect(pattern.corridor_routes == authored, "Compound cycles keep the shared wall resource immutable")
-	var report := {"method": "P2 input-only known-cue routes starting from lure; three existing wall cycles up to bank charge; actual M1 and collisions; no shooting, bombs, invincibility, or teleporting; isolated M1, not human validation", "failures": failures, "trials": trials}
+	var report := {"method": "P2 input-only known-cue routes; actual M1 and collisions; no shooting, bombs, invincibility, or teleporting; isolated M1, not human validation", "failures": failures, "trials": trials}
 	DirAccess.make_dir_recursive_absolute("res://build/validation")
 	FileAccess.open("res://build/validation/siege_cycles.json", FileAccess.WRITE).store_string(JSON.stringify(report, "\t"))
 	print(JSON.stringify(report))

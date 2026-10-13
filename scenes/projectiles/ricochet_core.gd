@@ -11,17 +11,21 @@ const CUE_COLOR := Color(1.0, 0.85, 0.35, 0.95)
 @export var child_scene: PackedScene
 @export var starts_above := true
 @export_range(0.1, 1.0, 0.05) var bank_warning_seconds := 0.45
-@export_range(0.1, 0.8, 0.05) var bank_pause_seconds := 0.25
-@export_range(0.5, 1.0, 0.05) var speed_retention := 0.9
-@export_range(1, 15) var child_count := 5
-@export_range(1, 15) var final_child_count := 7
-@export_range(20.0, 90.0, 1.0) var child_spread := 60.0
-@export_range(50.0, 600.0, 10.0) var child_speed := 270.0
-@export_range(0.5, 5.0, 0.1) var child_lifetime := 2.2
+@export_range(0.1, 0.8, 0.05) var bank_pause_seconds := 0.18
+@export_range(0.5, 1.0, 0.01) var speed_retention := 0.96
+@export_range(1, 15) var child_count := 7
+@export_range(1, 15) var middle_child_count := 9
+@export_range(1, 15) var final_child_count := 11
+@export_range(20.0, 90.0, 1.0) var child_spread := 70.0
+@export_range(50.0, 600.0, 10.0) var child_speed := 360.0
+@export_range(0.5, 5.0, 0.1) var child_lifetime := 3.8
+@export var aimed_fans := true
 var bank_count := 0
 var bank_wait := 0.0
 var bank_arena: Rect2
 var _bank_normal := Vector2.ZERO
+var _fan_bank := 0
+var _fan_center := Vector2.ZERO
 @onready var visual: Sprite2D = $Visual
 @onready var collision: CollisionShape2D = $CollisionShape2D
 var _visual_scale := Vector2.ONE
@@ -66,6 +70,18 @@ func next_bank() -> Dictionary:
 			normal = Vector2.DOWN if direction.y < 0.0 else Vector2.UP
 	return {"position": global_position + direction * distance, "normal": normal, "distance": distance}
 
+func fan_count(index: int) -> int:
+	if index >= MAX_BANKS: return final_child_count
+	return middle_child_count if index == 2 else child_count
+
+func _lock_fan(bank: Dictionary, index: int) -> void:
+	if _fan_bank == index: return
+	var outgoing := direction.bounce(bank.normal)
+	if aimed_fans and is_instance_valid(target):
+		outgoing = Vector2(bank.position).direction_to(target.global_position)
+	_fan_center = fan_direction(outgoing, bank.normal, child_spread)
+	_fan_bank = index
+
 func _physics_process(delta: float) -> void:
 	if spent or is_queued_for_deletion(): return
 	age += delta
@@ -88,10 +104,12 @@ func _physics_process(delta: float) -> void:
 		else:
 			var bank := next_bank()
 			var travel := float(bank.distance) / maxf(speed, 1.0)
+			if travel <= bank_warning_seconds: _lock_fan(bank, bank_count + 1)
 			if travel > remaining:
 				global_position += direction * speed * remaining
 				remaining = 0.0
 			else:
+				_lock_fan(bank, bank_count + 1)
 				global_position = bank.position
 				remaining -= travel
 				direction = direction.bounce(bank.normal)
@@ -109,12 +127,16 @@ func _physics_process(delta: float) -> void:
 	var size_factor := 1.0 - 0.14 * mini(bank_count, MAX_BANKS - 1)
 	visual.scale = _visual_scale * size_factor
 	collision.scale = Vector2.ONE * size_factor
+	if bank_wait <= 0.0:
+		var upcoming := next_bank()
+		if float(upcoming.distance) / maxf(speed, 1.0) <= bank_warning_seconds:
+			_lock_fan(upcoming, bank_count + 1)
 	queue_redraw()
 
 func _emit_fan() -> void:
 	if spent or is_queued_for_deletion() or child_scene == null: return
-	var count := final_child_count if bank_count == MAX_BANKS else child_count
-	var center := fan_direction(direction, _bank_normal, child_spread)
+	var count := fan_count(bank_count)
+	var center := _fan_center
 	for index in count:
 		var child := child_scene.instantiate() as Projectile
 		if child == null: continue
@@ -150,8 +172,8 @@ func _draw() -> void:
 		outgoing = direction.bounce(bank.normal)
 		normal = bank.normal
 		next_count += 1
-	var count := final_child_count if next_count == MAX_BANKS else child_count
-	outgoing = fan_direction(outgoing, normal, child_spread)
+	var count := fan_count(next_count)
+	outgoing = _fan_center if _fan_bank == next_count else fan_direction(outgoing, normal, child_spread)
 	var alpha := 1.0 - 0.5 * clampf(until_bank / bank_warning_seconds, 0.0, 1.0)
 	var tint := Color(CUE_COLOR, alpha)
 	var world_scale := maxf(global_scale.abs().x, 0.01)

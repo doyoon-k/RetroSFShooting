@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://go6dxu1qx1bf"]
+[gd_scene load_steps=14 format=3 uid="uid://go6dxu1qx1bf"]
 
 [ext_resource type="Resource" path="res://data/patterns/pursuit_fan_step.tres" id="burst"]
 [ext_resource type="Resource" path="res://data/patterns/siege_curtain_step.tres" id="fan"]
@@ -10,7 +10,6 @@
 [ext_resource type="Script" path="res://scripts/data/pattern_step.gd" id="StepType"]
 
 [ext_resource type="Resource" path="res://data/patterns/command_curtain_step.tres" id="Command"]
-[ext_resource type="Resource" path="res://data/patterns/ricochet_step.tres" id="Ricochet"]
 
 [ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Enemy/L1.png" id="EnemyTexture"]
 
@@ -48,7 +47,7 @@ maximum_hp = 1020
 death_animation = &"death"
 death_animation_seconds = 0.45
 is_boss = true
-second_phase = Array[ExtResource("StepType")]([ExtResource("spiral"), ExtResource("Command"), ExtResource("Ricochet"), ExtResource("burst")])
+second_phase = Array[ExtResource("StepType")]([ExtResource("spiral"), ExtResource("Command"), ExtResource("burst")])
 
 [node name="Visual" type="Sprite2D" parent="."]
 offset = Vector2(-13.5, 4.5)
@@ -69,7 +68,7 @@ stay_forever = true
 [node name="Shooter" type="Node2D" parent="."]
 position = Vector2(-100, 0)
 script = ExtResource("Shooter")
-steps = Array[ExtResource("StepType")]([ExtResource("fan"), ExtResource("Ricochet"), ExtResource("ring"), ExtResource("burst")])
+steps = Array[ExtResource("StepType")]([ExtResource("fan"), ExtResource("ring"), ExtResource("burst")])
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

@@ -33,7 +33,7 @@ def main():
         raise SystemExit(f'Siege probe failed; see {path}\n{result.stderr[:2000]}')
     if report['failures'] or len(report['trials']) != 24:
         raise SystemExit(f'Siege cycle failures; see {path}')
-    print('Siege cycles: 24/24 no-hit; lure → cross → core → bank charge; legacy 2-second recovery verified')
+    print('Siege cycles: 24/24 no-hit; lure → cross → core → lure; 2-second recovery verified')
     print('P2, 460px/s; real collisions; no shooting, bombs or invincibility')
 
 

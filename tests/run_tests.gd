@@ -789,28 +789,21 @@ func _test_game_flow() -> void:
 	_finish_story(story)
 	await frames(25)
 	check(main.current_screen.name == "CharacterSelect", "Intro ends in Character Select")
-	var hangar: Node = main.current_screen.get_node("Hangar")
+	var hangar: Node = main.current_screen.get_node("Layout/Hangar")
 	check(hangar.get_child_count() == content.pilots.size(), "Hangar has one slot per pilot")
 	for actor in hangar.get_children():
 		var pilot: PilotData = actor.get("pilot") as PilotData
 		check(pilot == content.pilot_by_id(pilot.id), "Hangar slot points to catalog pilot data")
-		var expected_portrait: Texture2D = pilot.hangar_portrait if pilot.hangar_portrait != null else pilot.normal
-		check(actor.get_node("Portrait").texture == expected_portrait, "Hangar portrait comes from pilot data or its normal fallback")
-		check(actor.get_node("Name").text == pilot.callsign, "Hangar name comes from pilot data")
-	var first_pilot: PilotData = hangar.get_child(0).get("pilot") as PilotData
-	var first_portrait := hangar.get_child(0).get_node("Portrait") as Sprite2D
-	var original_hangar_portrait: Texture2D = first_pilot.hangar_portrait
-	first_pilot.hangar_portrait = content.pilots[1].normal
-	check(first_portrait.texture == content.pilots[1].normal, "Hangar preview updates when pilot data changes")
-	first_pilot.hangar_portrait = original_hangar_portrait
-	check(first_portrait.texture == first_pilot.normal, "Clearing hangar portrait restores the normal fallback")
+		check(actor is TextureButton and actor.texture_normal is AtlasTexture, "Each pilot is a selectable slice of the supplied silhouette strip")
+	check(main.current_screen.selected == &"P1" and not main.current_screen.get_node("Layout/Details").visible, "Selection starts on P1 with the information panel closed")
 	await capture("03_character_select")
 	var select_screen: Node = main.current_screen
-	var select_roster := select_screen.get_node("Roster") as PilotRoster
-	select_roster.cards[1].pressed.emit()
-	select_roster.cards[5].mouse_entered.emit()
-	check(select_screen.get("selected") == &"P2" and select_roster.highlighted_id == &"P2", "Passing over another card does not change the selected pilot")
-	main.current_screen.get_node("Sortie").pressed.emit()
+	hangar.get_child(1).pressed.emit()
+	hangar.get_child(5).mouse_entered.emit()
+	check(select_screen.get("selected") == &"P2", "Passing over another silhouette does not change the selected pilot")
+	check(select_screen.get_node("Layout/Details").visible and select_screen.get_node("Layout/Details/PortraitPanel/Portrait").texture == content.pilots[1].normal, "Clicking P2 opens its existing portrait and information")
+	await capture("03_character_select_information")
+	main.current_screen.get_node("Layout/Details/Sortie").pressed.emit()
 	await frames(100)
 	check(main.current_screen is StageController and main.current_screen.phase == StageController.Phase.PLAYING, "Sortie opens playable Stage")
 	# Drive the normal boss-clear and ending signals without waiting for the full wave schedule.

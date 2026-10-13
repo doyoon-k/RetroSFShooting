@@ -11,7 +11,7 @@ scale = Vector2(2.4, 2.4)
 collision_layer = 8
 monitorable = false
 script = ExtResource("Script")
-speed = 520.0
+speed = 640.0
 lifetime = 14.0
 child_scene = ExtResource("Child")
 

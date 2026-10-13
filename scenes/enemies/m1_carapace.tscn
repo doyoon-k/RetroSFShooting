@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://scenes/enemies/enemy_ship.gd" id="Ship"]
 [ext_resource type="Script" path="res://scenes/enemies/enemy_movement.gd" id="Movement"]
@@ -9,7 +9,6 @@
 [ext_resource type="PackedScene" path="res://scenes/projectiles/lance_bullet.tscn" id="LureBullet"]
 [ext_resource type="PackedScene" path="res://scenes/projectiles/enemy_bullet.tscn" id="CrossBullet"]
 [ext_resource type="PackedScene" path="res://scenes/projectiles/siege_core.tscn" id="Core"]
-[ext_resource type="Resource" path="res://data/patterns/ricochet_step.tres" id="Ricochet"]
 
 [sub_resource type="CircleShape2D" id="Shape"]
 radius = 70.0
@@ -48,4 +47,3 @@ initial_delay = 1.1
 opening_bullet_scene = ExtResource("LureBullet")
 cross_bullet_scene = ExtResource("CrossBullet")
 core_scene = ExtResource("Core")
-ricochet_step = ExtResource("Ricochet")
