@@ -25,6 +25,7 @@
 | 아이템 성능 | `scenes/items/*.tscn` |
 | 일러스트·본문·타이핑 속도 | `data/stories/*.tres` |
 | 메뉴·HUD 글꼴 | `scenes/ui/game_theme.tres` |
+| 타이틀 배경·로고·시작 안내·메뉴 배치 | `scenes/title/title.tscn`의 Layout |
 | 파일럿 선택 배경·실루엣·정보창 배치 | `scenes/character_select/character_select.tscn`의 Layout |
 | 전투 프레임·파일럿 슬롯 배치 | `stage_01.tscn`의 Interface / Root |
 | 전투 하단 콘솔·확대 초상화 | `scenes/ui/combat_hud.tscn` |
@@ -228,6 +229,22 @@ Hold Position의 X는 등장 당시 화면을 기준으로 한 좌표이며, Y�
   bounds를 전달받는 전용 노드를 추가하고 필요한 경우 Stage의 생성 연결 부분을 확장합니다.
 
 처음부터 범용 행동 트리, 공격 DSL, 전역 이벤트 버스는 필요하지 않습니다.
+
+## 타이틀 화면
+
+`scenes/title/title.tscn`의 `Layout`에서 1920×1080 기준으로 배치합니다. `Space`는
+전체 화면 우주 배경, `Logo`는 PANIC HORIZON 로고, `Ship`은 기체입니다. 루트의
+`Ship Float Pixels`와 `Ship Float Seconds`로 기체의 상하 움직임을 조절합니다.
+`Portraits`의 SpriteFrames에는 `TitleBG1~3`으로 만든 6초 반복 애니메이션이 있습니다.
+기본 10fps이며 첫 정상 프레임은 0.6초, 이후 프레임들은 0.1초씩 표시합니다.
+`ScreenEffects`는 스캔라인과 강도를 낮춘 비네팅을 겹칩니다.
+
+`StartPrompt`의 Texture에 `Press Any key.png`의 `PRESS ANY BUTTON` 스프라이트를 연결합니다.
+메뉴·엔딩 목록 텍스트는 `TitleFont`의 Noto Sans KR 굵기 600 변형을 사용합니다. 실행 시 안내만 표시하고 첫 버튼
+입력 후 `Menu`의 세 버튼을 표시합니다. 메뉴 배치를 편집할 때는 Visible을 켜서 작업할 수
+있으며 실행 시에는 자동으로 숨깁니다. `Collection`은 엔딩 목록이며 시작 입력·새 게임
+시작·엔딩 목록 열기·메뉴 복귀는 `title.gd`에서 관리합니다. 첫 입력의 반복과 해제는
+메뉴 버튼에 전달하지 않아 같은 입력으로 새 게임이나 종료가 실행되지 않습니다.
 
 ## 파일럿·스토리·연출 교체
 

@@ -1,9 +1,146 @@
-[gd_scene load_steps=5 format=3 uid="uid://xu1ybjw215vl"]
+[gd_scene load_steps=21 format=3 uid="uid://xu1ybjw215vl"]
 
-[ext_resource type="Resource" path="res://data/game_catalog.tres" id="PreviewCatalog"]
+[ext_resource type="Resource" path="res://data/game_catalog.tres" id="Catalog"]
 [ext_resource type="Script" path="res://scenes/title/title.gd" id="Script"]
-[ext_resource type="Theme" uid="uid://wbownrqyfplv" path="res://scenes/ui/game_theme.tres" id="Theme"]
-[ext_resource type="Texture2D" uid="uid://i1xgenwuvfhg" path="res://assets/Pilots_sprites/Illust/TitleBG.png" id="TitleBackground"]
+[ext_resource type="Theme" path="res://scenes/ui/game_theme.tres" id="Theme"]
+[ext_resource type="FontFile" path="res://assets/fonts/NotoSansKR.ttf" id="Font"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/TitleSBG.png" id="Space"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/Title.png" id="Logo"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/TitleBG1.png" id="CrewNormal"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/TitleBG2.png" id="CrewFlash"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/TitleBG3.png" id="CrewSkull"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/Title_Ship.png" id="Ship"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/ScreenFX_A.png" id="Scanlines"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/ScreenFX_B.png" id="Vignette"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/Press Any key.png" id="StartPrompt"]
+
+[sub_resource type="FontVariation" id="TitleFont"]
+base_font = ExtResource("Font")
+variation_opentype = {
+2003265652: 600.0
+}
+
+[sub_resource type="SpriteFrames" id="CrewFrames"]
+animations = [{
+"frames": [{"duration": 6.0, "texture": ExtResource("CrewNormal")},
+{"duration": 1.0, "texture": ExtResource("CrewFlash")},
+{"duration": 1.0, "texture": ExtResource("CrewNormal")},
+{"duration": 1.0, "texture": ExtResource("CrewFlash")},
+{"duration": 1.0, "texture": ExtResource("CrewNormal")},
+{"duration": 1.0, "texture": ExtResource("CrewFlash")},
+{"duration": 1.0, "texture": ExtResource("CrewNormal")},
+{"duration": 1.0, "texture": ExtResource("CrewFlash")},
+{"duration": 1.0, "texture": ExtResource("CrewNormal")},
+{"duration": 1.0, "texture": ExtResource("CrewSkull")},
+{"duration": 1.0, "texture": ExtResource("CrewNormal")},
+{"duration": 1.0, "texture": ExtResource("CrewFlash")},
+{"duration": 1.0, "texture": ExtResource("CrewNormal")},
+{"duration": 1.0, "texture": ExtResource("CrewFlash")},
+{"duration": 1.0, "texture": ExtResource("CrewNormal")},
+{"duration": 1.0, "texture": ExtResource("CrewFlash")},
+{"duration": 1.0, "texture": ExtResource("CrewSkull")},
+{"duration": 1.0, "texture": ExtResource("CrewFlash")},
+{"duration": 1.0, "texture": ExtResource("CrewSkull")},
+{"duration": 1.0, "texture": ExtResource("CrewSkull")},
+{"duration": 1.0, "texture": ExtResource("CrewSkull")},
+{"duration": 1.0, "texture": ExtResource("CrewFlash")},
+{"duration": 1.0, "texture": ExtResource("CrewNormal")},
+{"duration": 1.0, "texture": ExtResource("CrewFlash")},
+{"duration": 1.0, "texture": ExtResource("CrewNormal")},
+{"duration": 1.0, "texture": ExtResource("CrewFlash")},
+{"duration": 1.0, "texture": ExtResource("CrewNormal")},
+{"duration": 1.0, "texture": ExtResource("CrewFlash")},
+{"duration": 1.0, "texture": ExtResource("CrewNormal")},
+{"duration": 1.0, "texture": ExtResource("CrewSkull")},
+{"duration": 1.0, "texture": ExtResource("CrewNormal")},
+{"duration": 1.0, "texture": ExtResource("CrewFlash")},
+{"duration": 1.0, "texture": ExtResource("CrewNormal")},
+{"duration": 1.0, "texture": ExtResource("CrewFlash")},
+{"duration": 1.0, "texture": ExtResource("CrewNormal")},
+{"duration": 1.0, "texture": ExtResource("CrewFlash")},
+{"duration": 1.0, "texture": ExtResource("CrewNormal")},
+{"duration": 1.0, "texture": ExtResource("CrewFlash")},
+{"duration": 1.0, "texture": ExtResource("CrewNormal")},
+{"duration": 1.0, "texture": ExtResource("CrewSkull")},
+{"duration": 1.0, "texture": ExtResource("CrewNormal")},
+{"duration": 1.0, "texture": ExtResource("CrewFlash")},
+{"duration": 1.0, "texture": ExtResource("CrewNormal")},
+{"duration": 1.0, "texture": ExtResource("CrewFlash")},
+{"duration": 1.0, "texture": ExtResource("CrewNormal")},
+{"duration": 1.0, "texture": ExtResource("CrewFlash")},
+{"duration": 1.0, "texture": ExtResource("CrewNormal")},
+{"duration": 1.0, "texture": ExtResource("CrewFlash")},
+{"duration": 1.0, "texture": ExtResource("CrewNormal")},
+{"duration": 1.0, "texture": ExtResource("CrewSkull")},
+{"duration": 1.0, "texture": ExtResource("CrewNormal")},
+{"duration": 1.0, "texture": ExtResource("CrewFlash")},
+{"duration": 1.0, "texture": ExtResource("CrewNormal")},
+{"duration": 1.0, "texture": ExtResource("CrewFlash")},
+{"duration": 1.0, "texture": ExtResource("CrewSkull")}],
+"loop": true,
+"name": &"idle",
+"speed": 10.0
+}]
+
+[sub_resource type="StyleBoxFlat" id="MenuNormal"]
+bg_color = Color(0.035, 0.045, 0.06, 0.9)
+border_color = Color(0.3, 0.42, 0.48, 0.85)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_left = 4
+corner_radius_bottom_right = 4
+
+[sub_resource type="StyleBoxFlat" id="MenuHover"]
+bg_color = Color(0.055, 0.08, 0.095, 0.96)
+border_color = Color(0.3, 0.78, 0.86, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_left = 4
+corner_radius_bottom_right = 4
+
+[sub_resource type="StyleBoxFlat" id="MenuPressed"]
+bg_color = Color(0.025, 0.06, 0.065, 0.96)
+border_color = Color(0.55, 0.85, 0.9, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_left = 4
+corner_radius_bottom_right = 4
+
+[sub_resource type="StyleBoxFlat" id="MenuFocus"]
+bg_color = Color(0, 0, 0, 0)
+border_color = Color(0.63, 0.84, 0.38, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_left = 4
+corner_radius_bottom_right = 4
+
+[sub_resource type="StyleBoxFlat" id="ArchivePanel"]
+bg_color = Color(0.035, 0.04, 0.055, 0.97)
+border_color = Color(0.3, 0.65, 0.72, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_left = 4
+corner_radius_bottom_right = 4
 
 [node name="Title" type="Control"]
 layout_mode = 3
@@ -14,9 +151,9 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("Theme")
 script = ExtResource("Script")
-catalog = ExtResource("PreviewCatalog")
+catalog = ExtResource("Catalog")
 
-[node name="TitleBackground" type="TextureRect" parent="."]
+[node name="Letterbox" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,72 +161,223 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("TitleBackground")
+color = Color(0.025, 0.02, 0.03, 1)
 
-[node name="Menu" type="Control" parent="."]
-unique_name_in_owner = true
-anchors_preset = 0
-offset_left = 100.0
-offset_top = 730.0
-offset_right = 490.0
-offset_bottom = 976.0
-
-[node name="NewGame" type="Button" parent="Menu"]
+[node name="Layout" type="Control" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
-offset_right = 390.0
-offset_bottom = 64.0
-text = "NEW GAME"
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
 
-[node name="Endings" type="Button" parent="Menu"]
+[node name="Space" type="TextureRect" parent="Layout"]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+expand_mode = 1
+texture = ExtResource("Space")
+
+[node name="Portraits" type="AnimatedSprite2D" parent="Layout"]
+unique_name_in_owner = true
+position = Vector2(173, 125)
+sprite_frames = SubResource("CrewFrames")
+animation = &"idle"
+autoplay = "idle"
+centered = false
+
+[node name="Logo" type="TextureRect" parent="Layout"]
+layout_mode = 0
+offset_left = 520.0
+offset_top = 58.0
+offset_right = 1400.0
+offset_bottom = 410.0
+mouse_filter = 2
+expand_mode = 1
+texture = ExtResource("Logo")
+
+[node name="Ship" type="TextureRect" parent="Layout"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_top = 82.0
-offset_right = 390.0
-offset_bottom = 146.0
-text = "ENDINGS"
+offset_left = 240.0
+offset_top = 480.0
+offset_right = 1476.0
+offset_bottom = 1026.0
+mouse_filter = 2
+expand_mode = 1
+texture = ExtResource("Ship")
 
-[node name="Exit" type="Button" parent="Menu"]
+[node name="StartPrompt" type="TextureRect" parent="Layout"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_top = 164.0
-offset_right = 390.0
-offset_bottom = 228.0
-text = "EXIT"
+offset_left = 712.0
+offset_top = 438.0
+offset_right = 1208.0
+offset_bottom = 484.0
+mouse_filter = 2
+expand_mode = 1
+texture = ExtResource("StartPrompt")
 
-[node name="Collection" type="Panel" parent="."]
+[node name="Menu" type="Control" parent="Layout"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
-offset_left = 96.0
-offset_top = 220.0
-offset_right = 1026.0
-offset_bottom = 980.0
+offset_left = 148.0
+offset_top = 610.0
+offset_right = 568.0
+offset_bottom = 892.0
+mouse_filter = 2
 
-[node name="CollectionHeading" type="Label" parent="Collection"]
+[node name="NewGame" type="Button" parent="Layout/Menu"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 42.0
-offset_top = 34.0
-offset_right = 862.0
-offset_bottom = 104.0
-theme_override_font_sizes/font_size = 42
+offset_right = 420.0
+offset_bottom = 78.0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.76, 0.87, 0.91, 1)
+theme_override_colors/font_hover_color = Color(0.5, 0.9, 0.96, 1)
+theme_override_colors/font_focus_color = Color(0.73, 0.92, 0.5, 1)
+theme_override_fonts/font = SubResource("TitleFont")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("MenuNormal")
+theme_override_styles/hover = SubResource("MenuHover")
+theme_override_styles/pressed = SubResource("MenuPressed")
+theme_override_styles/focus = SubResource("MenuFocus")
+theme_override_styles/disabled = SubResource("MenuNormal")
+text = "NEW GAME"
+focus_neighbor_top = NodePath("../Exit")
+focus_neighbor_bottom = NodePath("../Endings")
+
+[node name="Endings" type="Button" parent="Layout/Menu"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = 102.0
+offset_right = 420.0
+offset_bottom = 180.0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.76, 0.87, 0.91, 1)
+theme_override_colors/font_hover_color = Color(0.5, 0.9, 0.96, 1)
+theme_override_colors/font_focus_color = Color(0.73, 0.92, 0.5, 1)
+theme_override_fonts/font = SubResource("TitleFont")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("MenuNormal")
+theme_override_styles/hover = SubResource("MenuHover")
+theme_override_styles/pressed = SubResource("MenuPressed")
+theme_override_styles/focus = SubResource("MenuFocus")
+theme_override_styles/disabled = SubResource("MenuNormal")
+text = "ENDINGS"
+focus_neighbor_top = NodePath("../NewGame")
+focus_neighbor_bottom = NodePath("../Exit")
+
+[node name="Exit" type="Button" parent="Layout/Menu"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = 204.0
+offset_right = 420.0
+offset_bottom = 282.0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.76, 0.87, 0.91, 1)
+theme_override_colors/font_hover_color = Color(0.5, 0.9, 0.96, 1)
+theme_override_colors/font_focus_color = Color(0.73, 0.92, 0.5, 1)
+theme_override_fonts/font = SubResource("TitleFont")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("MenuNormal")
+theme_override_styles/hover = SubResource("MenuHover")
+theme_override_styles/pressed = SubResource("MenuPressed")
+theme_override_styles/focus = SubResource("MenuFocus")
+theme_override_styles/disabled = SubResource("MenuNormal")
+text = "EXIT"
+focus_neighbor_top = NodePath("../Endings")
+focus_neighbor_bottom = NodePath("../NewGame")
+
+[node name="Collection" type="Control" parent="Layout"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+
+[node name="Dimmer" type="ColorRect" parent="Layout/Collection"]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+color = Color(0.015, 0.015, 0.02, 0.7)
+
+[node name="Panel" type="Panel" parent="Layout/Collection"]
+layout_mode = 0
+offset_left = 470.0
+offset_top = 190.0
+offset_right = 1450.0
+offset_bottom = 930.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("ArchivePanel")
+
+[node name="CollectionHeading" type="Label" parent="Layout/Collection/Panel"]
+layout_mode = 0
+offset_left = 44.0
+offset_top = 30.0
+offset_right = 936.0
+offset_bottom = 108.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.65, 0.85, 0.45, 1)
+theme_override_fonts/font = SubResource("TitleFont")
+theme_override_font_sizes/font_size = 38
 text = "ENDING ARCHIVE"
 
-[node name="CollectionText" type="Label" parent="Collection"]
+[node name="CollectionText" type="Label" parent="Layout/Collection/Panel"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 42.0
-offset_top = 124.0
-offset_right = 862.0
-offset_bottom = 638.0
-theme_override_font_sizes/font_size = 26
+offset_left = 44.0
+offset_top = 126.0
+offset_right = 936.0
+offset_bottom = 606.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.78, 0.86, 0.9, 1)
+theme_override_constants/line_spacing = 10
+theme_override_fonts/font = SubResource("TitleFont")
+theme_override_font_sizes/font_size = 28
 
-[node name="CollectionBack" type="Button" parent="Collection"]
+[node name="CollectionBack" type="Button" parent="Layout/Collection/Panel"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 42.0
-offset_top = 663.0
-offset_right = 402.0
-offset_bottom = 725.0
+offset_left = 44.0
+offset_top = 632.0
+offset_right = 444.0
+offset_bottom = 696.0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.76, 0.87, 0.91, 1)
+theme_override_colors/font_hover_color = Color(0.5, 0.9, 0.96, 1)
+theme_override_colors/font_focus_color = Color(0.73, 0.92, 0.5, 1)
+theme_override_fonts/font = SubResource("TitleFont")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("MenuNormal")
+theme_override_styles/hover = SubResource("MenuHover")
+theme_override_styles/pressed = SubResource("MenuPressed")
+theme_override_styles/focus = SubResource("MenuFocus")
+theme_override_styles/disabled = SubResource("MenuNormal")
 text = "BACK / 돌아가기"
+
+[node name="ScreenEffects" type="Control" parent="Layout"]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+
+[node name="Scanlines" type="TextureRect" parent="Layout/ScreenEffects"]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+expand_mode = 1
+texture = ExtResource("Scanlines")
+
+[node name="Vignette" type="TextureRect" parent="Layout/ScreenEffects"]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+expand_mode = 1
+texture = ExtResource("Vignette")
+self_modulate = Color(1, 1, 1, 0.18)

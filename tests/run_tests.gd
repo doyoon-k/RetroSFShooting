@@ -770,13 +770,25 @@ func _test_game_flow() -> void:
 	root.add_child(main)
 	await frames(25)
 	check(main.current_screen.name == "Title", "Main boots into Title")
+	check(main.current_screen.get_node("%StartPrompt").visible and not main.current_screen.get_node("%Menu").visible, "Title starts at the button prompt")
 	await capture("01_title")
-	main.current_screen.get_node("Menu/Endings").pressed.emit()
+	var start_input := InputEventKey.new()
+	start_input.keycode = KEY_ENTER
+	start_input.physical_keycode = KEY_ENTER
+	start_input.pressed = true
+	root.push_input(start_input)
+	start_input = start_input.duplicate()
+	start_input.pressed = false
+	root.push_input(start_input)
 	await frames()
-	check(main.current_screen.get_node("Collection").visible, "Title opens ending collection")
-	check(main.current_screen.get_node("Collection/CollectionText").text.contains("???"), "Undiscovered endings are hidden")
-	main.current_screen.get_node("Collection/CollectionBack").pressed.emit()
-	main.current_screen.get_node("Menu/NewGame").pressed.emit()
+	check(main.current_screen.name == "Title" and main.current_screen.get_node("%Menu").visible, "The first confirm input opens the menu and stays on Title")
+	await capture("01_title_menu")
+	main.current_screen.get_node("%Endings").pressed.emit()
+	await frames()
+	check(main.current_screen.get_node("%Collection").visible, "Title opens ending collection")
+	check(main.current_screen.get_node("%CollectionText").text.contains("???"), "Undiscovered endings are hidden")
+	main.current_screen.get_node("%CollectionBack").pressed.emit()
+	main.current_screen.get_node("%NewGame").pressed.emit()
 	await frames(25)
 	var story: Node = main.current_screen
 	check(story.name == "StoryScreen", "New Game opens Intro")
@@ -829,6 +841,7 @@ func _test_game_flow() -> void:
 	main.current_screen.get_node("Return").pressed.emit()
 	await frames()
 	check(main.current_screen.name == "Title" and not paused, "Result returns to unpaused Title")
+	check(main.current_screen.get_node("%StartPrompt").visible and not main.current_screen.get_node("%Menu").visible, "Returning to Title resets the start prompt")
 	main.queue_free()
 	await frames()
 

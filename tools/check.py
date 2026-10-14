@@ -23,6 +23,10 @@ log_dir = ROOT / 'build' / 'validation'
 log_dir.mkdir(parents=True, exist_ok=True)
 commands = [
     ('import', ['--headless', '--editor', '--import']),
+    ('title', (['--rendering-method', 'gl_compatibility'] if args.screenshots else ['--headless'])
+     + ['--audio-driver', 'Dummy', '--script', 'tests/title_probe.gd', '--fixed-fps', '60']
+     + (['--', '--screenshots'] if args.screenshots else [])),
+    ('title_exit', ['--headless', '--audio-driver', 'Dummy', '--script', 'tests/title_probe.gd', '--fixed-fps', '60', '--', '--exit-test']),
     ('pilot_select', (['--rendering-method', 'gl_compatibility'] if args.screenshots else ['--headless'])
      + ['--audio-driver', 'Dummy', '--script', 'tests/pilot_select_probe.gd', '--fixed-fps', '60']
      + (['--', '--screenshots'] if args.screenshots else [])),
@@ -43,7 +47,7 @@ for name, command in commands:
         sys.exit(result.returncode or 1)
     print(f'{name}: OK')
     for line in output.splitlines():
-        if line.startswith(('TEST RESULT:', 'PILOT SELECT:')):
+        if line.startswith(('TEST RESULT:', 'PILOT SELECT:', 'TITLE:', 'TITLE EXIT:')):
             print(line)
         elif name == 'ricochet' and line.startswith('{'):
             report = json.loads(line)
