@@ -322,6 +322,7 @@ texture = ExtResource("PreviewPortrait")
 stretch_mode = 6
 
 [node name="PilotName" type="Label" parent="Layout/Details"]
+theme_type_variation = &"ArcadeLabel"
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 396.0
@@ -373,6 +374,7 @@ stretch_mode = 0
 texture_normal = ExtResource("Confirm")
 
 [node name="Label" type="Label" parent="Layout/Details/Sortie"]
+theme_type_variation = &"EmphasisLabel"
 layout_mode = 0
 offset_left = 122.0
 offset_top = 15.0

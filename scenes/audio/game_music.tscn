@@ -1,0 +1,35 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://scripts/audio/game_music.gd" id="Script"]
+[ext_resource type="AudioStream" path="res://assets/audio/Music/Cyberleaf Music - The 8-bit Jukebox Lite/TheSpaceIsFullOf$tars.wav" id="Title"]
+[ext_resource type="AudioStream" path="res://assets/audio/Music/Cyberleaf Music - The 8-bit Jukebox Lite/CaptChipPants.wav" id="Select"]
+[ext_resource type="AudioStream" path="res://assets/audio/Music/Cyberleaf Music - The 8-bit Jukebox Lite/FightForYourLives.wav" id="Stage"]
+[ext_resource type="AudioStream" path="res://assets/audio/Music/Decisive Battle (wav).wav" id="Boss"]
+[ext_resource type="AudioStream" path="res://assets/audio/Music/Cyberleaf Music - The 8-bit Jukebox Lite/VictoryAtLast.wav" id="Clear"]
+[ext_resource type="AudioStream" path="res://assets/audio/Music/Cyberleaf Music - The 8-bit Jukebox Lite/YetAnotherJourney.wav" id="Ending"]
+[ext_resource type="AudioStream" path="res://assets/audio/Music/Lilith's Elegy (wav).wav" id="Somber"]
+
+[node name="Music" type="Node"]
+process_mode = 3
+script = ExtResource("Script")
+title_track = ExtResource("Title")
+select_track = ExtResource("Select")
+stage_track = ExtResource("Stage")
+boss_track = ExtResource("Boss")
+clear_track = ExtResource("Clear")
+ending_track = ExtResource("Ending")
+somber_ending_track = ExtResource("Somber")
+loop_end_seconds = {
+&"title": 97.3,
+&"stage": 90.65,
+&"boss": 143.74,
+&"clear": 91.45,
+&"ending": 203.5,
+&"somber_ending": 103.269,
+}
+
+[node name="ChannelA" type="AudioStreamPlayer" parent="."]
+volume_db = -80.0
+
+[node name="ChannelB" type="AudioStreamPlayer" parent="."]
+volume_db = -80.0

@@ -267,6 +267,7 @@ func _run() -> void:
 	select.queue_free()
 	await frames()
 	await reset_audio()
+	GameMusic.stop()
 	await SoundEffects.shutdown()
 	print("SFX: %d checks, %d failures" % [checks, failures.size()])
 	quit(0 if failures.is_empty() else 1)

@@ -38,6 +38,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Heading" type="Label" parent="."]
+theme_type_variation = &"ArcadeLabel"
 unique_name_in_owner = true
 layout_mode = 0
 anchor_right = 1.0
@@ -51,6 +52,7 @@ theme_override_font_sizes/font_size = 26
 text = "PROLOGUE"
 
 [node name="Caption" type="Label" parent="."]
+theme_type_variation = &"BodyLabel"
 unique_name_in_owner = true
 layout_mode = 0
 anchor_top = 1.0
@@ -93,6 +95,7 @@ script = ExtResource("Typewriter")
 scroll_active = false
 
 [node name="PageNumber" type="Label" parent="."]
+theme_type_variation = &"ArcadeLabel"
 unique_name_in_owner = true
 layout_mode = 0
 anchor_top = 1.0

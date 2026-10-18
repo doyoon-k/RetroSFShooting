@@ -23,8 +23,6 @@ result_scene = ExtResource("Result")
 [node name="SaveStore" type="Node" parent="."]
 script = ExtResource("Save")
 
-[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
-
 [node name="TransitionLayer" type="CanvasLayer" parent="."]
 layer = 100
 

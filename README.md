@@ -71,7 +71,11 @@ Godot 4.7.2 / GDScript / Forward+를 기준으로 검증합니다. 설계 해상
 파일럿 초상화, 플레이어와 양측 탄환, 적 외형과 피격·사망 이펙트는
 `assets/Pilots_sprites/`의 제공된 PNG를 사용합니다. 보스는 기존 `Enemy/L1.png`를
 재사용합니다. AI가 작성한 SVG와 별 배경·장식 테마·격납고 임시 애니메이션은 제거했습니다.
-메뉴는 Godot 기본 컨트롤과 한글 폰트를 사용합니다.
+메뉴는 Godot 기본 컨트롤을 사용하며, `scenes/ui/game_theme.tres`에서 글꼴을 관리합니다.
+한글 메뉴·버튼은 SB 어그로 Medium, 큰 한글 강조 문구는 Bold, 영문 메뉴·HUD·숫자는
+Stadium을 사용합니다. 대사·설명·엔딩 기록은 Noto Sans KR을 유지합니다.
+`ArcadeLabel`/`ArcadeButton`, `EmphasisLabel`, `BodyLabel` 테마 변형으로 용도를 지정하며,
+Stadium에 없는 문자는 SB 어그로 Medium과 Noto Sans KR로 대체합니다.
 타이틀은 원본 우주 배경·로고·초록색 기체와 `TitleBG1~3`의 파일럿 군상을 사용합니다.
 영상 레퍼런스의 정상·밝은 노이즈·해골 전환을 반복하며 기체는 작게 위아래로 움직입니다.
 시작 안내 뒤의 세 메뉴와 엔딩 컬렉션은 마우스·키보드·게임패드로 사용할 수 있습니다.

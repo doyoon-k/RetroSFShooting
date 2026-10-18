@@ -1,9 +1,8 @@
-[gd_scene load_steps=18 format=3 uid="uid://xu1ybjw215vl"]
+[gd_scene load_steps=16 format=3 uid="uid://xu1ybjw215vl"]
 
 [ext_resource type="Resource" path="res://data/game_catalog.tres" id="Catalog"]
 [ext_resource type="Script" path="res://scenes/title/title.gd" id="Script"]
 [ext_resource type="Theme" path="res://scenes/ui/game_theme.tres" id="Theme"]
-[ext_resource type="FontFile" path="res://assets/fonts/NotoSansKR.ttf" id="Font"]
 [ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/TitleSBG.png" id="Space"]
 [ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/Title.png" id="Logo"]
 [ext_resource type="PackedScene" path="res://scenes/title/title_crew.tscn" id="Crew"]
@@ -11,12 +10,6 @@
 [ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/ScreenFX_A.png" id="Scanlines"]
 [ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/ScreenFX_B.png" id="Vignette"]
 [ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/Press Any key.png" id="StartPrompt"]
-
-[sub_resource type="FontVariation" id="TitleFont"]
-base_font = ExtResource("Font")
-variation_opentype = {
-2003265652: 600.0
-}
 
 [sub_resource type="StyleBoxFlat" id="MenuNormal"]
 bg_color = Color(0.035, 0.045, 0.06, 0.9)
@@ -154,13 +147,14 @@ texture = ExtResource("StartPrompt")
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
-offset_left = 148.0
+offset_left = 750.0
 offset_top = 610.0
-offset_right = 568.0
+offset_right = 1170.0
 offset_bottom = 892.0
 mouse_filter = 2
 
 [node name="NewGame" type="Button" parent="Layout/Menu"]
+theme_type_variation = &"ArcadeButton"
 unique_name_in_owner = true
 layout_mode = 0
 offset_right = 420.0
@@ -169,7 +163,6 @@ mouse_default_cursor_shape = 2
 theme_override_colors/font_color = Color(0.76, 0.87, 0.91, 1)
 theme_override_colors/font_hover_color = Color(0.5, 0.9, 0.96, 1)
 theme_override_colors/font_focus_color = Color(0.73, 0.92, 0.5, 1)
-theme_override_fonts/font = SubResource("TitleFont")
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("MenuNormal")
 theme_override_styles/hover = SubResource("MenuHover")
@@ -181,6 +174,7 @@ focus_neighbor_top = NodePath("../Exit")
 focus_neighbor_bottom = NodePath("../Endings")
 
 [node name="Endings" type="Button" parent="Layout/Menu"]
+theme_type_variation = &"ArcadeButton"
 unique_name_in_owner = true
 layout_mode = 0
 offset_top = 102.0
@@ -190,7 +184,6 @@ mouse_default_cursor_shape = 2
 theme_override_colors/font_color = Color(0.76, 0.87, 0.91, 1)
 theme_override_colors/font_hover_color = Color(0.5, 0.9, 0.96, 1)
 theme_override_colors/font_focus_color = Color(0.73, 0.92, 0.5, 1)
-theme_override_fonts/font = SubResource("TitleFont")
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("MenuNormal")
 theme_override_styles/hover = SubResource("MenuHover")
@@ -202,6 +195,7 @@ focus_neighbor_top = NodePath("../NewGame")
 focus_neighbor_bottom = NodePath("../Exit")
 
 [node name="Exit" type="Button" parent="Layout/Menu"]
+theme_type_variation = &"ArcadeButton"
 unique_name_in_owner = true
 layout_mode = 0
 offset_top = 204.0
@@ -211,7 +205,6 @@ mouse_default_cursor_shape = 2
 theme_override_colors/font_color = Color(0.76, 0.87, 0.91, 1)
 theme_override_colors/font_hover_color = Color(0.5, 0.9, 0.96, 1)
 theme_override_colors/font_focus_color = Color(0.73, 0.92, 0.5, 1)
-theme_override_fonts/font = SubResource("TitleFont")
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("MenuNormal")
 theme_override_styles/hover = SubResource("MenuHover")
@@ -247,6 +240,7 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("ArchivePanel")
 
 [node name="CollectionHeading" type="Label" parent="Layout/Collection/Panel"]
+theme_type_variation = &"ArcadeLabel"
 layout_mode = 0
 offset_left = 44.0
 offset_top = 30.0
@@ -254,11 +248,11 @@ offset_right = 936.0
 offset_bottom = 108.0
 mouse_filter = 2
 theme_override_colors/font_color = Color(0.65, 0.85, 0.45, 1)
-theme_override_fonts/font = SubResource("TitleFont")
 theme_override_font_sizes/font_size = 38
 text = "ENDING ARCHIVE"
 
 [node name="CollectionText" type="Label" parent="Layout/Collection/Panel"]
+theme_type_variation = &"BodyLabel"
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 44.0
@@ -268,7 +262,6 @@ offset_bottom = 606.0
 mouse_filter = 2
 theme_override_colors/font_color = Color(0.78, 0.86, 0.9, 1)
 theme_override_constants/line_spacing = 10
-theme_override_fonts/font = SubResource("TitleFont")
 theme_override_font_sizes/font_size = 28
 
 [node name="CollectionBack" type="Button" parent="Layout/Collection/Panel"]
@@ -282,7 +275,6 @@ mouse_default_cursor_shape = 2
 theme_override_colors/font_color = Color(0.76, 0.87, 0.91, 1)
 theme_override_colors/font_hover_color = Color(0.5, 0.9, 0.96, 1)
 theme_override_colors/font_focus_color = Color(0.73, 0.92, 0.5, 1)
-theme_override_fonts/font = SubResource("TitleFont")
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("MenuNormal")
 theme_override_styles/hover = SubResource("MenuHover")

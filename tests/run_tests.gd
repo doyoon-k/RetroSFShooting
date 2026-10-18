@@ -59,6 +59,7 @@ func _run() -> void:
 	await frames(3)
 	if FileAccess.file_exists(save_test_path):
 		DirAccess.remove_absolute(save_test_path)
+	GameMusic.stop()
 	await SoundEffects.shutdown()
 	print("TEST RESULT: %d checks, %d failures" % [checks, failures.size()])
 	for failure in failures:

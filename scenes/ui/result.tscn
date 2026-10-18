@@ -17,6 +17,7 @@ preview_catalog = ExtResource("PreviewCatalog")
 
 
 [node name="Debrief" type="Label" parent="."]
+theme_type_variation = &"ArcadeLabel"
 unique_name_in_owner = true
 offset_left = 120.0
 offset_top = 72.0
@@ -28,6 +29,7 @@ mouse_filter = 2
 
 
 [node name="Heading" type="Label" parent="."]
+theme_type_variation = &"EmphasisLabel"
 unique_name_in_owner = true
 offset_left = 120.0
 offset_top = 176.0
@@ -39,13 +41,14 @@ mouse_filter = 2
 
 
 [node name="Survivors" type="Label" parent="."]
+theme_type_variation = &"ArcadeLabel"
 unique_name_in_owner = true
 offset_left = 120.0
 offset_top = 303.0
 offset_right = 970.0
 offset_bottom = 413.0
 text = "SURVIVORS"
-theme_override_font_sizes/font_size = 66
+theme_override_font_sizes/font_size = 44
 mouse_filter = 2
 
 
@@ -58,6 +61,7 @@ offset_bottom = 896.0
 
 
 [node name="SaveStatus" type="Label" parent="."]
+theme_type_variation = &"BodyLabel"
 unique_name_in_owner = true
 offset_left = 120.0
 offset_top = 803.0

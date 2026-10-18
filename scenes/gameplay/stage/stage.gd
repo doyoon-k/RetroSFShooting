@@ -76,6 +76,7 @@ func _ready() -> void:
 	%BombFlash.position = presentation_bounds.position
 	%BombFlash.size = presentation_bounds.size
 	_sync_world_bounds()
+	GameMusic.play(&"stage")
 	_launch_current()
 
 func _physics_process(delta: float) -> void:
@@ -110,6 +111,7 @@ func _sync_world_bounds() -> void:
 		item.bounds = view_bounds
 
 func _exit_tree() -> void:
+	GameMusic.set_paused(false)
 	if get_tree() != null:
 		get_tree().paused = false
 
@@ -276,6 +278,7 @@ func _begin_boss_intro() -> void:
 	_clear_projectiles(false)
 	boss = _spawn_enemy(waves.boss_scene, (waves.get_node("BossMarker") as Marker2D).global_position)
 	_enter(Phase.BOSS_INTRO, boss_intro_seconds)
+	GameMusic.play(&"boss")
 	SoundEffects.play(&"warning")
 	_show_message("WARNING / BOSS", "대사 2", null)
 
@@ -366,6 +369,7 @@ func select_next(id: StringName) -> void:
 	_launch_current()
 
 func _start_clear() -> void:
+	GameMusic.play(&"clear")
 	_enter(Phase.CLEARING, clear_intro_seconds)
 	_clear_projectiles(true)
 	roster.show_survived_status = true
@@ -480,6 +484,7 @@ func toggle_pause() -> void:
 	if phase != Phase.PLAYING:
 		return
 	user_paused = not user_paused
+	GameMusic.set_paused(user_paused)
 	get_tree().paused = user_paused
 	%PauseMenu.visible = user_paused
 	%PauseDimmer.visible = user_paused

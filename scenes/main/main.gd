@@ -64,6 +64,7 @@ func show_ending() -> void:
 		return
 	var screen := story_scene.instantiate()
 	screen.story = ending.story
+	screen.music_cue = GameMusic.ending_cue(run.ending_id)
 	screen.finished.connect(show_result, CONNECT_DEFERRED | CONNECT_ONE_SHOT)
 	_replace(screen)
 

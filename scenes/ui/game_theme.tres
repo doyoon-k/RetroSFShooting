@@ -1,7 +1,28 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://wbownrqyfplv"]
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://wbownrqyfplv"]
 
-[ext_resource type="FontFile" uid="uid://p78o2secj3ik" path="res://assets/fonts/NotoSansKR.ttf" id="Font"]
+[ext_resource type="FontFile" uid="uid://p78o2secj3ik" path="res://assets/fonts/NotoSansKR.ttf" id="BodyFont"]
+[ext_resource type="FontFile" path="res://assets/fonts/SBAggroMedium.ttf" id="MenuFont"]
+[ext_resource type="FontFile" path="res://assets/fonts/SBAggroBold.ttf" id="EmphasisFont"]
+[ext_resource type="FontFile" path="res://assets/fonts/Stadium.ttf" id="ArcadeBase"]
+
+[sub_resource type="FontVariation" id="ArcadeFont"]
+base_font = ExtResource("ArcadeBase")
+fallbacks = Array[Font]([ExtResource("MenuFont"), ExtResource("BodyFont")])
 
 [resource]
-default_font = ExtResource("Font")
+default_font = ExtResource("MenuFont")
 default_font_size = 24
+ArcadeButton/base_type = &"Button"
+ArcadeButton/fonts/font = SubResource("ArcadeFont")
+ArcadeLabel/base_type = &"Label"
+ArcadeLabel/fonts/font = SubResource("ArcadeFont")
+BodyLabel/base_type = &"Label"
+BodyLabel/fonts/font = ExtResource("BodyFont")
+EmphasisLabel/base_type = &"Label"
+EmphasisLabel/fonts/font = ExtResource("EmphasisFont")
+RichTextLabel/fonts/normal_font = ExtResource("BodyFont")
+RichTextLabel/fonts/bold_font = ExtResource("BodyFont")
+RichTextLabel/fonts/italics_font = ExtResource("BodyFont")
+RichTextLabel/fonts/bold_italics_font = ExtResource("BodyFont")
+RichTextLabel/fonts/mono_font = ExtResource("BodyFont")
+TooltipLabel/fonts/font = ExtResource("BodyFont")

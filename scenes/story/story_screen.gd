@@ -2,10 +2,12 @@ extends Control
 
 signal finished
 @export var story: StoryData
+@export var music_cue: StringName = &"title"
 var page_index: int = 0
 var ended: bool = false
 
 func _ready() -> void:
+	GameMusic.play(music_cue)
 	%Next.pressed.connect(advance)
 	_show_page()
 	SoundEffects.bind_navigation(%Next)

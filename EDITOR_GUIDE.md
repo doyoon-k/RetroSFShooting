@@ -373,8 +373,40 @@ M1의 `Shooter`는 `SiegeShooter`입니다. 기본 순서는 **유인탄→벽 /
 
 추가 승인된 효과음은 실제 폭탄 발동(`Explosion 17`), 실드 획득(`UI Replenish Octave`), 실드 파괴(`Distortion Arc Short 02`)입니다. 폭탄 예약·취소에는 폭발음을 내지 않으며, 실드가 이미 있거나 피격 무적에 막힌 경우에는 실드 효과음을 반복하지 않습니다.
 
+폭탄은 실제 발동 시의 폭발음만 사용합니다. 별도 폭탄 준비음(후보 5번)은 사용하지 않습니다.
+
 최초 출격과 파일럿 교대 후 재출격에는 `FIRE_Fireball_Whoosh_Slow`를 공통으로 사용합니다. 기체 진입 연출이 시작될 때 한 번 재생하며, 연출 중 전투가 정지되어 있어도 소리는 이어집니다.
 
 공격 프리셋의 `Audible Warning`을 켜면 시각 예고가 시작될 때 공통 경고음을 재생합니다. 기본 적용 대상은 탄벽, 쌍익 교차 사격, 삼단 반사탄, 부화탄과 회전 탄막입니다. M1의 전용 순환도 같은 설정을 따릅니다. 경고음이 재생 중이면 중복 경고를 겹치지 않습니다.
 
 `python tools/check.py`에는 승인 음원 매핑, 획득 상한, 키보드/HUD 무기 전환, 사망 중 재생, 경고 중복, UI 조작 검사가 포함됩니다.
+
+## BGM 편집
+
+`scenes/audio/game_music.tscn`은 프로젝트의 `Music` Autoload입니다. 루트 `Music`을 선택하면
+Inspector의 `Approved Tracks`에서 곡을 교체하고, `Playback > Volume dB`에서 공통 음량을
+조절할 수 있습니다. 기본 음량은 -18 dB이며, 화면·전투 상황이 바뀔 때 0.5초 동안 교차 전환합니다.
+
+| 용도 | 승인 번호 | 음원 / Inspector 속성 |
+| --- | --- | --- |
+| 타이틀·인트로 | 1 | The Space Is Full Of $tars / Title Track |
+| 파일럿 선택 | 2 | Capt Chip Pants / Select Track |
+| 일반 스테이지·중간 보스 | 4 | Fight For Your Lives / Stage Track |
+| 최종 보스 등장·전투 | 5 | Decisive Battle / Boss Track |
+| 클리어·생존 엔딩 결과 | 6 | Victory At Last / Clear Track |
+| 2~4명 일반 생존·5명·6명 생존 엔딩 | 7 | Yet Another Journey / Ending Track |
+| 전멸·1명 생존·AI 배신 엔딩과 그 결과 | 8 | Lilith's Elegy / Somber Ending Track |
+
+인트로는 타이틀곡을 이어 재생합니다. 파일럿 격추·교대·재출격 중에는 현재 스테이지 또는
+보스 곡을 유지합니다. 수동 일시정지는 음악과 전환 시간을 함께 멈추고, 재개하면 같은 위치에서
+이어집니다. 출격·보스 등장·클리어 등 자동으로 전투를 멈추는 연출 중에는 BGM을 계속 재생합니다.
+
+선택 화면 곡은 원래의 반복 구조에 맞춰 샘플 루프를 사용합니다. 나머지 곡은 끝에서 1초 동안
+시작 부분과 교차 전환하며 반복합니다. `Loop End Seconds`는 곡 끝의 거의 무음인 꼬리를
+제외하는 지점(초)입니다. 곡을 바꿀 때 해당 항목을 삭제하면 전체 길이를 사용합니다.
+완전한 루프 음원으로 교체한 경우 `Native Loop Cues`에 해당 키(`title`, `select`, `stage`,
+`boss`, `clear`, `ending`, `somber_ending`)를 추가하면 교차 전환 없이 반복합니다.
+이 재생 설정은 실행 중 복사본에 적용되며 원본 음원과 공통 Import 설정은 그대로입니다.
+
+`python tools/check.py`는 승인된 7곡, 실제 화면 전환, 파일럿 교대, 수동 일시정지,
+6개 엔딩·결과 분기, 반복 재생과 중복 요청도 검사합니다.

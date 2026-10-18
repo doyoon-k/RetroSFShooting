@@ -17,6 +17,7 @@ config/features=PackedStringArray("4.7", "Forward Plus")
 [autoload]
 
 Sfx="*res://scenes/audio/sound_effects.tscn"
+Music="*res://scenes/audio/game_music.tscn"
 
 [display]
 

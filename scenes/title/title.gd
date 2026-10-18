@@ -14,6 +14,7 @@ var opening_input: InputEvent
 const DESIGN_SIZE := Vector2(1920, 1080)
 
 func _ready() -> void:
+	GameMusic.play(&"title")
 	%NewGame.pressed.connect(_new_game)
 	%Endings.pressed.connect(_show_endings)
 	%Exit.pressed.connect(_exit)
@@ -59,6 +60,7 @@ func _exit() -> void:
 		state = State.STARTING
 		for button in [%NewGame, %Endings, %Exit]:
 			button.disabled = true
+		GameMusic.stop()
 		await SoundEffects.shutdown()
 		get_tree().quit()
 

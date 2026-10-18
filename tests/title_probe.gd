@@ -170,6 +170,7 @@ func _run() -> void:
 		screen.queue_free()
 		await frames()
 
+	GameMusic.stop()
 	await SoundEffects.shutdown()
 	print("TITLE: %d checks, %d failures" % [checks, failures.size()])
 	quit(0 if failures.is_empty() else 1)

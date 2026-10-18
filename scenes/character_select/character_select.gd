@@ -10,6 +10,7 @@ var slots: Array[HangarPilot] = []
 const DESIGN_SIZE := Vector2(1920, 1080)
 
 func _ready() -> void:
+	GameMusic.play(&"select")
 	if run == null:
 		run = RunState.new(catalog)
 	for child in %Hangar.get_children():
