@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cbn6ffxegahpt"
+path="res://.godot/imported/NUCLEUS 1.wav-560c0920865377cbc5b00167660a4054.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/GoodSFX/NUCLEUS 1.wav"
+dest_files=["res://.godot/imported/NUCLEUS 1.wav-560c0920865377cbc5b00167660a4054.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

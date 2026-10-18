@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bhm03ineqopvy"
+path="res://.godot/imported/Blade Clash Impact Blunt 04.wav-f9efe45e984f1a93c467ff4bfbe9052e.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Hack and Slash 24 48/Audio/Weapon Clash/Blade Clash Impact Blunt 04.wav"
+dest_files=["res://.godot/imported/Blade Clash Impact Blunt 04.wav-f9efe45e984f1a93c467ff4bfbe9052e.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

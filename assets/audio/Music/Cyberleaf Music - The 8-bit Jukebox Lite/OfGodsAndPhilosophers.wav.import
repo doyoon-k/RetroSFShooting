@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://brdfja0tdyj46"
+path="res://.godot/imported/OfGodsAndPhilosophers.wav-68dcc92df3ae4b7a3818d4081082aa22.sample"
+
+[deps]
+
+source_file="res://assets/audio/Music/Cyberleaf Music - The 8-bit Jukebox Lite/OfGodsAndPhilosophers.wav"
+dest_files=["res://.godot/imported/OfGodsAndPhilosophers.wav-68dcc92df3ae4b7a3818d4081082aa22.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

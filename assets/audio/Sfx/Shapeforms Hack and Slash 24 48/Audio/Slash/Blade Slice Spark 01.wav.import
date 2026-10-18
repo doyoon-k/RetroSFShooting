@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b6w2gg5ea0fxj"
+path="res://.godot/imported/Blade Slice Spark 01.wav-c2738e09912f52f09ffeb0e58da25781.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Hack and Slash 24 48/Audio/Slash/Blade Slice Spark 01.wav"
+dest_files=["res://.godot/imported/Blade Slice Spark 01.wav-c2738e09912f52f09ffeb0e58da25781.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

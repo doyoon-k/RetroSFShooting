@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://i07xra2m0kx7"
+path="res://.godot/imported/PUNCH_ARCADE_01.wav-d4c223f4be6a05570a8ac5a9b2d76f71.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Hit and Punch Essentials/AUDIO 24 48/PUNCHES/PUNCH_ARCADE_01.wav"
+dest_files=["res://.godot/imported/PUNCH_ARCADE_01.wav-d4c223f4be6a05570a8ac5a9b2d76f71.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://8mebfrc1n1nq"
+path="res://.godot/imported/Bank Card Picked Up 02.wav-7a9fd3aae7b690dcbd49c740398736c5.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/The Mint Coins and Money Lite/Stereo/Bank Card/Bank Card Picked Up 02.wav"
+dest_files=["res://.godot/imported/Bank Card Picked Up 02.wav-7a9fd3aae7b690dcbd49c740398736c5.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

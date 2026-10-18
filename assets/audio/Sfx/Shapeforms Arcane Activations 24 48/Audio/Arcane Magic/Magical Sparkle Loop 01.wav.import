@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c2ycbq0mk4lrv"
+path="res://.godot/imported/Magical Sparkle Loop 01.wav-63e32515da32496b7cb5e2608446ef93.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane Magic/Magical Sparkle Loop 01.wav"
+dest_files=["res://.godot/imported/Magical Sparkle Loop 01.wav-63e32515da32496b7cb5e2608446ef93.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

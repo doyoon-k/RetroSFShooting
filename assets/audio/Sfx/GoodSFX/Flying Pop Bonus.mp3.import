@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://o6kvdsdgid66"
+path="res://.godot/imported/Flying Pop Bonus.mp3-78689156aed060b3102e75cdefe35f9c.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/GoodSFX/Flying Pop Bonus.mp3"
+dest_files=["res://.godot/imported/Flying Pop Bonus.mp3-78689156aed060b3102e75cdefe35f9c.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

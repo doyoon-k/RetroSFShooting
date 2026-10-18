@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dpdfi66r30o7f"
+path="res://.godot/imported/Energy Escape Heavy.wav-85df25e6280c3c707271f41456b4df42.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane Magic/Energy Escape Heavy.wav"
+dest_files=["res://.godot/imported/Energy Escape Heavy.wav-85df25e6280c3c707271f41456b4df42.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

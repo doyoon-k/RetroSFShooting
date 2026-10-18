@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://ddp2po50t5a7d"
+path="res://.godot/imported/Magical Chimes 03.wav-94b7bdb74d4dc9aac8f9bf98d842c8eb.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane Magic/Magical Chimes 03.wav"
+dest_files=["res://.godot/imported/Magical Chimes 03.wav-94b7bdb74d4dc9aac8f9bf98d842c8eb.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

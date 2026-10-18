@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c2im58e3lxk1u"
+path="res://.godot/imported/Decisive Battle.mp3-52d342560a0071b415f9fd3bc961a955.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/Music/Decisive Battle.mp3"
+dest_files=["res://.godot/imported/Decisive Battle.mp3-52d342560a0071b415f9fd3bc961a955.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

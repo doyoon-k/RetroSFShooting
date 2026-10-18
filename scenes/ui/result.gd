@@ -17,5 +17,10 @@ func _ready() -> void:
 	%Roster.show_survived_status = true
 	%Roster.refresh()
 	%SaveStatus.text = "엔딩 기록이 저장되었습니다." if save_error == OK else "엔딩 기록 저장에 실패했습니다. 기존 저장 파일은 보존됩니다."
-	%Return.pressed.connect(func(): return_requested.emit())
+	%Return.pressed.connect(_return_to_title)
 	%Return.grab_focus()
+	SoundEffects.bind_navigation(%Return)
+
+func _return_to_title() -> void:
+	SoundEffects.play(&"ui_confirm")
+	return_requested.emit()

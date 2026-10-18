@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c7fx54qpbhrdm"
+path="res://.godot/imported/Coin Slide Wood Collide Coins.wav-0335973b4ab8bd1b45ef81610f0539c5.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/The Mint Coins and Money Lite/Stereo/Coins/One Shots/Coin Slide Wood Collide Coins.wav"
+dest_files=["res://.godot/imported/Coin Slide Wood Collide Coins.wav-0335973b4ab8bd1b45ef81610f0539c5.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -146,5 +146,6 @@ func _run() -> void:
 	check(empty.selected == &"" and not empty.get_node("Layout/Details").visible and not empty.get_node("Layout/SelectionMarker").visible, "An empty roster has no selectable pilot or information panel")
 	empty.queue_free()
 	await frames()
+	await SoundEffects.shutdown()
 	print("PILOT SELECT: %d checks, %d failures" % [checks, failures.size()])
 	quit(0 if failures.is_empty() else 1)

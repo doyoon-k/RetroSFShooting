@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://rs3pt4h8ygvn"
+path="res://.godot/imported/Blade Slash Schwing Short 02.wav-3983a2ab85a0b2f176d53d141fe79012.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Hack and Slash 24 48/Audio/Slash/Blade Slash Schwing Short 02.wav"
+dest_files=["res://.godot/imported/Blade Slash Schwing Short 02.wav-3983a2ab85a0b2f176d53d141fe79012.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cclt2l06pmwy8"
+path="res://.godot/imported/Blade Swing Noise Slice 03.wav-4dd0b768bdc71b0809d53ae3a739b293.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Hack and Slash 24 48/Audio/Whoosh/Blade Swing Noise Slice 03.wav"
+dest_files=["res://.godot/imported/Blade Swing Noise Slice 03.wav-4dd0b768bdc71b0809d53ae3a739b293.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

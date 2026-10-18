@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dsx2flxe5x8h8"
+path="res://.godot/imported/Earth Energy Ambience Loop.wav-950b82d8a4422c5502b6f8330f5cbebc.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Ambience/Earth Energy Ambience Loop.wav"
+dest_files=["res://.godot/imported/Earth Energy Ambience Loop.wav-950b82d8a4422c5502b6f8330f5cbebc.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://tj3cx4pupinf"
+path="res://.godot/imported/Activate Shrine 05.wav-1386d4572af047bad0a5375afbc6646c.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane Magic/Activate Shrine 05.wav"
+dest_files=["res://.godot/imported/Activate Shrine 05.wav-1386d4572af047bad0a5375afbc6646c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c5jx0mnydxng7"
+path="res://.godot/imported/Dark Whirlwind Whoosh.wav-3d5e587bb46b984c7d11dbaebbda6082.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Risers Transitions Whooshes/Dark Whirlwind Whoosh.wav"
+dest_files=["res://.godot/imported/Dark Whirlwind Whoosh.wav-3d5e587bb46b984c7d11dbaebbda6082.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -30,6 +30,10 @@ func _ready() -> void:
 	_fit_layout()
 	_refresh_roster()
 	_focus_selected_slot()
+	for slot in slots:
+		SoundEffects.bind_navigation(slot)
+	for button in [%MoveLeft, %MoveRight, %CloseDetails, %Sortie]:
+		SoundEffects.bind_navigation(button)
 
 func _fit_layout() -> void:
 	var ratio := minf(size.x / DESIGN_SIZE.x, size.y / DESIGN_SIZE.y)
@@ -107,10 +111,12 @@ func _open_pilot(id: StringName) -> void:
 	%Details.show()
 	_refresh_details()
 	%Sortie.grab_focus()
+	SoundEffects.play(&"ui_confirm")
 
 func _close_details() -> void:
-	if confirmed:
+	if confirmed or not %Details.visible:
 		return
+	SoundEffects.play(&"ui_cancel")
 	%Details.hide()
 	_focus_selected_slot()
 
@@ -118,6 +124,7 @@ func _sortie() -> void:
 	if confirmed or not %Details.visible or not run.is_alive(selected):
 		return
 	confirmed = true
+	SoundEffects.play(&"ui_confirm")
 	_refresh_roster()
 	sortie_requested.emit(selected)
 

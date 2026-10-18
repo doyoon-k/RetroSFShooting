@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://nl5jho7ua3js"
+path="res://.godot/imported/Rotate Stone 06.wav-e1b938e91fe1f29157c8ae03e65d2c03.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Stone Interaction/Rotate Stone 06.wav"
+dest_files=["res://.godot/imported/Rotate Stone 06.wav-e1b938e91fe1f29157c8ae03e65d2c03.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

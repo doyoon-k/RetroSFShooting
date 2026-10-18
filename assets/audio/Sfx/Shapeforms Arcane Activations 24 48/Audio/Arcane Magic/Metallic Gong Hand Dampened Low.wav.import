@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b5sn8aimt6brw"
+path="res://.godot/imported/Metallic Gong Hand Dampened Low.wav-6020e967a8bd3813043c03135e81d885.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane Magic/Metallic Gong Hand Dampened Low.wav"
+dest_files=["res://.godot/imported/Metallic Gong Hand Dampened Low.wav-6020e967a8bd3813043c03135e81d885.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

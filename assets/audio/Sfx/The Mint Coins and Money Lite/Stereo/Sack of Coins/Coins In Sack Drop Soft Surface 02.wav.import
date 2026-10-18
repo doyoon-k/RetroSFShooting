@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b377csjetsdr6"
+path="res://.godot/imported/Coins In Sack Drop Soft Surface 02.wav-0e8c82e39d45e9484b81b30ba2d516d1.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/The Mint Coins and Money Lite/Stereo/Sack of Coins/Coins In Sack Drop Soft Surface 02.wav"
+dest_files=["res://.godot/imported/Coins In Sack Drop Soft Surface 02.wav-0e8c82e39d45e9484b81b30ba2d516d1.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

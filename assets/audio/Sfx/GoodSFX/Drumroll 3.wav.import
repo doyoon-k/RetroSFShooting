@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bu2bmrpo6di5n"
+path="res://.godot/imported/Drumroll 3.wav-d3d210c2b89cdd0e6707ce02b6e6d01e.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/GoodSFX/Drumroll 3.wav"
+dest_files=["res://.godot/imported/Drumroll 3.wav-d3d210c2b89cdd0e6707ce02b6e6d01e.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

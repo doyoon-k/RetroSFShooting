@@ -47,6 +47,7 @@ var bomb_flash_tween: Tween
 @onready var waves: WaveSequence = $Simulation/WaveSequence
 @onready var roster: PilotRoster = %Roster
 @onready var hud: CombatHUD = %CombatHUD
+@onready var power_up_message: PowerUpMessage = %PowerUpMessage
 
 func _ready() -> void:
 	if run == null:
@@ -140,6 +141,8 @@ func _process(delta: float) -> void:
 			_next_victory_line()
 
 func _enter(next_phase: Phase, seconds: float = 0.0) -> void:
+	if next_phase != Phase.PLAYING:
+		power_up_message.clear()
 	if next_phase in [Phase.PLAYER_DYING, Phase.CLEARING, Phase.FINISHED]:
 		_cancel_bomb()
 	phase = next_phase
@@ -174,9 +177,19 @@ func _launch_current() -> void:
 	player.weapon.bounds = view_bounds
 	player.bomb_requested.connect(_bomb)
 	player.died.connect(_player_died)
+	player.power_up_collected.connect(_show_power_up_message)
 	for item in items.get_children():
 		item.target = player
 	_show_message("SORTIE / " + pilot.callsign, "대사 1", null)
+	SoundEffects.play(&"sortie")
+
+func _show_power_up_message() -> void:
+	if phase != Phase.PLAYING or user_paused or not is_instance_valid(player):
+		return
+	var ship_position := player.get_global_transform_with_canvas().origin
+	# Keep the message above the persistent shield icon when it is equipped.
+	var clearance := 50.0 if player.state.shield else 0.0
+	power_up_message.show_at(ship_position, rules.playfield, clearance)
 
 func _update_hud() -> void:
 	if run == null or run.current_sortie == null:
@@ -263,6 +276,7 @@ func _begin_boss_intro() -> void:
 	_clear_projectiles(false)
 	boss = _spawn_enemy(waves.boss_scene, (waves.get_node("BossMarker") as Marker2D).global_position)
 	_enter(Phase.BOSS_INTRO, boss_intro_seconds)
+	SoundEffects.play(&"warning")
 	_show_message("WARNING / BOSS", "대사 2", null)
 
 func _enemy_damaged(enemy: EnemyShip) -> void:
@@ -272,6 +286,8 @@ func _enemy_damaged(enemy: EnemyShip) -> void:
 
 func _enemy_destroyed(enemy: EnemyShip) -> void:
 	defeated += 1
+	if enemy.is_midboss or enemy.is_boss:
+		SoundEffects.play(&"large_enemy_destroyed")
 	if enemy == mid_enemy:
 		mid_enemy = null
 		_clear_projectiles(false)
@@ -315,6 +331,7 @@ func _start_death() -> void:
 	dying_pilot_id = pending_death.pilot
 	pending_death.clear()
 	_enter(Phase.PLAYER_DYING, rules.death_seconds)
+	SoundEffects.play(&"player_destroyed")
 	_effect(location, explosion_scene, true)
 	for i in powerups:
 		var pickup := _spawn_pickup(recovery_pickup, location + Vector2(-80, (i - (powerups - 1) * 0.5) * 56))
@@ -425,6 +442,7 @@ func _detonate_bomb() -> void:
 	bomb_pending = false
 	bomb_delay_left = 0.0
 	player.grant_invincibility(rules.bomb_invincibility)
+	SoundEffects.play(&"bomb_detonate")
 	for actor in actors.get_children():
 		if actor is EnemyShip and view_bounds.has_point(actor.global_position):
 			actor.take_damage(rules.bomb_damage)
@@ -471,8 +489,7 @@ func toggle_pause() -> void:
 func _switch_weapon() -> void:
 	if phase != Phase.PLAYING or user_paused or not is_instance_valid(player):
 		return
-	run.current_sortie.switch_weapon()
-	player.weapon.cooldown = 0.0
+	player.weapon.switch_weapon()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause") and not event.is_echo():

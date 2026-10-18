@@ -1,38 +1,33 @@
-[gd_resource type="Resource" script_class="StoryData" load_steps=11 format=3 uid="uid://d0sgit0ijolup"]
+[gd_resource type="Resource" script_class="StoryData" format=3 uid="uid://d0sgit0ijolup"]
 
 [ext_resource type="Texture2D" uid="uid://djsjd21mdeyr0" path="res://assets/Pilots_sprites/stories/234ed01.png" id="Image0"]
 [ext_resource type="Texture2D" uid="uid://dl18jmdqo24bt" path="res://assets/Pilots_sprites/stories/234ed02.png" id="Image1"]
 [ext_resource type="Texture2D" uid="uid://djff1wa1ndysv" path="res://assets/Pilots_sprites/stories/234ed03.png" id="Image2"]
 [ext_resource type="Texture2D" uid="uid://cf2doc5syulsb" path="res://assets/Pilots_sprites/stories/234ed04.png" id="Image3"]
-[ext_resource type="Script" path="res://scripts/data/story_page.gd" id="Page"]
-[ext_resource type="Script" path="res://scripts/data/story_data.gd" id="Script"]
+[ext_resource type="Script" uid="uid://hu6rxfhvteyv" path="res://scripts/data/story_page.gd" id="Page"]
+[ext_resource type="Script" uid="uid://bb1edxs8c723k" path="res://scripts/data/story_data.gd" id="Script"]
 
 [sub_resource type="Resource" id="Page0"]
 script = ExtResource("Page")
 illustration = ExtResource("Image0")
-caption = ""
 text = "대사 1"
 
 [sub_resource type="Resource" id="Page1"]
 script = ExtResource("Page")
 illustration = ExtResource("Image1")
-caption = ""
 text = "대사 2"
 
 [sub_resource type="Resource" id="Page2"]
 script = ExtResource("Page")
 illustration = ExtResource("Image2")
-caption = ""
 text = "대사 3"
 
 [sub_resource type="Resource" id="Page3"]
 script = ExtResource("Page")
 illustration = ExtResource("Image3")
-caption = ""
 text = "대사 4"
 
 [resource]
 script = ExtResource("Script")
 title = "ENDING 04"
 pages = Array[ExtResource("Page")]([SubResource("Page0"), SubResource("Page1"), SubResource("Page2"), SubResource("Page3")])
-characters_per_second = 42.0

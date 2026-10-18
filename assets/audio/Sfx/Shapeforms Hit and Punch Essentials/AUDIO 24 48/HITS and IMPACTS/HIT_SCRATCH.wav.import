@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bcq5kfqd1w2wi"
+path="res://.godot/imported/HIT_SCRATCH.wav-92bcd3031267d3e56d15109cdab489bb.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Hit and Punch Essentials/AUDIO 24 48/HITS and IMPACTS/HIT_SCRATCH.wav"
+dest_files=["res://.godot/imported/HIT_SCRATCH.wav-92bcd3031267d3e56d15109cdab489bb.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

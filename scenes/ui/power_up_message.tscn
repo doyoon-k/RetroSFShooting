@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/power_up_message.gd" id="Script"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Item/PowerUp.png" id="Texture"]
+
+[sub_resource type="AtlasTexture" id="Message"]
+atlas = ExtResource("Texture")
+region = Rect2(50, 95, 155, 67)
+
+[node name="PowerUpMessage" type="Node2D"]
+process_mode = 1
+visible = false
+script = ExtResource("Script")
+
+[node name="Shadow" type="Sprite2D" parent="."]
+position = Vector2(2, 2)
+modulate = Color(0.025, 0.025, 0.04, 0.9)
+texture = SubResource("Message")
+
+[node name="Visual" type="Sprite2D" parent="."]
+texture = SubResource("Message")

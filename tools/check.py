@@ -23,6 +23,7 @@ log_dir = ROOT / 'build' / 'validation'
 log_dir.mkdir(parents=True, exist_ok=True)
 commands = [
     ('import', ['--headless', '--editor', '--import']),
+    ('sfx', ['--headless', '--audio-driver', 'Dummy', '--script', 'tests/sfx_probe.gd', '--fixed-fps', '60']),
     ('title', (['--rendering-method', 'gl_compatibility'] if args.screenshots else ['--headless'])
      + ['--audio-driver', 'Dummy', '--script', 'tests/title_probe.gd', '--fixed-fps', '60']
      + (['--', '--screenshots'] if args.screenshots else [])),
@@ -47,7 +48,7 @@ for name, command in commands:
         sys.exit(result.returncode or 1)
     print(f'{name}: OK')
     for line in output.splitlines():
-        if line.startswith(('TEST RESULT:', 'PILOT SELECT:', 'TITLE:', 'TITLE EXIT:')):
+        if line.startswith(('SFX:', 'TEST RESULT:', 'PILOT SELECT:', 'TITLE:', 'TITLE EXIT:')):
             print(line)
         elif name == 'ricochet' and line.startswith('{'):
             report = json.loads(line)

@@ -1,6 +1,8 @@
-[gd_resource type="Resource" script_class="AttackPattern" load_steps=3 format=3]
-[ext_resource type="Script" path="res://scripts/data/attack_pattern.gd" id="Script"]
+[gd_resource type="Resource" script_class="AttackPattern" format=3 uid="uid://ci4rjswwln7fr"]
+
 [ext_resource type="PackedScene" path="res://scenes/projectiles/lance_bullet.tscn" id="Bullet"]
+[ext_resource type="Script" uid="uid://c2k7od5at04pn" path="res://scripts/data/attack_pattern.gd" id="Script"]
+
 [resource]
 script = ExtResource("Script")
 display_name = "Wing battery / crossing volleys"
@@ -13,4 +15,5 @@ volley_count = 4
 volley_interval = 0.32
 rotation_per_volley = 6.0
 recovery = 1.0
+audible_warning = true
 muzzle_offsets = Array[Vector2]([Vector2(0, -110), Vector2(0, 110)])

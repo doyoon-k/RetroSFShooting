@@ -71,7 +71,9 @@ func _run() -> void:
 			return
 		print("TITLE EXIT: first click reveals the menu; second click exits")
 		click(screen.get_node("%Exit"))
-		await frames()
+		var deadline := Time.get_ticks_msec() + 1000
+		while Time.get_ticks_msec() < deadline:
+			await process_frame
 		push_error("EXIT did not terminate the application")
 		quit(1)
 		return
@@ -98,13 +100,13 @@ func _run() -> void:
 		check(not menu.visible, "Mouse movement, stick movement and modifiers do not dismiss the prompt")
 		if mode == 0:
 			await capture("title_waiting")
-			var crew := screen.get_node("%Portraits") as AnimatedSprite2D
+			var crew := screen.get_node("%Portraits") as Sprite2D
 			var ship := screen.get_node("%Ship") as Control
 			var original_y := ship.position.y
 			var seen := {}
 			for index in range(120):
 				await frames(1)
-				var artwork := crew.sprite_frames.get_frame_texture(crew.animation, crew.frame)
+				var artwork := crew.texture
 				if not seen.has(artwork.resource_path):
 					seen[artwork.resource_path] = true
 					if artwork.resource_path.ends_with("TitleBG2.png"):
@@ -168,5 +170,6 @@ func _run() -> void:
 		screen.queue_free()
 		await frames()
 
+	await SoundEffects.shutdown()
 	print("TITLE: %d checks, %d failures" % [checks, failures.size()])
 	quit(0 if failures.is_empty() else 1)

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dcfiw6houbwhr"
+path="res://.godot/imported/Reverse Tonal Riser 01.wav-acb214865794db2600d1ff8de41791d3.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Risers Transitions Whooshes/Reverse Tonal Riser 01.wav"
+dest_files=["res://.godot/imported/Reverse Tonal Riser 01.wav-acb214865794db2600d1ff8de41791d3.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cv7rwv04vyh2m"
+path="res://.godot/imported/Decisive Battle (wav).wav-029404f1c06ef8bbd79b034e0631c8b6.sample"
+
+[deps]
+
+source_file="res://assets/audio/Music/Decisive Battle (wav).wav"
+dest_files=["res://.godot/imported/Decisive Battle (wav).wav-029404f1c06ef8bbd79b034e0631c8b6.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

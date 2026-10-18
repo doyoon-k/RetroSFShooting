@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bcbhe4u0qu251"
+path="res://.godot/imported/Sword Slash Metallic Medium 02.wav-c275ea4ed07af2944e5dfc21d3f0b99a.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Hack and Slash 24 48/Audio/Slash/Sword Slash Metallic Medium 02.wav"
+dest_files=["res://.godot/imported/Sword Slash Metallic Medium 02.wav-c275ea4ed07af2944e5dfc21d3f0b99a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

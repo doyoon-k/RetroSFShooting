@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://j1k7kwtp13ac"
+path="res://.godot/imported/IMPACT_LOW_THUD_03.wav-4152a3d2c10d25d2fcc9426ce73923ba.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Hit and Punch Essentials/AUDIO 24 48/HITS and IMPACTS/IMPACT_LOW_THUD_03.wav"
+dest_files=["res://.godot/imported/IMPACT_LOW_THUD_03.wav-4152a3d2c10d25d2fcc9426ce73923ba.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

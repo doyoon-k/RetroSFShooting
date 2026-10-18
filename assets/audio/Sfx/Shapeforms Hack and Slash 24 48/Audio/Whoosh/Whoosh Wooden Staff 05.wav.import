@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bhub4jiq3fteg"
+path="res://.godot/imported/Whoosh Wooden Staff 05.wav-bfd91fe4e63a4c254428f74dfeecb905.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Hack and Slash 24 48/Audio/Whoosh/Whoosh Wooden Staff 05.wav"
+dest_files=["res://.godot/imported/Whoosh Wooden Staff 05.wav-bfd91fe4e63a4c254428f74dfeecb905.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://w2kys6qqge80"
+path="res://.godot/imported/Silk and Shadows.mp3-a68e0ff32bfb7b91d1fc7e296587ba00.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/Music/Silk and Shadows.mp3"
+dest_files=["res://.godot/imported/Silk and Shadows.mp3-a68e0ff32bfb7b91d1fc7e296587ba00.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

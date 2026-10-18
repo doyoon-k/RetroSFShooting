@@ -15,7 +15,15 @@ var volley: int = 0
 var timer: float = 0.0
 var locked_angle: float = PI
 var starting: bool = true
-var warning: bool = false
+var warning: bool = false:
+	set(value):
+		if warning == value:
+			return
+		warning = value
+		if warning and is_inside_tree() and not Engine.is_editor_hint():
+			if step_index < steps.size() and steps[step_index] != null and steps[step_index].pattern != null:
+				if steps[step_index].pattern.audible_warning:
+					SoundEffects.play(&"warning")
 var volleys_fired: int = 0
 var bursts_completed: int = 0
 var curtain_route_index: int = -1

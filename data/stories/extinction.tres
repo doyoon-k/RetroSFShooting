@@ -1,15 +1,13 @@
-[gd_resource type="Resource" script_class="StoryData" load_steps=4 format=3 uid="uid://dkad6dnbr4s5m"]
+[gd_resource type="Resource" script_class="StoryData" format=3 uid="uid://dkad6dnbr4s5m"]
 
-[ext_resource type="Script" path="res://scripts/data/story_page.gd" id="Page"]
-[ext_resource type="Script" path="res://scripts/data/story_data.gd" id="Script"]
+[ext_resource type="Script" uid="uid://hu6rxfhvteyv" path="res://scripts/data/story_page.gd" id="Page"]
+[ext_resource type="Script" uid="uid://bb1edxs8c723k" path="res://scripts/data/story_data.gd" id="Script"]
 
 [sub_resource type="Resource" id="Page0"]
 script = ExtResource("Page")
-caption = ""
 text = "대사 1"
 
 [resource]
 script = ExtResource("Script")
 title = "ENDING 01"
 pages = Array[ExtResource("Page")]([SubResource("Page0")])
-characters_per_second = 42.0

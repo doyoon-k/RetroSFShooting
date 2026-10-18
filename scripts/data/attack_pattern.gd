@@ -19,6 +19,8 @@ enum Shape { FAN, RING, CURTAIN, RICOCHET }
 @export_range(0.05, 20.0, 0.05) var recovery: float = 1.5
 ## -1 uses the emitter's default. Recovery starts after family clearance when enabled.
 @export_range(-1.0, 2.0, 0.05) var telegraph_seconds: float = -1.0
+## Play the shared alert once when this attack's visual telegraph begins.
+@export var audible_warning: bool = false
 @export var wait_for_clear: bool = false
 @export_group("Fleet geometry")
 ## World-pixel offsets: independent of the ship's visual scale.

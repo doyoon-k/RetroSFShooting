@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dwnflkykavwum"
+path="res://.godot/imported/Coin Counter Loop 04.wav-a31cb5eae6b80d924422ffafc9e4a34e.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/The Mint Coins and Money Lite/Stereo/Coins/Loops/Coin Counter Loop 04.wav"
+dest_files=["res://.godot/imported/Coin Counter Loop 04.wav-a31cb5eae6b80d924422ffafc9e4a34e.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

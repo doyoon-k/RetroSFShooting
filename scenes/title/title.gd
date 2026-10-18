@@ -23,6 +23,8 @@ func _ready() -> void:
 	%StartPrompt.show()
 	resized.connect(_fit_layout)
 	_fit_layout()
+	for button in [%NewGame, %Endings, %Exit, %CollectionBack]:
+		SoundEffects.bind_navigation(button)
 
 func _fit_layout() -> void:
 	var ratio := minf(size.x / DESIGN_SIZE.x, size.y / DESIGN_SIZE.y)
@@ -41,23 +43,30 @@ func _reveal_menu(event: InputEvent) -> void:
 	%StartPrompt.hide()
 	%Menu.show()
 	%NewGame.grab_focus()
+	SoundEffects.play(&"ui_confirm")
 
 func _new_game() -> void:
 	if state != State.MENU:
 		return
 	state = State.STARTING
+	SoundEffects.play(&"ui_confirm")
 	for button in [%NewGame, %Endings, %Exit]:
 		button.disabled = true
 	new_game_requested.emit()
 
 func _exit() -> void:
 	if state == State.MENU:
+		state = State.STARTING
+		for button in [%NewGame, %Endings, %Exit]:
+			button.disabled = true
+		await SoundEffects.shutdown()
 		get_tree().quit()
 
 func _show_endings() -> void:
 	if state != State.MENU:
 		return
 	state = State.COLLECTION
+	SoundEffects.play(&"ui_confirm")
 	var lines := PackedStringArray()
 	var discovered := 0
 	for ending in catalog.endings:
@@ -75,6 +84,7 @@ func _hide_endings() -> void:
 		return
 	state = State.MENU
 	%Collection.hide()
+	SoundEffects.play(&"ui_cancel")
 	%Menu.show()
 	%Endings.grab_focus()
 

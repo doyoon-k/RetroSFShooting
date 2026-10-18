@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://ck464o3u0yxtd"
+path="res://.godot/imported/Blade Swing Light Triplet 01.wav-c83b16dc8143e833b42c186b311fb703.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Hack and Slash 24 48/Audio/Whoosh/Blade Swing Light Triplet 01.wav"
+dest_files=["res://.godot/imported/Blade Swing Light Triplet 01.wav-c83b16dc8143e833b42c186b311fb703.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

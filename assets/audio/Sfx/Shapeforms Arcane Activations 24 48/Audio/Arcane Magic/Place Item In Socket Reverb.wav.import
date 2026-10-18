@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://0dddeosks61w"
+path="res://.godot/imported/Place Item In Socket Reverb.wav-4467021aefe7f4770922210a30929239.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane Magic/Place Item In Socket Reverb.wav"
+dest_files=["res://.godot/imported/Place Item In Socket Reverb.wav-4467021aefe7f4770922210a30929239.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

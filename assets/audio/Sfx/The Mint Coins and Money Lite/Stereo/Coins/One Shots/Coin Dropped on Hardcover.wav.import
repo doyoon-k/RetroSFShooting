@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://7iq5t3ty4t38"
+path="res://.godot/imported/Coin Dropped on Hardcover.wav-22890b7766e32a9c079d2898bd77e7ab.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/The Mint Coins and Money Lite/Stereo/Coins/One Shots/Coin Dropped on Hardcover.wav"
+dest_files=["res://.godot/imported/Coin Dropped on Hardcover.wav-22890b7766e32a9c079d2898bd77e7ab.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://r05jaea81ooo"
+path="res://.godot/imported/Notes Loop 03.wav-ded54aad6ae34638ad2473c8b884c86e.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/The Mint Coins and Money Lite/Stereo/Notes/Loops/Notes Loop 03.wav"
+dest_files=["res://.godot/imported/Notes Loop 03.wav-ded54aad6ae34638ad2473c8b884c86e.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

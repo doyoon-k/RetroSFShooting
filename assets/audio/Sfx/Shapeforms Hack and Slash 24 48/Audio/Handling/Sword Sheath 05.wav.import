@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://duwuyuns8h58f"
+path="res://.godot/imported/Sword Sheath 05.wav-3838be9054d01a69905aba8065ea051b.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Hack and Slash 24 48/Audio/Handling/Sword Sheath 05.wav"
+dest_files=["res://.godot/imported/Sword Sheath 05.wav-3838be9054d01a69905aba8065ea051b.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

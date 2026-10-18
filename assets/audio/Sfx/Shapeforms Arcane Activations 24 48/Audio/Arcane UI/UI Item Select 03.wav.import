@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bvbeag4w5pi1l"
+path="res://.godot/imported/UI Item Select 03.wav-cff3322a33eb5f4720a36a715e793d16.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane UI/UI Item Select 03.wav"
+dest_files=["res://.godot/imported/UI Item Select 03.wav-cff3322a33eb5f4720a36a715e793d16.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

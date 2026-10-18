@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://w1e5kd6q405r"
+path="res://.godot/imported/Map Reveal.wav-c643f22171cce1b3df5451d8e8964a32.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane Magic/Map Reveal.wav"
+dest_files=["res://.godot/imported/Map Reveal.wav-c643f22171cce1b3df5451d8e8964a32.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

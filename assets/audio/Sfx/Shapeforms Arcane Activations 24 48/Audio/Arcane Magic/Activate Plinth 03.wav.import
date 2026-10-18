@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://ck25yxvky8c28"
+path="res://.godot/imported/Activate Plinth 03.wav-e8a1675c5549dae855e3404e2ab6f22b.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane Magic/Activate Plinth 03.wav"
+dest_files=["res://.godot/imported/Activate Plinth 03.wav-e8a1675c5549dae855e3404e2ab6f22b.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

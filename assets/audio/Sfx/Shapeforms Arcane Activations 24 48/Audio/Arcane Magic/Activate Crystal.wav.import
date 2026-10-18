@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c12mkmdva2rqp"
+path="res://.godot/imported/Activate Crystal.wav-26dee122dea3144139ae27a95a05902e.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane Magic/Activate Crystal.wav"
+dest_files=["res://.godot/imported/Activate Crystal.wav-26dee122dea3144139ae27a95a05902e.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

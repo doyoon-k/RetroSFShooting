@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bu4780rgwskms"
+path="res://.godot/imported/Dark Metallic Scrape Reverb Tail.wav-1650579653238a1c21f98586c21d73d2.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane Magic/Dark Metallic Scrape Reverb Tail.wav"
+dest_files=["res://.godot/imported/Dark Metallic Scrape Reverb Tail.wav-1650579653238a1c21f98586c21d73d2.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

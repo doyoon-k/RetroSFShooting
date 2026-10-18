@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bellqgks15i0n"]
+[gd_scene load_steps=17 format=3 uid="uid://bellqgks15i0n"]
 
 [ext_resource type="Script" path="res://scenes/player/player_ship.gd" id="Script"]
 [ext_resource type="Script" path="res://scenes/player/player_weapon.gd" id="Weapon"]
@@ -12,7 +12,11 @@
 [ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Player/Robot_Demaged_Back.png" id="DamagedBack"]
 [ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Player/Robot_Demaged_Forward.png" id="DamagedForward"]
 
-[ext_resource type="Theme" path="res://scenes/ui/game_theme.tres" id="Theme"]
+[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Item/Shield_Item.png" id="ShieldTexture"]
+
+[sub_resource type="AtlasTexture" id="ShieldIcon"]
+atlas = ExtResource("ShieldTexture")
+region = Rect2(13, 21, 99, 91)
 
 [sub_resource type="CircleShape2D" id="Shape"]
 radius = 14.0
@@ -51,13 +55,8 @@ data = ExtResource("WeaponData")
 spread_data = ExtResource("SpreadWeaponData")
 proximity_tiers = Array[ExtResource("ProximityTier")]([SubResource("NearDamageTier"), SubResource("FarDamageTier")])
 
-[node name="Shield" type="Label" parent="."]
+[node name="Shield" type="Sprite2D" parent="."]
 visible = false
-offset_left = -24.0
-offset_top = -60.0
-offset_right = 24.0
-offset_bottom = -26.0
-mouse_filter = 2
-theme = ExtResource("Theme")
-text = "S"
-horizontal_alignment = 1
+position = Vector2(0, -43)
+scale = Vector2(0.22, 0.22)
+texture = SubResource("ShieldIcon")

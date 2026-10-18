@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c2big8xgxnmgn"
+path="res://.godot/imported/Transition Whoosh Reverberant Tap.wav-e9d4b8105e84a68878497c237e8a039e.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Risers Transitions Whooshes/Transition Whoosh Reverberant Tap.wav"
+dest_files=["res://.godot/imported/Transition Whoosh Reverberant Tap.wav-e9d4b8105e84a68878497c237e8a039e.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

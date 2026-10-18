@@ -1,6 +1,8 @@
-[gd_resource type="Resource" script_class="AttackPattern" load_steps=3 format=3]
-[ext_resource type="Script" path="res://scripts/data/attack_pattern.gd" id="Script"]
+[gd_resource type="Resource" script_class="AttackPattern" format=3 uid="uid://dce2egd0qjlv5"]
+
 [ext_resource type="PackedScene" path="res://scenes/projectiles/siege_bullet.tscn" id="Bullet"]
+[ext_resource type="Script" uid="uid://c2k7od5at04pn" path="res://scripts/data/attack_pattern.gd" id="Script"]
+
 [resource]
 script = ExtResource("Script")
 display_name = "Siege ship / shifting corridor"
@@ -11,10 +13,9 @@ bullet_count = 16
 volley_count = 3
 volley_interval = 0.85
 recovery = 0.5
+audible_warning = true
 corridor_center = 0.38
 corridor_shift = 0.22
-corridor_width = 180.0
 corridor_routes = Array[PackedFloat32Array]([PackedFloat32Array(0.32, 0.52, 0.42), PackedFloat32Array(0.42, 0.62, 0.52), PackedFloat32Array(0.68, 0.48, 0.58), PackedFloat32Array(0.58, 0.38, 0.48)])
 curtain_sway_volley = 1
 curtain_sway_amplitude = 72.0
-curtain_sway_period = 6.0

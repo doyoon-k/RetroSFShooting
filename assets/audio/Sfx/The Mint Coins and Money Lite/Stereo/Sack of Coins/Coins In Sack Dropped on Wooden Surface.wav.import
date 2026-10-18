@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://co46jx4ra8ca6"
+path="res://.godot/imported/Coins In Sack Dropped on Wooden Surface.wav-dbb6a8fa86b348667df89d0efe286ac2.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/The Mint Coins and Money Lite/Stereo/Sack of Coins/Coins In Sack Dropped on Wooden Surface.wav"
+dest_files=["res://.godot/imported/Coins In Sack Dropped on Wooden Surface.wav-dbb6a8fa86b348667df89d0efe286ac2.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

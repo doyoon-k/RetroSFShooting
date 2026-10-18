@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://csso2kubwjmfv"
+path="res://.godot/imported/Heavy Blade Whoosh 03.wav-e73ec61284131abfc48e8c3d169ab04d.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Hack and Slash 24 48/Audio/Slash/Heavy Blade Whoosh 03.wav"
+dest_files=["res://.godot/imported/Heavy Blade Whoosh 03.wav-e73ec61284131abfc48e8c3d169ab04d.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

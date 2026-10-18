@@ -34,6 +34,7 @@ func _build() -> void:
 		cards.append(card)
 		card.focus_entered.connect(_focus.bind(pilot.id))
 		card.pressed.connect(_select.bind(pilot.id))
+		SoundEffects.bind_navigation(card)
 	refresh()
 
 func refresh() -> void:
@@ -79,5 +80,6 @@ func _focus(id: StringName) -> void:
 
 func _select(id: StringName) -> void:
 	if selectable and run.is_alive(id):
+		SoundEffects.play(&"ui_confirm")
 		_focus(id)
 		pilot_selected.emit(id)

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cgkx58ccl20n7"
+path="res://.godot/imported/Bright Airy Whoosh Short 01.wav-a3c85f882e65c36e07bcde49023f6d60.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Risers Transitions Whooshes/Bright Airy Whoosh Short 01.wav"
+dest_files=["res://.godot/imported/Bright Airy Whoosh Short 01.wav-a3c85f882e65c36e07bcde49023f6d60.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

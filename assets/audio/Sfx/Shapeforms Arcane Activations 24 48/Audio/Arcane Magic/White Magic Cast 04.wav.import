@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dre83xsg8dtof"
+path="res://.godot/imported/White Magic Cast 04.wav-2ed492ad6a6043afc966316a1dd38d42.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane Magic/White Magic Cast 04.wav"
+dest_files=["res://.godot/imported/White Magic Cast 04.wav-2ed492ad6a6043afc966316a1dd38d42.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

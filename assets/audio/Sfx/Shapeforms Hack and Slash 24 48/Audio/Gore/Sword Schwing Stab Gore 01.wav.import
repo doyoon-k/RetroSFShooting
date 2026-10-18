@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bblbp06g8isnc"
+path="res://.godot/imported/Sword Schwing Stab Gore 01.wav-929d921643de1407add4e2eb5b5c451c.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Hack and Slash 24 48/Audio/Gore/Sword Schwing Stab Gore 01.wav"
+dest_files=["res://.godot/imported/Sword Schwing Stab Gore 01.wav-929d921643de1407add4e2eb5b5c451c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

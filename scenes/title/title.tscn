@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://xu1ybjw215vl"]
+[gd_scene load_steps=18 format=3 uid="uid://xu1ybjw215vl"]
 
 [ext_resource type="Resource" path="res://data/game_catalog.tres" id="Catalog"]
 [ext_resource type="Script" path="res://scenes/title/title.gd" id="Script"]
@@ -6,9 +6,7 @@
 [ext_resource type="FontFile" path="res://assets/fonts/NotoSansKR.ttf" id="Font"]
 [ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/TitleSBG.png" id="Space"]
 [ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/Title.png" id="Logo"]
-[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/TitleBG1.png" id="CrewNormal"]
-[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/TitleBG2.png" id="CrewFlash"]
-[ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/TitleBG3.png" id="CrewSkull"]
+[ext_resource type="PackedScene" path="res://scenes/title/title_crew.tscn" id="Crew"]
 [ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/Title_Ship.png" id="Ship"]
 [ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/ScreenFX_A.png" id="Scanlines"]
 [ext_resource type="Texture2D" path="res://assets/Pilots_sprites/UI/ScreenFX_B.png" id="Vignette"]
@@ -19,68 +17,6 @@ base_font = ExtResource("Font")
 variation_opentype = {
 2003265652: 600.0
 }
-
-[sub_resource type="SpriteFrames" id="CrewFrames"]
-animations = [{
-"frames": [{"duration": 6.0, "texture": ExtResource("CrewNormal")},
-{"duration": 1.0, "texture": ExtResource("CrewFlash")},
-{"duration": 1.0, "texture": ExtResource("CrewNormal")},
-{"duration": 1.0, "texture": ExtResource("CrewFlash")},
-{"duration": 1.0, "texture": ExtResource("CrewNormal")},
-{"duration": 1.0, "texture": ExtResource("CrewFlash")},
-{"duration": 1.0, "texture": ExtResource("CrewNormal")},
-{"duration": 1.0, "texture": ExtResource("CrewFlash")},
-{"duration": 1.0, "texture": ExtResource("CrewNormal")},
-{"duration": 1.0, "texture": ExtResource("CrewSkull")},
-{"duration": 1.0, "texture": ExtResource("CrewNormal")},
-{"duration": 1.0, "texture": ExtResource("CrewFlash")},
-{"duration": 1.0, "texture": ExtResource("CrewNormal")},
-{"duration": 1.0, "texture": ExtResource("CrewFlash")},
-{"duration": 1.0, "texture": ExtResource("CrewNormal")},
-{"duration": 1.0, "texture": ExtResource("CrewFlash")},
-{"duration": 1.0, "texture": ExtResource("CrewSkull")},
-{"duration": 1.0, "texture": ExtResource("CrewFlash")},
-{"duration": 1.0, "texture": ExtResource("CrewSkull")},
-{"duration": 1.0, "texture": ExtResource("CrewSkull")},
-{"duration": 1.0, "texture": ExtResource("CrewSkull")},
-{"duration": 1.0, "texture": ExtResource("CrewFlash")},
-{"duration": 1.0, "texture": ExtResource("CrewNormal")},
-{"duration": 1.0, "texture": ExtResource("CrewFlash")},
-{"duration": 1.0, "texture": ExtResource("CrewNormal")},
-{"duration": 1.0, "texture": ExtResource("CrewFlash")},
-{"duration": 1.0, "texture": ExtResource("CrewNormal")},
-{"duration": 1.0, "texture": ExtResource("CrewFlash")},
-{"duration": 1.0, "texture": ExtResource("CrewNormal")},
-{"duration": 1.0, "texture": ExtResource("CrewSkull")},
-{"duration": 1.0, "texture": ExtResource("CrewNormal")},
-{"duration": 1.0, "texture": ExtResource("CrewFlash")},
-{"duration": 1.0, "texture": ExtResource("CrewNormal")},
-{"duration": 1.0, "texture": ExtResource("CrewFlash")},
-{"duration": 1.0, "texture": ExtResource("CrewNormal")},
-{"duration": 1.0, "texture": ExtResource("CrewFlash")},
-{"duration": 1.0, "texture": ExtResource("CrewNormal")},
-{"duration": 1.0, "texture": ExtResource("CrewFlash")},
-{"duration": 1.0, "texture": ExtResource("CrewNormal")},
-{"duration": 1.0, "texture": ExtResource("CrewSkull")},
-{"duration": 1.0, "texture": ExtResource("CrewNormal")},
-{"duration": 1.0, "texture": ExtResource("CrewFlash")},
-{"duration": 1.0, "texture": ExtResource("CrewNormal")},
-{"duration": 1.0, "texture": ExtResource("CrewFlash")},
-{"duration": 1.0, "texture": ExtResource("CrewNormal")},
-{"duration": 1.0, "texture": ExtResource("CrewFlash")},
-{"duration": 1.0, "texture": ExtResource("CrewNormal")},
-{"duration": 1.0, "texture": ExtResource("CrewFlash")},
-{"duration": 1.0, "texture": ExtResource("CrewNormal")},
-{"duration": 1.0, "texture": ExtResource("CrewSkull")},
-{"duration": 1.0, "texture": ExtResource("CrewNormal")},
-{"duration": 1.0, "texture": ExtResource("CrewFlash")},
-{"duration": 1.0, "texture": ExtResource("CrewNormal")},
-{"duration": 1.0, "texture": ExtResource("CrewFlash")},
-{"duration": 1.0, "texture": ExtResource("CrewSkull")}],
-"loop": true,
-"name": &"idle",
-"speed": 10.0
-}]
 
 [sub_resource type="StyleBoxFlat" id="MenuNormal"]
 bg_color = Color(0.035, 0.045, 0.06, 0.9)
@@ -178,13 +114,9 @@ mouse_filter = 2
 expand_mode = 1
 texture = ExtResource("Space")
 
-[node name="Portraits" type="AnimatedSprite2D" parent="Layout"]
+[node name="Portraits" parent="Layout" instance=ExtResource("Crew")]
 unique_name_in_owner = true
 position = Vector2(173, 125)
-sprite_frames = SubResource("CrewFrames")
-animation = &"idle"
-autoplay = "idle"
-centered = false
 
 [node name="Logo" type="TextureRect" parent="Layout"]
 layout_mode = 0

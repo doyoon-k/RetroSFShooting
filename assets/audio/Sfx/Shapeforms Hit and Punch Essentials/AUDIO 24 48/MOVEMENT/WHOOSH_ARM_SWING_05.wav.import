@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://1fiet07qyi"
+path="res://.godot/imported/WHOOSH_ARM_SWING_05.wav-f69bfdd6af43e41ceb9a8b3c6966a993.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Hit and Punch Essentials/AUDIO 24 48/MOVEMENT/WHOOSH_ARM_SWING_05.wav"
+dest_files=["res://.godot/imported/WHOOSH_ARM_SWING_05.wav-f69bfdd6af43e41ceb9a8b3c6966a993.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

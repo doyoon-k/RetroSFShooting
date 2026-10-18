@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b6w7x02hb88b"
+path="res://.godot/imported/Hollow Metallic Transition.wav-f31ca066f4e45190ba099d98bd626620.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Risers Transitions Whooshes/Hollow Metallic Transition.wav"
+dest_files=["res://.godot/imported/Hollow Metallic Transition.wav-f31ca066f4e45190ba099d98bd626620.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

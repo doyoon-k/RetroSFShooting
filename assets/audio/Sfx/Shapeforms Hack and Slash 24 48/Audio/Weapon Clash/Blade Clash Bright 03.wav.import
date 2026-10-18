@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cexbxk05o14b7"
+path="res://.godot/imported/Blade Clash Bright 03.wav-769d3b5e2eaddc912eabd520e57caf86.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Hack and Slash 24 48/Audio/Weapon Clash/Blade Clash Bright 03.wav"
+dest_files=["res://.godot/imported/Blade Clash Bright 03.wav-769d3b5e2eaddc912eabd520e57caf86.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

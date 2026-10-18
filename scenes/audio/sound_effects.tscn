@@ -1,0 +1,80 @@
+[gd_scene load_steps=15 format=3]
+
+[ext_resource type="Script" path="res://scripts/audio/sound_effects.gd" id="Script"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/GoodSFX/Explosion 51.wav" id="PlayerDestroyed"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/GoodSFX/Explosion 511.wav" id="LargeDestroyed"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/GoodSFX/Buff_Power Up 1.wav" id="PowerUp"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane UI/UI Replenish Fast.wav" id="BombPickup"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/GoodSFX/Fantasy_Game_UI_Crafting_Tab_Button_9_Metal.wav" id="WeaponSwitch"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane UI/UI Arcane Cursor 01.wav" id="Cursor"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane UI/UI Select Bright.wav" id="Confirm"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane UI/UI Exit Menu.wav" id="Cancel"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane UI/UI Arcane Alert 01.wav" id="Warning"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/GoodSFX/Explosion 17.wav" id="BombDetonate"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane UI/UI Replenish Octave.wav" id="ShieldGain"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane Magic/Distortion Arc Short 02.wav" id="ShieldBreak"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/GoodSFX/FIRE_Fireball_Whoosh_Slow.wav" id="Sortie"]
+
+[node name="Sfx" type="Node"]
+process_mode = 3
+script = ExtResource("Script")
+
+[node name="player_destroyed" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("PlayerDestroyed")
+volume_db = -7.0
+
+[node name="large_enemy_destroyed" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("LargeDestroyed")
+volume_db = -9.0
+max_polyphony = 3
+
+[node name="power_up" type="AudioStreamPlayer" parent="."]
+process_mode = 1
+stream = ExtResource("PowerUp")
+volume_db = -10.0
+max_polyphony = 2
+
+[node name="bomb_pickup" type="AudioStreamPlayer" parent="."]
+process_mode = 1
+stream = ExtResource("BombPickup")
+max_polyphony = 2
+
+[node name="weapon_switch" type="AudioStreamPlayer" parent="."]
+process_mode = 1
+stream = ExtResource("WeaponSwitch")
+volume_db = -5.0
+
+[node name="ui_move" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("Cursor")
+volume_db = -5.0
+
+[node name="ui_confirm" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("Confirm")
+volume_db = -10.0
+
+[node name="ui_cancel" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("Cancel")
+volume_db = -8.0
+
+[node name="warning" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("Warning")
+volume_db = -6.0
+
+[node name="bomb_detonate" type="AudioStreamPlayer" parent="."]
+process_mode = 1
+stream = ExtResource("BombDetonate")
+volume_db = -8.0
+
+[node name="shield_gain" type="AudioStreamPlayer" parent="."]
+process_mode = 1
+stream = ExtResource("ShieldGain")
+volume_db = -4.0
+
+[node name="shield_break" type="AudioStreamPlayer" parent="."]
+process_mode = 1
+stream = ExtResource("ShieldBreak")
+volume_db = -7.0
+
+[node name="sortie" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("Sortie")
+volume_db = -9.0

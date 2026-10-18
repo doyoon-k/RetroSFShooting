@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b7l4vjgwfxyfv"
+path="res://.godot/imported/Rope Swing Retro Attack 01.wav-c62b47c8801003d6c6bf550d28ed4fca.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Hack and Slash 24 48/Audio/Whoosh/Rope Swing Retro Attack 01.wav"
+dest_files=["res://.godot/imported/Rope Swing Retro Attack 01.wav-c62b47c8801003d6c6bf550d28ed4fca.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

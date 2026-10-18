@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dsj17u1g1eub5"
+path="res://.godot/imported/Drum roll 1.wav-0189715f8560261633bdeb9025a6fbc1.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/GoodSFX/Drum roll 1.wav"
+dest_files=["res://.godot/imported/Drum roll 1.wav-0189715f8560261633bdeb9025a6fbc1.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

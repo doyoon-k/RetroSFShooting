@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://br3okg4su12yt"
+path="res://.godot/imported/Metallic Gong Rumble Low Short.wav-2148bb60ab7003a5014874f4348173a7.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane Magic/Metallic Gong Rumble Low Short.wav"
+dest_files=["res://.godot/imported/Metallic Gong Rumble Low Short.wav-2148bb60ab7003a5014874f4348173a7.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

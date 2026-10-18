@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://63vyffkb4unq"
+path="res://.godot/imported/Coin Spinning Loop.wav-1c6943fd46bad80a4e42dda5ff7305f0.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/The Mint Coins and Money Lite/Stereo/Coins/Loops/Coin Spinning Loop.wav"
+dest_files=["res://.godot/imported/Coin Spinning Loop.wav-1c6943fd46bad80a4e42dda5ff7305f0.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

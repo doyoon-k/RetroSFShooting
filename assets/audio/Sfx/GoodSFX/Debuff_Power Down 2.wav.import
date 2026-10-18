@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dkyad1wluxr0f"
+path="res://.godot/imported/Debuff_Power Down 2.wav-f1bda7664096e661d4ff06495617bbcf.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/GoodSFX/Debuff_Power Down 2.wav"
+dest_files=["res://.godot/imported/Debuff_Power Down 2.wav-f1bda7664096e661d4ff06495617bbcf.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

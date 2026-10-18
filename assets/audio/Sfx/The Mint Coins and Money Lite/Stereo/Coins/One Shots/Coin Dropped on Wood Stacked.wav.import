@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bysp2vk543pea"
+path="res://.godot/imported/Coin Dropped on Wood Stacked.wav-83b0fde39b4a944e55b322508d8f307a.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/The Mint Coins and Money Lite/Stereo/Coins/One Shots/Coin Dropped on Wood Stacked.wav"
+dest_files=["res://.godot/imported/Coin Dropped on Wood Stacked.wav-83b0fde39b4a944e55b322508d8f307a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -23,9 +23,12 @@
 | 공격 패턴 | `data/patterns/*.tres` |
 | 스테이지 배치와 이동 속도 | `scenes/gameplay/stage/stage_01.tscn` |
 | 아이템 성능 | `scenes/items/*.tscn` |
+| 아이템 그림·크기 | `scenes/items/*.tscn`의 `Visual` |
+| 파워업 획득 메시지 | `scenes/ui/power_up_message.tscn` 루트 |
 | 일러스트·본문·타이핑 속도 | `data/stories/*.tres` |
 | 메뉴·HUD 글꼴 | `scenes/ui/game_theme.tres` |
 | 타이틀 배경·로고·시작 안내·메뉴 배치 | `scenes/title/title.tscn`의 Layout |
+| 타이틀 녹색 캐릭터·해골 깜빡임 | `scenes/title/title_crew.tscn`의 AnimationPlayer |
 | 파일럿 선택 배경·실루엣·정보창 배치 | `scenes/character_select/character_select.tscn`의 Layout |
 | 전투 프레임·파일럿 슬롯 배치 | `stage_01.tscn`의 Interface / Root |
 | 전투 하단 콘솔·확대 초상화 | `scenes/ui/combat_hud.tscn` |
@@ -42,6 +45,16 @@ Inspector → Transform → Scale에서 크기를 조절합니다. 플레이어�
 `(1904, 976)`까지입니다. `PlayerShip`의 Boundary Padding은 투명 여백을 제외한
 기체 반크기이며 Scale에 맞춰 적용됩니다. 이동 경계는 하나의 직사각형입니다.
 좌하단 프레임이나 하단 콘솔과 겹쳐도 기체 위치를 밀어내거나 추가로 제한하지 않습니다.
+
+아이템은 `assets/Pilots_sprites/Item/`의 P·B·실드 이미지를 사용합니다. 투명 여백을
+AtlasTexture로 제외하고 실제 그림의 최대 길이를 약 68~69px로 맞췄습니다.
+크기는 각 아이템 씬의 `Visual > Transform > Scale`에서 바꿉니다.
+실제로 무기 레벨이 오른 경우에만 `PowerUp.png` 획득 메시지가 나타납니다.
+최대 레벨의 파워업, 폭탄, 실드에는 별도 획득 메시지가 없습니다.
+`power_up_message.tscn` 루트의 Duration(기본 0.8초), Rise Distance, Ship Offset,
+Display Width로 연출을 조절합니다. 같은 메시지를 갱신하므로 연속 획득 시 겹치지 않으며,
+화면 가장자리에서는 전투 영역 안으로 배치합니다. 일시정지 중에는 연출도 멈춥니다.
+기체 위 실드 상태도 같은 실드 이미지로 표시합니다.
 
 모든 적 탄환은 `assets/Pilots_sprites/Projectile/`의 PNG를 Sprite2D로 표시합니다.
 `Projectile_A.png`는 일반탄·굵은 탄·탄벽·부화탄, B는 유도탄, C는 고속탄에 연결되어 있습니다.
@@ -235,8 +248,8 @@ Hold Position의 X는 등장 당시 화면을 기준으로 한 좌표이며, Y�
 `scenes/title/title.tscn`의 `Layout`에서 1920×1080 기준으로 배치합니다. `Space`는
 전체 화면 우주 배경, `Logo`는 PANIC HORIZON 로고, `Ship`은 기체입니다. 루트의
 `Ship Float Pixels`와 `Ship Float Seconds`로 기체의 상하 움직임을 조절합니다.
-`Portraits`의 SpriteFrames에는 `TitleBG1~3`으로 만든 6초 반복 애니메이션이 있습니다.
-기본 10fps이며 첫 정상 프레임은 0.6초, 이후 프레임들은 0.1초씩 표시합니다.
+`Portraits`는 `title_crew.tscn`의 인스턴스입니다. 녹색 캐릭터 군상의 일반·밝은 노이즈·해골
+이미지를 바꾸는 연출은 이 씬의 `AnimationPlayer`에서 편집합니다.
 `ScreenEffects`는 스캔라인과 강도를 낮춘 비네팅을 겹칩니다.
 
 `StartPrompt`의 Texture에 `Press Any key.png`의 `PRESS ANY BUTTON` 스프라이트를 연결합니다.
@@ -245,6 +258,33 @@ Hold Position의 X는 등장 당시 화면을 기준으로 한 좌표이며, Y�
 있으며 실행 시에는 자동으로 숨깁니다. `Collection`은 엔딩 목록이며 시작 입력·새 게임
 시작·엔딩 목록 열기·메뉴 복귀는 `title.gd`에서 관리합니다. 첫 입력의 반복과 해제는
 메뉴 버튼에 전달하지 않아 같은 입력으로 새 게임이나 종료가 실행되지 않습니다.
+
+### 녹색 캐릭터·해골 애니메이션 편집
+
+1. FileSystem에서 `scenes/title/title_crew.tscn`을 엽니다. 타이틀의 `Portraits` 옆
+   씬 열기 아이콘으로 들어가도 됩니다.
+2. `AnimationPlayer`를 선택하고 하단 Animation 패널에서 `idle`을 고릅니다.
+3. `TitleCrew:texture` 트랙의 키를 좌우로 드래그해 이미지 전환 시점을 조정합니다.
+   타임라인을 클릭하거나 재생 버튼을 누르면 해당 시점의 이미지를 미리 볼 수 있습니다.
+4. 이미지를 추가·교체하려면 원하는 시간에 커서를 놓고 루트 `TitleCrew`를 선택합니다.
+   Inspector의 Texture에 PNG를 드래그한 뒤 Texture 옆 키 아이콘을 누릅니다.
+   기존 시간의 키도 같은 방법으로 교체할 수 있습니다.
+5. 필요 없는 키는 선택 후 Delete로 지웁니다. 마지막 이미지의 유지 시간은
+   다음 키 또는 애니메이션 끝까지이며, 전체 길이와 반복은 Animation 패널에서 조절합니다.
+6. 씬과 애니메이션을 저장한 뒤 `title.tscn`을 열고 **F6**으로 실제 화면을 확인합니다.
+
+`TitleBG1.png`는 정상, `TitleBG2.png`는 밝은 노이즈, `TitleBG3.png`는 해골입니다.
+기존 연출을 유지해 6초마다 반복하며 첫 정상 이미지는 0.6초, 이후 키 간격은 0.1초입니다.
+타임라인의 Step도 0.1초이며, 더 짧은 깜빡임이 필요하면 Step을 줄여 키를 배치합니다.
+텍스처 트랙은 Discrete로 설정해 키 사이에 이미지를 보간하지 않습니다.
+`RESET`은 편집·저장 시 정상 이미지를 복원하는 기본 상태이므로 연출은 `idle`에서 작업하세요.
+
+`title_crew_idle.tres`는 Unity의 `.anim`처럼 이미지와 타이밍을 담는 별도 Animation
+리소스입니다. `title_crew.tscn`은 스프라이트와 재생기를 묶는 재사용 씬이며, 타이틀은
+이를 인스턴스로 사용하므로 애니메이션 수정이 그대로 반영됩니다. 프레임 교체는
+AnimationPlayer가 담당하며 별도 코드 수정은 필요하지 않습니다.
+현재 세 PNG는 여섯 캐릭터가 합쳐진 이미지이므로, 캐릭터별 타이밍을 따로 편집하려면
+개별 캐릭터 이미지로 분리해야 합니다.
 
 ## 파일럿·스토리·연출 교체
 
@@ -324,3 +364,17 @@ M1의 `Shooter`는 `SiegeShooter`입니다. 기본 순서는 **유인탄→벽 /
 삼단 도약탄은 M2의 첫 공격이며 `data/patterns/ricochet.tres`, `scenes/projectiles/ricochet_core.tscn`에서 편집합니다. 0.6초 충전 후 한 발이 위→왼쪽→아래로 반사하며, 다음 사용은 아래→왼쪽→위입니다. 각 반사점은 도착0.45초 전에 플레이어 위치로 잔탄 조준을 확정하고 예고합니다. 도착 후0.18초 정지한 뒤7·9·11발/70°를 발사하며, 예고 뒤에는 해당 조준을 바꾸지 않습니다. 모탄640px/s, 반사마다 속도96%, 잔탄360px/s·수명3.8초입니다. 테두리64px 안쪽에서 반사하며 얕은 조준 각도에서도 부채꼴 전체가 영역 안쪽을 향합니다. 세 번째 반사에서는 모탄 판정을 제거하고 마지막 예고 후 소멸합니다. `Child Count`, `Middle Child Count`, `Final Child Count`, `Child Spread`, `Aimed Fans`, `Bank Warning Seconds`, `Bank Pause Seconds`, `Speed Retention`으로 조절합니다. 원본 B PNG와 금색 테두리·남은 반사 점으로 모탄을 구분합니다. 잔탄 정리 뒤1초 반격 시간을 주고 기존 쌍익/재조준 공격을 이어 갑니다. M1과 최종 보스에서는 제거했습니다. `python tools/ricochet_pressure.py`로 초기/강화판의 접촉 압박과 P2 입력 회피를 비교할 수 있습니다.
 
 `python tools/balance.py --boss-patterns`는 기존 6개 조건에 25개 보스 정지 위치 계측을 추가합니다. 한 지점에서 안 맞는지 보는 표본 검사이므로, 전체 패턴의 인간 회피 가능성을 증명하는 검사는 아닙니다.
+
+## 효과음 편집
+
+`scenes/audio/sound_effects.tscn`은 프로젝트의 `Sfx` Autoload입니다. 각 자식 `AudioStreamPlayer`의 `Stream`, `Volume dB`, `Max Polyphony`를 에디터에서 수정하면 음원·음량·동시 재생 수를 바꿀 수 있습니다. F5와 스테이지 F6 실행에서 같은 설정을 사용합니다.
+
+현재 승인된 연결은 플레이어 격추(`Explosion 51`), 중간/최종 보스 격파(`Explosion 511`), 실제 Power Up 레벨 상승, 폭탄 보급, 무기 전환, UI 이동·확정·취소, 보스/강공격 경고입니다. 일반 적 격파와 보류한 효과음은 연결하지 않았습니다. 강화·폭탄이 이미 상한이면 증가 효과음을 재생하지 않습니다.
+
+추가 승인된 효과음은 실제 폭탄 발동(`Explosion 17`), 실드 획득(`UI Replenish Octave`), 실드 파괴(`Distortion Arc Short 02`)입니다. 폭탄 예약·취소에는 폭발음을 내지 않으며, 실드가 이미 있거나 피격 무적에 막힌 경우에는 실드 효과음을 반복하지 않습니다.
+
+최초 출격과 파일럿 교대 후 재출격에는 `FIRE_Fireball_Whoosh_Slow`를 공통으로 사용합니다. 기체 진입 연출이 시작될 때 한 번 재생하며, 연출 중 전투가 정지되어 있어도 소리는 이어집니다.
+
+공격 프리셋의 `Audible Warning`을 켜면 시각 예고가 시작될 때 공통 경고음을 재생합니다. 기본 적용 대상은 탄벽, 쌍익 교차 사격, 삼단 반사탄, 부화탄과 회전 탄막입니다. M1의 전용 순환도 같은 설정을 따릅니다. 경고음이 재생 중이면 중복 경고를 겹치지 않습니다.
+
+`python tools/check.py`에는 승인 음원 매핑, 획득 상한, 키보드/HUD 무기 전환, 사망 중 재생, 경고 중복, UI 조작 검사가 포함됩니다.

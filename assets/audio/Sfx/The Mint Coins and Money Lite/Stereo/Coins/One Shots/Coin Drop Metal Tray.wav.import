@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://rkbag7ncnhbf"
+path="res://.godot/imported/Coin Drop Metal Tray.wav-567106bb7fe5c18f743a8ea096564e4e.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/The Mint Coins and Money Lite/Stereo/Coins/One Shots/Coin Drop Metal Tray.wav"
+dest_files=["res://.godot/imported/Coin Drop Metal Tray.wav-567106bb7fe5c18f743a8ea096564e4e.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

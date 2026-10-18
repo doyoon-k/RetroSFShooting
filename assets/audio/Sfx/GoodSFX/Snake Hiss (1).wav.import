@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://brhfr8ajhl81o"
+path="res://.godot/imported/Snake Hiss (1).wav-7aed4b2bd69efb551584b87426608c92.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/GoodSFX/Snake Hiss (1).wav"
+dest_files=["res://.godot/imported/Snake Hiss (1).wav-7aed4b2bd69efb551584b87426608c92.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

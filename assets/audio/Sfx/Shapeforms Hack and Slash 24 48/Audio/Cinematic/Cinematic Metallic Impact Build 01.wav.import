@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://clpdu8ht7i8yd"
+path="res://.godot/imported/Cinematic Metallic Impact Build 01.wav-60ce347b7ee1b3cc042a41f9a420434d.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Hack and Slash 24 48/Audio/Cinematic/Cinematic Metallic Impact Build 01.wav"
+dest_files=["res://.godot/imported/Cinematic Metallic Impact Build 01.wav-60ce347b7ee1b3cc042a41f9a420434d.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://2fcnspx4w1e6"
+path="res://.godot/imported/Magical Droplet Fall.wav-99a09fc3772b4109aebe162f5d0def66.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane Magic/Magical Droplet Fall.wav"
+dest_files=["res://.godot/imported/Magical Droplet Fall.wav-99a09fc3772b4109aebe162f5d0def66.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

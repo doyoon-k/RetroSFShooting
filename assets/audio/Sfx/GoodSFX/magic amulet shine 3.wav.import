@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bhipm8nawvole"
+path="res://.godot/imported/magic amulet shine 3.wav-6406fdd955f32b8785cd4fdeab69cf6a.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/GoodSFX/magic amulet shine 3.wav"
+dest_files=["res://.godot/imported/magic amulet shine 3.wav-6406fdd955f32b8785cd4fdeab69cf6a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

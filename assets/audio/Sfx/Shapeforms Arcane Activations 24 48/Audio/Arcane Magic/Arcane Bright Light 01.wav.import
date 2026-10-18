@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://d2ym3bacna5nq"
+path="res://.godot/imported/Arcane Bright Light 01.wav-3602df6e1394134249b3609069ae3c4b.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane Magic/Arcane Bright Light 01.wav"
+dest_files=["res://.godot/imported/Arcane Bright Light 01.wav-3602df6e1394134249b3609069ae3c4b.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

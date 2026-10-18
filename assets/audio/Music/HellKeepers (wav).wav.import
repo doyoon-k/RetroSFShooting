@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://byx4wcrmfox7j"
+path="res://.godot/imported/HellKeepers (wav).wav-2ab050393f2652c3bdc06f8e74007fe8.sample"
+
+[deps]
+
+source_file="res://assets/audio/Music/HellKeepers (wav).wav"
+dest_files=["res://.godot/imported/HellKeepers (wav).wav-2ab050393f2652c3bdc06f8e74007fe8.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

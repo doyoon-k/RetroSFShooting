@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://beu4r4uxnogj4"
+path="res://.godot/imported/Flutter Dark.wav-759e8d67f81dcb818ed1faa236c14e37.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane Magic/Flutter Dark.wav"
+dest_files=["res://.godot/imported/Flutter Dark.wav-759e8d67f81dcb818ed1faa236c14e37.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

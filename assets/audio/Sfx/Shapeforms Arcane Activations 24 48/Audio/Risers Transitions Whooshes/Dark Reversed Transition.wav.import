@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bykvbcxmvkd3w"
+path="res://.godot/imported/Dark Reversed Transition.wav-88e031c96f870afe164fb7a786993571.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Risers Transitions Whooshes/Dark Reversed Transition.wav"
+dest_files=["res://.godot/imported/Dark Reversed Transition.wav-88e031c96f870afe164fb7a786993571.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

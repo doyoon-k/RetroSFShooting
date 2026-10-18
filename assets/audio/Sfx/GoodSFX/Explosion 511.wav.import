@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://drahnxhlxuflf"
+path="res://.godot/imported/Explosion 511.wav-53353240df50bd2013bd866d682ffa9c.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/GoodSFX/Explosion 511.wav"
+dest_files=["res://.godot/imported/Explosion 511.wav-53353240df50bd2013bd866d682ffa9c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

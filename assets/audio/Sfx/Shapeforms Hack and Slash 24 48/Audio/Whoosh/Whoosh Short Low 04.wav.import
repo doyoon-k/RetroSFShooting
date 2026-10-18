@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cdcvso5gkfb8x"
+path="res://.godot/imported/Whoosh Short Low 04.wav-650edcb4102eb3b0c8d51130ce62b5b8.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Hack and Slash 24 48/Audio/Whoosh/Whoosh Short Low 04.wav"
+dest_files=["res://.godot/imported/Whoosh Short Low 04.wav-650edcb4102eb3b0c8d51130ce62b5b8.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -17,10 +17,16 @@ func _physics_process(delta: float) -> void:
 		return
 	cooldown = maxf(0.0, cooldown - delta)
 	if Input.is_action_just_pressed("switch_weapon"):
-		state.switch_weapon()
-		cooldown = 0.0
+		switch_weapon()
 	if Input.is_action_pressed("shoot") and cooldown <= 0.0:
 		fire()
+
+func switch_weapon() -> void:
+	if state == null or state.hp <= 0:
+		return
+	state.switch_weapon()
+	cooldown = 0.0
+	SoundEffects.play(&"weapon_switch")
 
 func active_data() -> WeaponData:
 	if state != null and state.active_weapon == SortieState.WeaponType.SPREAD:

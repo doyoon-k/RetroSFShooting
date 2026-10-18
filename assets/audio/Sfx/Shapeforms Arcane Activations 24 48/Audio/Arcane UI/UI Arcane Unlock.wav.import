@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dq86ujilaaauf"
+path="res://.godot/imported/UI Arcane Unlock.wav-cf0fb09b16c32feb0559d4eb57df900c.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane UI/UI Arcane Unlock.wav"
+dest_files=["res://.godot/imported/UI Arcane Unlock.wav-cf0fb09b16c32feb0559d4eb57df900c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

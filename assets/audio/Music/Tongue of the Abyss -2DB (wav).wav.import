@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dxv6gqnuhlor1"
+path="res://.godot/imported/Tongue of the Abyss -2DB (wav).wav-9d03bceaf2c6d3eef69d1948c6a94b31.sample"
+
+[deps]
+
+source_file="res://assets/audio/Music/Tongue of the Abyss -2DB (wav).wav"
+dest_files=["res://.godot/imported/Tongue of the Abyss -2DB (wav).wav-9d03bceaf2c6d3eef69d1948c6a94b31.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

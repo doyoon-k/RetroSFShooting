@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dk1i2qngwpgmd"
+path="res://.godot/imported/Blade Clash Heavy 01.wav-84c2454560efda93d448fbc347d270ef.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Hack and Slash 24 48/Audio/Weapon Clash/Blade Clash Heavy 01.wav"
+dest_files=["res://.godot/imported/Blade Clash Heavy 01.wav-84c2454560efda93d448fbc347d270ef.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

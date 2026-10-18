@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dt0o068h4a22r"
+path="res://.godot/imported/Light Blade Swishes 02.wav-d43fffbbab2f4825a54034ec3006fcd0.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Hack and Slash 24 48/Audio/Whoosh/Light Blade Swishes 02.wav"
+dest_files=["res://.godot/imported/Light Blade Swishes 02.wav-d43fffbbab2f4825a54034ec3006fcd0.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

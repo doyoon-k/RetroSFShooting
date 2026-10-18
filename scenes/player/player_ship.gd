@@ -4,6 +4,7 @@ extends Area2D
 signal died(position: Vector2, recovery_powerups: int, recovery_bombs: int)
 signal bomb_requested
 signal hit
+signal power_up_collected
 
 @export_range(50.0, 1200.0, 10.0) var move_speed: float = 490.0
 # Local-space half extents of the visible ship, excluding transparent texture margins.
@@ -54,8 +55,11 @@ func take_damage(amount: int = 1) -> void:
 	var powerups_before_hit := state.recoverable_powerups()
 	var bombs_before_hit := state.bombs
 	var hp_before_hit := state.hp
+	var shield_before_hit := state.shield
 	if not state.damage(amount):
 		return
+	if shield_before_hit and not state.shield:
+		SoundEffects.play(&"shield_break")
 	if state.hp < hp_before_hit:
 		has_taken_hit = true
 		_update_sprite()
@@ -67,7 +71,17 @@ func take_damage(amount: int = 1) -> void:
 
 func collect(kind: int) -> void:
 	if state != null and state.hp > 0:
+		var previous_power := state.current_power_level()
+		var previous_bombs := state.bombs
+		var previous_shield := state.shield
 		state.collect(kind, weapon.active_data().levels.size())
+		if state.current_power_level() > previous_power:
+			SoundEffects.play(&"power_up")
+			power_up_collected.emit()
+		elif kind == Pickup.Kind.BOMB and state.bombs > previous_bombs:
+			SoundEffects.play(&"bomb_pickup")
+		elif kind == Pickup.Kind.SHIELD and state.shield and not previous_shield:
+			SoundEffects.play(&"shield_gain")
 
 func _on_contact(area: Area2D) -> void:
 	if area is EnemyShip and area.hp > 0:

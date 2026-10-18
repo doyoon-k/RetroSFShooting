@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cwmbw5nly05ve"
+path="res://.godot/imported/Coins Collide 01.wav-ad61d84485dc92611f75cd7dee9f8324.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/The Mint Coins and Money Lite/Stereo/Coins/One Shots/Coins Collide 01.wav"
+dest_files=["res://.godot/imported/Coins Collide 01.wav-ad61d84485dc92611f75cd7dee9f8324.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

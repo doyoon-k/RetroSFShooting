@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c00t2eg1thlre"
+path="res://.godot/imported/Celestial Shimmer.wav-07b3b66147c2254c39624f79ce0413df.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane Magic/Celestial Shimmer.wav"
+dest_files=["res://.godot/imported/Celestial Shimmer.wav-07b3b66147c2254c39624f79ce0413df.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

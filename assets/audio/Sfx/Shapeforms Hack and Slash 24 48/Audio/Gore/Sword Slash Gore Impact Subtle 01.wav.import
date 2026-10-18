@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://do0di0wgic08x"
+path="res://.godot/imported/Sword Slash Gore Impact Subtle 01.wav-37d43fb8bec7350c55e0f3af43942a77.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Hack and Slash 24 48/Audio/Gore/Sword Slash Gore Impact Subtle 01.wav"
+dest_files=["res://.godot/imported/Sword Slash Gore Impact Subtle 01.wav-37d43fb8bec7350c55e0f3af43942a77.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

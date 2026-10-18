@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://diblrasa61pl0"
+path="res://.godot/imported/Tongue of the Abyss.mp3-7b030c8e73719ea996dfbc441dd73cc7.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/Music/Tongue of the Abyss.mp3"
+dest_files=["res://.godot/imported/Tongue of the Abyss.mp3-7b030c8e73719ea996dfbc441dd73cc7.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

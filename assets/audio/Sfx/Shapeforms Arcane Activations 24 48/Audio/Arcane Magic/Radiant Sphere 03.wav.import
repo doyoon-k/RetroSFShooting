@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b52ju8jullqjl"
+path="res://.godot/imported/Radiant Sphere 03.wav-55f2ea199faae8ef30ca1d8e85cfefe6.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane Magic/Radiant Sphere 03.wav"
+dest_files=["res://.godot/imported/Radiant Sphere 03.wav-55f2ea199faae8ef30ca1d8e85cfefe6.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -8,6 +8,7 @@ var ended: bool = false
 func _ready() -> void:
 	%Next.pressed.connect(advance)
 	_show_page()
+	SoundEffects.bind_navigation(%Next)
 
 func _show_page() -> void:
 	if story == null or story.pages.is_empty():
@@ -28,6 +29,7 @@ func _show_page() -> void:
 func advance() -> void:
 	if ended:
 		return
+	SoundEffects.play(&"ui_confirm")
 	if %StoryText.typing:
 		%StoryText.complete()
 		return

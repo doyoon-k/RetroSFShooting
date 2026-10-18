@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://d16nheecbxeau"
+path="res://.godot/imported/Ominous Eye Activate Echoes.wav-000874477a087f9629700bc5a70ddeb7.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane Magic/Ominous Eye Activate Echoes.wav"
+dest_files=["res://.godot/imported/Ominous Eye Activate Echoes.wav-000874477a087f9629700bc5a70ddeb7.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

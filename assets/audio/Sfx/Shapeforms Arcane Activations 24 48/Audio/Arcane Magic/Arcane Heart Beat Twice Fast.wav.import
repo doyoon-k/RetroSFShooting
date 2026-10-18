@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://7vqsn0i2fnfn"
+path="res://.godot/imported/Arcane Heart Beat Twice Fast.wav-41608f5d2c3caf3848d6adbc60a4b5e5.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane Magic/Arcane Heart Beat Twice Fast.wav"
+dest_files=["res://.godot/imported/Arcane Heart Beat Twice Fast.wav-41608f5d2c3caf3848d6adbc60a4b5e5.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

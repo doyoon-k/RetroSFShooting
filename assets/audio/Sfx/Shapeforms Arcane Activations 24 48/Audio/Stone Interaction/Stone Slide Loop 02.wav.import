@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cjvbj47metokg"
+path="res://.godot/imported/Stone Slide Loop 02.wav-371ef4e50b3799dd279477aab201a6bb.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Stone Interaction/Stone Slide Loop 02.wav"
+dest_files=["res://.godot/imported/Stone Slide Loop 02.wav-371ef4e50b3799dd279477aab201a6bb.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

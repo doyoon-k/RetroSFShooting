@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b54g2c8wg3gly"
+path="res://.godot/imported/Devotee's Forest (wav).wav-13e2648f38e04be41d65f9c47a30880d.sample"
+
+[deps]
+
+source_file="res://assets/audio/Music/Devotee's Forest (wav).wav"
+dest_files=["res://.godot/imported/Devotee's Forest (wav).wav-13e2648f38e04be41d65f9c47a30880d.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

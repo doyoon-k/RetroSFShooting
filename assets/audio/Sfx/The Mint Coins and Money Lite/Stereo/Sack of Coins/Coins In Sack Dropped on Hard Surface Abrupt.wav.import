@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dihjddsgqkk45"
+path="res://.godot/imported/Coins In Sack Dropped on Hard Surface Abrupt.wav-682b89e3ca0b2d8e8b5b39f222ca2b13.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/The Mint Coins and Money Lite/Stereo/Sack of Coins/Coins In Sack Dropped on Hard Surface Abrupt.wav"
+dest_files=["res://.godot/imported/Coins In Sack Dropped on Hard Surface Abrupt.wav-682b89e3ca0b2d8e8b5b39f222ca2b13.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

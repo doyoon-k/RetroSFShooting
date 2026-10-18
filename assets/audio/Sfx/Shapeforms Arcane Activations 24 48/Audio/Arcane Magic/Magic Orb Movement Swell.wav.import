@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bhy0womx0ar1t"
+path="res://.godot/imported/Magic Orb Movement Swell.wav-2495245a72d00aacc3c945b69d865314.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane Magic/Magic Orb Movement Swell.wav"
+dest_files=["res://.godot/imported/Magic Orb Movement Swell.wav-2495245a72d00aacc3c945b69d865314.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

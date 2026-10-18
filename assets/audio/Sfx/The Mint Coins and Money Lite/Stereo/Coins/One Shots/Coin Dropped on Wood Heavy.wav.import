@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c3ils1q11pr4a"
+path="res://.godot/imported/Coin Dropped on Wood Heavy.wav-14bb4f7091be19ddd9d9d51535b6ffb4.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/The Mint Coins and Money Lite/Stereo/Coins/One Shots/Coin Dropped on Wood Heavy.wav"
+dest_files=["res://.godot/imported/Coin Dropped on Wood Heavy.wav-14bb4f7091be19ddd9d9d51535b6ffb4.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

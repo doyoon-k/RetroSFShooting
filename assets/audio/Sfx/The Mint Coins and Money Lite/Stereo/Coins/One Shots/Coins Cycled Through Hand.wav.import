@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b44nacknruuqs"
+path="res://.godot/imported/Coins Cycled Through Hand.wav-f2269b7aa0edfb286fe6f0f2bb2b1372.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/The Mint Coins and Money Lite/Stereo/Coins/One Shots/Coins Cycled Through Hand.wav"
+dest_files=["res://.godot/imported/Coins Cycled Through Hand.wav-f2269b7aa0edfb286fe6f0f2bb2b1372.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

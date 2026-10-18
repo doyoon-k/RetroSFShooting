@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://f7qpisb5jt3l"
+path="res://.godot/imported/MOVEMENT_QUICK_JAB_05.wav-2f7c1fdef3adf57d73abf85f0d7541f3.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Hit and Punch Essentials/AUDIO 24 48/MOVEMENT/MOVEMENT_QUICK_JAB_05.wav"
+dest_files=["res://.godot/imported/MOVEMENT_QUICK_JAB_05.wav-2f7c1fdef3adf57d73abf85f0d7541f3.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

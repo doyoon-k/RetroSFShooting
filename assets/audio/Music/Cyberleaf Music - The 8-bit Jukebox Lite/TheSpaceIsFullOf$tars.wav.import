@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bn51joucs17ba"
+path="res://.godot/imported/TheSpaceIsFullOf$tars.wav-7a54fd66d4554f3bdc73f11ccf88fe87.sample"
+
+[deps]
+
+source_file="res://assets/audio/Music/Cyberleaf Music - The 8-bit Jukebox Lite/TheSpaceIsFullOf$tars.wav"
+dest_files=["res://.godot/imported/TheSpaceIsFullOf$tars.wav-7a54fd66d4554f3bdc73f11ccf88fe87.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

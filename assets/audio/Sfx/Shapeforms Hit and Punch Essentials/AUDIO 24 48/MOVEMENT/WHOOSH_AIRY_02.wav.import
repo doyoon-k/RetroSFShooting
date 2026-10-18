@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b0ogsyurr6fka"
+path="res://.godot/imported/WHOOSH_AIRY_02.wav-1a6be04d7329bba00b97a01ae11f634b.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Hit and Punch Essentials/AUDIO 24 48/MOVEMENT/WHOOSH_AIRY_02.wav"
+dest_files=["res://.godot/imported/WHOOSH_AIRY_02.wav-1a6be04d7329bba00b97a01ae11f634b.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

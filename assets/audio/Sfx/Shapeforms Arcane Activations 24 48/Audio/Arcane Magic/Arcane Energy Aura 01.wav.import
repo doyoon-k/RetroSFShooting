@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c1jo20r13msv"
+path="res://.godot/imported/Arcane Energy Aura 01.wav-2f7bf9cd4a3fffe9f6c27105985b9cda.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane Magic/Arcane Energy Aura 01.wav"
+dest_files=["res://.godot/imported/Arcane Energy Aura 01.wav-2f7bf9cd4a3fffe9f6c27105985b9cda.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

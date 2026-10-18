@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://m5qvn1ibudvs"
+path="res://.godot/imported/Coin Dropped on Coin Pile.wav-a011d21c7ab7eea3e65903aec22194c9.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/The Mint Coins and Money Lite/Stereo/Coins/One Shots/Coin Dropped on Coin Pile.wav"
+dest_files=["res://.godot/imported/Coin Dropped on Coin Pile.wav-a011d21c7ab7eea3e65903aec22194c9.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

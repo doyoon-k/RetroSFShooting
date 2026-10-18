@@ -274,5 +274,6 @@ func run() -> void:
 	var report := {"checks": checks, "failures": failures, "method": "36 mirrored geometry trials; locked aimed fans; real contact and pause; family clearance, cancellation and M2-only integration"}
 	DirAccess.make_dir_recursive_absolute("res://build/validation")
 	FileAccess.open("res://build/validation/ricochet.json", FileAccess.WRITE).store_string(JSON.stringify(report, "\t"))
+	await SoundEffects.shutdown()
 	print(JSON.stringify(report))
 	quit(0 if failures.is_empty() else 1)

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://ch7hoxuibx3j1"
+path="res://.godot/imported/Open Loot Box Sound 1.wav-8609047ed4d02515449e5c4256611f45.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/GoodSFX/Open Loot Box Sound 1.wav"
+dest_files=["res://.godot/imported/Open Loot Box Sound 1.wav-8609047ed4d02515449e5c4256611f45.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

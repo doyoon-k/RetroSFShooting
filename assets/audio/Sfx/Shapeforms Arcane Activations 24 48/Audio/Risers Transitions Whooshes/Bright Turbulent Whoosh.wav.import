@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b6hx4b3706hl3"
+path="res://.godot/imported/Bright Turbulent Whoosh.wav-30f77c80f28037bfb0666b336b4a6a52.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Risers Transitions Whooshes/Bright Turbulent Whoosh.wav"
+dest_files=["res://.godot/imported/Bright Turbulent Whoosh.wav-30f77c80f28037bfb0666b336b4a6a52.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

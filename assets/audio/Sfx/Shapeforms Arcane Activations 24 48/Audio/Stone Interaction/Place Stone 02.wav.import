@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bqrrtpklsr7b8"
+path="res://.godot/imported/Place Stone 02.wav-1b2e4729d7c90c5fbb08c5458c633d57.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Stone Interaction/Place Stone 02.wav"
+dest_files=["res://.godot/imported/Place Stone 02.wav-1b2e4729d7c90c5fbb08c5458c633d57.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

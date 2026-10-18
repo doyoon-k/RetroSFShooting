@@ -1,10 +1,11 @@
-[gd_scene load_steps=39 format=3 uid="uid://mfi362jrfrvm"]
+[gd_scene load_steps=40 format=3 uid="uid://mfi362jrfrvm"]
 
 [ext_resource type="Texture2D" uid="uid://bbjgaohud1ikn" path="res://assets/Pilots_sprites/UI/Battle_Bg.png" id="BattleFrame"]
 [ext_resource type="PackedScene" path="res://scenes/items/bomb.tscn" id="bomb"]
 [ext_resource type="PackedScene" uid="uid://go6dxu1qx1bf" path="res://scenes/enemies/boss.tscn" id="boss"]
 [ext_resource type="Resource" path="res://data/game_catalog.tres" id="Catalog"]
 [ext_resource type="PackedScene" path="res://scenes/ui/combat_hud.tscn" id="CombatHUD"]
+[ext_resource type="PackedScene" path="res://scenes/ui/power_up_message.tscn" id="PowerUpMessage"]
 [ext_resource type="Resource" path="res://data/sequences/diagonal_up.tres" id="DiagUp"]
 [ext_resource type="PackedScene" path="res://scenes/gameplay/enemy_hit.tscn" id="EnemyHit"]
 [ext_resource type="PackedScene" uid="uid://crf6oscbynrkg" path="res://scenes/gameplay/explosion.tscn" id="Explosion"]
@@ -787,6 +788,10 @@ z_index = 2
 anchors_preset = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
+
+[node name="PowerUpMessage" parent="Interface/Root" instance=ExtResource("PowerUpMessage")]
+unique_name_in_owner = true
+z_index = 2
 
 [node name="BattleFrame" type="TextureRect" parent="Interface/Root"]
 z_index = 1
