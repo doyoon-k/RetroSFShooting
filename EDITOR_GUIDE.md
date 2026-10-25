@@ -369,17 +369,36 @@ M1의 `Shooter`는 `SiegeShooter`입니다. 기본 순서는 **유인탄→벽 /
 
 `scenes/audio/sound_effects.tscn`은 프로젝트의 `Sfx` Autoload입니다. 각 자식 `AudioStreamPlayer`의 `Stream`, `Volume dB`, `Max Polyphony`를 에디터에서 수정하면 음원·음량·동시 재생 수를 바꿀 수 있습니다. F5와 스테이지 F6 실행에서 같은 설정을 사용합니다.
 
-현재 승인된 연결은 플레이어 격추(`Explosion 51`), 중간/최종 보스 격파(`Explosion 511`), 실제 Power Up 레벨 상승, 폭탄 보급, 무기 전환, UI 이동·확정·취소, 보스/강공격 경고입니다. 일반 적 격파와 보류한 효과음은 연결하지 않았습니다. 강화·폭탄이 이미 상한이면 증가 효과음을 재생하지 않습니다.
+`assets/audio/Sfx/ButtKnight/`에는 ButtKnight(`ButtKnightGit/Assets/SFX_Polished`)에서 가져온 19개 효과음이 있습니다. 원본 WAV에는 FL Studio가 넣은 루프 정보(`smpl`)가 남아 있지만 Godot 4.7 가져오기에서는 반복하지 않는 것을 확인했습니다. 새로 가져온 음원이 끝없이 반복되면 가져오기 탭의 `Loop Mode`를 `Disabled`로 바꿉니다.
 
-추가 승인된 효과음은 실제 폭탄 발동(`Explosion 17`), 실드 획득(`UI Replenish Octave`), 실드 파괴(`Distortion Arc Short 02`)입니다. 폭탄 예약·취소에는 폭발음을 내지 않으며, 실드가 이미 있거나 피격 무적에 막힌 경우에는 실드 효과음을 반복하지 않습니다.
+| 큐 | 음원 | 재생 시점 |
+|---|---|---|
+| `player_shot` / `player_shot_spread` | `LaserShoot` / `LaserShootHard` | 일직선 / 부채꼴 무기 발사. 새 발사가 앞 소리를 끊습니다 |
+| `enemy_hit` | `EnemyHit` | 적이 실제 피해를 받을 때 |
+| `small_enemy_destroyed` / `medium_enemy_destroyed` | `EnemyExplosion_Small` / `EnemyExplosion_Big` | 일반 적 격파. 적 씬의 `Destroyed Cue`로 고르며 N1–N5만 `medium`입니다 |
+| `large_enemy_destroyed` | `BossBodyExplosion` | 중간 보스·최종 보스 격파 |
+| `player_destroyed` | `Explosion 51` | 플레이어 격추 |
+| `player_hit` | `ElectImpactQuickB` | 실드 없이 맞고 살아남았을 때 |
+| `shield_gain` / `shield_break` | `UI Replenish Octave` / `Debuff` | 실드를 새로 얻을 때 / 실드가 실제로 피해를 막을 때 |
+| `power_up` / `bomb_pickup` | `Buff` / `BombGet` | 실제 Power Up 레벨 상승 / 폭탄 보급. 상한이면 재생하지 않습니다 |
+| `bomb_detonate` | `Explosion 17` | 실제 폭탄 발동. 예약·취소에는 소리가 없습니다 |
+| `weapon_switch` | `Crafting_Tab_Button_9_Metal` | 무기 전환 |
+| `warning` | `Timeout` | 보스 등장, `Audible Warning` 공격 예고. 재생 중이면 겹치지 않습니다 |
+| `boss_phase_two` | `Dark Metallic Transition` | 보스가 2페이즈로 넘어갈 때(격파 순간 제외) |
+| `enemy_shot` | `UI Short Flutter` | 적 탄이 실제로 생성될 때 |
+| `ricochet_bank` / `bullet_split` | `Blade Clash Impact Blunt 01` / `Poof` | 삼단 반사탄의 반사 / 반사탄 부채꼴·부화탄 분열 |
+| `siege_charge` / `counter_window` | `LaserChargeLong` / `Perfect` | M1 순환 시작(경고음과 함께) / 반격 시간 시작 |
+| `sortie` | `FIRE_Fireball_Whoosh_Slow` | 최초 출격과 파일럿 교대 후 재출격. 정지된 진입 연출 중에도 이어집니다 |
+| `countdown_tick` | `BeepButtonSelect` | 다음 파일럿 선택 카운트다운의 매 초 |
+| `stage_clear` / `message_appear` | `WalletGet` / `UI Message Appear 03` | SECTOR CLEAR / 생존자 승리 대사 패널. 다른 연출 메시지는 각자의 효과음을 씁니다 |
+| `text_blip` | `UI Click Taps` | 타자기 텍스트 3글자마다. `TypewriterLabel`의 `Blip Cue`, `Blip Every`로 조절합니다 |
+| `pause_open` / `pause_close` | `Pause` / `Continue` | 일시정지 열기 / 닫기 |
+| `ui_move` / `ui_confirm` / `ui_cancel` | `UI Arcane Cursor 01` / `FinalSelectSound` / `UI Exit Menu` | 메뉴 이동·확정·취소 |
+| `result_reveal` | `ScoreIconPop` | 결과 화면 진입 |
 
-폭탄은 실제 발동 시의 폭발음만 사용합니다. 별도 폭탄 준비음(후보 5번)은 사용하지 않습니다.
+자주 나는 효과음은 플레이어 노드의 Metadata `min_interval`(초)로 같은 큐의 재시작을 막습니다. ButtKnight의 `synchronousRate`와 같은 역할이며, 기본값은 `enemy_hit` 0.05초, `enemy_shot` 0.06초, 일반 적 폭발과 `bullet_split` 0.1초입니다.
 
-최초 출격과 파일럿 교대 후 재출격에는 `FIRE_Fireball_Whoosh_Slow`를 공통으로 사용합니다. 기체 진입 연출이 시작될 때 한 번 재생하며, 연출 중 전투가 정지되어 있어도 소리는 이어집니다.
-
-공격 프리셋의 `Audible Warning`을 켜면 시각 예고가 시작될 때 공통 경고음을 재생합니다. 기본 적용 대상은 탄벽, 쌍익 교차 사격, 삼단 반사탄, 부화탄과 회전 탄막입니다. M1의 전용 순환도 같은 설정을 따릅니다. 경고음이 재생 중이면 중복 경고를 겹치지 않습니다.
-
-`python tools/check.py`에는 승인 음원 매핑, 획득 상한, 키보드/HUD 무기 전환, 사망 중 재생, 경고 중복, UI 조작 검사가 포함됩니다.
+`python tools/check.py`에는 승인 음원 매핑, 획득 상한, 키보드/HUD 무기 전환, 무기별 발사음, 적 크기별 폭발음, 피격 간격 제한, 사망 중 재생, 경고 중복, 일시정지, UI 조작 검사가 포함됩니다.
 
 ## BGM 편집
 

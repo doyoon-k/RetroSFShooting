@@ -1,19 +1,38 @@
-[gd_scene load_steps=15 format=3]
+[gd_scene load_steps=34 format=3]
 
 [ext_resource type="Script" path="res://scripts/audio/sound_effects.gd" id="Script"]
 [ext_resource type="AudioStream" path="res://assets/audio/Sfx/GoodSFX/Explosion 51.wav" id="PlayerDestroyed"]
-[ext_resource type="AudioStream" path="res://assets/audio/Sfx/GoodSFX/Explosion 511.wav" id="LargeDestroyed"]
-[ext_resource type="AudioStream" path="res://assets/audio/Sfx/GoodSFX/Buff_Power Up 1.wav" id="PowerUp"]
-[ext_resource type="AudioStream" path="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane UI/UI Replenish Fast.wav" id="BombPickup"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/ButtKnight/BossBodyExplosion.wav" id="LargeDestroyed"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/ButtKnight/Buff.wav" id="PowerUp"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/ButtKnight/BombGet.wav" id="BombPickup"]
 [ext_resource type="AudioStream" path="res://assets/audio/Sfx/GoodSFX/Fantasy_Game_UI_Crafting_Tab_Button_9_Metal.wav" id="WeaponSwitch"]
 [ext_resource type="AudioStream" path="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane UI/UI Arcane Cursor 01.wav" id="Cursor"]
-[ext_resource type="AudioStream" path="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane UI/UI Select Bright.wav" id="Confirm"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/ButtKnight/FinalSelectSound.wav" id="Confirm"]
 [ext_resource type="AudioStream" path="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane UI/UI Exit Menu.wav" id="Cancel"]
-[ext_resource type="AudioStream" path="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane UI/UI Arcane Alert 01.wav" id="Warning"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/ButtKnight/Timeout.wav" id="Warning"]
 [ext_resource type="AudioStream" path="res://assets/audio/Sfx/GoodSFX/Explosion 17.wav" id="BombDetonate"]
 [ext_resource type="AudioStream" path="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane UI/UI Replenish Octave.wav" id="ShieldGain"]
-[ext_resource type="AudioStream" path="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane Magic/Distortion Arc Short 02.wav" id="ShieldBreak"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/ButtKnight/Debuff.wav" id="ShieldBreak"]
 [ext_resource type="AudioStream" path="res://assets/audio/Sfx/GoodSFX/FIRE_Fireball_Whoosh_Slow.wav" id="Sortie"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/ButtKnight/LaserShoot.wav" id="PlayerShot"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/ButtKnight/LaserShootHard.wav" id="PlayerShotSpread"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/ButtKnight/EnemyHit.wav" id="EnemyHit"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/ButtKnight/EnemyExplosion_Small.wav" id="SmallDestroyed"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/ButtKnight/EnemyExplosion_Big.wav" id="MediumDestroyed"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/GoodSFX/ElectImpactQuickB PE1030532.wav" id="PlayerHit"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Risers Transitions Whooshes/Dark Metallic Transition.wav" id="BossPhaseTwo"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane UI/UI Short Flutter.wav" id="EnemyShot"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/Shapeforms Hack and Slash 24 48/Audio/Weapon Clash/Blade Clash Impact Blunt 01.wav" id="RicochetBank"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/ButtKnight/Poof.wav" id="BulletSplit"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/ButtKnight/LaserChargeLong.wav" id="SiegeCharge"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/ButtKnight/Perfect.wav" id="CounterWindow"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/ButtKnight/WalletGet.wav" id="StageClear"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/ButtKnight/Pause.wav" id="PauseOpen"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/ButtKnight/Continue.wav" id="PauseClose"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/ButtKnight/BeepButtonSelect.wav" id="CountdownTick"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane UI/UI Message Appear 03.wav" id="MessageAppear"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/Shapeforms Arcane Activations 24 48/Audio/Arcane UI/UI Click Taps.wav" id="TextBlip"]
+[ext_resource type="AudioStream" path="res://assets/audio/Sfx/ButtKnight/ScoreIconPop.wav" id="ResultReveal"]
 
 [node name="Sfx" type="Node"]
 process_mode = 3
@@ -25,13 +44,13 @@ volume_db = -7.0
 
 [node name="large_enemy_destroyed" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("LargeDestroyed")
-volume_db = -9.0
+volume_db = -6.0
 max_polyphony = 3
 
 [node name="power_up" type="AudioStreamPlayer" parent="."]
 process_mode = 1
 stream = ExtResource("PowerUp")
-volume_db = -10.0
+volume_db = 5.0
 max_polyphony = 2
 
 [node name="bomb_pickup" type="AudioStreamPlayer" parent="."]
@@ -50,7 +69,7 @@ volume_db = -5.0
 
 [node name="ui_confirm" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("Confirm")
-volume_db = -10.0
+volume_db = -6.0
 
 [node name="ui_cancel" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("Cancel")
@@ -58,7 +77,6 @@ volume_db = -8.0
 
 [node name="warning" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("Warning")
-volume_db = -6.0
 
 [node name="bomb_detonate" type="AudioStreamPlayer" parent="."]
 process_mode = 1
@@ -73,8 +91,104 @@ volume_db = -4.0
 [node name="shield_break" type="AudioStreamPlayer" parent="."]
 process_mode = 1
 stream = ExtResource("ShieldBreak")
-volume_db = -7.0
+volume_db = 2.0
 
 [node name="sortie" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("Sortie")
 volume_db = -9.0
+
+[node name="player_shot" type="AudioStreamPlayer" parent="."]
+process_mode = 1
+stream = ExtResource("PlayerShot")
+volume_db = -14.0
+
+[node name="player_shot_spread" type="AudioStreamPlayer" parent="."]
+process_mode = 1
+stream = ExtResource("PlayerShotSpread")
+volume_db = -14.0
+
+[node name="enemy_hit" type="AudioStreamPlayer" parent="."]
+process_mode = 1
+stream = ExtResource("EnemyHit")
+volume_db = -7.0
+metadata/min_interval = 0.05
+
+[node name="small_enemy_destroyed" type="AudioStreamPlayer" parent="."]
+process_mode = 1
+stream = ExtResource("SmallDestroyed")
+volume_db = 1.0
+max_polyphony = 4
+metadata/min_interval = 0.1
+
+[node name="medium_enemy_destroyed" type="AudioStreamPlayer" parent="."]
+process_mode = 1
+stream = ExtResource("MediumDestroyed")
+volume_db = 1.0
+max_polyphony = 3
+metadata/min_interval = 0.1
+
+[node name="player_hit" type="AudioStreamPlayer" parent="."]
+process_mode = 1
+stream = ExtResource("PlayerHit")
+volume_db = -6.0
+
+[node name="boss_phase_two" type="AudioStreamPlayer" parent="."]
+process_mode = 1
+stream = ExtResource("BossPhaseTwo")
+volume_db = -6.0
+
+[node name="enemy_shot" type="AudioStreamPlayer" parent="."]
+process_mode = 1
+stream = ExtResource("EnemyShot")
+volume_db = -18.0
+metadata/min_interval = 0.06
+
+[node name="ricochet_bank" type="AudioStreamPlayer" parent="."]
+process_mode = 1
+stream = ExtResource("RicochetBank")
+volume_db = -14.0
+
+[node name="bullet_split" type="AudioStreamPlayer" parent="."]
+process_mode = 1
+stream = ExtResource("BulletSplit")
+volume_db = -6.0
+max_polyphony = 2
+metadata/min_interval = 0.1
+
+[node name="siege_charge" type="AudioStreamPlayer" parent="."]
+process_mode = 1
+stream = ExtResource("SiegeCharge")
+volume_db = -10.0
+
+[node name="counter_window" type="AudioStreamPlayer" parent="."]
+process_mode = 1
+stream = ExtResource("CounterWindow")
+volume_db = 2.0
+
+[node name="stage_clear" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("StageClear")
+volume_db = -6.0
+
+[node name="pause_open" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("PauseOpen")
+volume_db = -2.0
+
+[node name="pause_close" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("PauseClose")
+volume_db = -2.0
+
+[node name="countdown_tick" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("CountdownTick")
+volume_db = -8.0
+
+[node name="message_appear" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("MessageAppear")
+volume_db = -8.0
+
+[node name="text_blip" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("TextBlip")
+volume_db = -18.0
+
+[node name="result_reveal" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("ResultReveal")
+volume_db = -6.0

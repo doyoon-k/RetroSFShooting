@@ -128,6 +128,7 @@ func _physics_process(delta: float) -> void:
 				starting = true
 				_schedule(Phase.RECOVERY, counter_seconds)
 				counter_window_started.emit(cycle_index)
+				SoundEffects.play(&"counter_window")
 		Phase.RECOVERY:
 			cycle_index = (cycle_index + 1) % 3
 			_begin_cycle()
@@ -147,6 +148,7 @@ func _begin_cycle() -> void:
 	var first: Phase = Phase.LURE if cycle_index == Cycle.LURE else (Phase.WALL if cycle_index == Cycle.CROSS else Phase.DEPLOY)
 	_schedule(first, telegraph_seconds)
 	cycle_started.emit(cycle_index)
+	SoundEffects.play(&"siege_charge")
 
 func _schedule(next: Phase, delay: float) -> void:
 	cycle_phase = next
@@ -164,6 +166,7 @@ func _spawn_shot(scene: PackedScene, point: Vector2, angle: float, speed: float 
 	if speed > 0.0: bullet.speed = speed
 	projectiles.add_child(bullet)
 	_track(bullet)
+	SoundEffects.play(&"enemy_shot")
 	return bullet
 
 func _deploy_cores() -> void:

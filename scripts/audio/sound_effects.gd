@@ -1,10 +1,13 @@
 class_name SoundEffects
 extends Node
 ## Persistent one-shot players; streams and levels are editable in the autoload scene.
+## A player's optional `min_interval` metadata (seconds) blocks restarts that come too soon.
 
 signal cue_played(cue: StringName)
 
 var _last_play_frame: Dictionary = {}
+var _last_play_time: Dictionary = {}
+var _clock: float = 0.0
 var _last_ui_action_frame: int = -1
 var _navigation_target: int = 0
 var _shutting_down: bool = false
@@ -37,6 +40,10 @@ func _shutdown() -> void:
 	while Time.get_ticks_msec() < deadline:
 		await get_tree().process_frame
 
+func _process(delta: float) -> void:
+	# Engine time keeps min_interval deterministic under --fixed-fps tests.
+	_clock += delta
+
 func _play(cue: StringName) -> void:
 	if _shutting_down:
 		return
@@ -48,12 +55,15 @@ func _play(cue: StringName) -> void:
 	var frame := Engine.get_process_frames()
 	if _last_play_frame.get(cue, -1) == frame:
 		return
+	if _last_play_time.has(cue) and _clock - _last_play_time[cue] < float(player.get_meta(&"min_interval", 0.0)):
+		return
 	if cue == &"warning" and player.playing:
 		return
 	if cue == &"ui_confirm" or cue == &"ui_cancel":
 		_last_ui_action_frame = frame
 		$ui_move.stop()
 	_last_play_frame[cue] = frame
+	_last_play_time[cue] = _clock
 	player.play()
 	cue_played.emit(cue)
 

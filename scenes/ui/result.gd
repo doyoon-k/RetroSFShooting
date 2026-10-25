@@ -13,6 +13,7 @@ func _ready() -> void:
 		ending = preview_catalog.ending_by_id(&"new_home")
 	var ending_music := GameMusic.ending_cue(ending.id)
 	GameMusic.play(&"clear" if ending_music == &"ending" else ending_music)
+	SoundEffects.play(&"result_reveal")
 	%Heading.text = ending.number + " / " + ending.title
 	%Survivors.text = "SURVIVORS  %d / %d" % [run.survivors().size(), run.catalog.pilots.size()]
 	%Roster.configure(run.catalog, run)

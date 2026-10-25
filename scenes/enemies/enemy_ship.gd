@@ -15,6 +15,8 @@ signal health_changed(current: float, maximum: int)
 @export_range(0.0, 5.0, 0.05) var death_animation_seconds: float = 0.0
 @export var is_boss: bool = false
 @export var is_midboss: bool = false
+## Sfx cue for an ordinary death. Midbosses and the boss always use large_enemy_destroyed.
+@export var destroyed_cue: StringName = &"small_enemy_destroyed"
 @export_range(0.05, 0.95, 0.05) var phase_threshold: float = 0.5
 @export var second_phase: Array[PatternStep] = []
 var hp: float
@@ -76,6 +78,8 @@ func take_damage(amount: float) -> void:
 		damaged.emit(self)
 	if is_boss and not phase_two and float(hp) / maximum_hp <= phase_threshold:
 		phase_two = true
+		if hp > 0.0:
+			SoundEffects.play(&"boss_phase_two")
 		if shooter != null and not second_phase.is_empty():
 			shooter.set_sequence(second_phase)
 	if hp == 0:

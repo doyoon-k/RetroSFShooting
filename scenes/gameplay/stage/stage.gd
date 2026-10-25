@@ -126,7 +126,10 @@ func _process(delta: float) -> void:
 		var t := clampf(1.0 - phase_left / rules.launch_seconds, 0.0, 1.0)
 		player.position = (Vector2(rules.playfield.position.x - 80, rules.spawn_position.y).lerp(rules.spawn_position, 1 - pow(1 - t, 3)) + Vector2(progress_x, 0.0))
 	if phase == Phase.SELECTING_NEXT:
-		%Countdown.text = str(maxi(1, ceili(phase_left)))
+		var countdown := str(maxi(1, ceili(phase_left)))
+		if %Countdown.text != countdown:
+			%Countdown.text = countdown
+			SoundEffects.play(&"countdown_tick")
 	if phase_left > 0.0:
 		return
 	match phase:
@@ -154,6 +157,9 @@ func _enter(next_phase: Phase, seconds: float = 0.0) -> void:
 		player.auto_advance_speed = scroll_speed if phase == Phase.PLAYING and not is_instance_valid(boss) and not is_instance_valid(mid_enemy) and not boss_waiting_to_enter else 0.0
 	%SequencePanel.hide()
 	%NextPilotPanel.visible = phase == Phase.SELECTING_NEXT
+	if phase == Phase.SELECTING_NEXT:
+		# Cleared so the first second of every countdown also ticks.
+		%Countdown.text = ""
 	%PauseDimmer.visible = phase == Phase.PLAYER_DYING or phase == Phase.SELECTING_NEXT or phase == Phase.CLEARING or user_paused
 	roster.selectable = phase == Phase.SELECTING_NEXT
 	roster.refresh()
@@ -283,14 +289,14 @@ func _begin_boss_intro() -> void:
 	_show_message("WARNING / BOSS", "대사 2", null)
 
 func _enemy_damaged(enemy: EnemyShip) -> void:
+	SoundEffects.play(&"enemy_hit")
 	var effect := _effect(enemy.global_position, enemy_hit_scene, enemy.is_boss and enemy.hp <= 0.0) as EnemyHitEffect
 	if effect != null:
 		effect.fit_to_enemy(enemy)
 
 func _enemy_destroyed(enemy: EnemyShip) -> void:
 	defeated += 1
-	if enemy.is_midboss or enemy.is_boss:
-		SoundEffects.play(&"large_enemy_destroyed")
+	SoundEffects.play(&"large_enemy_destroyed" if enemy.is_midboss or enemy.is_boss else enemy.destroyed_cue)
 	if enemy == mid_enemy:
 		mid_enemy = null
 		_clear_projectiles(false)
@@ -370,6 +376,7 @@ func select_next(id: StringName) -> void:
 
 func _start_clear() -> void:
 	GameMusic.play(&"clear")
+	SoundEffects.play(&"stage_clear")
 	_enter(Phase.CLEARING, clear_intro_seconds)
 	_clear_projectiles(true)
 	roster.show_survived_status = true
@@ -386,6 +393,8 @@ func _next_victory_line() -> void:
 	var pilot := survivors[victory_index]
 	phase_left = rules.victory_line_seconds
 	var pilot_label := pilot.display_name if pilot.display_name == pilot.callsign else pilot.display_name + " / " + pilot.callsign
+	# Other sequence messages arrive with their own cue (sortie, warning, death, clear).
+	SoundEffects.play(&"message_appear")
 	_show_message(pilot_label, pilot.victory_line, roster.portrait_for(pilot))
 
 func _finish() -> void:
@@ -484,6 +493,7 @@ func toggle_pause() -> void:
 	if phase != Phase.PLAYING:
 		return
 	user_paused = not user_paused
+	SoundEffects.play(&"pause_open" if user_paused else &"pause_close")
 	GameMusic.set_paused(user_paused)
 	get_tree().paused = user_paused
 	%PauseMenu.visible = user_paused

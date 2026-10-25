@@ -17,6 +17,7 @@ collision_mask = 0
 monitoring = false
 script = ExtResource("Ship")
 maximum_hp = 18
+destroyed_cue = &"medium_enemy_destroyed"
 
 [node name="Visual" type="Sprite2D" parent="."]
 offset = Vector2(4.5, 0.0)

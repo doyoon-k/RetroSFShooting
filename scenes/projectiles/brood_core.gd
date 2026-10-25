@@ -52,6 +52,7 @@ func hatch() -> void:
 			child.direction = direction.rotated(deg_to_rad(child_spread) * (float(index) / (child_count - 1) - 0.5))
 			get_parent().add_child(child)
 			offspring_spawned.emit(child)
+		SoundEffects.play(&"bullet_split")
 	queue_free()
 
 func _update_visual() -> void:

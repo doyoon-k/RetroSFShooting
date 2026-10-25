@@ -190,6 +190,7 @@ func _fire_volley(pattern: AttackPattern, angle: float) -> void:
 	if pattern.projectile_scene == null:
 		return
 	volleys_fired += 1
+	var fired := false
 	for shot in pattern.shots_for_volley(global_position, bounds, angle, volley, curtain_route_index):
 		# Only a curtain's edge continuation may start above/below the arena.
 		# Its x emitter must still be visible, and can_fire gates the whole burst.
@@ -213,9 +214,12 @@ func _fire_volley(pattern: AttackPattern, angle: float) -> void:
 		if target_provider.is_valid():
 			bullet.target = target_provider.call()
 		projectiles.add_child(bullet)
+		fired = true
 		_track_burst_projectile(bullet)
 		if bullet.has_signal("offspring_spawned"):
 			bullet.connect("offspring_spawned", _track_burst_projectile)
+	if fired:
+		SoundEffects.play(&"enemy_shot")
 
 func _track_burst_projectile(bullet: Projectile) -> void:
 	_burst_projectiles.append(bullet)

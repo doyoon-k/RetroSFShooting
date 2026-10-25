@@ -118,6 +118,7 @@ func _physics_process(delta: float) -> void:
 				speed *= speed_retention
 				bank_wait = bank_pause_seconds
 				banked.emit(bank_count, bank.normal)
+				SoundEffects.play(&"ricochet_bank")
 				if bank_count == MAX_BANKS:
 					# The final cue remains visible, but the exhausted core cannot hit.
 					collision_layer = 0
@@ -151,6 +152,7 @@ func _emit_fan() -> void:
 		child.lifetime = child_lifetime
 		get_parent().add_child(child)
 		offspring_spawned.emit(child)
+	SoundEffects.play(&"bullet_split")
 
 func _draw() -> void:
 	if spent or is_queued_for_deletion() or not is_node_ready(): return

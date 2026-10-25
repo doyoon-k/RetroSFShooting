@@ -63,6 +63,8 @@ func take_damage(amount: int = 1) -> void:
 	if state.hp < hp_before_hit:
 		has_taken_hit = true
 		_update_sprite()
+		if state.hp > 0:
+			SoundEffects.play(&"player_hit")
 	hit.emit()
 	grant_invincibility(rules.hit_invincibility)
 	if state.hp == 0:

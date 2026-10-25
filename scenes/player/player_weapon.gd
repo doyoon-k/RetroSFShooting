@@ -60,3 +60,4 @@ func fire() -> void:
 		projectiles.add_child(bullet)
 		bullet.global_position = to_global(offset)
 		bullet.damage_origin = bullet.global_position
+	SoundEffects.play(&"player_shot_spread" if state.active_weapon == SortieState.WeaponType.SPREAD else &"player_shot")
