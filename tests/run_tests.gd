@@ -1002,7 +1002,7 @@ func _test_bomb_timing() -> void:
 	stage.player.take_damage()
 	await frames(3)
 	stage._physics_process(0.5)
-	check(stage.phase == StageController.Phase.PLAYER_DYING and is_equal_approx(enemy.hp, hp_before - stage.rules.bomb_damage) and is_zero_approx(stage.get_node("Interface/Root/BombFlash").modulate.a), "Dying during preparation cancels the reserved explosion and its cue")
+	check(stage.phase == StageController.Phase.PLAYER_DYING and is_equal_approx(enemy.hp, hp_before - stage.rules.bomb_damage) and is_zero_approx(stage.get_node("%BombFlash").modulate.a), "Dying during preparation cancels the reserved explosion and its cue")
 	stage.phase_left = 0.0
 	await frames(3)
 	stage.select_next(&"P2")
@@ -1311,6 +1311,8 @@ func _test_combat_layout() -> void:
 	hud.get_node("BombButton").pressed.emit()
 	hud.get_node("WeaponChange").pressed.emit()
 	check(stage.user_paused and stage.run.current_sortie.bombs == bombs and stage.run.current_sortie.active_weapon == SortieState.WeaponType.SPREAD, "Paused console cannot spend bombs or change weapons")
+	var dimmer := stage.get_node("%PauseDimmer") as ColorRect
+	check(dimmer.visible and dimmer.mouse_filter == Control.MOUSE_FILTER_IGNORE, "Pause dimmer lets clicks through to the whole pause button")
 	hud.get_node("PauseButton").pressed.emit()
 	stage.run.current_sortie.collect(Pickup.Kind.SHIELD, 3)
 	stage.player.invincibility = 0

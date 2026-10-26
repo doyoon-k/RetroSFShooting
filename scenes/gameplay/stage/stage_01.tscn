@@ -803,10 +803,13 @@ mouse_filter = 2
 texture = ExtResource("BattleFrame")
 expand_mode = 1
 
-[node name="BombFlash" type="ColorRect" parent="Interface/Root"]
+[node name="PlayfieldMask" type="Polygon2D" parent="Interface/Root"]
+clip_children = 1
+polygon = PackedVector2Array(440, 24, 1904, 24, 1904, 976, 546, 976, 555, 967, 560, 955, 563, 943, 563, 930, 559, 918, 553, 907, 544, 898, 533, 892, 521, 888, 509, 888, 496, 890, 485, 896, 456, 896, 456, 800, 440, 800)
+
+[node name="BombFlash" type="ColorRect" parent="Interface/Root/PlayfieldMask"]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0)
-z_index = 3
 layout_mode = 0
 offset_left = 440.0
 offset_top = 24.0
@@ -815,15 +818,15 @@ offset_bottom = 976.0
 mouse_filter = 2
 color = Color(0.75294, 0.91373, 0.96078, 1)
 
-[node name="PauseDimmer" type="ColorRect" parent="Interface/Root"]
+[node name="PauseDimmer" type="ColorRect" parent="Interface/Root/PlayfieldMask"]
 unique_name_in_owner = true
 visible = false
-z_index = 3
 layout_mode = 0
 offset_left = 440.0
 offset_top = 24.0
 offset_right = 1904.0
 offset_bottom = 976.0
+mouse_filter = 2
 color = Color(0.005, 0.01, 0.025, 0.82)
 
 [node name="SequencePanel" type="Panel" parent="Interface/Root"]
