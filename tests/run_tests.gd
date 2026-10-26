@@ -616,7 +616,7 @@ func _test_input_map() -> void:
 	var old_switch_key := InputEventKey.new()
 	old_switch_key.physical_keycode = KEY_C
 	check(not InputMap.event_is_action(old_switch_key, "switch_weapon"), "Old C key no longer switches weapons")
-	for entry in [[KEY_LEFT, "move_left"], [KEY_RIGHT, "move_right"], [KEY_UP, "move_up"], [KEY_DOWN, "move_down"], [KEY_ESCAPE, "pause"], [KEY_SPACE, "story_advance"], [KEY_W, "ui_up"], [KEY_D, "ui_right"], [KEY_J, "switch_weapon"], [KEY_K, "shoot"], [KEY_L, "bomb"]]:
+	for entry in [[KEY_LEFT, "move_left"], [KEY_RIGHT, "move_right"], [KEY_UP, "move_up"], [KEY_DOWN, "move_down"], [KEY_ESCAPE, "pause"], [KEY_SPACE, "story_advance"], [KEY_W, "ui_up"], [KEY_D, "ui_right"], [KEY_J, "shoot"], [KEY_K, "bomb"], [KEY_L, "switch_weapon"]]:
 		var event := InputEventKey.new()
 		event.physical_keycode = entry[0]
 		check(InputMap.event_is_action(event, entry[1]), "Expected physical key is mapped to " + entry[1])
