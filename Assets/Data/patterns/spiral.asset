@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76b4ddb4bb762c348890d155b46e1d41, type: 3}
+  m_Name: spiral
+  m_EditorClassIdentifier: 
+  displayName: Rotating four-way burst
+  projectilePrefab: {fileID: 3816420043127644467, guid: 2b2041895a130ad49a3d57be981731bb, type: 3}
+  aim: 0
+  shape: 1
+  bulletCount: 4
+  spreadDegrees: 45
+  angleDegrees: -180
+  aimOffsetDegrees: 0
+  volleyCount: 6
+  volleyInterval: 0.24
+  rotationPerVolley: -17
+  recovery: 2.2
+  telegraphSeconds: -1
+  audibleWarning: 0
+  waitForClear: 0
+  muzzleOffsets:
+  - {x: 0, y: 0}
+  corridorCenter: 0.5
+  corridorShift: 0.18
+  corridorWidth: 180
+  corridorRoutes: []
+  curtainSwayVolley: -1
+  curtainSwayAmplitude: 0
+  curtainSwayPeriod: 6

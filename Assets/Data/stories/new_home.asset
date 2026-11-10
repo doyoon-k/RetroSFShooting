@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 450189fc035ea1b4e8ae22c4a52c9923, type: 3}
+  m_Name: new_home
+  m_EditorClassIdentifier: 
+  title: ENDING 06
+  pages:
+  - illustration: {fileID: 21300000, guid: 301a86c82bcb6c1459d444b9b34d5f20, type: 3}
+    caption: 
+    text: "\uB300\uC0AC 1"
+  - illustration: {fileID: 21300000, guid: 09e09930b4879c54991aa0970aefc6fb, type: 3}
+    caption: 
+    text: "\uB300\uC0AC 2"
+  - illustration: {fileID: 21300000, guid: 74e8f53e2f674d04892c711c02152e96, type: 3}
+    caption: 
+    text: "\uB300\uC0AC 3"
+  - illustration: {fileID: 21300000, guid: f205462674d1b99468741b9dfa80ec8b, type: 3}
+    caption: 
+    text: "\uB300\uC0AC 4"
+  charactersPerSecond: 42

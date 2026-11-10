@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 450189fc035ea1b4e8ae22c4a52c9923, type: 3}
+  m_Name: intro
+  m_EditorClassIdentifier: 
+  title: INTRO
+  pages:
+  - illustration: {fileID: 21300000, guid: e76c22ed78c5fd44f9be1781cad75a15, type: 3}
+    caption: 
+    text: "\uB300\uC0AC 1"
+  - illustration: {fileID: 21300000, guid: d35e7042ff5ccc34ba50d43998880a24, type: 3}
+    caption: 
+    text: "\uB300\uC0AC 2"
+  - illustration: {fileID: 21300000, guid: 8795f215152b0334c9897ae912afc46d, type: 3}
+    caption: 
+    text: "\uB300\uC0AC 3"
+  - illustration: {fileID: 21300000, guid: 3d2208e2b1cf6464eb2a68d1d55b3865, type: 3}
+    caption: 
+    text: "\uB300\uC0AC 4"
+  - illustration: {fileID: 21300000, guid: 669cc172d9fd2494abe874f64ef50ada, type: 3}
+    caption: 
+    text: "\uB300\uC0AC 5"
+  - illustration: {fileID: 21300000, guid: ec6c26f56d54d654da9fb10736d6a75c, type: 3}
+    caption: 
+    text: "\uB300\uC0AC 6"
+  - illustration: {fileID: 21300000, guid: 6c6f3e93b0045634ca24f1b29e60dcc8, type: 3}
+    caption: 
+    text: "\uB300\uC0AC 7"
+  - illustration: {fileID: 21300000, guid: 5e8b39d7900e68f4eb9a10c3f84c6e63, type: 3}
+    caption: 
+    text: "\uB300\uC0AC 8"
+  - illustration: {fileID: 21300000, guid: ae814096c50011a4ea2ede4327c785ba, type: 3}
+    caption: 
+    text: "\uB300\uC0AC 9"
+  charactersPerSecond: 42

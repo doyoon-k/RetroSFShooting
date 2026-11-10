@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d30d47ce03105147940c1d4518aa08f, type: 3}
+  m_Name: P5
+  m_EditorClassIdentifier: 
+  id: P5
+  displayName: P5
+  callsign: P5
+  description: "\uB300\uC0AC 1"
+  isAi: 0
+  accent: {r: 0.60784, g: 0.85098, b: 0.64706, a: 1}
+  shipPrefab: {fileID: 2333374742528334, guid: ac26bb8320e3c02458d97315437fc0a5, type: 3}
+  hangarPortrait: {fileID: 0}
+  normal: {fileID: 21300000, guid: 6c30b79af8aff8547978a73631919261, type: 3}
+  oneDead: {fileID: 21300000, guid: fbf18e9f11848f44a8b7679804e2d5ff, type: 3}
+  twoDead: {fileID: 21300000, guid: 9a1b4db61fa3b4e42818bf755f24475a, type: 3}
+  fourDead: {fileID: 21300000, guid: 3f96428c06cb23c49b54d71230133852, type: 3}
+  damaged: {fileID: 21300000, guid: 0b9d45d4f6ffd1a4abf7e5eae738ea00, type: 3}
+  dead: {fileID: 21300000, guid: 6adf920e5883bba4a92d200de94aa22c, type: 3}
+  deathLine: "\uB300\uC0AC 2"
+  victoryLine: "\uB300\uC0AC 3"

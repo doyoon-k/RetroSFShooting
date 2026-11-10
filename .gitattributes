@@ -1,16 +1,14 @@
-# Keep repository text files consistent across platforms.
 * text=auto
-
-*.gd text eol=lf
-*.gdshader text eol=lf
-*.tscn text eol=lf
-*.tres text eol=lf
-*.godot text eol=lf
-*.cfg text eol=lf
-*.json text eol=lf
+*.cs text eol=lf
 *.md text eol=lf
-
-# Binary assets
+*.json text eol=lf
+*.unity text eol=lf merge=unityyamlmerge
+*.prefab text eol=lf merge=unityyamlmerge
+*.asset text eol=lf merge=unityyamlmerge
+*.anim text eol=lf merge=unityyamlmerge
+*.controller text eol=lf merge=unityyamlmerge
+*.mat text eol=lf merge=unityyamlmerge
+*.meta text eol=lf
 *.png binary
 *.jpg binary
 *.jpeg binary
@@ -23,4 +21,3 @@
 *.otf binary
 *.woff binary
 *.woff2 binary
-

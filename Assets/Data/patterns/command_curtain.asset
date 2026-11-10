@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76b4ddb4bb762c348890d155b46e1d41, type: 3}
+  m_Name: command_curtain
+  m_EditorClassIdentifier: 
+  displayName: Flagship / closing blockade
+  projectilePrefab: {fileID: 4440310592859173552, guid: 1ad901aa74f8ee64e94c5ab2bbf77f08, type: 3}
+  aim: 0
+  shape: 2
+  bulletCount: 17
+  spreadDegrees: 45
+  angleDegrees: 180
+  aimOffsetDegrees: 0
+  volleyCount: 4
+  volleyInterval: 1
+  rotationPerVolley: 0
+  recovery: 1.05
+  telegraphSeconds: -1
+  audibleWarning: 1
+  waitForClear: 0
+  muzzleOffsets:
+  - {x: 0, y: 0}
+  corridorCenter: 0.5
+  corridorShift: 0.2
+  corridorWidth: 160
+  corridorRoutes:
+  - values:
+    - 0.32
+    - 0.52
+    - 0.42
+    - 0.54
+  - values:
+    - 0.42
+    - 0.62
+    - 0.52
+    - 0.4
+  - values:
+    - 0.68
+    - 0.48
+    - 0.58
+    - 0.46
+  - values:
+    - 0.58
+    - 0.38
+    - 0.48
+    - 0.6
+  curtainSwayVolley: 1
+  curtainSwayAmplitude: 72
+  curtainSwayPeriod: 6

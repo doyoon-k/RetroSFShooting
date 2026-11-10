@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 488ece2d18311c44db98e48a213b512f, type: 3}
+  m_Name: MusicBank
+  m_EditorClassIdentifier: 
+  titleTrack: {fileID: 8300000, guid: b991103924dc9b946b7f6bd3415bee03, type: 3}
+  selectTrack: {fileID: 8300000, guid: 09c7767b72e1a5d4aa7dccf617497b5d, type: 3}
+  stageTrack: {fileID: 8300000, guid: 60a1c7f6aeeb33e4e9399bda3c5f3de0, type: 3}
+  bossTrack: {fileID: 8300000, guid: aed72c79cbceca747997b71e0ebba094, type: 3}
+  clearTrack: {fileID: 8300000, guid: 8fea20348c50dce4daebffc4bf4e98c7, type: 3}
+  endingTrack: {fileID: 8300000, guid: 19909ba47af1fb04d8055f1eaeaaca9a, type: 3}
+  somberEndingTrack: {fileID: 8300000, guid: 03011a4b325c84b468f05892d409ba95, type: 3}
+  volumeDb: -18
+  crossfadeSeconds: 0.5
+  loopCrossfadeSeconds: 1
+  nativeLoopCues:
+  - select
+  loopEndSeconds: []
+  somberEndingIds:
+  - extinction
+  - last_signal
+  - betrayal

@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0422ed78ca37b44f9eae35e4f1b5e8d, type: 3}
+  m_Name: default
+  m_EditorClassIdentifier: 
+  startingHp: 2
+  startingBombs: 2
+  spawnInvincibility: 1.5
+  hitInvincibility: 0.75
+  selectionSeconds: 5
+  launchSeconds: 1.2
+  deathSeconds: 2.8
+  victoryLineSeconds: 2
+  bombActivationDelay: 0.2
+  bombCooldown: 1.5
+  bombDamage: 10
+  bombInvincibility: 1
+  bombClearsBullets: 1
+  playfield:
+    serializedVersion: 2
+    x: 440
+    y: -976
+    width: 1464
+    height: 952
+  spawnPosition: {x: 662, y: -500}

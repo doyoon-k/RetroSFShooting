@@ -1,0 +1,207 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35ba55e594d6bfb4b93344117780696b, type: 3}
+  m_Name: SfxBank
+  m_EditorClassIdentifier: 
+  entries:
+  - cue: player_destroyed
+    clip: {fileID: 8300000, guid: c17ebe6d47c93de41b7a8c79346d27e4, type: 3}
+    volumeDb: -7
+    maxPolyphony: 1
+    pausable: 0
+    minInterval: 0
+  - cue: large_enemy_destroyed
+    clip: {fileID: 8300000, guid: 6504bd719cc0fb74bbaf09d6f4fb0962, type: 3}
+    volumeDb: -6
+    maxPolyphony: 3
+    pausable: 0
+    minInterval: 0
+  - cue: power_up
+    clip: {fileID: 8300000, guid: 785ce04a16df65642a100addab26df16, type: 3}
+    volumeDb: 5
+    maxPolyphony: 2
+    pausable: 1
+    minInterval: 0
+  - cue: bomb_pickup
+    clip: {fileID: 8300000, guid: 403ee2bd4fa698449a8f0bad0c923b08, type: 3}
+    volumeDb: 0
+    maxPolyphony: 2
+    pausable: 1
+    minInterval: 0
+  - cue: weapon_switch
+    clip: {fileID: 8300000, guid: 6c2068330a4dd5c478268d9c52b36bf5, type: 3}
+    volumeDb: -5
+    maxPolyphony: 1
+    pausable: 1
+    minInterval: 0
+  - cue: ui_move
+    clip: {fileID: 8300000, guid: 9b6b30445d0ef83489ceccb7ff24780d, type: 3}
+    volumeDb: -5
+    maxPolyphony: 1
+    pausable: 0
+    minInterval: 0
+  - cue: ui_confirm
+    clip: {fileID: 8300000, guid: 18b9dc0c7d849b349834b425055f63d8, type: 3}
+    volumeDb: -6
+    maxPolyphony: 1
+    pausable: 0
+    minInterval: 0
+  - cue: ui_cancel
+    clip: {fileID: 8300000, guid: c74fd87a517371f45ab013c1fd0d321b, type: 3}
+    volumeDb: -8
+    maxPolyphony: 1
+    pausable: 0
+    minInterval: 0
+  - cue: warning
+    clip: {fileID: 8300000, guid: 8b02fe821f3d7784ea177db7db0673bb, type: 3}
+    volumeDb: 0
+    maxPolyphony: 1
+    pausable: 0
+    minInterval: 0
+  - cue: bomb_detonate
+    clip: {fileID: 8300000, guid: 6f4ce6c0560684a44be165497a700730, type: 3}
+    volumeDb: -8
+    maxPolyphony: 1
+    pausable: 1
+    minInterval: 0
+  - cue: shield_gain
+    clip: {fileID: 8300000, guid: a82cb29d56d414d4a98dd48615314a08, type: 3}
+    volumeDb: -4
+    maxPolyphony: 1
+    pausable: 1
+    minInterval: 0
+  - cue: shield_break
+    clip: {fileID: 8300000, guid: 3a71b9b070ad2624cbf0719aa9584ef0, type: 3}
+    volumeDb: 2
+    maxPolyphony: 1
+    pausable: 1
+    minInterval: 0
+  - cue: sortie
+    clip: {fileID: 8300000, guid: d2f9cdcee70f7c04590b3ba8792d28f7, type: 3}
+    volumeDb: -9
+    maxPolyphony: 1
+    pausable: 0
+    minInterval: 0
+  - cue: player_shot
+    clip: {fileID: 8300000, guid: 7acc69eda350a10458d67a51fa577884, type: 3}
+    volumeDb: -14
+    maxPolyphony: 1
+    pausable: 1
+    minInterval: 0
+  - cue: player_shot_spread
+    clip: {fileID: 8300000, guid: 3c7781b6459106c40adfe653e87bb26f, type: 3}
+    volumeDb: -14
+    maxPolyphony: 1
+    pausable: 1
+    minInterval: 0
+  - cue: enemy_hit
+    clip: {fileID: 8300000, guid: d8ba45cab45eaf942819f23a0422b318, type: 3}
+    volumeDb: -7
+    maxPolyphony: 1
+    pausable: 1
+    minInterval: 0.05
+  - cue: small_enemy_destroyed
+    clip: {fileID: 8300000, guid: a5595da68442e8a4d824f6f96537c20a, type: 3}
+    volumeDb: 1
+    maxPolyphony: 4
+    pausable: 1
+    minInterval: 0.1
+  - cue: medium_enemy_destroyed
+    clip: {fileID: 8300000, guid: 007b12a7abb336349aee613618a3a4b7, type: 3}
+    volumeDb: 1
+    maxPolyphony: 3
+    pausable: 1
+    minInterval: 0.1
+  - cue: player_hit
+    clip: {fileID: 8300000, guid: 01caf3ba15bcb414ab7137c8c9f1fd06, type: 3}
+    volumeDb: -6
+    maxPolyphony: 1
+    pausable: 1
+    minInterval: 0
+  - cue: boss_phase_two
+    clip: {fileID: 8300000, guid: bf41ab38cfd54f54a9b89c1f758fca46, type: 3}
+    volumeDb: -6
+    maxPolyphony: 1
+    pausable: 1
+    minInterval: 0
+  - cue: enemy_shot
+    clip: {fileID: 8300000, guid: b3a8265b33a5323448615dcd3f45f20d, type: 3}
+    volumeDb: -18
+    maxPolyphony: 1
+    pausable: 1
+    minInterval: 0.06
+  - cue: ricochet_bank
+    clip: {fileID: 8300000, guid: 18083499a3963da488dc023038b9d7cd, type: 3}
+    volumeDb: -14
+    maxPolyphony: 1
+    pausable: 1
+    minInterval: 0
+  - cue: bullet_split
+    clip: {fileID: 8300000, guid: 11351f58a45179e4bab63b346df725d1, type: 3}
+    volumeDb: -6
+    maxPolyphony: 2
+    pausable: 1
+    minInterval: 0.1
+  - cue: siege_charge
+    clip: {fileID: 8300000, guid: 3a36ad0bf155fe943962b4667e3928d7, type: 3}
+    volumeDb: -10
+    maxPolyphony: 1
+    pausable: 1
+    minInterval: 0
+  - cue: counter_window
+    clip: {fileID: 8300000, guid: bab0cfe701f020943ba16eb99f54144f, type: 3}
+    volumeDb: 2
+    maxPolyphony: 1
+    pausable: 1
+    minInterval: 0
+  - cue: stage_clear
+    clip: {fileID: 8300000, guid: d660c70a3b5aafa4d875f29dbe350ab0, type: 3}
+    volumeDb: -6
+    maxPolyphony: 1
+    pausable: 0
+    minInterval: 0
+  - cue: pause_open
+    clip: {fileID: 8300000, guid: 34d7c1ecf76d4f0458ba80add5124a93, type: 3}
+    volumeDb: -2
+    maxPolyphony: 1
+    pausable: 0
+    minInterval: 0
+  - cue: pause_close
+    clip: {fileID: 8300000, guid: 87e3ed98a22859944badcda8a973a68a, type: 3}
+    volumeDb: -2
+    maxPolyphony: 1
+    pausable: 0
+    minInterval: 0
+  - cue: countdown_tick
+    clip: {fileID: 8300000, guid: a3aaee98b7bd20d4da7ff26d1a5c4570, type: 3}
+    volumeDb: -8
+    maxPolyphony: 1
+    pausable: 0
+    minInterval: 0
+  - cue: message_appear
+    clip: {fileID: 8300000, guid: d4207cdb0c6ece2418839be158faa0d8, type: 3}
+    volumeDb: -8
+    maxPolyphony: 1
+    pausable: 0
+    minInterval: 0
+  - cue: text_blip
+    clip: {fileID: 8300000, guid: 7b65965e60e34b84f92540b360543fd4, type: 3}
+    volumeDb: -18
+    maxPolyphony: 1
+    pausable: 0
+    minInterval: 0
+  - cue: result_reveal
+    clip: {fileID: 8300000, guid: ec9657445466a6d46af9c2613f764312, type: 3}
+    volumeDb: -6
+    maxPolyphony: 1
+    pausable: 0
+    minInterval: 0

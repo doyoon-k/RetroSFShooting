@@ -1,0 +1,3419 @@
+fileFormatVersion: 2
+guid: da794c3c4a9460542be41c146ce38351
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2936711892437721970
+    second: ScreenFX_A_0
+  - first:
+      213: 785887533379779048
+    second: ScreenFX_A_1
+  - first:
+      213: 568737707152797158
+    second: ScreenFX_A_2
+  - first:
+      213: 3299548683646703327
+    second: ScreenFX_A_3
+  - first:
+      213: -8558346598661336829
+    second: ScreenFX_A_4
+  - first:
+      213: 6996008640234002389
+    second: ScreenFX_A_5
+  - first:
+      213: -5570759208901830674
+    second: ScreenFX_A_6
+  - first:
+      213: 3766775461696399317
+    second: ScreenFX_A_7
+  - first:
+      213: 4959796211310093748
+    second: ScreenFX_A_8
+  - first:
+      213: -5755649352628194888
+    second: ScreenFX_A_9
+  - first:
+      213: -3260791056035198725
+    second: ScreenFX_A_10
+  - first:
+      213: 3542543478251250918
+    second: ScreenFX_A_11
+  - first:
+      213: 4222192819699240621
+    second: ScreenFX_A_12
+  - first:
+      213: -4857666176298140578
+    second: ScreenFX_A_13
+  - first:
+      213: 1966876908076832315
+    second: ScreenFX_A_14
+  - first:
+      213: -5521736694217317813
+    second: ScreenFX_A_15
+  - first:
+      213: -5169706032677774439
+    second: ScreenFX_A_16
+  - first:
+      213: -6652516321145733612
+    second: ScreenFX_A_17
+  - first:
+      213: -9057538305614003745
+    second: ScreenFX_A_18
+  - first:
+      213: 8130175334670425866
+    second: ScreenFX_A_19
+  - first:
+      213: 3329623225588244326
+    second: ScreenFX_A_20
+  - first:
+      213: -2597829295683855856
+    second: ScreenFX_A_21
+  - first:
+      213: -5327520221777158270
+    second: ScreenFX_A_22
+  - first:
+      213: -5990646047924424891
+    second: ScreenFX_A_23
+  - first:
+      213: 2070998498010754304
+    second: ScreenFX_A_24
+  - first:
+      213: -5670666722672782867
+    second: ScreenFX_A_25
+  - first:
+      213: 3522849617003170932
+    second: ScreenFX_A_26
+  - first:
+      213: -4174358040519293283
+    second: ScreenFX_A_27
+  - first:
+      213: 4816920546627976453
+    second: ScreenFX_A_28
+  - first:
+      213: -931661302692505476
+    second: ScreenFX_A_29
+  - first:
+      213: 4204063108840875220
+    second: ScreenFX_A_30
+  - first:
+      213: 6889849705273539484
+    second: ScreenFX_A_31
+  - first:
+      213: -495714733941706250
+    second: ScreenFX_A_32
+  - first:
+      213: -956252841879421711
+    second: ScreenFX_A_33
+  - first:
+      213: 4024533654672510618
+    second: ScreenFX_A_34
+  - first:
+      213: -1971715474581333237
+    second: ScreenFX_A_35
+  - first:
+      213: 3535788895706452348
+    second: ScreenFX_A_36
+  - first:
+      213: -4997942358070893426
+    second: ScreenFX_A_37
+  - first:
+      213: -3094996680898867222
+    second: ScreenFX_A_38
+  - first:
+      213: -3054034534211967880
+    second: ScreenFX_A_39
+  - first:
+      213: -8196774529982042293
+    second: ScreenFX_A_40
+  - first:
+      213: 8754567592968975815
+    second: ScreenFX_A_41
+  - first:
+      213: 6005525276105456954
+    second: ScreenFX_A_42
+  - first:
+      213: 5789374404865809789
+    second: ScreenFX_A_43
+  - first:
+      213: -8846507619593766489
+    second: ScreenFX_A_44
+  - first:
+      213: 6403420576370439838
+    second: ScreenFX_A_45
+  - first:
+      213: -2813382150296581526
+    second: ScreenFX_A_46
+  - first:
+      213: 5271663870365780217
+    second: ScreenFX_A_47
+  - first:
+      213: -3647079952606641244
+    second: ScreenFX_A_48
+  - first:
+      213: 4994431799062971628
+    second: ScreenFX_A_49
+  - first:
+      213: 3312200659681240410
+    second: ScreenFX_A_50
+  - first:
+      213: -8908586624899642836
+    second: ScreenFX_A_51
+  - first:
+      213: -9064392178795947476
+    second: ScreenFX_A_52
+  - first:
+      213: -6653307309253766130
+    second: ScreenFX_A_53
+  - first:
+      213: 4384524431935648904
+    second: ScreenFX_A_54
+  - first:
+      213: 2986557705077314896
+    second: ScreenFX_A_55
+  - first:
+      213: 9151190227760459539
+    second: ScreenFX_A_56
+  - first:
+      213: 7097787974945496125
+    second: ScreenFX_A_57
+  - first:
+      213: 1872712385065096609
+    second: ScreenFX_A_58
+  - first:
+      213: -772157412916913404
+    second: ScreenFX_A_59
+  - first:
+      213: 6558461940617231477
+    second: ScreenFX_A_60
+  - first:
+      213: 8373588045235858270
+    second: ScreenFX_A_61
+  - first:
+      213: 5165295168389669684
+    second: ScreenFX_A_62
+  - first:
+      213: -1380270044344503151
+    second: ScreenFX_A_63
+  - first:
+      213: 6473512817731202672
+    second: ScreenFX_A_64
+  - first:
+      213: -285487124148315097
+    second: ScreenFX_A_65
+  - first:
+      213: 8821939581502855344
+    second: ScreenFX_A_66
+  - first:
+      213: 2756846869347853564
+    second: ScreenFX_A_67
+  - first:
+      213: -666518305513622750
+    second: ScreenFX_A_68
+  - first:
+      213: 221158664433385339
+    second: ScreenFX_A_69
+  - first:
+      213: 3439300904430533297
+    second: ScreenFX_A_70
+  - first:
+      213: 9120067095745649226
+    second: ScreenFX_A_71
+  - first:
+      213: 923514836964231265
+    second: ScreenFX_A_72
+  - first:
+      213: -5729838627845655786
+    second: ScreenFX_A_73
+  - first:
+      213: 5730472701345936459
+    second: ScreenFX_A_74
+  - first:
+      213: -4488433944855639686
+    second: ScreenFX_A_75
+  - first:
+      213: 4033053249932254020
+    second: ScreenFX_A_76
+  - first:
+      213: 4245251484208449394
+    second: ScreenFX_A_77
+  - first:
+      213: 7662774126204455886
+    second: ScreenFX_A_78
+  - first:
+      213: 2037024456471000030
+    second: ScreenFX_A_79
+  - first:
+      213: 5620933253527044363
+    second: ScreenFX_A_80
+  - first:
+      213: 5258108111568817429
+    second: ScreenFX_A_81
+  - first:
+      213: -1128452116256630525
+    second: ScreenFX_A_82
+  - first:
+      213: 6462088836944074448
+    second: ScreenFX_A_83
+  - first:
+      213: -2378407773644087447
+    second: ScreenFX_A_84
+  - first:
+      213: -8414978812612260262
+    second: ScreenFX_A_85
+  - first:
+      213: -7307300887201888044
+    second: ScreenFX_A_86
+  - first:
+      213: -1380186309080213649
+    second: ScreenFX_A_87
+  - first:
+      213: -6854532601643840009
+    second: ScreenFX_A_88
+  - first:
+      213: 2016301264020827535
+    second: ScreenFX_A_89
+  - first:
+      213: -9160985875283679679
+    second: ScreenFX_A_90
+  - first:
+      213: 460827698534880670
+    second: ScreenFX_A_91
+  - first:
+      213: 1014126246643678636
+    second: ScreenFX_A_92
+  - first:
+      213: -1782851231156553231
+    second: ScreenFX_A_93
+  - first:
+      213: -922360998062607346
+    second: ScreenFX_A_94
+  - first:
+      213: 1065106849700718579
+    second: ScreenFX_A_95
+  - first:
+      213: 5696561786200512636
+    second: ScreenFX_A_96
+  - first:
+      213: -6118817915567112175
+    second: ScreenFX_A_97
+  - first:
+      213: -7113614902422492507
+    second: ScreenFX_A_98
+  - first:
+      213: -3018009664727703953
+    second: ScreenFX_A_99
+  - first:
+      213: 4403559726650380188
+    second: ScreenFX_A_100
+  - first:
+      213: 8877388359660245405
+    second: ScreenFX_A_101
+  - first:
+      213: -5770590694219779088
+    second: ScreenFX_A_102
+  - first:
+      213: 1731961887330996972
+    second: ScreenFX_A_103
+  - first:
+      213: 812032742077424834
+    second: ScreenFX_A_104
+  - first:
+      213: -3445790169584417739
+    second: ScreenFX_A_105
+  - first:
+      213: 3099768751221702314
+    second: ScreenFX_A_106
+  - first:
+      213: 4835398135066675552
+    second: ScreenFX_A_107
+  - first:
+      213: -3040291148270095681
+    second: ScreenFX_A_108
+  - first:
+      213: -3946970483589007613
+    second: ScreenFX_A_109
+  - first:
+      213: -6828436679991399423
+    second: ScreenFX_A_110
+  - first:
+      213: 7092221196375408374
+    second: ScreenFX_A_111
+  - first:
+      213: 982765768274174834
+    second: ScreenFX_A_112
+  - first:
+      213: -274769017851075810
+    second: ScreenFX_A_113
+  - first:
+      213: -5761553866199764102
+    second: ScreenFX_A_114
+  - first:
+      213: 8026550720778003090
+    second: ScreenFX_A_115
+  - first:
+      213: 6230443707817406862
+    second: ScreenFX_A_116
+  - first:
+      213: -4396918259035376482
+    second: ScreenFX_A_117
+  - first:
+      213: -5948832456391837673
+    second: ScreenFX_A_118
+  - first:
+      213: 6647818162866144536
+    second: ScreenFX_A_119
+  - first:
+      213: -5229605378114778206
+    second: ScreenFX_A_120
+  - first:
+      213: 4864323610527882194
+    second: ScreenFX_A_121
+  - first:
+      213: -3660645297054067665
+    second: ScreenFX_A_122
+  - first:
+      213: -834677453739459393
+    second: ScreenFX_A_123
+  - first:
+      213: -1208569887873752557
+    second: ScreenFX_A_124
+  - first:
+      213: 5820064524857559116
+    second: ScreenFX_A_125
+  - first:
+      213: 3761239779886979197
+    second: ScreenFX_A_126
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 1
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ScreenFX_A_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1071
+        width: 1920
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2736a6428eb41c820800000000000000
+      internalID: 2936711892437721970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1066
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e9728c3c8808ea00800000000000000
+      internalID: 785887533379779048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1061
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ed663d6eef84e700800000000000000
+      internalID: 568737707152797158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 976
+        width: 1920
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd69ed7cb0a5acd20800000000000000
+      internalID: 3299548683646703327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 965
+        width: 1920
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3015e12dc15aa3980800000000000000
+      internalID: -8558346598661336829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 960
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d716b6bac0d61160800000000000000
+      internalID: 6996008640234002389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 955
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee79b20c300b0b2b0800000000000000
+      internalID: -5570759208901830674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 950
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d7621f3356464430800000000000000
+      internalID: 3766775461696399317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 945
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b56775406cb4d440800000000000000
+      internalID: 4959796211310093748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 940
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b1b3e49863df10b0800000000000000
+      internalID: -5755649352628194888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 935
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf8404a9fc75fb2d0800000000000000
+      internalID: -3260791056035198725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_11
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 930
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e4ea863684a92130800000000000000
+      internalID: 3542543478251250918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 925
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: daec067dffd389a30800000000000000
+      internalID: 4222192819699240621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_13
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 920
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5cb154895a169cb0800000000000000
+      internalID: -4857666176298140578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_14
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 915
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3696de7020cb4b10800000000000000
+      internalID: 1966876908076832315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 910
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b42efe56bb9de53b0800000000000000
+      internalID: -5521736694217317813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 905
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99b1c09e0c38148b0800000000000000
+      internalID: -5169706032677774439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_17
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 900
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41ebe9707a38da3a0800000000000000
+      internalID: -6652516321145733612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 895
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd1426266e82d4280800000000000000
+      internalID: -9057538305614003745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_19
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 890
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0f5ca0346f24d070800000000000000
+      internalID: 8130175334670425866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 885
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66fd31dbea2353e20800000000000000
+      internalID: 3329623225588244326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_21
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 880
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01a19abf408a2fbd0800000000000000
+      internalID: -2597829295683855856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_22
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 875
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28f134fa598d016b0800000000000000
+      internalID: -5327520221777158270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_23
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 870
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54fed52c823fcdca0800000000000000
+      internalID: -5990646047924424891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 865
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00d6c4c492aadbc10800000000000000
+      internalID: 2070998498010754304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 860
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de1d57309aebd41b0800000000000000
+      internalID: -5670666722672782867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_26
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 855
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47c4892df0da3e030800000000000000
+      internalID: 3522849617003170932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_27
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 850
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d964d859a73b116c0800000000000000
+      internalID: -4174358040519293283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_28
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 845
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50d7a0d47b329d240800000000000000
+      internalID: 4816920546627976453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_29
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 840
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c78190a3bf21213f0800000000000000
+      internalID: -931661302692505476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 835
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d4e8c79f15d75a30800000000000000
+      internalID: 4204063108840875220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_31
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 830
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9bb8ae8dc9ad9f50800000000000000
+      internalID: 6889849705273539484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_32
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 825
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f13a7d631ede19f0800000000000000
+      internalID: -495714733941706250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_33
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 820
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1fcb1545b15bab2f0800000000000000
+      internalID: -956252841879421711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_34
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 815
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9e0c5939040ad730800000000000000
+      internalID: 4024533654672510618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_35
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 810
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0b5073f83f03a4e0800000000000000
+      internalID: -1971715474581333237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_36
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 805
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c719a596445a11130800000000000000
+      internalID: 3535788895706452348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_37
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 720
+        width: 1920
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e846e43d7edb3aab0800000000000000
+      internalID: -4997942358070893426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_38
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 709
+        width: 1920
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aef820eaaec5c05d0800000000000000
+      internalID: -3094996680898867222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_39
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 704
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8742588a5c3ed95d0800000000000000
+      internalID: -3054034534211967880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_40
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 699
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4f637c4ef43f3e80800000000000000
+      internalID: -8196774529982042293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_41
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 694
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c5ff0597d87e7970800000000000000
+      internalID: 8754567592968975815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_42
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 689
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3d35e38b69e75350800000000000000
+      internalID: 6005525276105456954
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_43
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 684
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7dd3c9095df75050800000000000000
+      internalID: 5789374404865809789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_44
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 679
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a9b357d034ea3580800000000000000
+      internalID: -8846507619593766489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_45
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 674
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e96bcf166158dd850800000000000000
+      internalID: 6403420576370439838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_46
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 669
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6ac52a17dbd4f8d0800000000000000
+      internalID: -2813382150296581526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_47
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 664
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f8c9601c56b82940800000000000000
+      internalID: 5271663870365780217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_48
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 659
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a3ce6d2b18f26dc0800000000000000
+      internalID: -3647079952606641244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_49
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 654
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce440167249cf4540800000000000000
+      internalID: 4994431799062971628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_50
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 649
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a556d1183fc47fd20800000000000000
+      internalID: 3312200659681240410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_51
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 644
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2a8f041aa75e5480800000000000000
+      internalID: -8908586624899642836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_52
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 639
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2ad90ea65fc43280800000000000000
+      internalID: -9064392178795947476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_53
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 634
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e045b62c044baa3a0800000000000000
+      internalID: -6653307309253766130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_54
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 629
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 884bb8a9db5f8dc30800000000000000
+      internalID: 4384524431935648904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_55
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 624
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 055d658c862627920800000000000000
+      internalID: 2986557705077314896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_56
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 619
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31f20bde60f8ffe70800000000000000
+      internalID: 9151190227760459539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_57
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 614
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3c5aa9be88608260800000000000000
+      internalID: 7097787974945496125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_58
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 609
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a5974efdf53df910800000000000000
+      internalID: 1872712385065096609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_59
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 604
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40b176c8ceeb845f0800000000000000
+      internalID: -772157412916913404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_60
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 599
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57cb8630366540b50800000000000000
+      internalID: 6558461940617231477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_61
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 594
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5badb346f5f43470800000000000000
+      internalID: 8373588045235858270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_62
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 589
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 43368e7b690dea740800000000000000
+      internalID: 5165295168389669684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_63
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 584
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 194bbb825bb48dce0800000000000000
+      internalID: -1380270044344503151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_64
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 579
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07e6ecd0c9986d950800000000000000
+      internalID: 6473512817731202672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_65
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 574
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72c113129feb90cf0800000000000000
+      internalID: -285487124148315097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_66
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 569
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b89f690f43dd6a70800000000000000
+      internalID: 8821939581502855344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_67
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 564
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf460ab0f99424620800000000000000
+      internalID: 2756846869347853564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_68
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 559
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 223b09be12d00c6f0800000000000000
+      internalID: -666518305513622750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_69
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 554
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7f3d8032a6b11300800000000000000
+      internalID: 221158664433385339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_70
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 549
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1baf24c43f9dabf20800000000000000
+      internalID: 3439300904430533297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_71
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 464
+        width: 1920
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4ad5a114bcf09e70800000000000000
+      internalID: 9120067095745649226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_72
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 453
+        width: 1920
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1684e0ae9dbf0dc00800000000000000
+      internalID: 923514836964231265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_73
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 448
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 613b2fe30268b70b0800000000000000
+      internalID: -5729838627845655786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_74
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 439
+        width: 1920
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b443cce7f8ab68f40800000000000000
+      internalID: 5730472701345936459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_75
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 429
+        width: 1920
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a79031f9b11e5b1c0800000000000000
+      internalID: -4488433944855639686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_76
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 424
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44b5272109848f730800000000000000
+      internalID: 4033053249932254020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_77
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 419
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 277c17a8bb92aea30800000000000000
+      internalID: 4245251484208449394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_78
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 334
+        width: 1920
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecb887af774a75a60800000000000000
+      internalID: 7662774126204455886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_79
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 323
+        width: 1920
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed3bcb653f6f44c10800000000000000
+      internalID: 2037024456471000030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_80
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 318
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0109aa5301910e40800000000000000
+      internalID: 5620933253527044363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_81
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 313
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51dc8a4087d88f840800000000000000
+      internalID: 5258108111568817429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_82
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 308
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3095c7077cee650f0800000000000000
+      internalID: -1128452116256630525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_83
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 303
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d691114f83fda950800000000000000
+      internalID: 6462088836944074448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_84
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 298
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96f9ae03bb23efed0800000000000000
+      internalID: -2378407773644087447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_85
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 293
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5ecec9ba5df73b80800000000000000
+      internalID: -8414978812612260262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_86
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 288
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d84f6f0f80479a90800000000000000
+      internalID: -7307300887201888044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_87
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 283
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f679a6b4dd798dce0800000000000000
+      internalID: -1380186309080213649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_88
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 278
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7fd4fa96aeecfd0a0800000000000000
+      internalID: -6854532601643840009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_89
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 273
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8de12a11575bfb10800000000000000
+      internalID: 2016301264020827535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_90
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 268
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 146685722e3add080800000000000000
+      internalID: -9160985875283679679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_91
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 263
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9515d9a950356600800000000000000
+      internalID: 460827698534880670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_92
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 258
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cadb890c276e21e00800000000000000
+      internalID: 1014126246643678636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_93
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 253
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f9bb8f404a0247e0800000000000000
+      internalID: -1782851231156553231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_94
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 248
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e04bdc32f8d1333f0800000000000000
+      internalID: -922360998062607346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_95
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 243
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f72f30690508ce00800000000000000
+      internalID: 1065106849700718579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_96
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 238
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c78db8b43c04e0f40800000000000000
+      internalID: 5696561786200512636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_97
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 233
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11083515687951ba0800000000000000
+      internalID: -6118817915567112175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_98
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 228
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5aaae209fec574d90800000000000000
+      internalID: -7113614902422492507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_99
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 223
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6e95353330ed16d0800000000000000
+      internalID: -3018009664727703953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_100
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 218
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9f46368d369c1d30800000000000000
+      internalID: 4403559726650380188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_101
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 213
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d919cbebda1d23b70800000000000000
+      internalID: 8877388359660245405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_102
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 208
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f3fad6665ebaefa0800000000000000
+      internalID: -5770590694219779088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_103
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 203
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce211e2092a290810800000000000000
+      internalID: 1731961887330996972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_104
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 198
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c4e2810a7be44b00800000000000000
+      internalID: 812032742077424834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_105
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 193
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 534436be8181e20d0800000000000000
+      internalID: -3445790169584417739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_106
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 188
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aaefc668147940b20800000000000000
+      internalID: 3099768751221702314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_107
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 183
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0694c3c1cf8ca1340800000000000000
+      internalID: 4835398135066675552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_108
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 178
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb2b89d0f47bec5d0800000000000000
+      internalID: -3040291148270095681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_109
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 173
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 307b9b2d14b8939c0800000000000000
+      internalID: -3946970483589007613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_110
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 168
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10c6dd5a4058c31a0800000000000000
+      internalID: -6828436679991399423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_111
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 163
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6feb3761a91ac6260800000000000000
+      internalID: 7092221196375408374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_112
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 78
+        width: 1920
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2736563624c73ad00800000000000000
+      internalID: 982765768274174834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_113
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 67
+        width: 1920
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1324b7b803df2cf0800000000000000
+      internalID: -274769017851075810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_114
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 62
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7372e2e849da00b0800000000000000
+      internalID: -5761553866199764102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_115
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 57
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 292e0a3aa59046f60800000000000000
+      internalID: 8026550720778003090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_116
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 52
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e81368dba8bf67650800000000000000
+      internalID: 6230443707817406862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_117
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 47
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9474c7a3220bf2c0800000000000000
+      internalID: -4396918259035376482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_118
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 42
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71833703660817da0800000000000000
+      internalID: -5948832456391837673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_119
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 37
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 815c601c56bc14c50800000000000000
+      internalID: 6647818162866144536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_120
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ab0ff1cd95bc67b0800000000000000
+      internalID: -5229605378114778206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_121
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 27
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2db5f0e2d8c818340800000000000000
+      internalID: 4864323610527882194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_122
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 22
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f24536c4f76c23dc0800000000000000
+      internalID: -3660645297054067665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_123
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 17
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fbcf4d33741aa64f0800000000000000
+      internalID: -834677453739459393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_124
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 12
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3122d0b171c4a3fe0800000000000000
+      internalID: -1208569887873752557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_125
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 7
+        width: 1920
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c48ccfd69d505c050800000000000000
+      internalID: 5820064524857559116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScreenFX_A_126
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1920
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d785b33e6ab923430800000000000000
+      internalID: 3761239779886979197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      ScreenFX_A_0: 2936711892437721970
+      ScreenFX_A_1: 785887533379779048
+      ScreenFX_A_10: -3260791056035198725
+      ScreenFX_A_100: 4403559726650380188
+      ScreenFX_A_101: 8877388359660245405
+      ScreenFX_A_102: -5770590694219779088
+      ScreenFX_A_103: 1731961887330996972
+      ScreenFX_A_104: 812032742077424834
+      ScreenFX_A_105: -3445790169584417739
+      ScreenFX_A_106: 3099768751221702314
+      ScreenFX_A_107: 4835398135066675552
+      ScreenFX_A_108: -3040291148270095681
+      ScreenFX_A_109: -3946970483589007613
+      ScreenFX_A_11: 3542543478251250918
+      ScreenFX_A_110: -6828436679991399423
+      ScreenFX_A_111: 7092221196375408374
+      ScreenFX_A_112: 982765768274174834
+      ScreenFX_A_113: -274769017851075810
+      ScreenFX_A_114: -5761553866199764102
+      ScreenFX_A_115: 8026550720778003090
+      ScreenFX_A_116: 6230443707817406862
+      ScreenFX_A_117: -4396918259035376482
+      ScreenFX_A_118: -5948832456391837673
+      ScreenFX_A_119: 6647818162866144536
+      ScreenFX_A_12: 4222192819699240621
+      ScreenFX_A_120: -5229605378114778206
+      ScreenFX_A_121: 4864323610527882194
+      ScreenFX_A_122: -3660645297054067665
+      ScreenFX_A_123: -834677453739459393
+      ScreenFX_A_124: -1208569887873752557
+      ScreenFX_A_125: 5820064524857559116
+      ScreenFX_A_126: 3761239779886979197
+      ScreenFX_A_13: -4857666176298140578
+      ScreenFX_A_14: 1966876908076832315
+      ScreenFX_A_15: -5521736694217317813
+      ScreenFX_A_16: -5169706032677774439
+      ScreenFX_A_17: -6652516321145733612
+      ScreenFX_A_18: -9057538305614003745
+      ScreenFX_A_19: 8130175334670425866
+      ScreenFX_A_2: 568737707152797158
+      ScreenFX_A_20: 3329623225588244326
+      ScreenFX_A_21: -2597829295683855856
+      ScreenFX_A_22: -5327520221777158270
+      ScreenFX_A_23: -5990646047924424891
+      ScreenFX_A_24: 2070998498010754304
+      ScreenFX_A_25: -5670666722672782867
+      ScreenFX_A_26: 3522849617003170932
+      ScreenFX_A_27: -4174358040519293283
+      ScreenFX_A_28: 4816920546627976453
+      ScreenFX_A_29: -931661302692505476
+      ScreenFX_A_3: 3299548683646703327
+      ScreenFX_A_30: 4204063108840875220
+      ScreenFX_A_31: 6889849705273539484
+      ScreenFX_A_32: -495714733941706250
+      ScreenFX_A_33: -956252841879421711
+      ScreenFX_A_34: 4024533654672510618
+      ScreenFX_A_35: -1971715474581333237
+      ScreenFX_A_36: 3535788895706452348
+      ScreenFX_A_37: -4997942358070893426
+      ScreenFX_A_38: -3094996680898867222
+      ScreenFX_A_39: -3054034534211967880
+      ScreenFX_A_4: -8558346598661336829
+      ScreenFX_A_40: -8196774529982042293
+      ScreenFX_A_41: 8754567592968975815
+      ScreenFX_A_42: 6005525276105456954
+      ScreenFX_A_43: 5789374404865809789
+      ScreenFX_A_44: -8846507619593766489
+      ScreenFX_A_45: 6403420576370439838
+      ScreenFX_A_46: -2813382150296581526
+      ScreenFX_A_47: 5271663870365780217
+      ScreenFX_A_48: -3647079952606641244
+      ScreenFX_A_49: 4994431799062971628
+      ScreenFX_A_5: 6996008640234002389
+      ScreenFX_A_50: 3312200659681240410
+      ScreenFX_A_51: -8908586624899642836
+      ScreenFX_A_52: -9064392178795947476
+      ScreenFX_A_53: -6653307309253766130
+      ScreenFX_A_54: 4384524431935648904
+      ScreenFX_A_55: 2986557705077314896
+      ScreenFX_A_56: 9151190227760459539
+      ScreenFX_A_57: 7097787974945496125
+      ScreenFX_A_58: 1872712385065096609
+      ScreenFX_A_59: -772157412916913404
+      ScreenFX_A_6: -5570759208901830674
+      ScreenFX_A_60: 6558461940617231477
+      ScreenFX_A_61: 8373588045235858270
+      ScreenFX_A_62: 5165295168389669684
+      ScreenFX_A_63: -1380270044344503151
+      ScreenFX_A_64: 6473512817731202672
+      ScreenFX_A_65: -285487124148315097
+      ScreenFX_A_66: 8821939581502855344
+      ScreenFX_A_67: 2756846869347853564
+      ScreenFX_A_68: -666518305513622750
+      ScreenFX_A_69: 221158664433385339
+      ScreenFX_A_7: 3766775461696399317
+      ScreenFX_A_70: 3439300904430533297
+      ScreenFX_A_71: 9120067095745649226
+      ScreenFX_A_72: 923514836964231265
+      ScreenFX_A_73: -5729838627845655786
+      ScreenFX_A_74: 5730472701345936459
+      ScreenFX_A_75: -4488433944855639686
+      ScreenFX_A_76: 4033053249932254020
+      ScreenFX_A_77: 4245251484208449394
+      ScreenFX_A_78: 7662774126204455886
+      ScreenFX_A_79: 2037024456471000030
+      ScreenFX_A_8: 4959796211310093748
+      ScreenFX_A_80: 5620933253527044363
+      ScreenFX_A_81: 5258108111568817429
+      ScreenFX_A_82: -1128452116256630525
+      ScreenFX_A_83: 6462088836944074448
+      ScreenFX_A_84: -2378407773644087447
+      ScreenFX_A_85: -8414978812612260262
+      ScreenFX_A_86: -7307300887201888044
+      ScreenFX_A_87: -1380186309080213649
+      ScreenFX_A_88: -6854532601643840009
+      ScreenFX_A_89: 2016301264020827535
+      ScreenFX_A_9: -5755649352628194888
+      ScreenFX_A_90: -9160985875283679679
+      ScreenFX_A_91: 460827698534880670
+      ScreenFX_A_92: 1014126246643678636
+      ScreenFX_A_93: -1782851231156553231
+      ScreenFX_A_94: -922360998062607346
+      ScreenFX_A_95: 1065106849700718579
+      ScreenFX_A_96: 5696561786200512636
+      ScreenFX_A_97: -6118817915567112175
+      ScreenFX_A_98: -7113614902422492507
+      ScreenFX_A_99: -3018009664727703953
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
