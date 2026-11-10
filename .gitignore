@@ -8,12 +8,29 @@
 /[Uu]ser[Ss]ettings/
 /[Mm]emoryCaptures/
 /[Rr]ecordings/
+.utmp/
+/[Aa]ssets/AssetStoreTools*
+/[Aa]ssets/Plugins/Editor/JetBrains*
+/[Aa]ssets/[Ss]treamingAssets/aa.meta
+/[Aa]ssets/[Ss]treamingAssets/aa/*
+ExportedObj/
+.gradle/
+*.tmp
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+
+# Crash reports
+sysinfo.txt
+mono_crash*
 
 # IDE
 .vs/
 .vscode/
 .idea/
+.consulo/
 *.csproj
+*.unityproj
 *.sln
 *.suo
 *.user
