@@ -26,7 +26,11 @@ namespace RetroSF
         [Header("Parts")]
         public PlayerWeapon weapon;
         public SpriteRenderer visuals;
-        public GameObject shield;
+        [Header("Effects")]
+        public GameObject shieldEffectPrefab;
+        public OneShotEffect powerDownEffect;
+
+        GameObject activeShieldEffect;
 
         [NonSerialized] public float autoAdvanceSpeed;
         [NonSerialized] public SortieState state;
@@ -47,6 +51,7 @@ namespace RetroSF
 
         void FixedUpdate()
         {
+            UpdateShieldVisuals();
             if (state == null || state.hp <= 0) return;
             float delta = Time.fixedDeltaTime;
             invincibility = Mathf.Max(0f, invincibility - delta);
@@ -64,7 +69,6 @@ namespace RetroSF
                 color.a = blink ? 0.4f : 1f;
                 visuals.color = color;
             }
-            if (shield != null && shield.activeSelf != state.shield) shield.SetActive(state.shield);
             if (GameInput.ConsumeBomb()) BombRequested?.Invoke();
         }
 
@@ -76,9 +80,13 @@ namespace RetroSF
             int powerupsBeforeHit = state.RecoverablePowerups();
             int bombsBeforeHit = state.Bombs;
             int hpBeforeHit = state.hp;
+            int powerBeforeHit = state.CurrentPowerLevel();
             bool shieldBeforeHit = state.shield;
             if (!state.Damage(amount)) return;
+            UpdateShieldVisuals();
             if (shieldBeforeHit && !state.shield) Sfx.Play("shield_break");
+            // Fatal hits use the death presentation instead of a power-down burst.
+            if (state.hp > 0 && state.CurrentPowerLevel() < powerBeforeHit) PlayEffect(powerDownEffect);
             if (state.hp < hpBeforeHit)
             {
                 hasTakenHit = true;
@@ -101,6 +109,7 @@ namespace RetroSF
             int previousBombs = state.Bombs;
             bool previousShield = state.shield;
             state.Collect(kind, weapon.ActiveData().levels.Count);
+            UpdateShieldVisuals();
             if (state.CurrentPowerLevel() > previousPower)
             {
                 Sfx.Play("power_up");
@@ -114,6 +123,28 @@ namespace RetroSF
             {
                 Sfx.Play("shield_gain");
             }
+        }
+
+        void UpdateShieldVisuals()
+        {
+            bool equipped = state != null && state.hp > 0 && state.shield;
+            if (equipped)
+            {
+                if (activeShieldEffect == null && shieldEffectPrefab != null)
+                    activeShieldEffect = Instantiate(shieldEffectPrefab, transform, false);
+            }
+            else if (activeShieldEffect != null)
+            {
+                activeShieldEffect.SetActive(false);
+                Destroy(activeShieldEffect);
+                activeShieldEffect = null;
+            }
+        }
+
+        void PlayEffect(OneShotEffect prefab)
+        {
+            // Follow the ship; each instance finishes independently, including overlapping effects.
+            if (prefab != null) Instantiate(prefab, transform, false);
         }
 
         void OnTriggerEnter2D(Collider2D other)

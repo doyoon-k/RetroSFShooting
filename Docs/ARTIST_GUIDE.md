@@ -29,6 +29,10 @@ EnemyShip (루트)            ← EnemyShip / EnemyMovement / Rigidbody2D / Anim
 - 대기(Idle) 애니메이션을 추가하려면 컨트롤러의 `Idle` 상태에 클립을 넣으면 됩니다.
 - 폭발·피격 이펙트는 기본 상태가 한 번 재생되고 끝나면 자동으로 삭제됩니다(`OneShotEffect`).
   클립의 Loop Time은 꺼 두세요.
+- 플레이어의 `Shield Effect Prefab`은 실드를 획득하면 기체를 따라 반복 재생되고, 실드가
+  소모되면 즉시 사라집니다. `ShieldFx`에는 `OneShotEffect`를 붙이지 않고 Loop Time을 켭니다.
+  `Power Down Effect`는 생존한 피격으로 무기 레벨이 실제로 내려갈 때 `PowerdownFX`를
+  한 번 재생합니다. 두 효과는 일시정지 중에 멈추며, 동시에 재생될 수 있습니다.
 - 밝게 번쩍이는 색(1보다 큰 값)은 SpriteRenderer 색 대신 머티리얼 속성 `_Tint`(HDR)를
   키프레임하세요. 피격 플래시는 `_FlashAmount`(0~1)입니다. 둘 다 Animation 창에서
   `Sprite Renderer > Material._Tint`로 추가할 수 있습니다.

@@ -342,9 +342,7 @@ namespace RetroSF
         void ShowPowerUpMessage()
         {
             if (phase != Phase.Playing || userPaused || player == null) return;
-            // Keep the message above the persistent shield icon when it is equipped.
-            float clearance = player.state.shield ? 50f : 0f;
-            powerUpMessage.ShowAt(WorldToDesign(player.Position), DesignRect(rules.playfield), clearance);
+            powerUpMessage.ShowAt(WorldToDesign(player.Position), DesignRect(rules.playfield));
         }
 
         Vector2 WorldToDesign(Vector2 world) => new Vector2(world.x - progressX, world.y + DesignHeight);
