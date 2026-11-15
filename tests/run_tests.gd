@@ -625,7 +625,9 @@ func _test_proximity_damage() -> void:
 	var enemy_scene := load("res://scenes/enemies/fighter.tscn") as PackedScene
 	var bullet_scene := load("res://scenes/projectiles/player_bullet.tscn") as PackedScene
 	var enemies: Array[EnemyShip] = []
-	for distance in [120.0, 400.0, 760.0]:
+	var distances := [0.0, 80.0, 80.01, 160.0, 160.01, 320.0, 320.01, 760.0]
+	var expected := [4, 4, 3, 3, 2, 2, 1, 1]
+	for distance in distances:
 		var origin := Vector2(200.0, 1500.0 + enemies.size() * 100.0)
 		var enemy := enemy_scene.instantiate() as EnemyShip
 		enemy.maximum_hp = 10
@@ -639,24 +641,20 @@ func _test_proximity_damage() -> void:
 		bullet.friendly = true
 		bullet.damage = 1
 		bullet.bounds = Rect2(0, 0, 2400, 2000)
-		bullet.proximity_points = [Vector2(160.0, 2.0), Vector2(640.0, 1.0)]
+		bullet.proximity_points = [Vector2(80, 4), Vector2(160, 3), Vector2(320, 2)]
 		root.add_child(bullet)
 		bullet.global_position = enemy.global_position
 		bullet.damage_origin = origin
 		# Exercise the projectile's collision handler at each impact distance.
 		bullet._on_area_entered(enemy)
 	await frames()
-	var near_damage := 10.0 - enemies[0].hp
-	var middle_damage := 10.0 - enemies[1].hp
-	var far_damage := 10.0 - enemies[2].hp
-	check(is_equal_approx(near_damage, 2.0), "Point-blank player bullet deals double damage on collision")
-	check(middle_damage > 1.0 and middle_damage < 2.0, "Middle-range player bullet deals fractional bonus damage")
-	check(is_equal_approx(far_damage, 1.0), "Distant player bullet deals base damage on collision")
+	for index in distances.size():
+		check(is_equal_approx(10.0 - enemies[index].hp, expected[index]), "Collision deals the exact integer damage step at %.2fpx" % distances[index])
 	var sample := bullet_scene.instantiate() as Projectile
-	sample.proximity_points = [Vector2(160.0, 2.0), Vector2(400.0, 1.8), Vector2(640.0, 1.0)]
-	check(is_equal_approx(sample.proximity_multiplier(400.0), 1.8), "An added damage tier changes the multiplier at its distance")
+	sample.proximity_points = [Vector2(80, 4), Vector2(160, 3), Vector2(320, 2)]
+	check(sample.proximity_multiplier(120) == 3, "Intermediate ranges use a whole damage step")
 	sample.proximity_points.remove_at(1)
-	check(is_equal_approx(sample.proximity_multiplier(400.0), 1.5), "Removing a damage tier reconnects its neighbors")
+	check(sample.proximity_multiplier(120) == 2, "Removing a tier extends the next step without interpolation")
 	sample.proximity_points.remove_at(1)
 	check(is_equal_approx(sample.proximity_multiplier(200.0), 1.0), "A single close-range tier falls back to base damage beyond its distance")
 	sample.proximity_points.clear()
@@ -1066,7 +1064,7 @@ func _test_stage() -> void:
 	var radial_texture := load("res://assets/Pilots_sprites/Player/Projectile_Radial.png") as Texture2D
 	check(straight.levels.size() == 3 and spread.levels.size() == 3, "Both weapons have three authored levels")
 	var authored_tiers := stage.player.weapon.proximity_tiers
-	check(authored_tiers.size() == 2 and authored_tiers[0].distance == 80.0 and authored_tiers[1].distance == 360.0, "Player ship limits bonus damage to close range")
+	check(authored_tiers.size() == 3 and authored_tiers[0].distance == 80.0 and authored_tiers[1].distance == 160.0 and authored_tiers[2].distance == 320.0, "Player ship authors three close-range damage steps")
 	for level_index in straight.levels.size():
 		var level := straight.levels[level_index]
 		check(level.angles.size() == level_index + 2, "Straight weapon gains one parallel shot per level")
@@ -1091,8 +1089,8 @@ func _test_stage() -> void:
 	var second_straight_bullet := stage.projectiles.get_child(bullet_count + 1) as Projectile
 	check(is_equal_approx(straight_bullet.global_position.x, second_straight_bullet.global_position.x) and is_equal_approx(straight_bullet.global_position.y, stage.player.weapon.global_position.y - 21.0) and is_equal_approx(second_straight_bullet.global_position.y, stage.player.weapon.global_position.y + 21.0), "Straight bullets spawn in two parallel rows on the enlarged ship")
 	check((straight_bullet.get_node("Visual") as Sprite2D).texture == straight_texture, "Fired straight bullet shows the straight image")
-	check(straight_bullet.proximity_points.size() == 2 and is_equal_approx(straight_bullet.proximity_points[0].y, 1.6) and straight_bullet.damage_origin.is_equal_approx(straight_bullet.global_position), "Straight shot captures proximity tiers and its own firing origin")
-	check(is_equal_approx(straight_bullet.proximity_multiplier(360), 1.0) and is_equal_approx(straight_bullet.proximity_multiplier(80), 1.6), "Fired shots retain base damage at range and cap the close bonus at 1.6")
+	check(straight_bullet.proximity_points.size() == 3 and straight_bullet.proximity_points[0].y == 4 and straight_bullet.damage_origin.is_equal_approx(straight_bullet.global_position), "Straight shot captures proximity tiers and its own firing origin")
+	check(straight_bullet.proximity_multiplier(321) == 1 and straight_bullet.proximity_multiplier(80) == 4, "Fired shots retain base damage at range and cap the close bonus at four")
 	await capture("straight_lv1")
 	Input.action_press("switch_weapon")
 	await frames(2)
@@ -1103,21 +1101,21 @@ func _test_stage() -> void:
 	check(stage.projectiles.get_child_count() == bullet_count + 3, "Spread weapon fires exactly three projectiles")
 	check((stage.projectiles.get_child(bullet_count).get_node("Visual") as Sprite2D).texture == radial_texture, "Fired spread bullet shows the radial image")
 	check(stage.projectiles.get_child(bullet_count).direction.y < 0.0 and stage.projectiles.get_child(bullet_count + 1).direction.y == 0.0 and stage.projectiles.get_child(bullet_count + 2).direction.y > 0.0, "Spread projectiles fan above, forward, and below")
-	check((stage.projectiles.get_child(bullet_count) as Projectile).proximity_points.size() == 2 and (stage.projectiles.get_child(bullet_count + 2) as Projectile).damage_origin.is_equal_approx(stage.player.weapon.global_position), "All spread shots inherit proximity tiers")
+	check((stage.projectiles.get_child(bullet_count) as Projectile).proximity_points.size() == 3 and (stage.projectiles.get_child(bullet_count + 2) as Projectile).damage_origin.is_equal_approx(stage.player.weapon.global_position), "All spread shots inherit proximity tiers")
 	var extra_tier := ProximityDamageTier.new()
-	extra_tier.distance = 200.0
-	extra_tier.multiplier = 1.8
+	extra_tier.distance = 240.0
+	extra_tier.multiplier = 2
 	var custom_tiers := authored_tiers.duplicate()
 	custom_tiers.insert(0, extra_tier)
 	stage.player.weapon.proximity_tiers = custom_tiers
 	bullet_count = stage.projectiles.get_child_count()
 	stage.player.weapon.fire()
 	var custom_bullet := stage.projectiles.get_child(bullet_count) as Projectile
-	check(custom_bullet.proximity_points.size() == 3 and custom_bullet.proximity_points[1] == Vector2(200.0, 1.8), "Weapon sorts and applies a newly added tier to fired shots")
+	check(custom_bullet.proximity_points.size() == 4 and custom_bullet.proximity_points[2] == Vector2(240, 2), "Weapon sorts and applies a newly added tier to fired shots")
 	custom_tiers.erase(extra_tier)
 	bullet_count = stage.projectiles.get_child_count()
 	stage.player.weapon.fire()
-	check((stage.projectiles.get_child(bullet_count) as Projectile).proximity_points.size() == 2 and custom_bullet.proximity_points.size() == 3, "Removing a tier changes new shots without rewriting shots already fired")
+	check((stage.projectiles.get_child(bullet_count) as Projectile).proximity_points.size() == 3 and custom_bullet.proximity_points.size() == 4, "Removing a tier changes new shots without rewriting shots already fired")
 	stage.player.weapon.proximity_tiers = authored_tiers
 	stage.player.collect(Pickup.Kind.POWER)
 	check(stage.run.current_sortie.current_power_level() == 2, "Power pickup upgrades both weapon patterns")

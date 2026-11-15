@@ -1,8 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://bellqgks15i0n"]
+[gd_scene load_steps=19 format=3 uid="uid://bellqgks15i0n"]
 
 [ext_resource type="Script" path="res://scenes/player/player_ship.gd" id="Script"]
 [ext_resource type="Script" path="res://scenes/player/player_weapon.gd" id="Weapon"]
 [ext_resource type="Script" path="res://scripts/data/proximity_damage_tier.gd" id="ProximityTier"]
+[ext_resource type="Resource" path="res://data/weapons/proximity_feedback.tres" id="ProximityFeedback"]
 [ext_resource type="Resource" uid="uid://dj7cna4wypie8" path="res://data/weapons/standard.tres" id="WeaponData"]
 [ext_resource type="Resource" path="res://data/weapons/spread.tres" id="SpreadWeaponData"]
 [ext_resource type="Texture2D" path="res://assets/Pilots_sprites/Player/Robot_Nomal.png" id="Normal"]
@@ -24,12 +25,17 @@ radius = 14.0
 [sub_resource type="Resource" id="NearDamageTier"]
 script = ExtResource("ProximityTier")
 distance = 80.0
-multiplier = 1.6
+multiplier = 4
+
+[sub_resource type="Resource" id="MiddleDamageTier"]
+script = ExtResource("ProximityTier")
+distance = 160.0
+multiplier = 3
 
 [sub_resource type="Resource" id="FarDamageTier"]
 script = ExtResource("ProximityTier")
-distance = 360.0
-multiplier = 1.0
+distance = 320.0
+multiplier = 2
 
 [node name="PlayerShip" type="Area2D"]
 scale = Vector2(1.5, 1.5)
@@ -53,7 +59,8 @@ position = Vector2(40, 0)
 script = ExtResource("Weapon")
 data = ExtResource("WeaponData")
 spread_data = ExtResource("SpreadWeaponData")
-proximity_tiers = Array[ExtResource("ProximityTier")]([SubResource("NearDamageTier"), SubResource("FarDamageTier")])
+proximity_tiers = Array[ExtResource("ProximityTier")]([SubResource("NearDamageTier"), SubResource("MiddleDamageTier"), SubResource("FarDamageTier")])
+proximity_feedback = ExtResource("ProximityFeedback")
 
 [node name="Shield" type="Sprite2D" parent="."]
 visible = false

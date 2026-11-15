@@ -28,6 +28,9 @@ var dying: bool = false
 var death_left: float = 0.0
 var _hit_flash_left: float = 0.0
 var _hit_flash_material: ShaderMaterial
+var last_hit_multiplier: int = 1
+var last_hit_color: Color = Color.WHITE
+var _damage_feedback: DamageMultiplierFeedback
 @onready var movement: EnemyMovement = $Movement
 @onready var shooter: EnemyShooter = get_node_or_null("Shooter") as EnemyShooter
 
@@ -66,13 +69,26 @@ func _physics_process(delta: float) -> void:
 	elif not is_boss and not bounds.grow(despawn_margin).has_point(global_position):
 		queue_free()
 
-func take_damage(amount: float) -> void:
+func take_projectile_damage(base_damage: int, multiplier: int, feedback: ProximityFeedbackStyle, impact_position: Vector2) -> void:
+	var previous_hp := hp
+	var color := feedback.color_for(multiplier) if feedback != null else Color.WHITE
+	take_damage(base_damage * multiplier, multiplier, color)
+	if hp >= previous_hp or feedback == null:
+		return
+	if not is_instance_valid(_damage_feedback) or _damage_feedback.is_queued_for_deletion():
+		_damage_feedback = DamageMultiplierFeedback.new()
+		get_parent().add_child(_damage_feedback)
+	_damage_feedback.show_hit(self, impact_position, multiplier, feedback, bounds)
+
+func take_damage(amount: float, multiplier: int = 1, hit_color: Color = Color.WHITE) -> void:
 	if dying or hp <= 0 or get_tree().paused:
 		return
 	var previous_hp := hp
 	hp = maxf(0.0, hp - amount)
 	health_changed.emit(hp, maximum_hp)
 	if hp < previous_hp:
+		last_hit_multiplier = multiplier
+		last_hit_color = hit_color
 		_hit_flash_left = hit_flash_seconds
 		_hit_flash_material.set_shader_parameter("flash_amount", 1.0 if _hit_flash_left > 0.0 else 0.0)
 		damaged.emit(self)

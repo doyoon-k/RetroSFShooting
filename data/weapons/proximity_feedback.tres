@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ProximityFeedbackStyle" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/proximity_feedback_style.gd" id="Script"]
+
+[resource]
+script = ExtResource("Script")
+x1_color = Color(0.858824, 0.905882, 0.929412, 1)
+x2_color = Color(0.568627, 0.894118, 0.952941, 1)
+x3_color = Color(1, 0.890196, 0.541176, 1)
+x4_color = Color(1, 0.694118, 0.435294, 1)

@@ -293,6 +293,8 @@ func _enemy_damaged(enemy: EnemyShip) -> void:
 	var effect := _effect(enemy.global_position, enemy_hit_scene, enemy.is_boss and enemy.hp <= 0.0) as EnemyHitEffect
 	if effect != null:
 		effect.fit_to_enemy(enemy)
+		effect.scale *= 1.0 + 0.1 * (enemy.last_hit_multiplier - 1)
+		effect.modulate = Color.WHITE.lerp(enemy.last_hit_color, 0.35)
 
 func _enemy_destroyed(enemy: EnemyShip) -> void:
 	defeated += 1

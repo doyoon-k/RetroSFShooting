@@ -18,7 +18,7 @@
 | 방사형 탄환 이미지 | `scenes/projectiles/radial_bullet.tscn`의 `Visual` |
 | 적 탄환 이미지 | `scenes/projectiles/*_bullet.tscn`, `brood_core.tscn`의 `Visual` |
 | 적의 피 튀는 효과 | `scenes/gameplay/enemy_hit.tscn` 루트의 `Size Ratio`, `Size Growth`, `Max Scale`, `Front Inset` |
-| 근접 사격 배율·거리 | `scenes/player/player_ship.tscn`의 `Weapon` 노드 |
+| 근접 사격 배율·거리·표시 색상 | `scenes/player/player_ship.tscn`의 `Weapon` 노드 |
 | 적 성능 | `scenes/enemies/*.tscn` |
 | 공격 패턴 | `data/patterns/*.tres` |
 | 스테이지 배치와 이동 속도 | `scenes/gameplay/stage/stage_01.tscn` |
@@ -122,11 +122,21 @@ Display Width로 연출을 조절합니다. 같은 메시지를 갱신하므로 
 폭탄 시간은 `data/rules/default.tres`의 `Bomb` 그룹에서 조절합니다. `Bomb Activation Delay`는 입력부터 폭발까지의 시간(0.2초), `Bomb Cooldown`은 입력부터 다음 사용까지의 시간(1.5초), `Bomb Invincibility`는 폭발 후 무적 시간(1초)입니다.
 
 `Weapon` 노드의 `Proximity Damage > Proximity Tiers` 배열에서 거리(px)와 배율을
-한 쌍씩 추가·제거합니다. 배열 순서와 상관없이 거리순으로 적용되며, 단계 사이에서는
-발사 위치에서 충돌 지점까지의 거리에 따라 배율이 선형으로 변합니다. 가장 가까운
-단계 안쪽은 그 단계의 배율, 가장 먼 단계 바깥쪽은 기본 피해 1배입니다.
-기본 설정은 80px 이내 1.6배, 360px 이상 1배입니다. 배열이 비어 있으면 항상 1배이며,
-단계가 하나면 해당 거리 안쪽에만 그 배율을 적용합니다. 소수 피해도 적 체력에 누적됩니다.
+한 쌍씩 추가·제거합니다. `Distance`는 해당 정수 배율을 적용하는 최대 거리(포함)입니다.
+배열 순서와 상관없이 거리순으로 적용하며, 발사점부터 실제 명중점까지의 거리로 결정합니다.
+80px 이하 x4, 80px 초과~160px 이하 x3, 160px 초과~320px 이하 x2, 320px 초과 x1입니다.
+단계 사이를 보간하지 않습니다. 배열이 비어 있거나 마지막 거리보다 멀면 기본 피해 1배입니다.
+
+같은 `Weapon` 노드의 `Proximity Feedback` 리소스를 펼치면 `Multiplier Colors` 아래
+`X1 Color`, `X2 Color`, `X3 Color`, `X4 Color`를 각각 색상 선택기로 변경할 수 있습니다.
+공유 파일은 `data/weapons/proximity_feedback.tres`이며, 모든 파일럿·직선탄·확산탄의
+명중 표시와 거리 가이드에 같은 색상이 적용됩니다. 특정 기체만 다르게 쓰려면 리소스를 복제하세요.
+적 위 표시는 `x1`~`x4`만 사용하고, `game_theme.tres`의 `ArcadeLabel` 숫자 폰트를 그대로 씁니다.
+`Hit Label`에서 크기·유지 시간(기본 0.35초)·배율 변경 시 확대·위치 오프셋을 조절합니다.
+적별 표시 하나를 재사용하고 마지막 명중부터 유지 시간을 연장하며, 처치 후에도 짧게 남습니다.
+`Distance Guides`에서 사격 중 보이는 전방 원호의 표시 여부·투명도를 조절할 수 있습니다.
+원호는 현재 총구 위치를 기준으로 한 가이드이며, 실제 피해와 적 위 숫자는 각 탄의 발사점 기준입니다.
+x4에 진입할 때의 강한 타격음은 `scenes/audio/sound_effects.tscn`의 `enemy_hit_strong`에서 조절합니다.
 
 **공유 리소스에 주의:** 같은 `.tres`를 참조하는 모든 적에게 수정이 적용됩니다. 특정 적만
 바꾸려면 그 리소스를 복제해 연결하세요. 중첩된 Step 안의 Pattern까지 독립시키려면 Pattern도
