@@ -205,3 +205,9 @@ MonoBehaviour:
     maxPolyphony: 1
     pausable: 0
     minInterval: 0
+  - cue: enemy_hit_strong
+    clip: {fileID: 8300000, guid: d8ba45cab45eaf942819f23a0422b318, type: 3}
+    volumeDb: -5
+    maxPolyphony: 1
+    pausable: 1
+    minInterval: 0.14

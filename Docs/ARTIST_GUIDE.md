@@ -59,6 +59,21 @@ EnemyShip (루트)            ← EnemyShip / EnemyMovement / Rigidbody2D / Anim
 - 전투 프레임 `Battle_Bg_Keyed.png`는 원본 `Battle_Bg.png`에서 흰 창을 투명하게 만든 그림입니다.
   프레임을 다시 그리면 창 부분을 투명하게 저장해 이 파일을 바꾸면 됩니다.
 
+## 근접 사격 배율과 숫자 표시
+
+`Assets/Prefabs/player/player_ship.prefab`의 `Weapon`을 선택합니다. `Proximity Tiers`는
+80px 이하 x4, 160px 이하 x3, 320px 이하 x2이며, 마지막 거리보다 멀면 x1입니다.
+거리는 각 탄의 발사점부터 실제 명중점까지이고, 정수 단계 사이를 보간하지 않습니다.
+
+`Proximity Feedback`에 연결된 `Assets/Data/weapons/proximity_feedback.asset`을 펼치면
+`Multiplier Colors` 아래의 `X1 Color`~`X4 Color`를 색상 선택기로 바꿀 수 있습니다.
+모든 파일럿과 두 무기의 피격 표시·거리 가이드가 같은 설정을 사용합니다.
+`Numeric Font`는 HUD 숫자와 같은 `Assets/Fonts/TMP/Stadium SDF.asset`입니다.
+`Hit Label`에서 크기, 유지 시간(0.35초), 배율 변경 시 확대, 위치를 조절하고,
+`Distance Guides`에서 사격 중 원호의 표시 여부와 투명도를 조절합니다.
+원호는 현재 총구 기준의 가이드이며, 적 위 숫자는 실제 명중 배율입니다.
+숫자는 적별 하나만 갱신하고 처치 후에도 잠깐 남습니다. 전투 일시정지 중에는 표시 시간도 멈춥니다.
+
 ## 확인용 씬
 
 - `Assets/Scenes/Main.unity`: 전체 게임

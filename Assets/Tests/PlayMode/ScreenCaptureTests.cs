@@ -26,7 +26,7 @@ namespace RetroSF.Tests
             yield return null;
         }
 
-        static IEnumerator Capture(string name)
+        internal static IEnumerator Capture(string name)
         {
             yield return null;
             var camera = Camera.main;

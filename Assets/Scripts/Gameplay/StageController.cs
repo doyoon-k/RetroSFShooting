@@ -449,7 +449,12 @@ namespace RetroSF
         {
             Sfx.Play("enemy_hit");
             var effect = SpawnEffect(enemy.Position, enemyHitPrefab, enemy.isBoss && enemy.hp <= 0f) as EnemyHitEffect;
-            if (effect != null) effect.FitToEnemy(enemy);
+            if (effect != null)
+            {
+                effect.FitToEnemy(enemy);
+                effect.transform.localScale *= 1f + 0.1f * (enemy.LastHitMultiplier - 1);
+                if (effect.visual != null) effect.visual.color = Color.Lerp(Color.white, enemy.LastHitColor, 0.35f);
+            }
         }
 
         void EnemyDestroyed(EnemyShip enemy)

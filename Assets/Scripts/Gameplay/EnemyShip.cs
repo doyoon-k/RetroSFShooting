@@ -50,6 +50,9 @@ namespace RetroSF
         bool disableCollidersPending;
         bool freed;
         MaterialPropertyBlock block;
+        public int LastHitMultiplier { get; private set; } = 1;
+        public Color LastHitColor { get; private set; } = Color.white;
+        public DamageMultiplierFeedback DamageFeedback { get; private set; }
 
         public Vector2 Position
         {
@@ -110,7 +113,23 @@ namespace RetroSF
             }
         }
 
-        public void TakeDamage(float amount)
+        public void TakeProjectileDamage(int baseDamage, int multiplier, ProximityFeedbackStyle feedback, Vector2 impact)
+        {
+            float before = hp;
+            ApplyDamage(baseDamage * multiplier, multiplier, feedback != null ? feedback.ColorFor(multiplier) : Color.white);
+            if (hp >= before || feedback == null) return;
+            if (DamageFeedback == null || DamageFeedback.TimeLeft <= 0f)
+            {
+                var host = new GameObject("DamageMultiplierFeedback");
+                host.transform.SetParent(transform.parent, false);
+                DamageFeedback = host.AddComponent<DamageMultiplierFeedback>();
+            }
+            DamageFeedback.ShowHit(this, impact, multiplier, feedback);
+        }
+
+        public void TakeDamage(float amount) => ApplyDamage(amount, 1, Color.white);
+
+        void ApplyDamage(float amount, int multiplier, Color hitColor)
         {
             if (dying || hp <= 0f || GamePause.Paused) return;
             float previousHp = hp;
@@ -118,6 +137,8 @@ namespace RetroSF
             HealthChanged?.Invoke(hp, maximumHp);
             if (hp < previousHp)
             {
+                LastHitMultiplier = multiplier;
+                LastHitColor = hitColor;
                 hitFlashLeft = hitFlashSeconds;
                 SetFlash(hitFlashLeft > 0f ? 1f : 0f);
                 Damaged?.Invoke(this);

@@ -101,13 +101,17 @@ namespace RetroSF.Tests
         }
 
         [Test]
-        public void ProximityDamageCurve()
+        public void ProximityDamageSteps()
         {
             var bullet = new GameObject("Bullet").AddComponent<Projectile>();
-            bullet.proximityPoints = new List<Vector2> { new Vector2(80f, 1.6f), new Vector2(360f, 1f) };
-            Assert.AreEqual(1.6f, bullet.ProximityMultiplier(40f), 0.0001f);
-            Assert.AreEqual(1.3f, bullet.ProximityMultiplier(220f), 0.0001f);
-            Assert.AreEqual(1f, bullet.ProximityMultiplier(500f), 0.0001f);
+            bullet.proximityPoints = new List<Vector2> { new Vector2(80f, 4f), new Vector2(160f, 3f), new Vector2(320f, 2f) };
+            Assert.AreEqual(4, bullet.ProximityMultiplier(40f));
+            Assert.AreEqual(4, bullet.ProximityMultiplier(80f));
+            Assert.AreEqual(3, bullet.ProximityMultiplier(80.01f));
+            Assert.AreEqual(3, bullet.ProximityMultiplier(160f));
+            Assert.AreEqual(2, bullet.ProximityMultiplier(160.01f));
+            Assert.AreEqual(2, bullet.ProximityMultiplier(320f));
+            Assert.AreEqual(1, bullet.ProximityMultiplier(320.01f));
             Object.DestroyImmediate(bullet.gameObject);
         }
 

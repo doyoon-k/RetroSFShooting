@@ -26,6 +26,7 @@ namespace RetroSF
         [NonSerialized] public bool spent;
         [NonSerialized] public Vector2 damageOrigin;
         [NonSerialized] public List<Vector2> proximityPoints = new List<Vector2>();
+        [NonSerialized] public ProximityFeedbackStyle proximityFeedback;
 
         bool ready;
 
@@ -102,8 +103,10 @@ namespace RetroSF
             spent = true;
             if (enemy != null)
             {
-                float amount = friendly ? damage * ProximityMultiplier(Vector2.Distance(Position, damageOrigin)) : damage;
-                enemy.TakeDamage(amount);
+                if (friendly)
+                    enemy.TakeProjectileDamage(damage, ProximityMultiplier(Vector2.Distance(Position, damageOrigin)), proximityFeedback, Position);
+                else
+                    enemy.TakeDamage(damage);
             }
             else
             {
@@ -112,21 +115,11 @@ namespace RetroSF
             Free();
         }
 
-        public float ProximityMultiplier(float distance)
+        public int ProximityMultiplier(float distance)
         {
-            if (proximityPoints.Count == 0) return 1f;
-            if (distance <= proximityPoints[0].x) return proximityPoints[0].y;
-            for (int index = 1; index < proximityPoints.Count; index++)
-            {
-                var previous = proximityPoints[index - 1];
-                var current = proximityPoints[index];
-                if (distance <= current.x)
-                {
-                    float progress = Mathf.Clamp01((distance - previous.x) / (current.x - previous.x));
-                    return Mathf.Lerp(previous.y, current.y, progress);
-                }
-            }
-            return 1f;
+            foreach (var point in proximityPoints)
+                if (distance <= point.x) return Mathf.Max(1, Mathf.RoundToInt(point.y));
+            return 1;
         }
     }
 }

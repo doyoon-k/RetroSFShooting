@@ -75,6 +75,14 @@
 - `ScreenCaptureTests`: 주요 장면을 `Captures/*.png`로 저장. Godot 쪽은
   Godot 버전 폴더의 `build/screenshots` (`godot --path . --script tests/run_tests.gd -- --screenshots`)
 
+## Unity에서 변경한 근접 사격
+
+거리 배율은 기존 80px/1.6~360px/1 선형 보간에서 80px/x4, 160px/x3, 320px/x2,
+그 밖 x1 정수 단계로 변경했습니다. 발사점 스냅샷과 두 무기 공유 적용은 유지합니다.
+`ProximityFeedbackStyle` 공유 에셋이 네 색상과 Stadium TMP 폰트를 소유하고,
+적별 `DamageMultiplierFeedback`은 같은 부모의 형제 오브젝트로 만들어 처치 후에도 유지됩니다.
+표시의 이동·확대·사라짐은 scaled time과 `GamePause`를 따릅니다. 폭탄과 적탄은 배율 경로를 사용하지 않습니다.
+
 ## 아직 옮기지 않은 것
 
 - 툴팁(`tooltip_text`): uGUI에 기본 기능이 없어 생략

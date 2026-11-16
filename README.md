@@ -13,6 +13,11 @@ Godot 4.7 버전(이 리포지토리의 태그 `godot-final`)을 Unity 6000.1.17
 조작은 원본과 같습니다: 이동 WASD/방향키/왼쪽 스틱, 발사 J/X, 폭탄 K/B, 무기 변경 L/Y,
 일시정지 ESC/Start, 메뉴 Enter/A, 스토리 넘기기 Space/A.
 
+직선탄·확산탄은 발사점부터 명중점까지 80px 이내 x4, 160px 이내 x3, 320px 이내 x2,
+그 밖은 x1의 정수 피해 배율을 사용합니다. 적 위에는 HUD와 같은 Stadium 폰트로 `x숫자`만
+표시하고, 연속 명중은 표시 하나를 갱신합니다. 사격 중 전방 원호로 거리 단계를 안내합니다.
+플레이어 프리팹의 `Weapon > Proximity Feedback`에서 네 배율의 색상과 표시 설정을 편집합니다.
+
 ## 문서
 
 - [이식 규칙](Docs/PORTING.md): 좌표계(y 반전), 각도, 일시정지, 충돌 레이어 대응표
@@ -37,3 +42,4 @@ Window > General > Test Runner.
 - EditMode `GodotParityTests`: 원본 GDScript 공식을 그대로 계산해 Unity 쪽 결과(좌표 반전 후)와 비교
 - PlayMode `StageSmokeTests`: 발진·스크롤·일시정지·폭탄·타이틀 진입
 - PlayMode `ScreenCaptureTests`: 주요 장면을 `Captures/*.png`로 저장 (Godot 스크린샷과 나란히 비교용)
+- PlayMode `ProximityFeedbackTests`: 실제 탄 충돌의 네 배율, 폰트·색상·연속 명중·일시정지·처치 후 표시와 렌더링

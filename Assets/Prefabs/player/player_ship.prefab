@@ -291,6 +291,9 @@ MonoBehaviour:
   straightShotSpacing: 28
   proximityTiers:
   - distance: 80
-    multiplier: 1.6
-  - distance: 360
-    multiplier: 1
+    multiplier: 4
+  - distance: 160
+    multiplier: 3
+  - distance: 320
+    multiplier: 2
+  proximityFeedback: {fileID: 11400000, guid: 5b1f9e52534a9ce40bc73aa83fb1b88c, type: 2}
