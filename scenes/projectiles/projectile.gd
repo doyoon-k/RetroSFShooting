@@ -16,7 +16,6 @@ var target: Node2D
 var spent: bool = false
 var damage_origin := Vector2.ZERO
 var proximity_points: Array[Vector2] = []
-var proximity_feedback: ProximityFeedbackStyle
 
 func _ready() -> void:
 	collision_layer = 4 if friendly else 8
@@ -41,14 +40,20 @@ func _on_area_entered(area: Area2D) -> void:
 	if area.has_method("take_damage"):
 		spent = true
 		if friendly and area is EnemyShip:
-			var multiplier := proximity_multiplier(global_position.distance_to(damage_origin))
-			area.take_projectile_damage(damage, multiplier, proximity_feedback, global_position)
+			area.take_damage(float(damage) * proximity_multiplier(global_position.distance_to(damage_origin)))
 		else:
 			area.take_damage(damage)
 		queue_free()
 
-func proximity_multiplier(distance: float) -> int:
-	for point in proximity_points:
-		if distance <= point.x:
-			return maxi(1, roundi(point.y))
-	return 1
+func proximity_multiplier(distance: float) -> float:
+	if proximity_points.is_empty():
+		return 1.0
+	if distance <= proximity_points[0].x:
+		return proximity_points[0].y
+	for index in range(1, proximity_points.size()):
+		var previous := proximity_points[index - 1]
+		var current := proximity_points[index]
+		if distance <= current.x:
+			var progress := clampf((distance - previous.x) / (current.x - previous.x), 0.0, 1.0)
+			return lerpf(previous.y, current.y, progress)
+	return 1.0

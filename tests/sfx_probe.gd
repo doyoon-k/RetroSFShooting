@@ -54,7 +54,6 @@ func _run() -> void:
 		"player_shot": "ButtKnight/LaserShoot.wav",
 		"player_shot_spread": "ButtKnight/LaserShootHard.wav",
 		"enemy_hit": "ButtKnight/EnemyHit.wav",
-		"enemy_hit_strong": "ButtKnight/EnemyHit.wav",
 		"small_enemy_destroyed": "ButtKnight/EnemyExplosion_Small.wav",
 		"medium_enemy_destroyed": "ButtKnight/EnemyExplosion_Big.wav",
 		"player_hit": "ElectImpactQuickB PE1030532.wav",

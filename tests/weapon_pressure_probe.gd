@@ -30,9 +30,6 @@ func run() -> void:
 						far.distance = 640 if args.has("--baseline-proximity") else 360
 						far.multiplier = 1
 						stage.player.weapon.proximity_tiers = [near, far]
-						# Historical comparisons retain their continuous curve.
-						var points: Array[Vector2] = [Vector2(near.distance, near.multiplier), Vector2(far.distance, far.multiplier)]
-						stage.projectiles.child_entered_tree.connect(_legacy_bullet_entered.bind(points))
 					var enemy := stage._spawn_enemy(load("res://scenes/enemies/" + enemy_name + ".tscn"), Vector2(1500, 500))
 					enemy.movement.set_physics_process(false)
 					var duration := 0.0
@@ -58,20 +55,3 @@ func run() -> void:
 	file.store_string(JSON.stringify(report, "\t"))
 	print(JSON.stringify(report))
 	quit()
-
-func _legacy_bullet_entered(node: Node, points: Array[Vector2]) -> void:
-	if node is Projectile and node.friendly:
-		node.ready.connect(_legacy_bullet_ready.bind(node, points), CONNECT_ONE_SHOT)
-
-func _legacy_bullet_ready(bullet: Projectile, points: Array[Vector2]) -> void:
-	bullet.area_entered.disconnect(bullet._on_area_entered)
-	bullet.area_entered.connect(_legacy_collision.bind(bullet, points))
-
-func _legacy_collision(area: Area2D, bullet: Projectile, points: Array[Vector2]) -> void:
-	if bullet.spent or paused or not area is EnemyShip:
-		return
-	var distance := bullet.global_position.distance_to(bullet.damage_origin)
-	var progress := clampf((distance - points[0].x) / (points[1].x - points[0].x), 0.0, 1.0)
-	bullet.spent = true
-	area.take_damage(bullet.damage * lerpf(points[0].y, points[1].y, progress))
-	bullet.queue_free()

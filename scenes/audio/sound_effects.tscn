@@ -113,13 +113,6 @@ stream = ExtResource("EnemyHit")
 volume_db = -7.0
 metadata/min_interval = 0.05
 
-[node name="enemy_hit_strong" type="AudioStreamPlayer" parent="."]
-process_mode = 1
-stream = ExtResource("EnemyHit")
-volume_db = -5.0
-pitch_scale = 0.75
-metadata/min_interval = 0.14
-
 [node name="small_enemy_destroyed" type="AudioStreamPlayer" parent="."]
 process_mode = 1
 stream = ExtResource("SmallDestroyed")

@@ -25,9 +25,6 @@ commands = [
     ('import', ['--headless', '--editor', '--import']),
     ('bgm', ['--headless', '--audio-driver', 'Dummy', '--script', 'tests/bgm_probe.gd', '--fixed-fps', '60']),
     ('sfx', ['--headless', '--audio-driver', 'Dummy', '--script', 'tests/sfx_probe.gd', '--fixed-fps', '60']),
-    ('proximity', (['--rendering-method', 'gl_compatibility'] if args.screenshots else ['--headless'])
-     + ['--audio-driver', 'Dummy', '--script', 'tests/proximity_feedback_probe.gd', '--fixed-fps', '60']
-     + (['--', '--screenshots'] if args.screenshots else [])),
     ('title', (['--rendering-method', 'gl_compatibility'] if args.screenshots else ['--headless'])
      + ['--audio-driver', 'Dummy', '--script', 'tests/title_probe.gd', '--fixed-fps', '60']
      + (['--', '--screenshots'] if args.screenshots else [])),
@@ -52,7 +49,7 @@ for name, command in commands:
         sys.exit(result.returncode or 1)
     print(f'{name}: OK')
     for line in output.splitlines():
-        if line.startswith(('BGM:', 'SFX:', 'PROXIMITY:', 'TEST RESULT:', 'PILOT SELECT:', 'TITLE:', 'TITLE EXIT:')):
+        if line.startswith(('BGM:', 'SFX:', 'TEST RESULT:', 'PILOT SELECT:', 'TITLE:', 'TITLE EXIT:')):
             print(line)
         elif name == 'ricochet' and line.startswith('{'):
             report = json.loads(line)
