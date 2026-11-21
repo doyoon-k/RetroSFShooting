@@ -155,6 +155,116 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.14
+--- !u!1 &1185288453232686470
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8022962026501670365}
+  - component: {fileID: 2561838709496858889}
+  - component: {fileID: 9092250847098986893}
+  m_Layer: 6
+  m_Name: MuzzleFlash
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &8022962026501670365
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185288453232686470}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.12, y: 0, z: 0}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2712172916370053221}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &2561838709496858889
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185288453232686470}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 70b33fc0b99d98641af2cd336edd1209, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 40
+  m_Sprite: {fileID: 21300000, guid: 026ad58a3f182014fa38f0611ac8e456, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.61, y: 0.64}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!95 &9092250847098986893
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185288453232686470}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 93a3a7ea77285423e955c613d68410f6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4956705000647932158
 GameObject:
   m_ObjectHideFlags: 0
@@ -234,10 +344,13 @@ MonoBehaviour:
   boundaryPadding: {x: 0.4, y: 0.3}
   normalSprite: {fileID: 21300000, guid: 6f2a0d93f0de3844e80b44b850138ba9, type: 3}
   normalBackSprite: {fileID: 21300000, guid: 445c41c449828a846b514cad7670a0e8, type: 3}
+  normalBackSprite2: {fileID: 21300000, guid: 31c4faf265a984d309e24f889c8553c2, type: 3}
   normalForwardSprite: {fileID: 21300000, guid: 47b59275ac6f3fa41a2a5dc6a19c7a4e, type: 3}
   damagedSprite: {fileID: 21300000, guid: 68df1cbbaed5ae942be9cfe8b0d9875c, type: 3}
   damagedBackSprite: {fileID: 21300000, guid: 25758cb90a7b16c4f80f28f3f1ed4f32, type: 3}
+  damagedBackSprite2: {fileID: 21300000, guid: c7012e4390da845519b15701d3772ac3, type: 3}
   damagedForwardSprite: {fileID: 21300000, guid: 0cb9c3f4c8badf84ab6b5cf83349e92b, type: 3}
+  backFramesPerSecond: 12
   weapon: {fileID: 8322379821719931806}
   visuals: {fileID: 7879381316897835510}
   shieldEffectPrefab: {fileID: 675709106853633796, guid: 8af836460af4b4c8092f12690815c2d2, type: 3}
@@ -271,7 +384,8 @@ Transform:
   m_LocalPosition: {x: 0.4, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8022962026501670365}
   m_Father: {fileID: 8708513728250749501}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8322379821719931806
@@ -297,3 +411,4 @@ MonoBehaviour:
   - distance: 3.2
     multiplier: 2
   proximityFeedback: {fileID: 11400000, guid: 5b1f9e52534a9ce40bc73aa83fb1b88c, type: 2}
+  muzzleFlash: {fileID: 1185288453232686470}

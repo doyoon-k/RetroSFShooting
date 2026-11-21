@@ -14,17 +14,23 @@ namespace RetroSF
         public List<ProximityDamageTier> proximityTiers = new List<ProximityDamageTier>();
         [Tooltip("Expand the shared asset to edit x1/x2/x3/x4 colors and the numeric font.")]
         public ProximityFeedbackStyle proximityFeedback;
+        [Header("Muzzle Flash")]
+        [Tooltip("Looping flash (ShotFx) shown at the muzzle while the weapon keeps firing. Starts inactive.")]
+        public GameObject muzzleFlash;
 
         [NonSerialized] public SortieState state;
         [NonSerialized] public Transform projectiles;
         [NonSerialized] public Rect bounds;
         [NonSerialized] public float cooldown;
         float guideLeft;
+        float muzzleFlashLeft;
         readonly List<TMPro.TextMeshProUGUI> guideLabels = new List<TMPro.TextMeshProUGUI>();
 
         void FixedUpdate()
         {
             guideLeft = Mathf.Max(0f, guideLeft - Time.fixedDeltaTime);
+            muzzleFlashLeft = Mathf.Max(0f, muzzleFlashLeft - Time.fixedDeltaTime);
+            ShowMuzzleFlash(muzzleFlashLeft > 0f && state != null && state.hp > 0);
             if (state == null || state.hp <= 0) return;
             cooldown = Mathf.Max(0f, cooldown - Time.fixedDeltaTime);
             if (GameInput.ConsumeSwitchWeapon()) SwitchWeapon();
@@ -53,6 +59,9 @@ namespace RetroSF
             if (level.projectilePrefab == null) return;
             cooldown = level.interval;
             guideLeft = level.interval + 0.1f;
+            // Lasts until the next shot is due, so holding fire keeps one continuous looping flash.
+            muzzleFlashLeft = level.interval + Time.fixedDeltaTime;
+            ShowMuzzleFlash(true);
             var proximityPoints = new List<Vector2>();
             foreach (var tier in proximityTiers)
                 if (tier != null) proximityPoints.Add(new Vector2(Mathf.Max(0f, tier.distance), Mathf.Max(1f, tier.multiplier)));
@@ -75,6 +84,11 @@ namespace RetroSF
                 bullet.damageOrigin = spawn;
             }
             Sfx.Play(state.activeWeapon == SortieState.WeaponType.Spread ? "player_shot_spread" : "player_shot");
+        }
+
+        void ShowMuzzleFlash(bool visible)
+        {
+            if (muzzleFlash != null && muzzleFlash.activeSelf != visible) muzzleFlash.SetActive(visible);
         }
 
         void LateUpdate()
