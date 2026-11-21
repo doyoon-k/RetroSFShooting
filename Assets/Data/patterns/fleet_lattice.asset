@@ -28,11 +28,11 @@ MonoBehaviour:
   audibleWarning: 1
   waitForClear: 0
   muzzleOffsets:
-  - {x: 0, y: 110}
-  - {x: 0, y: -110}
+  - {x: 0, y: 1.1}
+  - {x: 0, y: -1.1}
   corridorCenter: 0.5
   corridorShift: 0.18
-  corridorWidth: 180
+  corridorWidth: 1.8
   corridorRoutes: []
   curtainSwayVolley: -1
   curtainSwayAmplitude: 0

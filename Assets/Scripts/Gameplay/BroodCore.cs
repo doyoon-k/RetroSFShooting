@@ -64,7 +64,7 @@ namespace RetroSF
             if (hatched || hatchHeld || spent || IsFreed) return;
             hatched = true;
             // No on-destruction callback: a bomb/clear removes the core without children.
-            if (childPrefab != null && G.HasPoint(G.Grow(bounds, -24f), Position))
+            if (childPrefab != null && G.HasPoint(G.Grow(bounds, -0.24f), Position))
             {
                 for (int index = 0; index < childCount; index++)
                 {
@@ -101,7 +101,7 @@ namespace RetroSF
             hintAlpha = 0.5f + 0.35f * progress;
             for (int i = 0; i < hints.Count; i++)
             {
-                hints[i].transform.localPosition = G.FromAngle(hintAngles[i]) * (33f + 15f * progress);
+                hints[i].transform.localPosition = G.FromAngle(hintAngles[i]) * (0.33f + 0.15f * progress);
                 hints[i].color = new Color(1f, 1f, 1f, hintAlpha);
             }
         }

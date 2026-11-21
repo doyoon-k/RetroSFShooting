@@ -161,7 +161,7 @@ namespace RetroSF
 
         public virtual bool CanFire()
         {
-            if (G.HasArea(bounds) && !G.HasPoint(G.Grow(bounds, -32f), Position)) return false;
+            if (G.HasArea(bounds) && !G.HasPoint(G.Grow(bounds, -0.32f), Position)) return false;
             if (Ship != null && Ship.movement != null && Ship.movement.mode == EnemyMovement.Mode.StrafeExit)
             {
                 // The strafing battery commits to one firing station, then visibly retreats.
@@ -174,7 +174,7 @@ namespace RetroSF
                 if (target != null)
                 {
                     Vector2 targetPosition = target.position;
-                    return Position.x > targetPosition.x + 80f && Vector2.Distance(Position, targetPosition) >= 160f;
+                    return Position.x > targetPosition.x + 0.8f && Vector2.Distance(Position, targetPosition) >= 1.6f;
                 }
             }
             return true;
@@ -204,33 +204,33 @@ namespace RetroSF
             else if (pattern.aim == AttackPattern.Aim.TrackEachVolley) tint = new Color(1f, 0.5f, 0.75f, 0.9f);
             float aimAngle = pattern.aim == AttackPattern.Aim.TrackEachVolley ? AimAngle(pattern) : lockedAngle;
             var forward = G.FromAngle(aimAngle);
-            TelegraphDrawer.Ring(center, Mathf.Lerp(22f, 8f, progress) * s, 23, tint, 2.5f * s);
-            TelegraphDrawer.Line(center + forward * 12f * s, center + forward * 36f * s, tint, 2f * s);
+            TelegraphDrawer.Ring(center, Mathf.Lerp(0.22f, 0.08f, progress) * s, 23, tint, 0.025f * s);
+            TelegraphDrawer.Line(center + forward * 0.12f * s, center + forward * 0.36f * s, tint, 0.02f * s);
             if (pattern.shape == AttackPattern.Shape.Curtain)
             {
                 // Show the upcoming wall's actual remote emitter positions.
-                var inner = G.Grow(bounds, -16f);
+                var inner = G.Grow(bounds, -0.16f);
                 bool sways = pattern.SwayForVolley(volley) > 0f;
                 foreach (var shot in pattern.ShotsForVolley(center, bounds, lockedAngle, volley, curtainRouteIndex))
                 {
                     if (!G.HasPoint(inner, shot.position)) continue;
                     var point = shot.position;
-                    TelegraphDrawer.Circle(point, 5f * s, tint);
-                    TelegraphDrawer.Line(point, point + Vector2.left * 18f * s, tint, 2f * s);
+                    TelegraphDrawer.Circle(point, 0.05f * s, tint);
+                    TelegraphDrawer.Line(point, point + Vector2.left * 0.18f * s, tint, 0.02f * s);
                     if (!sways) continue;
                     for (int side = -1; side <= 1; side += 2)
                     {
                         // Godot side -1 is above the row (y - 22 in y-down space).
-                        var tip = shot.position + new Vector2(0f, -side * 22f);
-                        TelegraphDrawer.Line(tip + new Vector2(-6f, side * 7f), tip, tint, 1.5f * s);
-                        TelegraphDrawer.Line(tip, tip + new Vector2(6f, side * 7f), tint, 1.5f * s);
+                        var tip = shot.position + new Vector2(0f, -side * 0.22f);
+                        TelegraphDrawer.Line(tip + new Vector2(-0.06f, side * 0.07f), tip, tint, 0.015f * s);
+                        TelegraphDrawer.Line(tip, tip + new Vector2(0.06f, side * 0.07f), tint, 0.015f * s);
                     }
                 }
             }
             else
             {
                 foreach (var offset in pattern.muzzleOffsets)
-                    TelegraphDrawer.Ring(center + offset, 8f * s, 15, tint, 2f * s);
+                    TelegraphDrawer.Ring(center + offset, 0.08f * s, 15, tint, 0.02f * s);
             }
         }
 
@@ -258,7 +258,7 @@ namespace RetroSF
                 // Only a curtain's edge continuation may start above/below the arena.
                 // Its x emitter must still be visible, and CanFire gates the whole burst.
                 float sway = pattern.SwayForVolley(volley);
-                var spawnBounds = G.Grow(bounds, -16f);
+                var spawnBounds = G.Grow(bounds, -0.16f);
                 if (sway > 0f)
                     spawnBounds = new Rect(spawnBounds.x, bounds.yMin - sway, spawnBounds.width, bounds.height + sway * 2f);
                 if (!G.HasPoint(spawnBounds, shot.position)) continue;
@@ -300,10 +300,10 @@ namespace RetroSF
             Vector2 center = Position;
             var forward = RicochetCore.LaunchDirection(center, bounds, ricochetStartsAbove);
             var tint = RicochetCore.CueColor;
-            TelegraphDrawer.Ring(center, Mathf.Lerp(20f, 10f, progress) * s, 31, tint, 2f * s);
-            TelegraphDrawer.Line(center + forward * 12f * s, center + forward * 42f * s, tint, 2f * s);
+            TelegraphDrawer.Ring(center, Mathf.Lerp(0.2f, 0.1f, progress) * s, 31, tint, 0.02f * s);
+            TelegraphDrawer.Line(center + forward * 0.12f * s, center + forward * 0.42f * s, tint, 0.02f * s);
             for (int index = 0; index < 3; index++)
-                TelegraphDrawer.Circle(center + new Vector2(-24f, (index - 1) * 6f) * s, 2f * s, tint);
+                TelegraphDrawer.Circle(center + new Vector2(-0.24f, (index - 1) * 0.06f) * s, 0.02f * s, tint);
         }
     }
 }

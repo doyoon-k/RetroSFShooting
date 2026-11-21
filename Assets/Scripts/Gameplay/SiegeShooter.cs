@@ -85,7 +85,7 @@ namespace RetroSF
                     BeginCycle();
                     break;
                 case Phase.Lure:
-                    SpawnShot(openingBulletPrefab, Position, lureAngle, 450f);
+                    SpawnShot(openingBulletPrefab, Position, lureAngle, 4.5f);
                     volleysFired += 1;
                     extraVolley += 1;
                     if (extraVolley < 2)
@@ -147,7 +147,7 @@ namespace RetroSF
                     break;
                 case Phase.Cross:
                     for (int side = -1; side <= 1; side += 2)
-                        SpawnShot(crossBulletPrefab, CrossMuzzle(side), CrossAngle(side), 400f);
+                        SpawnShot(crossBulletPrefab, CrossMuzzle(side), CrossAngle(side), 4f);
                     volleysFired += 1;
                     extraVolley += 1;
                     if (extraVolley < 3)
@@ -207,7 +207,7 @@ namespace RetroSF
 
         Projectile SpawnShot(Projectile prefab, Vector2 point, float angle, float speedOverride = 0f)
         {
-            if (prefab == null || !G.HasPoint(G.Grow(bounds, -16f), point)) return null;
+            if (prefab == null || !G.HasPoint(G.Grow(bounds, -0.16f), point)) return null;
             var bullet = Instantiate(prefab, new Vector3(point.x, point.y, 0f), Quaternion.identity, projectiles);
             bullet.direction = G.FromAngle(angle);
             bullet.bounds = bounds;
@@ -278,8 +278,8 @@ namespace RetroSF
             if (cyclePhase == Phase.Lure)
             {
                 var forward = G.FromAngle(lureAngle);
-                TelegraphDrawer.Ring(Position, 12f * s, 23, tint, 2.5f * s);
-                TelegraphDrawer.Line(Position + forward * 12f * s, Position + forward * 48f * s, tint, 2f * s);
+                TelegraphDrawer.Ring(Position, 0.12f * s, 23, tint, 0.025f * s);
+                TelegraphDrawer.Line(Position + forward * 0.12f * s, Position + forward * 0.48f * s, tint, 0.02f * s);
             }
             else if (cyclePhase == Phase.Cross)
             {
@@ -287,14 +287,14 @@ namespace RetroSF
                 {
                     var point = CrossMuzzle(side);
                     var direction = G.FromAngle(CrossAngle(side));
-                    TelegraphDrawer.Ring(point, 8f * s, 15, tint, 2f * s);
-                    TelegraphDrawer.Line(point, point + direction * 240f, tint, 2f * s);
+                    TelegraphDrawer.Ring(point, 0.08f * s, 15, tint, 0.02f * s);
+                    TelegraphDrawer.Line(point, point + direction * 2.4f, tint, 0.02f * s);
                 }
             }
             else if (cyclePhase == Phase.Deploy)
             {
                 foreach (float fraction in CoreFractions)
-                    TelegraphDrawer.Ring(CorePoint(fraction), 8f * s, 15, tint, 2f * s);
+                    TelegraphDrawer.Ring(CorePoint(fraction), 0.08f * s, 15, tint, 0.02f * s);
             }
         }
     }

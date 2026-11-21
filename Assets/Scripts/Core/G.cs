@@ -11,6 +11,10 @@ namespace RetroSF
         public const float Tau = Mathf.PI * 2f;
         const float CmpEpsilon = 0.00001f;
 
+        /// <summary>Sprites import at 100 pixels per unit: one world unit is 100 pixels of the 1920×1080 design.</summary>
+        public const float PixelsPerUnit = 100f;
+        public const float UnitsPerPixel = 1f / PixelsPerUnit;
+
         public static Vector2 FromAngle(float radians) => new Vector2(Mathf.Cos(radians), Mathf.Sin(radians));
 
         public static float Angle(Vector2 v) => Mathf.Atan2(v.y, v.x);
@@ -85,9 +89,12 @@ namespace RetroSF
 
         // ---- Rects (Unity space). Godot "top" is yMax, "bottom" is yMin. ----
 
-        public static Rect FromGodotRect(float x, float y, float w, float h) => new Rect(x, -(y + h), w, h);
+        /// <summary>Godot rect in design pixels (y down) to a Unity world rect in units (y up).</summary>
+        public static Rect FromGodotRect(float x, float y, float w, float h) =>
+            new Rect(x * UnitsPerPixel, -(y + h) * UnitsPerPixel, w * UnitsPerPixel, h * UnitsPerPixel);
 
-        public static Vector2 FromGodotPoint(Vector2 godot) => new Vector2(godot.x, -godot.y);
+        /// <summary>Godot point in design pixels (y down) to a Unity world point in units (y up).</summary>
+        public static Vector2 FromGodotPoint(Vector2 godot) => new Vector2(godot.x, -godot.y) * UnitsPerPixel;
 
         public static Rect Grow(Rect r, float by) => new Rect(r.x - by, r.y - by, r.width + by * 2f, r.height + by * 2f);
 

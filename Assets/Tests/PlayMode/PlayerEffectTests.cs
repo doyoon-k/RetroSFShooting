@@ -45,13 +45,13 @@ namespace RetroSF.Tests
             Assert.IsTrue(player.state.shield);
             var effect = Effects.Single();
             Assert.IsTrue(effect.name.StartsWith(player.shieldEffectPrefab.name));
-            Assert.Greater(effect.GetComponent<SpriteRenderer>().bounds.size.x, 100f,
-                "the effect uses the game's pixel-sized world units");
+            Assert.Greater(effect.GetComponent<SpriteRenderer>().bounds.size.x, 1f,
+                "the effect is over 100 px (1 unit) wide");
 
             player.Collect(Pickup.Kind.Shield);
             Assert.AreSame(effect, Effects.Single(), "another pickup doesn't duplicate or restart the shield");
-            player.Position += new Vector2(80f, -30f);
-            Assert.Less(Vector3.Distance(player.transform.position, effect.transform.position), 0.001f,
+            player.Position += new Vector2(0.8f, -0.3f);
+            Assert.Less(Vector3.Distance(player.transform.position, effect.transform.position), 0.00001f,
                 "the shield stays centered on the moving ship");
 
             player.GrantInvincibility(999f);

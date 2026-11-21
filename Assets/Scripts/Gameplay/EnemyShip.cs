@@ -18,7 +18,7 @@ namespace RetroSF
         [Range(1, 2000)] public int maximumHp = 3;
         [Range(0, 10)] public int contactDamage = 1;
         [Range(0f, 1f)] public float hitFlashSeconds = 0.08f;
-        [Range(0f, 1000f)] public float despawnMargin = 320f;
+        [Range(0f, 10f)] public float despawnMargin = 3.2f;
         [Tooltip("Animator state played on death (the Godot AnimationPlayer animation name).")]
         public string deathAnimation = "";
         [Range(0f, 5f)] public float deathAnimationSeconds;

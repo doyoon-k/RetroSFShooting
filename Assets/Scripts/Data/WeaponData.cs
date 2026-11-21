@@ -7,8 +7,8 @@ namespace RetroSF
     [Serializable]
     public class ProximityDamageTier
     {
-        [Tooltip("Inclusive maximum distance from the firing point to the hit point, in pixels.")]
-        [Range(0f, 5000f)] public float distance = 80f;
+        [Tooltip("Inclusive maximum distance from the firing point to the hit point, in world units (100 px = 1 unit).")]
+        [Range(0f, 50f)] public float distance = 0.8f;
         [Range(1, 4)] public int multiplier = 4;
     }
 

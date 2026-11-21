@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 557544723591325}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -70, y: -0, z: 0}
+  m_LocalPosition: {x: -0.7, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -125,7 +125,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 70
+  m_Radius: 0.7
 --- !u!1 &4063456052384149689
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,7 +152,7 @@ Transform:
   m_GameObject: {fileID: 4063456052384149689}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.18, y: -3.06, z: 0}
+  m_LocalPosition: {x: -0.0918, y: -0.0306, z: 0}
   m_LocalScale: {x: 0.68, y: 0.68, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -207,7 +207,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 512, y: 512}
+  m_Size: {x: 5.12, y: 5.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -291,10 +291,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mode: 3
   direction: {x: -1, y: 0}
-  speed: 280
-  amplitude: 100
+  speed: 2.8
+  amplitude: 1
   frequency: 0.5
-  holdPosition: {x: 1160, y: -532}
+  holdPosition: {x: 11.6, y: -5.32}
   holdSeconds: 0
   stayForever: 1
   exitDirection: {x: -1, y: 0}
@@ -314,7 +314,7 @@ MonoBehaviour:
   maximumHp: 360
   contactDamage: 1
   hitFlashSeconds: 0.08
-  despawnMargin: 500
+  despawnMargin: 5
   deathAnimation: 
   deathAnimationSeconds: 0
   isBoss: 0

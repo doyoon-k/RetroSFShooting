@@ -74,10 +74,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38931a39fd89ea140b590bac41f22390, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 260
+  speed: 2.6
   lifetime: 8
   damage: 1
-  despawnMargin: 80
+  despawnMargin: 0.8
   homingRadiansPerSecond: 0.65
   homingSeconds: 1.2
 --- !u!1 &5217764663097517630
@@ -147,7 +147,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 8
+  m_Radius: 0.08
 --- !u!1 &8443852253993141923
 GameObject:
   m_ObjectHideFlags: 0
@@ -229,7 +229,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 77, y: 40}
+  m_Size: {x: 0.77, y: 0.4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

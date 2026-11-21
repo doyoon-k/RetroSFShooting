@@ -9,7 +9,7 @@ namespace RetroSF
         public WeaponData data;
         public WeaponData spreadData;
         [Header("Shot Pattern")]
-        [Range(0f, 100f)] public float straightShotSpacing = 28f;
+        [Range(0f, 1f)] public float straightShotSpacing = 0.28f;
         [Header("Proximity Damage")]
         public List<ProximityDamageTier> proximityTiers = new List<ProximityDamageTier>();
         [Tooltip("Expand the shared asset to edit x1/x2/x3/x4 colors and the numeric font.")]
@@ -99,13 +99,13 @@ namespace RetroSF
                 while (guideLabels.Count <= index)
                     guideLabels.Add(DamageMultiplierFeedback.CreateText(transform, "DistanceMultiplier", proximityFeedback.numericFont, 18));
                 var label = guideLabels[index];
-                Vector2 position = origin + new Vector2(tier.distance - 22f, 12f);
-                if (!G.HasPoint(G.Grow(bounds, -18f), position)) continue;
+                Vector2 position = origin + new Vector2(tier.distance - 0.22f, 0.12f);
+                if (!G.HasPoint(G.Grow(bounds, -0.18f), position)) continue;
                 label.gameObject.SetActive(true);
                 label.text = "x" + tier.multiplier;
                 label.color = color;
                 var parentScale = transform.lossyScale;
-                label.transform.localScale = new Vector3(1f / parentScale.x, 1f / parentScale.y, 1f);
+                label.transform.localScale = new Vector3(G.UnitsPerPixel / parentScale.x, G.UnitsPerPixel / parentScale.y, 1f);
                 label.transform.SetPosition2D(position);
             }
         }

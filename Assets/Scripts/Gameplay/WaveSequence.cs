@@ -37,7 +37,7 @@ namespace RetroSF
             var marker = BossMarker;
             if (marker == null) return;
             Gizmos.color = new Color(1f, 0.3f, 0.3f, 0.9f);
-            Gizmos.DrawWireSphere(marker.position, 80f);
+            Gizmos.DrawWireSphere(marker.position, 0.8f);
         }
     }
 }

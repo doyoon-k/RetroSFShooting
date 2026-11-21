@@ -86,23 +86,23 @@ namespace RetroSF
             indices.Add(start); indices.Add(start + 2); indices.Add(start + 3);
         }
 
-        public static void Line(Vector2 from, Vector2 to, Color color, float width = 1f)
+        public static void Line(Vector2 from, Vector2 to, Color color, float width = 0.01f)
         {
             var self = Instance;
             self.BeginFrameIfNeeded();
             Vector2 along = to - from;
-            if (along.sqrMagnitude < 0.000001f) return;
+            if (along.sqrMagnitude < 1e-10f) return;
             Vector2 side = G.Orthogonal(along.normalized) * (width * 0.5f);
             self.AddQuad(from - side, from + side, to + side, to - side, color);
         }
 
-        public static void Polyline(IList<Vector2> points, Color color, float width = 1f)
+        public static void Polyline(IList<Vector2> points, Color color, float width = 0.01f)
         {
             for (int i = 1; i < points.Count; i++) Line(points[i - 1], points[i], color, width);
         }
 
         /// <summary>Godot draw_arc. Angles are Unity space radians.</summary>
-        public static void Arc(Vector2 center, float radius, float startAngle, float endAngle, int segments, Color color, float width = 1f)
+        public static void Arc(Vector2 center, float radius, float startAngle, float endAngle, int segments, Color color, float width = 0.01f)
         {
             segments = Mathf.Max(1, segments);
             Vector2 previous = center + G.FromAngle(startAngle) * radius;
@@ -115,7 +115,7 @@ namespace RetroSF
             }
         }
 
-        public static void Ring(Vector2 center, float radius, int segments, Color color, float width = 1f) =>
+        public static void Ring(Vector2 center, float radius, int segments, Color color, float width = 0.01f) =>
             Arc(center, radius, 0f, G.Tau, segments, color, width);
 
         /// <summary>Godot draw_circle (filled).</summary>

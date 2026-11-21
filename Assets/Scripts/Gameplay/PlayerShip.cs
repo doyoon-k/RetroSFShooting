@@ -13,9 +13,9 @@ namespace RetroSF
         public event Action Hit;
         public event Action PowerUpCollected;
 
-        [Range(50f, 1200f)] public float moveSpeed = 490f;
+        [Range(0.5f, 12f)] public float moveSpeed = 4.9f;
         [Tooltip("Local-space half extents of the visible ship, excluding transparent texture margins.")]
-        public Vector2 boundaryPadding = new Vector2(40f, 30f);
+        public Vector2 boundaryPadding = new Vector2(0.4f, 0.3f);
         [Header("Ship Sprites")]
         public Sprite normalSprite;
         public Sprite normalBackSprite;

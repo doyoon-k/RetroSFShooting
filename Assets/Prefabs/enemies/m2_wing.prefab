@@ -67,7 +67,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 87
+  m_Radius: 0.87
 --- !u!1 &712370337178304263
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,7 +94,7 @@ Transform:
   m_GameObject: {fileID: 712370337178304263}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -70, y: -0, z: 0}
+  m_LocalPosition: {x: -0.7, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -196,10 +196,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mode: 4
   direction: {x: -1, y: 0}
-  speed: 300
-  amplitude: 150
+  speed: 3
+  amplitude: 1.5
   frequency: 0.1
-  holdPosition: {x: 1160, y: -532}
+  holdPosition: {x: 11.6, y: -5.32}
   holdSeconds: 4
   stayForever: 0
   exitDirection: {x: -1, y: 0}
@@ -219,7 +219,7 @@ MonoBehaviour:
   maximumHp: 495
   contactDamage: 1
   hitFlashSeconds: 0.08
-  despawnMargin: 500
+  despawnMargin: 5
   deathAnimation: 
   deathAnimationSeconds: 0
   isBoss: 0
@@ -257,7 +257,7 @@ Transform:
   m_GameObject: {fileID: 5063898370577111274}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.8, y: -13.2, z: 0}
+  m_LocalPosition: {x: -0.088, y: -0.132, z: 0}
   m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -312,7 +312,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 512, y: 512}
+  m_Size: {x: 5.12, y: 5.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

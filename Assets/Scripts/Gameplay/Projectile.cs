@@ -11,10 +11,10 @@ namespace RetroSF
     {
         public event Action<Projectile> OffspringSpawned;
 
-        [Range(10f, 2000f)] public float speed = 380f;
+        [Range(0.1f, 20f)] public float speed = 3.8f;
         [Range(0.1f, 30f)] public float lifetime = 8f;
         [Range(1, 100)] public int damage = 1;
-        [Range(0f, 500f)] public float despawnMargin = 80f;
+        [Range(0f, 5f)] public float despawnMargin = 0.8f;
         [Range(0f, 8f)] public float homingRadiansPerSecond;
         [Range(0f, 8f)] public float homingSeconds = 1.2f;
 

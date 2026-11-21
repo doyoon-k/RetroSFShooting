@@ -58,8 +58,10 @@ namespace RetroSF
         {
             float pop = Mathf.Lerp(1f, style.popScale, popLeft / 0.12f);
             var parentScale = transform.parent != null ? transform.parent.lossyScale : Vector3.one;
-            transform.localScale = new Vector3(pop / parentScale.x, pop / parentScale.y, 1f);
-            Vector2 half = Label.rectTransform.sizeDelta * pop * 0.5f + Vector2.one * 6f;
+            // The label canvas is laid out in design pixels; scale it down to world units.
+            float scale = pop * G.UnitsPerPixel;
+            transform.localScale = new Vector3(scale / parentScale.x, scale / parentScale.y, 1f);
+            Vector2 half = (Label.rectTransform.sizeDelta * pop * 0.5f + Vector2.one * 6f) * G.UnitsPerPixel;
             Vector2 location = impactPosition + style.labelOffset;
             if (bounds.width > 0f && bounds.height > 0f)
             {

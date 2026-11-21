@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mode: 1
   direction: {x: -1, y: 0}
-  speed: 190
-  amplitude: 120
+  speed: 1.9
+  amplitude: 1.2
   frequency: 0.45
-  holdPosition: {x: 1220, y: -532}
+  holdPosition: {x: 12.2, y: -5.32}
   holdSeconds: 4
   stayForever: 0
   exitDirection: {x: -1, y: 0}

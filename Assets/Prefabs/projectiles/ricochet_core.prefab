@@ -74,10 +74,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf02c6226aadc264ab07c38e8e3710df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 640
+  speed: 6.4
   lifetime: 14
   damage: 1
-  despawnMargin: 80
+  despawnMargin: 0.8
   homingRadiansPerSecond: 0
   homingSeconds: 1.2
   childPrefab: {fileID: 3816420043127644467, guid: 2b2041895a130ad49a3d57be981731bb, type: 3}
@@ -89,7 +89,7 @@ MonoBehaviour:
   middleChildCount: 9
   finalChildCount: 11
   childSpread: 70
-  childSpeed: 360
+  childSpeed: 3.6
   childLifetime: 3.8
   aimedFans: 1
   visual: {fileID: 870335053905354240}
@@ -175,7 +175,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 77, y: 40}
+  m_Size: {x: 0.77, y: 0.4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -248,4 +248,4 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 14
+  m_Radius: 0.14

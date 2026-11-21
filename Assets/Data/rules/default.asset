@@ -27,8 +27,8 @@ MonoBehaviour:
   bombClearsBullets: 1
   playfield:
     serializedVersion: 2
-    x: 440
-    y: -976
-    width: 1464
-    height: 952
-  spawnPosition: {x: 662, y: -500}
+    x: 4.4
+    y: -9.76
+    width: 14.64
+    height: 9.52
+  spawnPosition: {x: 6.62, y: -5}

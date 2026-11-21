@@ -12,17 +12,19 @@
 
 | 항목 | Godot | Unity |
 |---|---|---|
-| 단위 | 픽셀 | 1 unit = 1 px (스프라이트 PPU 1) |
+| 단위 | 픽셀 | 1 unit = 100 px (스프라이트 PPU 100, `G.PixelsPerUnit`) |
 | Y축 | 아래가 + | 위가 + |
-| 화면 | (0,0)~(1920,1080) | x 0~1920, y 0~-1080 |
-| 카메라 | Camera2D 중심 (960+진행, 540) | Orthographic size 540, 위치 (960+진행, -540) |
+| 화면 | (0,0)~(1920,1080) | x 0~19.2, y 0~-10.8 |
+| 카메라 | Camera2D 중심 (960+진행, 540) | Orthographic size 5.4, 위치 (9.6+진행, -5.4) |
 | 각도 | 시계 방향 + (화면 기준) | 반시계 방향 + |
 
-- 위치·방향 Vector2는 `(x, -y)`로 바꾼다. 크기(extent, padding)는 그대로 둔다.
+- 위치·방향 Vector2는 `(x, -y)`로 바꾼다. 크기(extent, padding)는 부호를 그대로 둔다.
+- 원본의 픽셀 값(위치, 거리, 속도, 가속도, 선 굵기)은 100으로 나눠 unit으로 쓴다 (`G.UnitsPerPixel`).
+  UI 캔버스는 그대로 1920×1080 디자인 픽셀이며, 월드↔캔버스 변환은 `G.PixelsPerUnit`을 곱한다.
 - 데이터의 각도(`angle_degrees`, `aim_offset_degrees`, `rotation_per_volley`, ShotLevel `angles`)는
   부호를 뒤집어 저장한다. 그 뒤 코드에서는 Unity 각도만 쓴다.
   `Vector2.from_angle(a)` → `G.FromAngle(a)`, `v.angle()` → `G.Angle(v)`, `v.rotated(a)` → `G.Rotated(v, a)`.
-- Godot `Rect2(x, y, w, h)` (y = 위쪽 모서리)는 `G.FromGodotRect` → `Rect(x, -(y+h), w, h)`.
+- Godot `Rect2(x, y, w, h)` (y = 위쪽 모서리, 픽셀)는 `G.FromGodotRect` → `Rect(x, -(y+h), w, h) / 100`.
   원본의 `rect.position.y`(위)는 `rect.yMax`, `rect.end.y`(아래)는 `rect.yMin`.
   "위에서부터의 비율 f"는 `rect.yMax - rect.height * f`.
 - `orthogonal()`은 `G.Orthogonal(v)` = `(-v.y, v.x)`. 화면에서 같은 방향을 가리킨다.

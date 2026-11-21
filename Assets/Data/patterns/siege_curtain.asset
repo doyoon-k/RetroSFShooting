@@ -31,7 +31,7 @@ MonoBehaviour:
   - {x: 0, y: 0}
   corridorCenter: 0.38
   corridorShift: 0.22
-  corridorWidth: 180
+  corridorWidth: 1.8
   corridorRoutes:
   - values:
     - 0.32
@@ -50,5 +50,5 @@ MonoBehaviour:
     - 0.38
     - 0.48
   curtainSwayVolley: 1
-  curtainSwayAmplitude: 72
+  curtainSwayAmplitude: 0.72
   curtainSwayPeriod: 6

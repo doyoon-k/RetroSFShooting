@@ -35,7 +35,7 @@ namespace RetroSF
             worldRect = G.Expand(worldRect, bodyTransform.TransformPoint(rect.max));
             worldRect = G.Expand(worldRect, bodyTransform.TransformPoint(new Vector2(rect.xMin, rect.yMax)));
             transform.SetPosition2D(new Vector2(worldRect.xMin + worldRect.width * frontInset, worldRect.center.y));
-            float referenceExtent = 1f;
+            float referenceExtent = G.UnitsPerPixel;
             foreach (var frame in frames)
             {
                 if (frame == null) continue;

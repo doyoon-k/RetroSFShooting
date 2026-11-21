@@ -81,7 +81,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 105, y: 67}
+  m_Size: {x: 1.05, y: 0.67}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -163,10 +163,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   kind: 0
   lifetime: 7
-  attraction: 24
-  maximumSpeed: 95
-  initialVelocity: {x: -50, y: -40}
-  boundaryPadding: 24
+  attraction: 0.24
+  maximumSpeed: 0.95
+  initialVelocity: {x: -0.5, y: -0.4}
+  boundaryPadding: 0.24
   visual: {fileID: 6549352474496896151}
 --- !u!1 &9099499573742510675
 GameObject:
@@ -235,4 +235,4 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 24
+  m_Radius: 0.24

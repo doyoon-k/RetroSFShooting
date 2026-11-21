@@ -11,8 +11,8 @@ namespace RetroSF
     public class EnemyLab : MonoBehaviour
     {
         static readonly Rect Bounds = G.FromGodotRect(48f, 100f, 1440f, 864f);
-        static readonly Vector2 SpawnPosition = new Vector2(1300f, -532f);
-        static readonly Vector2 PlayerStart = new Vector2(260f, -532f);
+        static readonly Vector2 SpawnPosition = new Vector2(13f, -5.32f);
+        static readonly Vector2 PlayerStart = new Vector2(2.6f, -5.32f);
 
         public PlayerShip playerPrefab;
         public GameRules rules;
@@ -74,7 +74,7 @@ namespace RetroSF
             if (route == null) return;
             route.points = new List<Vector2>
             {
-                Vector2.zero, new Vector2(-300f, 220f), new Vector2(-690f, -170f), new Vector2(-1390f, 0f),
+                Vector2.zero, new Vector2(-3f, 2.2f), new Vector2(-6.9f, -1.7f), new Vector2(-13.9f, 0f),
             };
         }
 

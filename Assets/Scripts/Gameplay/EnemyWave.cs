@@ -64,7 +64,7 @@ namespace RetroSF
             Gizmos.color = enemyPrefab != null ? new Color(0.74f, 0.35f, 0.95f, 0.8f) : Color.red;
             Vector2 start = StartPosition;
             for (int index = 0; index < count; index++)
-                Gizmos.DrawWireSphere(start + spawnOffset * index, 24f);
+                Gizmos.DrawWireSphere(start + spawnOffset * index, 0.24f);
         }
     }
 }

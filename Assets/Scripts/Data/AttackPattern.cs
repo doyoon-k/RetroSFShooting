@@ -48,11 +48,11 @@ namespace RetroSF
         public bool waitForClear;
 
         [Header("Fleet geometry")]
-        [Tooltip("World-pixel offsets: independent of the ship's visual scale.")]
+        [Tooltip("World-unit offsets (100 px = 1 unit): independent of the ship's visual scale.")]
         public List<Vector2> muzzleOffsets = new List<Vector2> { Vector2.zero };
         [Range(0.15f, 0.85f)] public float corridorCenter = 0.5f;
         [Range(0f, 0.3f)] public float corridorShift = 0.18f;
-        [Range(100f, 400f)] public float corridorWidth = 180f;
+        [Range(1f, 4f)] public float corridorWidth = 1.8f;
 
         [Header("Curtain routes")]
         [Tooltip("Each route stores one normalized corridor height (0 = top) per volley.")]
@@ -61,7 +61,7 @@ namespace RetroSF
         [Header("Curtain motion")]
         [Tooltip("Zero-based volley; -1 keeps every wall stationary.")]
         [Range(-1, 99)] public int curtainSwayVolley = -1;
-        [Range(0f, 120f)] public float curtainSwayAmplitude;
+        [Range(0f, 1.2f)] public float curtainSwayAmplitude;
         [Range(2f, 12f)] public float curtainSwayPeriod = 6f;
 
         public float SwayForVolley(int volley) =>
@@ -86,12 +86,12 @@ namespace RetroSF
             {
                 float gap = CorridorY(arena, volley, routeIndex);
                 float sway = SwayForVolley(volley);
-                float spacing = (arena.height - 90f) / Mathf.Max(1, bulletCount - 1);
+                float spacing = (arena.height - 0.9f) / Mathf.Max(1, bulletCount - 1);
                 // Continue moving rows past the edges, so only the authored corridor opens.
-                int guardRows = Mathf.CeilToInt(sway / Mathf.Max(spacing, 1f));
+                int guardRows = Mathf.CeilToInt(sway / Mathf.Max(spacing, 0.01f));
                 for (int index = -guardRows; index < bulletCount + guardRows; index++)
                 {
-                    float y = arena.yMax - 45f - spacing * index;
+                    float y = arena.yMax - 0.45f - spacing * index;
                     if (Mathf.Abs(y - gap) < corridorWidth * 0.5f) continue;
                     shots.Add(new Shot(new Vector2(origin.x, y), angle));
                 }

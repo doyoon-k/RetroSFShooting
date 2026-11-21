@@ -11,10 +11,10 @@ namespace RetroSF
 
         public Kind kind = Kind.Power;
         [Range(0.1f, 30f)] public float lifetime = 7f;
-        [Range(0f, 200f)] public float attraction = 24f;
-        [Range(0f, 400f)] public float maximumSpeed = 95f;
-        public Vector2 initialVelocity = new Vector2(-50f, -40f);
-        [Range(1f, 100f)] public float boundaryPadding = 24f;
+        [Range(0f, 2f)] public float attraction = 0.24f;
+        [Range(0f, 4f)] public float maximumSpeed = 0.95f;
+        public Vector2 initialVelocity = new Vector2(-0.5f, -0.4f);
+        [Range(0.01f, 1f)] public float boundaryPadding = 0.24f;
         public SpriteRenderer visual;
 
         [NonSerialized] public Rect bounds;

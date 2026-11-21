@@ -25,7 +25,7 @@ namespace RetroSF.Tests
             stage.player.enabled = false;
             stage.player.weapon.enabled = false;
             stage.player.GrantInvincibility(999f);
-            stage.player.Position = new Vector2(900f, -530f);
+            stage.player.Position = new Vector2(9f, -5.3f);
             style = Object.Instantiate(stage.player.weapon.proximityFeedback);
             stage.player.weapon.proximityFeedback = style;
         }
@@ -59,7 +59,7 @@ namespace RetroSF.Tests
         public IEnumerator FiredShotsApplyFourStepsAndRenderTheSharedNumericFont()
         {
             int firstFrame = Time.frameCount;
-            foreach (var entry in new[] { new Vector2(400, 1), new Vector2(240, 2), new Vector2(120, 3), new Vector2(60, 4) })
+            foreach (var entry in new[] { new Vector2(4f, 1), new Vector2(2.4f, 2), new Vector2(1.2f, 3), new Vector2(0.6f, 4) })
             {
                 var enemy = MakeEnemy();
                 stage.player.weapon.Fire();
@@ -108,9 +108,9 @@ namespace RetroSF.Tests
             Assert.AreSame(feedback, enemy.DamageFeedback);
             Assert.AreEqual("x4", feedback.Label.text);
             Vector3 before = feedback.transform.position;
-            enemy.Position += new Vector2(30, 20);
+            enemy.Position += new Vector2(0.3f, 0.2f);
             yield return null;
-            Assert.Less(Vector3.Distance(before + new Vector3(30, 20), feedback.transform.position), 0.01f);
+            Assert.Less(Vector3.Distance(before + new Vector3(0.3f, 0.2f), feedback.transform.position), 0.0001f);
             GamePause.Set(true);
             float left = feedback.TimeLeft;
             yield return new WaitForSecondsRealtime(0.15f);

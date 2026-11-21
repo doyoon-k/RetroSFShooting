@@ -39,7 +39,8 @@ EnemyShip (루트)            ← EnemyShip / EnemyMovement / Rigidbody2D / Anim
 
 ## 스프라이트 가져오기
 
-- 1 unit = 1 px입니다. 새 PNG는 Texture Type `Sprite`, **Pixels Per Unit 1**로 가져오세요.
+- 1 unit = 100 px입니다. 새 PNG는 Texture Type `Sprite`, **Pixels Per Unit 100**(Unity 기본값) 그대로 가져오면 됩니다.
+- 인스펙터의 위치·거리·속도 값도 unit 단위입니다. 1920×1080 화면은 19.2×10.8 unit입니다.
 - 머티리얼은 `Assets/Materials/RetroSFSprite.mat`을 쓰면 피격 플래시와 HDR 색이 동작합니다.
 - 그리는 순서: 함선 0번대, 탄 20번대, 아이템 30번대, 이펙트 40번대 (Order in Layer).
 
@@ -62,7 +63,7 @@ EnemyShip (루트)            ← EnemyShip / EnemyMovement / Rigidbody2D / Anim
 ## 근접 사격 배율과 숫자 표시
 
 `Assets/Prefabs/player/player_ship.prefab`의 `Weapon`을 선택합니다. `Proximity Tiers`는
-80px 이하 x4, 160px 이하 x3, 320px 이하 x2이며, 마지막 거리보다 멀면 x1입니다.
+0.8 unit(80px) 이하 x4, 1.6(160px) 이하 x3, 3.2(320px) 이하 x2이며, 마지막 거리보다 멀면 x1입니다.
 거리는 각 탄의 발사점부터 실제 명중점까지이고, 정수 단계 사이를 보간하지 않습니다.
 
 `Proximity Feedback`에 연결된 `Assets/Data/weapons/proximity_feedback.asset`을 펼치면

@@ -14,8 +14,11 @@ namespace RetroSF
     {
         public enum Phase { Launching, Playing, BossIntro, PlayerDying, SelectingNext, Clearing, Finished }
 
+        /// <summary>Interface canvas size in design pixels; the world view covers the same area in units.</summary>
         const float DesignHeight = 1080f;
         const float DesignWidth = 1920f;
+        const float ViewHeight = DesignHeight * G.UnitsPerPixel;
+        const float ViewWidth = DesignWidth * G.UnitsPerPixel;
 
         public event Action Completed;
 
@@ -26,8 +29,8 @@ namespace RetroSF
         public EnemyHitEffect enemyHitPrefab;
         [Range(0.1f, 10f)] public float bossIntroSeconds = 2f;
         [Range(0.1f, 10f)] public float clearIntroSeconds = 1.5f;
-        [Range(1f, 1000f)] public float scrollSpeed = 180f;
-        [Range(0f, 500f)] public float activationMargin = 80f;
+        [Range(0.01f, 10f)] public float scrollSpeed = 1.8f;
+        [Range(0f, 5f)] public float activationMargin = 0.8f;
         [Tooltip("Interface overlays (dimmer, bomb flash) in world space at the stage start.")]
         public Rect presentationBounds = G.FromGodotRect(440f, 24f, 1464f, 952f);
 
@@ -158,9 +161,10 @@ namespace RetroSF
             GamePause.Set(false);
         }
 
-        /// <summary>Interface overlays use the design canvas (origin bottom-left, y up).</summary>
-        static Rect DesignRect(Rect worldAtStart) =>
-            new Rect(worldAtStart.x, worldAtStart.y + DesignHeight, worldAtStart.width, worldAtStart.height);
+        /// <summary>Interface overlays use the design canvas in pixels (origin bottom-left, y up).</summary>
+        static Rect DesignRect(Rect worldAtStart) => new Rect(
+            worldAtStart.x * G.PixelsPerUnit, worldAtStart.y * G.PixelsPerUnit + DesignHeight,
+            worldAtStart.width * G.PixelsPerUnit, worldAtStart.height * G.PixelsPerUnit);
 
         void PlaceOverlay(Image overlay)
         {
@@ -203,7 +207,7 @@ namespace RetroSF
             viewBounds = new Rect(rules.playfield.position + new Vector2(progressX, 0f), rules.playfield.size);
             var camera = Camera.main;
             if (camera != null)
-                camera.transform.position = new Vector3(DesignWidth * 0.5f + progressX, -DesignHeight * 0.5f, camera.transform.position.z);
+                camera.transform.position = new Vector3(ViewWidth * 0.5f + progressX, -ViewHeight * 0.5f, camera.transform.position.z);
             if (playfield != null)
                 playfield.position = new Vector3(viewBounds.x, viewBounds.yMax, playfield.position.z);
             if (player != null)
@@ -243,7 +247,7 @@ namespace RetroSF
             if (phase == Phase.Launching && player != null)
             {
                 float t = Mathf.Clamp01(1f - phaseLeft / rules.launchSeconds);
-                var from = new Vector2(rules.playfield.x - 80f, rules.spawnPosition.y);
+                var from = new Vector2(rules.playfield.x - 0.8f, rules.spawnPosition.y);
                 player.Position = Vector2.Lerp(from, rules.spawnPosition, 1f - Mathf.Pow(1f - t, 3f)) + new Vector2(progressX, 0f);
             }
             if (phase == Phase.SelectingNext)
@@ -319,7 +323,7 @@ namespace RetroSF
             roster.highlightedId = run.currentPilotId;
             roster.Refresh();
             var pilot = catalog.PilotById(run.currentPilotId);
-            var spawn = new Vector3(progressX + rules.playfield.x - 80f, rules.spawnPosition.y, 0f);
+            var spawn = new Vector3(progressX + rules.playfield.x - 0.8f, rules.spawnPosition.y, 0f);
             player = Instantiate(pilot.shipPrefab, spawn, pilot.shipPrefab.transform.rotation, actors);
             player.state = run.currentSortie;
             player.rules = rules;
@@ -345,7 +349,8 @@ namespace RetroSF
             powerUpMessage.ShowAt(WorldToDesign(player.Position), DesignRect(rules.playfield));
         }
 
-        Vector2 WorldToDesign(Vector2 world) => new Vector2(world.x - progressX, world.y + DesignHeight);
+        Vector2 WorldToDesign(Vector2 world) =>
+            new Vector2((world.x - progressX) * G.PixelsPerUnit, world.y * G.PixelsPerUnit + DesignHeight);
 
         void UpdateHud()
         {
@@ -529,14 +534,14 @@ namespace RetroSF
             for (int i = 0; i < powerups; i++)
             {
                 float row = i - (powerups - 1) * 0.5f;
-                var pickup = SpawnPickup(recoveryPickup, location + new Vector2(-80f, -row * 56f));
-                if (pickup != null) pickup.velocity = new Vector2(-65f, -row * 35f);
+                var pickup = SpawnPickup(recoveryPickup, location + new Vector2(-0.8f, -row * 0.56f));
+                if (pickup != null) pickup.velocity = new Vector2(-0.65f, -row * 0.35f);
             }
             for (int i = 0; i < bombs; i++)
             {
                 float row = i - (bombs - 1) * 0.5f;
-                var pickup = SpawnPickup(recoveryBomb, location + new Vector2(80f, -row * 56f));
-                if (pickup != null) pickup.velocity = new Vector2(65f, -row * 35f);
+                var pickup = SpawnPickup(recoveryBomb, location + new Vector2(0.8f, -row * 0.56f));
+                if (pickup != null) pickup.velocity = new Vector2(0.65f, -row * 0.35f);
             }
             if (player != null) Destroy(player.gameObject);
             player = null;
@@ -610,7 +615,7 @@ namespace RetroSF
         Pickup SpawnPickup(Pickup prefab, Vector2 location)
         {
             if (prefab == null) return null;
-            var clamped = G.Clamp(location, viewBounds.min + new Vector2(25f, 25f), viewBounds.max - new Vector2(25f, 25f));
+            var clamped = G.Clamp(location, viewBounds.min + new Vector2(0.25f, 0.25f), viewBounds.max - new Vector2(0.25f, 0.25f));
             var pickup = Instantiate(prefab, new Vector3(clamped.x, clamped.y, 0f), prefab.transform.rotation, items);
             pickup.bounds = viewBounds;
             pickup.target = player;

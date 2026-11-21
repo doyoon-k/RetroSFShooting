@@ -20,9 +20,9 @@ namespace RetroSF.Tests
         public void RectConversionKeepsTopAndBottom()
         {
             var arena = UnityArena;
-            Assert.AreEqual(-24f, arena.yMax, 0.001f, "Godot top edge y=24 becomes Unity yMax=-24");
-            Assert.AreEqual(-976f, arena.yMin, 0.001f, "Godot bottom edge y=976 becomes Unity yMin=-976");
-            Assert.AreEqual(G.FromTop(arena, 0.25f), -(GodotArena.y + GodotArena.height * 0.25f), 0.001f);
+            Assert.AreEqual(-0.24f, arena.yMax, 0.00001f, "Godot top edge y=24 px becomes Unity yMax=-0.24 units");
+            Assert.AreEqual(-9.76f, arena.yMin, 0.00001f, "Godot bottom edge y=976 px becomes Unity yMin=-9.76 units");
+            Assert.AreEqual(G.FromTop(arena, 0.25f), -(GodotArena.y + GodotArena.height * 0.25f) * G.UnitsPerPixel, 0.00001f);
         }
 
         [Test]
@@ -31,11 +31,12 @@ namespace RetroSF.Tests
             var pattern = ScriptableObject.CreateInstance<AttackPattern>();
             pattern.shape = AttackPattern.Shape.Curtain;
             pattern.bulletCount = 11;
-            pattern.corridorWidth = 180f;
+            const float corridorWidthPixels = 180f;
+            pattern.corridorWidth = corridorWidthPixels * G.UnitsPerPixel;
             pattern.corridorRoutes = new List<FloatList> { new FloatList { values = new List<float> { 0.32f, 0.52f, 0.42f, 0.54f } } };
             pattern.curtainSwayVolley = 1;
-            pattern.curtainSwayAmplitude = 40f;
-            var origin = new Vector2(1800f, -500f);
+            pattern.curtainSwayAmplitude = 40f * G.UnitsPerPixel;
+            var origin = G.FromGodotPoint(new Vector2(1800f, 500f));
 
             // Godot: y = arena.position.y + 45 + spacing * index; skip |y - gap| < width / 2.
             float gap = GodotArena.y + GodotArena.height * Mathf.Clamp(pattern.corridorRoutes[0].values[volley], 0.15f, 0.85f);
@@ -46,8 +47,8 @@ namespace RetroSF.Tests
             for (int index = -guard; index < pattern.bulletCount + guard; index++)
             {
                 float y = GodotArena.y + 45f + spacing * index;
-                if (Mathf.Abs(y - gap) < pattern.corridorWidth * 0.5f) continue;
-                expected.Add(-y);
+                if (Mathf.Abs(y - gap) < corridorWidthPixels * 0.5f) continue;
+                expected.Add(-y * G.UnitsPerPixel);
             }
             var actual = pattern.ShotsForVolley(origin, UnityArena, Mathf.PI, volley, 0).Select(s => s.position.y).ToList();
             CollectionAssert.AreEqual(expected, actual, new FloatComparer());
@@ -88,7 +89,7 @@ namespace RetroSF.Tests
             float vertical = above ? godotOrigin.y - field.y : field.yMax - godotOrigin.y;
             float horizontal = Mathf.Max(1f, godotOrigin.x - field.x);
             var godot = new Vector2(-horizontal, (above ? -1f : 1f) * (vertical + field.height * 0.5f)).normalized;
-            var unity = RicochetCore.LaunchDirection(Flip(godotOrigin), UnityArena, above);
+            var unity = RicochetCore.LaunchDirection(G.FromGodotPoint(godotOrigin), UnityArena, above);
             Assert.AreEqual(Flip(godot).x, unity.x, 0.0001f);
             Assert.AreEqual(Flip(godot).y, unity.y, 0.0001f);
         }
@@ -104,14 +105,14 @@ namespace RetroSF.Tests
         public void ProximityDamageSteps()
         {
             var bullet = new GameObject("Bullet").AddComponent<Projectile>();
-            bullet.proximityPoints = new List<Vector2> { new Vector2(80f, 4f), new Vector2(160f, 3f), new Vector2(320f, 2f) };
-            Assert.AreEqual(4, bullet.ProximityMultiplier(40f));
-            Assert.AreEqual(4, bullet.ProximityMultiplier(80f));
-            Assert.AreEqual(3, bullet.ProximityMultiplier(80.01f));
-            Assert.AreEqual(3, bullet.ProximityMultiplier(160f));
-            Assert.AreEqual(2, bullet.ProximityMultiplier(160.01f));
-            Assert.AreEqual(2, bullet.ProximityMultiplier(320f));
-            Assert.AreEqual(1, bullet.ProximityMultiplier(320.01f));
+            bullet.proximityPoints = new List<Vector2> { new Vector2(0.8f, 4f), new Vector2(1.6f, 3f), new Vector2(3.2f, 2f) };
+            Assert.AreEqual(4, bullet.ProximityMultiplier(0.4f));
+            Assert.AreEqual(4, bullet.ProximityMultiplier(0.8f));
+            Assert.AreEqual(3, bullet.ProximityMultiplier(0.8001f));
+            Assert.AreEqual(3, bullet.ProximityMultiplier(1.6f));
+            Assert.AreEqual(2, bullet.ProximityMultiplier(1.6001f));
+            Assert.AreEqual(2, bullet.ProximityMultiplier(3.2f));
+            Assert.AreEqual(1, bullet.ProximityMultiplier(3.2001f));
             Object.DestroyImmediate(bullet.gameObject);
         }
 
@@ -143,7 +144,7 @@ namespace RetroSF.Tests
 
         class FloatComparer : System.Collections.IComparer
         {
-            public int Compare(object a, object b) => Mathf.Abs((float)a - (float)b) < 0.001f ? 0 : 1;
+            public int Compare(object a, object b) => Mathf.Abs((float)a - (float)b) < 0.0001f ? 0 : 1;
         }
     }
 }

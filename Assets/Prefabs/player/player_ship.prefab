@@ -81,7 +81,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 128, y: 128}
+  m_Size: {x: 1.28, y: 1.28}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -154,7 +154,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 14
+  m_Radius: 0.14
 --- !u!1 &4956705000647932158
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,8 +230,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b4279378e7038c4c91d7f37c021e09f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 490
-  boundaryPadding: {x: 40, y: 30}
+  moveSpeed: 4.9
+  boundaryPadding: {x: 0.4, y: 0.3}
   normalSprite: {fileID: 21300000, guid: 6f2a0d93f0de3844e80b44b850138ba9, type: 3}
   normalBackSprite: {fileID: 21300000, guid: 445c41c449828a846b514cad7670a0e8, type: 3}
   normalForwardSprite: {fileID: 21300000, guid: 47b59275ac6f3fa41a2a5dc6a19c7a4e, type: 3}
@@ -268,7 +268,7 @@ Transform:
   m_GameObject: {fileID: 8496871316449228939}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 40, y: -0, z: 0}
+  m_LocalPosition: {x: 0.4, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -288,12 +288,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 25cb335322adf0e44ba7c4f2ac7679b2, type: 2}
   spreadData: {fileID: 11400000, guid: d60bbf2f5dc61474687bfb4af5502354, type: 2}
-  straightShotSpacing: 28
+  straightShotSpacing: 0.28
   proximityTiers:
-  - distance: 80
+  - distance: 0.8
     multiplier: 4
-  - distance: 160
+  - distance: 1.6
     multiplier: 3
-  - distance: 320
+  - distance: 3.2
     multiplier: 2
   proximityFeedback: {fileID: 11400000, guid: 5b1f9e52534a9ce40bc73aa83fb1b88c, type: 2}

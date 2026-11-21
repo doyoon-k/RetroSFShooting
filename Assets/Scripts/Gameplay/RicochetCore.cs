@@ -15,7 +15,7 @@ namespace RetroSF
 
         public event Action<int, Vector2> Banked;
 
-        public const float EdgeInset = 64f;
+        public const float EdgeInset = 0.64f;
         public const int MaxBanks = 3;
         public static readonly Color CueColor = new Color(1f, 0.85f, 0.35f, 0.95f);
 
@@ -28,7 +28,7 @@ namespace RetroSF
         [Range(1, 15)] public int middleChildCount = 9;
         [Range(1, 15)] public int finalChildCount = 11;
         [Range(20f, 90f)] public float childSpread = 70f;
-        [Range(50f, 600f)] public float childSpeed = 360f;
+        [Range(0.5f, 6f)] public float childSpeed = 3.6f;
         [Range(0.5f, 5f)] public float childLifetime = 3.8f;
         public bool aimedFans = true;
         public SpriteRenderer visual;
@@ -50,7 +50,7 @@ namespace RetroSF
             var field = ReflectionBounds(arena);
             // Unfold the first two banks to put the left-wall contact at mid-height.
             float vertical = above ? field.yMax - origin.y : origin.y - field.yMin;
-            float horizontal = Mathf.Max(1f, origin.x - field.xMin);
+            float horizontal = Mathf.Max(0.01f, origin.x - field.xMin);
             return new Vector2(-horizontal, (above ? 1f : -1f) * (vertical + field.height * 0.5f)).normalized;
         }
 
@@ -144,7 +144,7 @@ namespace RetroSF
                 else
                 {
                     var bank = NextBank();
-                    float travel = bank.distance / Mathf.Max(speed, 1f);
+                    float travel = bank.distance / Mathf.Max(speed, 0.01f);
                     if (travel <= bankWarningSeconds) LockFan(bank, bankCount + 1);
                     if (travel > remaining)
                     {
@@ -179,7 +179,7 @@ namespace RetroSF
             if (bankWait <= 0f)
             {
                 var upcoming = NextBank();
-                if (upcoming.distance / Mathf.Max(speed, 1f) <= bankWarningSeconds)
+                if (upcoming.distance / Mathf.Max(speed, 0.01f) <= bankWarningSeconds)
                     LockFan(upcoming, bankCount + 1);
             }
         }
@@ -194,7 +194,7 @@ namespace RetroSF
             {
                 float offset = count > 1 ? childSpread * Mathf.Deg2Rad * ((float)index / Mathf.Max(1, count - 1) - 0.5f) : 0f;
                 var childDirection = G.Rotated(center, offset);
-                Vector2 spawn = Position + childDirection * 18f;
+                Vector2 spawn = Position + childDirection * 0.18f;
                 var child = Instantiate(childPrefab, new Vector3(spawn.x, spawn.y, 0f), Quaternion.identity, transform.parent);
                 child.direction = childDirection;
                 child.bounds = bounds;
@@ -213,13 +213,13 @@ namespace RetroSF
             float rotation = G.Angle(direction);
             if (bankCount < MaxBanks)
             {
-                float radius = 18f * (1f - 0.14f * bankCount);
-                TelegraphDrawer.Ring(position, radius * worldScale, 32, CueColor, 1.3f * worldScale);
+                float radius = 0.18f * (1f - 0.14f * bankCount);
+                TelegraphDrawer.Ring(position, radius * worldScale, 32, CueColor, 0.013f * worldScale);
                 int remainingBanks = MaxBanks - bankCount;
                 for (int index = 0; index < remainingBanks; index++)
                 {
-                    var local = new Vector2(-radius - 5f, (index - (remainingBanks - 1) * 0.5f) * 5f);
-                    TelegraphDrawer.Circle(position + G.Rotated(local, rotation) * worldScale, 1.5f * worldScale, CueColor);
+                    var local = new Vector2(-radius - 0.05f, (index - (remainingBanks - 1) * 0.5f) * 0.05f);
+                    TelegraphDrawer.Circle(position + G.Rotated(local, rotation) * worldScale, 0.015f * worldScale, CueColor);
                 }
             }
             Vector2 point = position;
@@ -230,7 +230,7 @@ namespace RetroSF
             if (bankWait <= 0f)
             {
                 var bank = NextBank();
-                untilBank = bank.distance / Mathf.Max(speed, 1f);
+                untilBank = bank.distance / Mathf.Max(speed, 0.01f);
                 if (untilBank > bankWarningSeconds) return;
                 point = bank.position;
                 outgoing = G.Bounce(direction, bank.normal);
@@ -241,12 +241,12 @@ namespace RetroSF
             outgoing = fanBank == nextCount ? fanCenter : FanDirection(outgoing, normal, childSpread);
             float alpha = 1f - 0.5f * Mathf.Clamp01(untilBank / bankWarningSeconds);
             var tint = new Color(CueColor.r, CueColor.g, CueColor.b, alpha);
-            TelegraphDrawer.Ring(point, 32f, 23, tint, 2f);
+            TelegraphDrawer.Ring(point, 0.32f, 23, tint, 0.02f);
             for (int index = 0; index < count; index++)
             {
                 float offset = count > 1 ? childSpread * Mathf.Deg2Rad * ((float)index / Mathf.Max(1, count - 1) - 0.5f) : 0f;
                 var ray = G.Rotated(outgoing, offset);
-                TelegraphDrawer.Line(point + ray * 24f, point + ray * 105f, tint, 2f);
+                TelegraphDrawer.Line(point + ray * 0.24f, point + ray * 1.05f, tint, 0.02f);
             }
         }
     }

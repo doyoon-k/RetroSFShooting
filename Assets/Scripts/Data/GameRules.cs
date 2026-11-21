@@ -25,6 +25,6 @@ namespace RetroSF
         public bool bombClearsBullets = true;
         [Header("Playfield (Unity space)")]
         public Rect playfield = G.FromGodotRect(440f, 24f, 1464f, 952f);
-        public Vector2 spawnPosition = new Vector2(662f, -500f);
+        public Vector2 spawnPosition = new Vector2(6.62f, -5f);
     }
 }

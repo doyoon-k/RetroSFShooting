@@ -40,7 +40,7 @@ namespace RetroSF.Tests
             Assert.Greater(stage.player.invincibility, 0f, "spawn invincibility starts after the launch");
             float progress = stage.progressX;
             yield return new WaitForSeconds(2f);
-            Assert.Greater(stage.progressX, progress + 300f, "the arena scrolls at about 180 px/s");
+            Assert.Greater(stage.progressX, progress + 3f, "the arena scrolls at about 1.8 units/s (180 px/s)");
             Assert.Greater(stage.actors.GetComponentsInChildren<EnemyShip>().Length, 0, "waves spawn enemies");
         }
 
