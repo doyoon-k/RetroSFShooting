@@ -47,10 +47,13 @@
 | 4 PlayerBullet | 8 PlayerBullet |
 | 8 EnemyBullet | 9 EnemyBullet |
 | 16 Item | 10 Item |
+| (Unity 전용) | 11 PlayerPickup |
 
 - Area2D → Kinematic Rigidbody2D + trigger Collider2D. 감지 처리는 Godot에서 monitoring 하던 쪽만 한다
   (탄 → 대상, 플레이어 → 적 접촉, 아이템 → 플레이어).
-- 레이어 충돌 행렬: Player–Enemy, Player–EnemyBullet, Player–Item, Enemy–PlayerBullet만 켠다.
+- 레이어 충돌 행렬: Player–Enemy, Player–EnemyBullet, PlayerPickup–Item, Enemy–PlayerBullet만 켠다.
+- 플레이어는 피격 원(`CollisionShape2D`, Player 레이어)과 아이템 획득 원(`PickupShape`, PlayerPickup
+  레이어)이 따로 있다. 피격 원을 줄여도 아이템 획득 범위는 그대로 유지된다.
 
 ## 노드 → 컴포넌트
 

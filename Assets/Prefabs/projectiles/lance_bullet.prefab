@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: lance_bullet
       objectReference: {fileID: 0}
+    - target: {fileID: 2209845317513486718, guid: 2b2041895a130ad49a3d57be981731bb, type: 3}
+      propertyPath: m_Radius
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 2999413012866217536, guid: 2b2041895a130ad49a3d57be981731bb, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.50980395

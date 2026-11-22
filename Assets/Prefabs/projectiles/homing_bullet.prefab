@@ -147,7 +147,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.08
+  m_Radius: 0.035
 --- !u!1 &8443852253993141923
 GameObject:
   m_ObjectHideFlags: 0

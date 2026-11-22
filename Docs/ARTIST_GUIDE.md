@@ -13,6 +13,8 @@ EnemyShip (루트)            ← EnemyShip / EnemyMovement / Rigidbody2D / Anim
 ```
 
 - 플레이어: `Assets/Prefabs/player/player_ship.prefab` (P1~P6은 이 프리팹의 Variant)
+  - `CollisionShape2D`는 피격 판정(기체 중앙 몸통만), `PickupShape`는 아이템 획득 범위입니다.
+  - 탄의 판정은 빛번짐을 빼고 밝은 코어 크기에 맞춥니다.
 - 적: `Assets/Prefabs/enemies/*.prefab`
 - 탄: `Assets/Prefabs/projectiles/*.prefab`
 - 아이템: `Assets/Prefabs/items/*.prefab`
