@@ -10,6 +10,8 @@ namespace RetroSF
         public WeaponData spreadData;
         [Header("Shot Pattern")]
         [Range(0f, 1f)] public float straightShotSpacing = 0.28f;
+        [Tooltip("How far along its flight direction a shot first appears, in this transform's local units. Visual only: damage distance and guides still measure from the weapon.")]
+        [Range(0f, 1f)] public float spawnForward = 0.27f;
         [Header("Proximity Damage")]
         public List<ProximityDamageTier> proximityTiers = new List<ProximityDamageTier>();
         [Tooltip("Expand the shared asset to edit x1/x2/x3/x4 colors and the numeric font.")]
@@ -73,15 +75,17 @@ namespace RetroSF
                 Vector2 offset = Vector2.zero;
                 if (state.activeWeapon == SortieState.WeaponType.Straight)
                     offset.y = -((index - (count - 1) * 0.5f) * straightShotSpacing);
-                Vector3 spawn = transform.TransformPoint(offset);
+                Vector2 direction = G.Rotated(Vector2.right, angle * Mathf.Deg2Rad);
+                Vector3 origin = transform.TransformPoint(offset);
+                Vector3 spawn = transform.TransformPoint(offset + direction * spawnForward);
                 var bullet = Instantiate(level.projectilePrefab, new Vector3(spawn.x, spawn.y, 0f), Quaternion.identity, projectiles);
                 bullet.friendly = true;
                 bullet.damage = level.damage;
-                bullet.direction = G.Rotated(Vector2.right, angle * Mathf.Deg2Rad);
+                bullet.direction = direction;
                 bullet.bounds = bounds;
                 bullet.proximityPoints = new List<Vector2>(proximityPoints);
                 bullet.proximityFeedback = proximityFeedback;
-                bullet.damageOrigin = spawn;
+                bullet.damageOrigin = origin;
             }
             Sfx.Play(state.activeWeapon == SortieState.WeaponType.Spread ? "player_shot_spread" : "player_shot");
         }
