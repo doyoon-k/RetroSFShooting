@@ -18,9 +18,6 @@ namespace RetroSF
         [Range(0.15f, 2f)] public float duration = 0.35f;
         [Range(1f, 1.5f)] public float popScale = 1.18f;
         public Vector2 labelOffset = new Vector2(0f, 0.34f);
-        [Header("Distance Guides")]
-        public bool showGuides = true;
-        [Range(0f, 1f)] public float guideOpacity = 0.22f;
 
         public Color ColorFor(int multiplier)
         {

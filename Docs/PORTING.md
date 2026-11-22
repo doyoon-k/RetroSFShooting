@@ -96,7 +96,7 @@
 
 ## Unity에서 변경한 근접 사격
 
-거리 배율은 기존 80px/1.6~360px/1 선형 보간에서 80px/x4, 160px/x3, 320px/x2,
+거리 배율은 기존 80px/1.6~360px/1 선형 보간에서 160px/x4, 320px/x3, 640px/x2,
 그 밖 x1 정수 단계로 변경했습니다. 발사점 스냅샷과 두 무기 공유 적용은 유지합니다.
 `ProximityFeedbackStyle` 공유 에셋이 네 색상과 Stadium TMP 폰트를 소유하고,
 적별 `DamageMultiplierFeedback`은 같은 부모의 형제 오브젝트로 만들어 처치 후에도 유지됩니다.

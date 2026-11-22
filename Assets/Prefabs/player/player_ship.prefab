@@ -402,11 +402,11 @@ MonoBehaviour:
   straightShotSpacing: 0.28
   spawnForward: 0.27
   proximityTiers:
-  - distance: 0.8
-    multiplier: 4
   - distance: 1.6
-    multiplier: 3
+    multiplier: 4
   - distance: 3.2
+    multiplier: 3
+  - distance: 6.4
     multiplier: 2
   proximityFeedback: {fileID: 11400000, guid: 5b1f9e52534a9ce40bc73aa83fb1b88c, type: 2}
   muzzleFlash: {fileID: 1185288453232686470}

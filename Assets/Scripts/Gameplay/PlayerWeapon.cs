@@ -10,7 +10,7 @@ namespace RetroSF
         public WeaponData spreadData;
         [Header("Shot Pattern")]
         [Range(0f, 1f)] public float straightShotSpacing = 0.28f;
-        [Tooltip("How far along its flight direction a shot first appears, in this transform's local units. Visual only: damage distance and guides still measure from the weapon.")]
+        [Tooltip("How far along its flight direction a shot first appears, in this transform's local units. Visual only: damage distance still measures from the weapon.")]
         [Range(0f, 1f)] public float spawnForward = 0.27f;
         [Header("Proximity Damage")]
         public List<ProximityDamageTier> proximityTiers = new List<ProximityDamageTier>();
@@ -24,13 +24,10 @@ namespace RetroSF
         [NonSerialized] public Transform projectiles;
         [NonSerialized] public Rect bounds;
         [NonSerialized] public float cooldown;
-        float guideLeft;
         float muzzleFlashLeft;
-        readonly List<TMPro.TextMeshProUGUI> guideLabels = new List<TMPro.TextMeshProUGUI>();
 
         void FixedUpdate()
         {
-            guideLeft = Mathf.Max(0f, guideLeft - Time.fixedDeltaTime);
             muzzleFlashLeft = Mathf.Max(0f, muzzleFlashLeft - Time.fixedDeltaTime);
             ShowMuzzleFlash(muzzleFlashLeft > 0f && state != null && state.hp > 0);
             if (state == null || state.hp <= 0) return;
@@ -60,7 +57,6 @@ namespace RetroSF
             var level = weapon.levels[Mathf.Clamp(state.CurrentPowerLevel() - 1, 0, weapon.levels.Count - 1)];
             if (level.projectilePrefab == null) return;
             cooldown = level.interval;
-            guideLeft = level.interval + 0.1f;
             // Lasts until the next shot is due, so holding fire keeps one continuous looping flash.
             muzzleFlashLeft = level.interval + Time.fixedDeltaTime;
             ShowMuzzleFlash(true);
@@ -93,39 +89,6 @@ namespace RetroSF
         void ShowMuzzleFlash(bool visible)
         {
             if (muzzleFlash != null && muzzleFlash.activeSelf != visible) muzzleFlash.SetActive(visible);
-        }
-
-        void LateUpdate()
-        {
-            bool visible = guideLeft > 0f && state != null && state.hp > 0 && proximityFeedback != null && proximityFeedback.showGuides;
-            foreach (var guide in guideLabels) guide.gameObject.SetActive(false);
-            if (!visible) return;
-            Vector2 origin = transform.position;
-            for (int index = 0; index < proximityTiers.Count; index++)
-            {
-                var tier = proximityTiers[index];
-                if (tier == null || tier.multiplier <= 1 || tier.distance <= 0f) continue;
-                Color color = proximityFeedback.ColorFor(tier.multiplier);
-                color.a *= proximityFeedback.guideOpacity;
-                Vector2 previous = origin + Vector2.down * tier.distance;
-                for (int step = 1; step <= 48; step++)
-                {
-                    Vector2 point = origin + G.FromAngle(Mathf.Lerp(-Mathf.PI * 0.5f, Mathf.PI * 0.5f, step / 48f)) * tier.distance;
-                    if (G.HasPoint(bounds, previous) && G.HasPoint(bounds, point)) TelegraphDrawer.Line(previous, point, color);
-                    previous = point;
-                }
-                while (guideLabels.Count <= index)
-                    guideLabels.Add(DamageMultiplierFeedback.CreateText(transform, "DistanceMultiplier", proximityFeedback.numericFont, 18));
-                var label = guideLabels[index];
-                Vector2 position = origin + new Vector2(tier.distance - 0.22f, 0.12f);
-                if (!G.HasPoint(G.Grow(bounds, -0.18f), position)) continue;
-                label.gameObject.SetActive(true);
-                label.text = "x" + tier.multiplier;
-                label.color = color;
-                var parentScale = transform.lossyScale;
-                label.transform.localScale = new Vector3(G.UnitsPerPixel / parentScale.x, G.UnitsPerPixel / parentScale.y, 1f);
-                label.transform.SetPosition2D(position);
-            }
         }
     }
 }
