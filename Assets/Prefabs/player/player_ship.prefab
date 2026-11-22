@@ -344,13 +344,10 @@ MonoBehaviour:
   boundaryPadding: {x: 0.4, y: 0.3}
   normalSprite: {fileID: 21300000, guid: 6f2a0d93f0de3844e80b44b850138ba9, type: 3}
   normalBackSprite: {fileID: 21300000, guid: 445c41c449828a846b514cad7670a0e8, type: 3}
-  normalBackSprite2: {fileID: 21300000, guid: 31c4faf265a984d309e24f889c8553c2, type: 3}
   normalForwardSprite: {fileID: 21300000, guid: 47b59275ac6f3fa41a2a5dc6a19c7a4e, type: 3}
   damagedSprite: {fileID: 21300000, guid: 68df1cbbaed5ae942be9cfe8b0d9875c, type: 3}
   damagedBackSprite: {fileID: 21300000, guid: 25758cb90a7b16c4f80f28f3f1ed4f32, type: 3}
-  damagedBackSprite2: {fileID: 21300000, guid: c7012e4390da845519b15701d3772ac3, type: 3}
   damagedForwardSprite: {fileID: 21300000, guid: 0cb9c3f4c8badf84ab6b5cf83349e92b, type: 3}
-  backFramesPerSecond: 12
   weapon: {fileID: 8322379821719931806}
   visuals: {fileID: 7879381316897835510}
   shieldEffectPrefab: {fileID: 675709106853633796, guid: 8af836460af4b4c8092f12690815c2d2, type: 3}

@@ -19,15 +19,10 @@ namespace RetroSF
         [Header("Ship Sprites")]
         public Sprite normalSprite;
         public Sprite normalBackSprite;
-        [Tooltip("Optional second back frame: moving back alternates between the two back frames.")]
-        public Sprite normalBackSprite2;
         public Sprite normalForwardSprite;
         public Sprite damagedSprite;
         public Sprite damagedBackSprite;
-        [Tooltip("Optional second back frame: moving back alternates between the two back frames.")]
-        public Sprite damagedBackSprite2;
         public Sprite damagedForwardSprite;
-        [Range(1f, 30f)] public float backFramesPerSecond = 12f;
         [Header("Parts")]
         public PlayerWeapon weapon;
         public SpriteRenderer visuals;
@@ -36,7 +31,6 @@ namespace RetroSF
         public OneShotEffect powerDownEffect;
 
         GameObject activeShieldEffect;
-        float backAnimationTime;
 
         [NonSerialized] public float autoAdvanceSpeed;
         [NonSerialized] public SortieState state;
@@ -63,8 +57,6 @@ namespace RetroSF
             invincibility = Mathf.Max(0f, invincibility - delta);
             Vector2 motion = GameInput.Move;
             horizontalInput = motion.x;
-            // Each back move restarts on the first back frame; combat pause stops the loop with FixedUpdate.
-            backAnimationTime = horizontalInput < 0f ? backAnimationTime + delta : 0f;
             Position += (new Vector2(autoAdvanceSpeed, 0f) + motion * moveSpeed) * delta;
             var scale = transform.localScale;
             var padding = new Vector2(boundaryPadding.x * Mathf.Abs(scale.x), boundaryPadding.y * Mathf.Abs(scale.y));
@@ -168,16 +160,10 @@ namespace RetroSF
             if (visuals == null) return;
             Sprite next;
             if (horizontalInput > 0f) next = hasTakenHit ? damagedForwardSprite : normalForwardSprite;
-            else if (horizontalInput < 0f)
-                next = hasTakenHit ? BackFrame(damagedBackSprite, damagedBackSprite2) : BackFrame(normalBackSprite, normalBackSprite2);
+            // Moving back holds the single back pose; it does not animate.
+            else if (horizontalInput < 0f) next = hasTakenHit ? damagedBackSprite : normalBackSprite;
             else next = hasTakenHit ? damagedSprite : normalSprite;
             if (visuals.sprite != next) visuals.sprite = next;
-        }
-
-        Sprite BackFrame(Sprite first, Sprite second)
-        {
-            if (second == null) return first;
-            return Mathf.FloorToInt(backAnimationTime * backFramesPerSecond) % 2 == 0 ? first : second;
         }
     }
 }
