@@ -66,6 +66,33 @@ namespace RetroSF.Tests
             Assert.Greater(anchored, 0, "the burst effects are anchored to their art");
         }
 
+        [Test]
+        public void HitBurstIsTheSameSizeOnEveryEnemy()
+        {
+            var hitPrefab = AssetDatabase.LoadAssetAtPath<EnemyHitEffect>("Assets/Prefabs/gameplay/enemy_hit.prefab");
+            var scene = UnityEditor.SceneManagement.EditorSceneManager.NewPreviewScene();
+            try
+            {
+                int enemies = 0;
+                foreach (var guid in AssetDatabase.FindAssets("t:Prefab", new[] { "Assets/Prefabs/enemies" }))
+                {
+                    var prefab = AssetDatabase.LoadAssetAtPath<EnemyShip>(AssetDatabase.GUIDToAssetPath(guid));
+                    if (prefab == null) continue;
+                    var enemy = (EnemyShip)PrefabUtility.InstantiatePrefab(prefab, scene);
+                    var burst = (EnemyHitEffect)PrefabUtility.InstantiatePrefab(hitPrefab, scene);
+                    burst.FitToEnemy(enemy);
+                    Assert.AreEqual(hitPrefab.scale, burst.transform.lossyScale.x, 0.001f, prefab.name + " gets the zako-sized burst");
+                    Assert.AreEqual(hitPrefab.scale, burst.transform.lossyScale.y, 0.001f, prefab.name + " gets the zako-sized burst");
+                    enemies++;
+                }
+                Assert.Greater(enemies, 0);
+            }
+            finally
+            {
+                UnityEditor.SceneManagement.EditorSceneManager.ClosePreviewScene(scene);
+            }
+        }
+
         static float ClipSeconds(OneShotEffect effect)
         {
             var controller = (AnimatorController)effect.GetComponent<Animator>().runtimeAnimatorController;

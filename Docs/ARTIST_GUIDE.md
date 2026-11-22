@@ -7,7 +7,7 @@ RattleBloom과 같은 방식으로 작업합니다. 게임 로직이 붙은 오�
 
 ```text
 EnemyShip (루트)            ← EnemyShip / EnemyMovement / Rigidbody2D / Animator
-  - Visual                  ← SpriteRenderer (몸체 그림). 피격 플래시와 피 튀는 효과 크기의 기준
+  - Visual                  ← SpriteRenderer (몸체 그림). 피격 플래시와 피 튀는 효과 위치의 기준
   - CollisionShape2D        ← 판정. 그림과 별개로 크기 조절
   - Shooter                 ← 발사 위치. 예고선도 여기서 그려짐
 ```
@@ -29,6 +29,9 @@ EnemyShip (루트)            ← EnemyShip / EnemyMovement / Rigidbody2D / Anim
 - 대기(Idle) 애니메이션을 추가하려면 컨트롤러의 `Idle` 상태에 클립을 넣으면 됩니다.
 - 폭발·피격 이펙트는 기본 상태가 한 번 재생되고 끝나면 자동으로 삭제됩니다(`OneShotEffect`).
   클립의 Loop Time은 꺼 두세요. 켜진 채로 두면 `EffectTests`가 실패해 알려 줍니다.
+- 적 피격 효과(`enemy_hit.prefab`, 피 튀는 효과)는 적의 크기와 상관없이 모든 적에게 같은 크기로 나옵니다.
+  크기는 `Enemy Hit Effect > Scale`(기본 1.08, 기본 자코 z1_wedge에 그려지던 크기)로 조절합니다.
+  위치는 맞은 적 몸체의 앞쪽이고, 근접 사격 배율이 높을수록 조금 커집니다(x4에서 1.3배).
 - 적이 격추되면 `Assets/Prefabs/Fx/EnemyDieFx_0001.prefab`이 그 적의 몸체(그림의 불투명한 부분) 가운데에서
   한 번 재생됩니다. 적 크기와 상관없이 프리팹 크기 그대로 나오므로, 크기는 프리팹 루트의 Scale로 조절하세요.
   다른 연출로 바꾸려면 `stage_01.prefab`의 `StageController > Enemy Death Prefab`에 넣으면 됩니다.

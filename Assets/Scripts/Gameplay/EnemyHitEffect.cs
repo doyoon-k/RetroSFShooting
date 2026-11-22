@@ -3,14 +3,17 @@ using UnityEngine;
 
 namespace RetroSF
 {
-    /// <summary>Blood burst sized to the enemy it hit. The animated renderer is the child "Visual".</summary>
+    /// <summary>
+    /// Blood burst at the front of the enemy it hit, the same size on every enemy.
+    /// The animated renderer is the child "Visual".
+    /// </summary>
     public class EnemyHitEffect : OneShotEffect
     {
-        [Range(0.1f, 3f)] public float sizeRatio = 1f;
-        [Range(0.1f, 1f)] public float sizeGrowth = 0.5f;
-        [Range(0.5f, 5f)] public float maxScale = 2.25f;
+        [Tooltip("World scale of the burst on every enemy. 1.08 is the size the Godot game drew on the basic zako (z1_wedge).")]
+        [Range(0.1f, 3f)] public float scale = 1.08f;
+        [Tooltip("How far into the body, as a share of its width from its front edge, the burst sits.")]
         [Range(0f, 0.5f)] public float frontInset = 0.12f;
-        [Tooltip("Every frame of the hit animation, first frame first. Used for anchoring and size.")]
+        [Tooltip("Every frame of the hit animation, first frame first. The first one anchors the burst on the impact point.")]
         public List<Sprite> frames = new List<Sprite>();
         public SpriteRenderer visual;
 
@@ -35,17 +38,7 @@ namespace RetroSF
             worldRect = G.Expand(worldRect, bodyTransform.TransformPoint(rect.max));
             worldRect = G.Expand(worldRect, bodyTransform.TransformPoint(new Vector2(rect.xMin, rect.yMax)));
             transform.SetPosition2D(new Vector2(worldRect.xMin + worldRect.width * frontInset, worldRect.center.y));
-            float referenceExtent = G.UnitsPerPixel;
-            foreach (var frame in frames)
-            {
-                if (frame == null) continue;
-                var size = OpaqueRect(frame).size;
-                referenceExtent = Mathf.Max(referenceExtent, Mathf.Max(size.x, size.y));
-            }
-            float relativeSize = Mathf.Max(worldRect.width, worldRect.height) / referenceExtent;
-            // Keep small effects small; compress growth above the native texture size.
-            float factor = Mathf.Min(relativeSize, Mathf.Pow(relativeSize, sizeGrowth));
-            float scale = Mathf.Min(factor, maxScale) * sizeRatio;
+            // Godot grew the burst with the enemy's size (up to 2.25x on bosses); every enemy now gets the zako's.
             var parentScale = transform.parent != null ? transform.parent.lossyScale : Vector3.one;
             transform.localScale = new Vector3(scale / parentScale.x, scale / parentScale.y, 1f);
         }
