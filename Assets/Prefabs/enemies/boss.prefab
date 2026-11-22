@@ -253,6 +253,18 @@ MonoBehaviour:
   dropPrefab: {fileID: 0}
   dropChance: 0
   scoreValue: 20000
+  deathBursts:
+    count: 12
+    seconds: 3.85
+    finale: 3
+  phaseBreakBursts:
+    count: 7
+    seconds: 2.1
+    finale: 0
+  deathBlinkTint: {r: 3, g: 2, b: 1, a: 1}
+  deathBlinkWhiteEvery: 0
+  phaseBreakBlinkWhite: 1
+  phaseBreakHoldSeconds: 2.55
   visual: {fileID: 8419140012308819532}
   core: {fileID: 0}
 --- !u!95 &7893231758429332793

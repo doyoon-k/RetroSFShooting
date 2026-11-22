@@ -229,6 +229,15 @@ MonoBehaviour:
   dropPrefab: {fileID: 0}
   dropChance: 0
   scoreValue: 5000
+  deathBursts:
+    count: 6
+    seconds: 1.75
+    finale: 2
+  phaseBreakBursts:
+    count: 1
+    seconds: 0
+    finale: 0
+  phaseBreakHoldSeconds: 0.75
   visual: {fileID: 829008830835764880}
   core: {fileID: 0}
 --- !u!1 &8342062927408104256

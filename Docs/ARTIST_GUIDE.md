@@ -28,7 +28,32 @@ EnemyShip (루트)            ← EnemyShip / EnemyMovement / Rigidbody2D / Anim
   `Death Animation Seconds`에 길이를 넣으면 그 시간 동안 연출한 뒤 사라집니다.
 - 대기(Idle) 애니메이션을 추가하려면 컨트롤러의 `Idle` 상태에 클립을 넣으면 됩니다.
 - 폭발·피격 이펙트는 기본 상태가 한 번 재생되고 끝나면 자동으로 삭제됩니다(`OneShotEffect`).
-  클립의 Loop Time은 꺼 두세요.
+  클립의 Loop Time은 꺼 두세요. 켜진 채로 두면 `EffectTests`가 실패해 알려 줍니다.
+- 적이 격추되면 `Assets/Prefabs/Fx/EnemyDieFx_0001.prefab`이 그 적의 몸체(그림의 불투명한 부분) 가운데에서
+  한 번 재생됩니다. 적 크기와 상관없이 프리팹 크기 그대로 나오므로, 크기는 프리팹 루트의 Scale로 조절하세요.
+  다른 연출로 바꾸려면 `stage_01.prefab`의 `StageController > Enemy Death Prefab`에 넣으면 됩니다.
+- 큰 적은 EnemyShip의 `Break-up > Death Bursts`로 몸 여러 곳에서 연달아 터집니다. `Count`는 개수,
+  `Seconds`는 첫 폭발부터 마지막 폭발까지의 시간이고 그 사이를 같은 간격으로 나눕니다. 위치는 몸의 가장자리나
+  촉수 같은 얇은 곳을 피해 몸 안쪽에서 고르고, 마지막 폭발은 몸에서 가장 두꺼운 곳입니다. `Finale`만큼의 폭발이
+  마지막 폭발과 동시에 터집니다. 그다음 `death` 애니메이션이 재생되고(없으면 0.5초 동안 흐려짐) 끝나면 사라집니다.
+- 연쇄가 이어지는 동안 몸은 폭발마다 `Death Blink Tint` 색(기본 3·2·1, 보스 `death` 애니메이션의 가장 밝은 색)으로
+  간격의 절반 동안 깜빡입니다. 흰 번쩍임은 섞지 않으며(`Death Blink White Every` 0), 격추하는 마지막 일격의
+  흰 피격 번쩍임도 이때 끕니다. 깜빡임은 폭발 하나에 한 번이라 간격을 1/3초 이상으로 두면 1초에 세 번을 넘지 않습니다.
+- 기본값은 실제 게임을 재서 맞췄습니다(R-Type·라이덴 II 약 2초, 도돈파치 약 5.5초, 이카루가 약 13.5초).
+  보스는 12개·3.85초 + 피날레 3개, `death` 애니메이션 뒤 `StageController > Boss Clear Delay Seconds`(1초)를
+  기다려 격추 약 5.3초 뒤에 SECTOR CLEAR가 나옵니다. 중간보스는 6개·1.75초 + 피날레 2개로 약 2.25초 뒤에
+  사라지고, 그때까지 스크롤이 멈춰 있습니다. 그 밖의 적은 1개입니다.
+- 연쇄 간격은 1/3초보다 짧게 하지 마세요. 더 빠르면 폭발이 뭉개져 보이고, 1초에 세 번 넘게 번쩍이면 광과민성
+  발작을 일으킬 수 있습니다(WCAG 2.3.1). 더 짧게 넣으면 `EffectTests`가 실패해 알려 줍니다.
+- 2페이즈가 있는 적(보스, 그리고 `Second Phase` 패턴을 넣은 적)은 HP가 `Phase Threshold` 아래로 내려가면
+  사격을 멈추고 `Phase Break Bursts`만큼 중파 이펙트(`Assets/Prefabs/Fx/Enermy_Broken1.prefab`,
+  `StageController > Enemy Damage Prefab`)가 몸 여러 곳에서 터지고 그때마다 몸이 하얗게 깜빡인 뒤
+  (`Phase Break Blink White`), `Phase Break Hold Seconds`가 지나면
+  2페이즈 패턴을 시작합니다. 보스 기본값은 7개·2.1초(0.35초 간격), 멈춤 2.55초로 마지막 이펙트가 끝난 뒤에
+  2페이즈가 시작됩니다(라이덴 II 외장 파괴 약 1.75초, 도돈파치 부품 파괴 약 1.5초보다 조금 길게).
+- 이펙트 그림이 캔버스 가운데에서 벗어나 그려져 있으면 프리팹의 `One Shot Effect > Anchor To Art`를 켜세요.
+  모든 프레임 그림의 가운데가 터지는 지점에 오도록 맞춰 띄웁니다. 프레임을 바꾼 뒤에는 메뉴
+  **RetroSF > Measure Effect Anchors**를 실행하세요. 실행하지 않으면 `EffectTests`가 실패해 알려 줍니다.
 - 플레이어의 `Shield Effect Prefab`은 실드를 획득하면 기체를 따라 반복 재생되고, 실드가
   소모되면 즉시 사라집니다. `ShieldFx`에는 `OneShotEffect`를 붙이지 않고 Loop Time을 켭니다.
   `Power Down Effect`는 생존한 피격으로 무기 레벨이 실제로 내려갈 때 `PowerdownFX`를

@@ -72,6 +72,11 @@
 - 전투 UI의 Godot z_index는 중첩 Canvas의 sorting order(1000 + z×10)로 옮겼습니다.
 - 전투 프레임의 왼쪽 파일럿 칸 밑에 어두운 바탕을 깔았습니다(Godot에는 없음). 카드 사이 틈과 현재 파일럿 칸
   뒤로 게임 화면이 비치지 않게 합니다. 점수 칸에 있던 Godot `PauseButton`은 점수 레퍼런스에 맞춰 뺐습니다.
+- 보스 격추 흐름을 바꿨습니다(Godot에는 없음). Godot는 보스를 격추한 프레임에 클리어 단계로 넘어가 화면이
+  멈췄기 때문에 보스의 `death` 애니메이션이 재생되지 않았습니다. 이제 보스·중간보스는 연쇄 폭발과 `death`
+  애니메이션(또는 흐려짐)이 끝난 뒤 사라지고, 그다음에 SECTOR CLEAR(보스는 1초 여운 뒤)나 스크롤 재개가
+  옵니다. 보스 페이즈 전환에도 중파 이펙트와 사격 멈춤을 넣었습니다. 길이는 R-Type·라이덴 II·도돈파치·이카루가의
+  플레이 영상을 재서 도돈파치 수준(보스 격추 → SECTOR CLEAR 약 5초)에 맞췄습니다.
 
 ## 검증
 
@@ -80,6 +85,10 @@
 - `ScoreTests`, `ScoreFlowTests`: 점수 규칙(Unity에서 추가, Godot에는 없음)·최고 점수 저장·전투 프레임 굽기·
   점수 글꼴과 위치(레퍼런스 그림 기준) 확인
 - `HudLayoutTests`: 로스터가 Godot 위치에 있고 프레임의 투명한 파일럿 칸이 모두 바탕으로 덮였는지 확인
+- `EffectTests`, `EnemyDeathEffectTests`: 1회성 이펙트 클립이 반복되지 않는지, 적 사망 연출(Unity에서 추가,
+  Godot에는 없음)이 몸체 가운데에 뜨고 일시정지 중 멈췄다가 끝나면 사라지는지 확인
+- `LargeEnemyBreakUpTests`: 보스·중간보스의 연쇄 폭발이 몸 안쪽에서 1/3초 이상 간격으로 터지고, 다 끝난 뒤에
+  SECTOR CLEAR·스크롤 재개가 오는지, 보스 페이즈 전환 때 중파 이펙트 뒤에 2페이즈가 시작되는지 확인
 - `ScreenCaptureTests`: 주요 장면을 `Captures/*.png`로 저장. Godot 쪽은
   Godot 버전 폴더의 `build/screenshots` (`godot --path . --script tests/run_tests.gd -- --screenshots`)
 

@@ -1603,6 +1603,8 @@ MonoBehaviour:
   recoveryBomb: {fileID: 6420282039092733452, guid: c6bb1dfb7e582dd4281227d6c1cf9903, type: 3}
   explosionPrefab: {fileID: 7937186135888331919, guid: 4e3a493529ebc964d989c346cdee98ff, type: 3}
   enemyHitPrefab: {fileID: 3670449393021406338, guid: 39e9eba04c5a0774cbd357e335f9d3b6, type: 3}
+  enemyDeathPrefab: {fileID: 740460535352351516, guid: b06562252aeb54807b4d7e1807f2b3a7, type: 3}
+  enemyDamagePrefab: {fileID: 6932658532739232428, guid: 739cb250e403f4d2f81f8114fec1d70e, type: 3}
   bossIntroSeconds: 2
   clearIntroSeconds: 1.5
   scrollSpeed: 1.8

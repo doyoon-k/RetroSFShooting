@@ -27,8 +27,14 @@ namespace RetroSF
         public Pickup recoveryBomb;
         public OneShotEffect explosionPrefab;
         public EnemyHitEffect enemyHitPrefab;
+        [Tooltip("Death burst at the prefab's own size: one at the body center of an ordinary enemy, a chain over a large one's body.")]
+        public OneShotEffect enemyDeathPrefab;
+        [Tooltip("Damage burst over the body of a ship whose second phase begins.")]
+        public OneShotEffect enemyDamagePrefab;
         [Range(0.1f, 10f)] public float bossIntroSeconds = 2f;
         [Range(0.1f, 10f)] public float clearIntroSeconds = 1.5f;
+        [Tooltip("Once the boss's death sequence is over, the stage lets the last bursts play out for this long before SECTOR CLEAR.")]
+        [Range(0f, 5f)] public float bossClearDelaySeconds = 1f;
         [Range(0.01f, 10f)] public float scrollSpeed = 1.8f;
         [Range(0f, 5f)] public float activationMargin = 0.8f;
         [Tooltip("Interface overlays (dimmer, bomb flash) in world space at the stage start.")]
@@ -80,6 +86,8 @@ namespace RetroSF
 
         PendingDeath pendingDeath;
         bool pendingBoss;
+        /// <summary>Counts down from the end of the boss's death sequence to SECTOR CLEAR; 0 when idle.</summary>
+        float bossClearLeft;
         bool bossWaitingToEnter;
         bool resolutionQueued;
         string dyingPilotId = "";
@@ -180,6 +188,13 @@ namespace RetroSF
         {
             if (phase != Phase.Playing || userPaused) return;
             AdvanceBomb(Time.fixedDeltaTime);
+            if (bossClearLeft > 0f)
+            {
+                // The boss is gone; hold the scroll while its last bursts play out.
+                bossClearLeft -= Time.fixedDeltaTime;
+                if (bossClearLeft <= 0f) ClearSector();
+                return;
+            }
             if (boss != null || midEnemy != null || bossWaitingToEnter) return;
             progressX += scrollSpeed * Time.fixedDeltaTime;
             SyncWorldBounds();
@@ -406,6 +421,8 @@ namespace RetroSF
             enemy.dropChance = chance;
             enemy.Damaged += EnemyDamaged;
             enemy.Destroyed += EnemyDestroyed;
+            enemy.BurstRequested += EnemyBurst;
+            enemy.DeathFinished += EnemyDeathFinished;
             var mode = enemy.movement.mode;
             if (mode == EnemyMovement.Mode.EnterHoldExit || mode == EnemyMovement.Mode.VerticalSweep || mode == EnemyMovement.Mode.StrafeExit)
             {
@@ -465,12 +482,8 @@ namespace RetroSF
             defeated += 1;
             run.score += enemy.KillScore;
             Sfx.Play(enemy.isMidboss || enemy.isBoss ? "large_enemy_destroyed" : enemy.destroyedCue);
-            if (enemy == midEnemy)
-            {
-                midEnemy = null;
-                ClearProjectiles(false);
-                if (player != null && phase == Phase.Playing) player.autoAdvanceSpeed = scrollSpeed;
-            }
+            // A large enemy breaks up for a while: its bullets go now, the stage moves on once it is gone.
+            if (enemy == midEnemy || enemy.isBoss) ClearProjectiles(false);
             if (enemy.dropPrefab != null && UnityEngine.Random.value < enemy.dropChance)
             {
                 // Trigger callbacks run inside the physics step; spawn after it.
@@ -478,11 +491,31 @@ namespace RetroSF
                 var location = enemy.Position;
                 Defer(() => SpawnPickup(drop, location));
             }
+        }
+
+        void EnemyBurst(EnemyShip enemy, Vector2 point, EnemyShip.BurstKind kind) =>
+            SpawnEffect(point, kind == EnemyShip.BurstKind.Death ? enemyDeathPrefab : enemyDamagePrefab);
+
+        /// <summary>The enemy's death bursts are over: resume the scroll after a midboss, clear the sector after the boss.</summary>
+        void EnemyDeathFinished(EnemyShip enemy)
+        {
+            if (enemy == midEnemy)
+            {
+                midEnemy = null;
+                if (player != null && phase == Phase.Playing) player.autoAdvanceSpeed = scrollSpeed;
+            }
             if (enemy.isBoss)
             {
-                pendingBoss = true;
-                QueueResolution();
+                if (bossClearDelaySeconds > 0f) bossClearLeft = bossClearDelaySeconds;
+                else ClearSector();
             }
+        }
+
+        void ClearSector()
+        {
+            bossClearLeft = 0f;
+            pendingBoss = true;
+            QueueResolution();
         }
 
         void PlayerDied(Vector2 location, int recoveryPowerups, int recoveryBombs)

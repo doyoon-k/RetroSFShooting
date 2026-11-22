@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 619355710873926995}
   - component: {fileID: 786006603207540611}
   - component: {fileID: 2071036057080004595}
+  - component: {fileID: 740460535352351516}
   m_Layer: 0
   m_Name: EnemyDieFx_0001
   m_TagString: Untagged
@@ -56,7 +57,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 70b33fc0b99d98641af2cd336edd1209, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -76,7 +77,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10000
+  m_SortingOrder: 42
   m_Sprite: {fileID: 21300000, guid: 0c12dddd1b4a30a49894b085d23c37a1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -110,3 +111,17 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &740460535352351516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3584150748354419837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a181e5c6fd161a49bdd56433a614c59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anchorToArt: 1
+  artCenter: {x: 0.004999995, y: 0.14999998}

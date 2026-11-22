@@ -10,10 +10,25 @@ namespace RetroSF
     [RequireComponent(typeof(Animator))]
     public class OneShotEffect : MonoBehaviour
     {
+        [Tooltip("Spawn so the middle of everything the animation draws lands on the spawn point, " +
+                 "instead of the sprite pivot. For art drawn off the canvas center.")]
+        public bool anchorToArt;
+        [Tooltip("Middle of the opaque pixels of all frames, relative to the pivot in local units. " +
+                 "Filled in by RetroSF > Measure Effect Anchors.")]
+        public Vector2 artCenter;
+
         Animator animator;
         bool started;
 
-        protected virtual void Awake() => animator = GetComponent<Animator>();
+        protected virtual void Awake()
+        {
+            animator = GetComponent<Animator>();
+            // Instantiate has already placed the pivot on the spawn point.
+            if (anchorToArt) transform.position -= transform.TransformVector(artCenter);
+        }
+
+        /// <summary>World point the effect is centered on: the art center when anchored, else the pivot.</summary>
+        public Vector2 Center => anchorToArt ? (Vector2)transform.TransformPoint(artCenter) : (Vector2)transform.position;
 
         public void SetUnscaled(bool unscaled) =>
             GetComponent<Animator>().updateMode = unscaled ? AnimatorUpdateMode.UnscaledTime : AnimatorUpdateMode.Normal;
