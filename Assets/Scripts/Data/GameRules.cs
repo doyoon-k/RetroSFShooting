@@ -23,6 +23,9 @@ namespace RetroSF
         [Range(1, 100)] public int bombDamage = 10;
         [Range(0f, 5f)] public float bombInvincibility = 1f;
         public bool bombClearsBullets = true;
+        [Header("Score")]
+        [Tooltip("Added once at SECTOR CLEAR for every pilot still alive.")]
+        [Range(0, 100000)] public int clearBonusPerSurvivor = 10000;
         [Header("Playfield (Unity space)")]
         public Rect playfield = G.FromGodotRect(440f, 24f, 1464f, 952f);
         public Vector2 spawnPosition = new Vector2(6.62f, -5f);

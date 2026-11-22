@@ -7,8 +7,9 @@ using System.Text;
 namespace RetroSF
 {
     /// <summary>
-    /// Unlocked endings on disk (Godot save_store.gd). Version 1 file:
-    /// <c>{"version":1,"endings":["new_home", ...]}</c>.
+    /// Unlocked endings and the high score on disk (Godot save_store.gd). Version 1 file:
+    /// <c>{"version":1,"endings":["new_home", ...],"highScore":123400}</c>. A file without
+    /// <c>highScore</c> (Godot, or before the score system) reads as a high score of 0.
     /// An unreadable or unsupported file is never overwritten: later endings stay in memory only.
     /// Writes go to a temporary file first and then replace the save in one step.
     /// </summary>
@@ -20,6 +21,7 @@ namespace RetroSF
 
         public string SavePath { get; }
         public List<string> Unlocked { get; } = new List<string>();
+        public int HighScore { get; private set; }
         bool writable = true;
 
         public SaveStore(string savePath)
@@ -31,6 +33,7 @@ namespace RetroSF
         public bool LoadProgress()
         {
             Unlocked.Clear();
+            HighScore = 0;
             if (!File.Exists(SavePath))
             {
                 writable = true;
@@ -66,7 +69,19 @@ namespace RetroSF
             }
             foreach (var id in list)
                 if (id is string text && !Unlocked.Contains(text)) Unlocked.Add(text);
+            if (data.TryGetValue("highScore", out var best) && best is double points && points > 0)
+                HighScore = (int)Math.Min(Math.Floor(points), int.MaxValue);
             return true;
+        }
+
+        /// <summary>
+        /// Records a finished run: its ending and, when it beats the stored one, its score.
+        /// False when it could only be kept in memory.
+        /// </summary>
+        public bool RecordRun(string endingId, int score)
+        {
+            if (score > HighScore) HighScore = score;
+            return Unlock(endingId);
         }
 
         /// <summary>Records an ending. False when it could only be kept in memory.</summary>
@@ -120,7 +135,7 @@ namespace RetroSF
                 if (i > 0) builder.Append(',');
                 Json.Quote(builder, Unlocked[i]);
             }
-            builder.Append("]}");
+            builder.Append("],\"highScore\":").Append(HighScore.ToString(CultureInfo.InvariantCulture)).Append('}');
             return builder.ToString();
         }
 

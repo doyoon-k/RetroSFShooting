@@ -131,7 +131,6 @@ namespace RetroSF
             resume.onClick.AddListener(TogglePause);
             combatHUD.BombRequested += OnBombRequested;
             combatHUD.WeaponChangeRequested += SwitchWeapon;
-            combatHUD.PauseRequested += TogglePause;
             PlaceOverlay(pauseDimmer);
             PlaceOverlay(bombFlash);
             SetBombFlash(0f);
@@ -153,7 +152,6 @@ namespace RetroSF
             {
                 combatHUD.BombRequested -= OnBombRequested;
                 combatHUD.WeaponChangeRequested -= SwitchWeapon;
-                combatHUD.PauseRequested -= TogglePause;
             }
             if (resume != null) resume.onClick.RemoveListener(TogglePause);
             if (!started) return;
@@ -357,7 +355,7 @@ namespace RetroSF
             if (run == null || run.currentSortie == null) return;
             var pilot = catalog.PilotById(run.currentPilotId);
             if (pilot != null)
-                combatHUD.Display(run.currentSortie, roster.PortraitFor(pilot), phase == Phase.Playing && !userPaused, CanUseBomb());
+                combatHUD.Display(run.currentSortie, run.score, roster.PortraitFor(pilot), phase == Phase.Playing && !userPaused, CanUseBomb());
         }
 
         public Transform GetTarget() => player != null && !player.deathReported ? player.transform : null;
@@ -465,6 +463,7 @@ namespace RetroSF
         void EnemyDestroyed(EnemyShip enemy)
         {
             defeated += 1;
+            run.score += enemy.KillScore;
             Sfx.Play(enemy.isMidboss || enemy.isBoss ? "large_enemy_destroyed" : enemy.destroyedCue);
             if (enemy == midEnemy)
             {
@@ -581,6 +580,8 @@ namespace RetroSF
             Music.Play("clear");
             Sfx.Play("stage_clear");
             Enter(Phase.Clearing, clearIntroSeconds);
+            // Pilots lost in this resolution are already marked dead.
+            run.score += run.ClearBonus();
             ClearProjectiles(true);
             roster.showSurvivedStatus = true;
             roster.Refresh();

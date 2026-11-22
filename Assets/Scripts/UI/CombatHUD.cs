@@ -1,18 +1,21 @@
 using System;
+using System.Globalization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace RetroSF
 {
-    /// <summary>Active pilot portrait and the bomb / weapon / pause console (Godot combat_hud.gd).</summary>
+    /// <summary>Active pilot portrait, the bomb / weapon console (Godot combat_hud.gd) and the run score.</summary>
     public class CombatHUD : MonoBehaviour
     {
         const float SpreadIconDegrees = 18f;
 
+        /// <summary>Plain digits, no padding: the score box right-aligns them like the art reference.</summary>
+        public static string FormatScore(int score) => Mathf.Max(0, score).ToString(CultureInfo.InvariantCulture);
+
         public event Action BombRequested;
         public event Action WeaponChangeRequested;
-        public event Action PauseRequested;
 
         public Sprite bombOn;
         public Sprite bombReady;
@@ -30,7 +33,7 @@ namespace RetroSF
         [SerializeField] Image weaponTwo;
         [SerializeField] TextMeshProUGUI weaponLevel;
         [SerializeField] Button weaponChange;
-        [SerializeField] Button pauseButton;
+        [SerializeField] TextMeshProUGUI score;
 
         Image[] bombSlots;
         bool initialized;
@@ -38,6 +41,7 @@ namespace RetroSF
         Vector2 weaponTwoCenter;
         float shownWeaponTwoDegrees;
         int shownLevel = -1;
+        int shownScore = -1;
 
         void Awake() => Initialize();
 
@@ -46,7 +50,6 @@ namespace RetroSF
             if (!initialized) return;
             if (bombButton != null) bombButton.onClick.RemoveListener(RequestBomb);
             if (weaponChange != null) weaponChange.onClick.RemoveListener(RequestWeaponChange);
-            if (pauseButton != null) pauseButton.onClick.RemoveListener(RequestPause);
         }
 
         /// <summary>Also run from Display, which the stage may call before this object first wakes.</summary>
@@ -66,11 +69,6 @@ namespace RetroSF
                 UiUtil.DisableFocus(weaponChange);
                 weaponChange.onClick.AddListener(RequestWeaponChange);
             }
-            if (pauseButton != null)
-            {
-                UiUtil.DisableFocus(pauseButton);
-                pauseButton.onClick.AddListener(RequestPause);
-            }
             if (weaponTwo != null)
             {
                 var rect = weaponTwo.rectTransform;
@@ -84,12 +82,15 @@ namespace RetroSF
 
         void RequestWeaponChange() => WeaponChangeRequested?.Invoke();
 
-        void RequestPause() => PauseRequested?.Invoke();
-
-        public void Display(SortieState sortie, Sprite portrait, bool canUse, bool bombAvailable)
+        public void Display(SortieState sortie, int runScore, Sprite portrait, bool canUse, bool bombAvailable)
         {
             Initialize();
             if (sortie == null) return;
+            if (score != null && runScore != shownScore)
+            {
+                shownScore = runScore;
+                score.text = FormatScore(runScore);
+            }
             UiUtil.SetTextureCovered(activePortrait, portrait);
             bool bombUsable = canUse && bombAvailable && sortie.Bombs > 0;
             int firstBombIndex = bombSlots.Length - sortie.Bombs;

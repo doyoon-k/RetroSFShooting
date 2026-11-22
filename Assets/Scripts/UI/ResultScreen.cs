@@ -13,12 +13,15 @@ namespace RetroSF
         [NonSerialized] public RunState run;
         [NonSerialized] public EndingData ending;
         [NonSerialized] public bool saveOk = true;
+        /// <summary>The run beat the stored high score.</summary>
+        [NonSerialized] public bool newRecord;
         public event Action ReturnRequested;
 
         [SerializeField] TextMeshProUGUI heading;
         [SerializeField] TextMeshProUGUI survivors;
         [SerializeField] PilotRoster roster;
         [SerializeField] TextMeshProUGUI saveStatus;
+        [SerializeField] TextMeshProUGUI newRecordLabel;
         // Godot node %Return; "return" is a C# keyword, so the field is spelled @return (serialized as "return").
         [SerializeField] Button @return;
 
@@ -39,6 +42,7 @@ namespace RetroSF
             roster.Configure(run.catalog, run);
             roster.showSurvivedStatus = true;
             roster.Refresh();
+            if (newRecordLabel != null) newRecordLabel.gameObject.SetActive(newRecord);
             saveStatus.text = saveOk ? "엔딩 기록이 저장되었습니다." : "엔딩 기록 저장에 실패했습니다. 기존 저장 파일은 보존됩니다.";
             @return.onClick.AddListener(ReturnToTitle);
             UiRuntime.Focus(@return);

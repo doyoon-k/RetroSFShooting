@@ -252,6 +252,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6127f636040a71742b5d494ae9d62a89, type: 2}
   dropPrefab: {fileID: 0}
   dropChance: 0
+  scoreValue: 20000
   visual: {fileID: 8419140012308819532}
   core: {fileID: 0}
 --- !u!95 &7893231758429332793

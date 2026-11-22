@@ -68,12 +68,18 @@
   계획이 생기면 그때 다시 판단합니다.)
 - Godot StyleBoxFlat(버튼·패널 배경과 테두리, 상태별 글자색)은 `UiStyleBox` + 9-slice `Border` 자식으로 옮겼습니다.
 - `battle_frame.gdshader`는 `Assets/Art/_Generated/Battle_Bg_Keyed.png`로 미리 구워 두었습니다.
+  같은 규칙을 `Assets/Editor/BattleFrameBaker.cs`(메뉴 RetroSF > Bake Battle Frame)가 다시 굽습니다.
 - 전투 UI의 Godot z_index는 중첩 Canvas의 sorting order(1000 + z×10)로 옮겼습니다.
+- 전투 프레임의 왼쪽 파일럿 칸 밑에 어두운 바탕을 깔았습니다(Godot에는 없음). 카드 사이 틈과 현재 파일럿 칸
+  뒤로 게임 화면이 비치지 않게 합니다. 점수 칸에 있던 Godot `PauseButton`은 점수 레퍼런스에 맞춰 뺐습니다.
 
 ## 검증
 
 - `GodotParityTests`: Godot 공식을 그대로 계산해 좌표·각도 변환 결과와 비교
 - `StageSmokeTests`: 실제 씬으로 발진·스크롤·일시정지·폭탄·타이틀 진입 확인
+- `ScoreTests`, `ScoreFlowTests`: 점수 규칙(Unity에서 추가, Godot에는 없음)·최고 점수 저장·전투 프레임 굽기·
+  점수 글꼴과 위치(레퍼런스 그림 기준) 확인
+- `HudLayoutTests`: 로스터가 Godot 위치에 있고 프레임의 투명한 파일럿 칸이 모두 바탕으로 덮였는지 확인
 - `ScreenCaptureTests`: 주요 장면을 `Captures/*.png`로 저장. Godot 쪽은
   Godot 버전 폴더의 `build/screenshots` (`godot --path . --script tests/run_tests.gd -- --screenshots`)
 

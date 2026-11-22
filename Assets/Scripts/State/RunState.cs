@@ -14,6 +14,8 @@ namespace RetroSF
         public SortieState currentSortie;
         public bool bossCleared;
         public string endingId = "";
+        /// <summary>Shared by every pilot of the run: kills plus the clear bonus.</summary>
+        public int score;
 
         public RunState(GameCatalog content = null)
         {
@@ -47,6 +49,9 @@ namespace RetroSF
                 RosterChanged?.Invoke();
             }
         }
+
+        /// <summary>SECTOR CLEAR bonus for the pilots still alive.</summary>
+        public int ClearBonus() => catalog.rules != null ? Survivors().Count * catalog.rules.clearBonusPerSurvivor : 0;
 
         public string AutomaticChoice(string preferred)
         {

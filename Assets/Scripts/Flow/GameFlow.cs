@@ -125,7 +125,9 @@ namespace RetroSF
             var screen = Replace(resultPrefab);
             screen.run = run;
             screen.ending = catalog.EndingById(run.endingId);
-            screen.saveOk = saveStore.Unlock(run.endingId);
+            int previousHighScore = saveStore.HighScore;
+            screen.saveOk = saveStore.RecordRun(run.endingId, run.score);
+            screen.newRecord = run.score > previousHighScore;
             OnceDeferred(h => screen.ReturnRequested += h, h => screen.ReturnRequested -= h, ShowTitle);
         }
 

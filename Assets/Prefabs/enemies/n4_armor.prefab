@@ -314,5 +314,6 @@ MonoBehaviour:
   secondPhase: []
   dropPrefab: {fileID: 0}
   dropChance: 0
+  scoreValue: 500
   visual: {fileID: 643682870428695233}
   core: {fileID: 0}

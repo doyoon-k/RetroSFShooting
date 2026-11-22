@@ -3,6 +3,7 @@
     "rootNamespace": "RetroSF.Tests",
     "references": [
         "RetroSF.Runtime",
+        "RetroSF.Editor",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner"
     ],

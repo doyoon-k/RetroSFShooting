@@ -30,6 +30,8 @@ namespace RetroSF
         public List<PatternStep> secondPhase = new List<PatternStep>();
         public Pickup dropPrefab;
         [Range(0f, 1f)] public float dropChance;
+        [Tooltip("Points for shooting this enemy down, multiplied by the proximity multiplier (x1-x4) of the killing hit.")]
+        [Min(0)] public int scoreValue = 100;
         [Header("Parts")]
         [Tooltip("Body renderer: flashes on hits and sizes the hit effect.")]
         public SpriteRenderer visual;
@@ -53,6 +55,9 @@ namespace RetroSF
         public int LastHitMultiplier { get; private set; } = 1;
         public Color LastHitColor { get; private set; } = Color.white;
         public DamageMultiplierFeedback DamageFeedback { get; private set; }
+
+        /// <summary>What this kill scores: the base score times the killing hit's proximity multiplier (bombs hit at x1).</summary>
+        public int KillScore => scoreValue * Mathf.Max(1, LastHitMultiplier);
 
         public Vector2 Position
         {

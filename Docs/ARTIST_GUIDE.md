@@ -57,8 +57,27 @@ EnemyShip (루트)            ← EnemyShip / EnemyMovement / Rigidbody2D / Anim
 - 기준 해상도 1920×1080, 16:9 레터박스입니다.
 - 글꼴은 `Assets/Fonts/TMP`의 TextMeshPro 폰트입니다. Stadium → SB 어그로 → Noto Sans KR 순으로
   없는 글자를 대신합니다.
-- 전투 프레임 `Battle_Bg_Keyed.png`는 원본 `Battle_Bg.png`에서 흰 창을 투명하게 만든 그림입니다.
-  프레임을 다시 그리면 창 부분을 투명하게 저장해 이 파일을 바꾸면 됩니다.
+- 전투 프레임 `Assets/Art/_Generated/Battle_Bg_Keyed.png`는 원본 `Assets/Art/Pilots_sprites/UI/Battle_Bg.png`에서
+  흰 창과 그 가장자리의 회색, 그림에 그려진 J 배지를 투명하게 구운 그림입니다. `Battle_Bg.png`를 고친 뒤에는
+  메뉴 **RetroSF > Bake Battle Frame**을 실행하세요. 굽지 않고 두면 `ScoreTests`가 실패해 알려 줍니다.
+- 프레임이 투명한 왼쪽 파일럿 칸 밑에는 어두운 바탕(`RosterBacking`, 현재 파일럿 칸의 `Backing`, 색 26·23·26)이
+  깔려 있어 뒤를 지나가는 적과 총알이 비치지 않습니다. 각 초상화 카드는 그 위에 `Pilot_Bg.png`를 채웁니다.
+  프레임의 투명 영역을 넓히면 바탕이 그 영역을 덮는지 `HudLayoutTests`가 확인합니다.
+
+## 점수
+
+- 적을 격추하면 그 적의 `EnemyShip > Score Value` × 마지막 일격의 근접 배율(x1~x4)을 얻습니다. 폭탄 격추는 x1입니다.
+  기본값은 자코 100, n 계열 300~500, 중간보스 5,000, 보스 20,000입니다.
+- 보스를 격파해 SECTOR CLEAR가 되면 살아 있는 파일럿 수 × `Assets/Data/rules/default.asset`의
+  `Clear Bonus Per Survivor`(10,000)를 더합니다. 점수는 한 번의 플레이에서 모든 파일럿이 함께 쌓습니다.
+- 점수는 프레임 오른쪽 아래 점수 칸에 레퍼런스 그림대로 앞자리 0 없이 오른쪽 정렬로 표시됩니다.
+  `Assets/Prefabs/ui/combat_hud.prefab`의 `ScoreBox/Score`이며, 다른 HUD 글자와 같은 Stadium 42입니다.
+  `ScoreBox`는 프레임에 그려진 점수 칸(회색 테두리 안쪽 x 1478~1825, y 953~1045)과 같고, 숫자는 그 안에서
+  위아래 여백이 같도록 세로 가운데(Midline 정렬, 숫자 모양 기준)에 놓이며 오른쪽 끝은 레퍼런스와 같은 x 1810입니다.
+  프레임의 점수 칸을 옮기면 `HudLayoutTests`가 `ScoreBox`를 맞추라고 알려 줍니다.
+  7자리가 되면 칸 안에 들어가도록 자동으로 작아집니다(`ScoreFlowTests`가 확인). 이 자리에 있던
+  일시정지 버튼은 없어졌고, 일시정지는 ESC·게임패드 Start로 합니다.
+- 최고 점수는 엔딩 기록과 같은 저장 파일에 남고, 최고 점수를 넘기면 결과 화면에 `NEW RECORD`가 나옵니다.
 
 ## 근접 사격 배율과 숫자 표시
 
