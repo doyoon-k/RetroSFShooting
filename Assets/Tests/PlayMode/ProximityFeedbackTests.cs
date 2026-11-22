@@ -59,7 +59,7 @@ namespace RetroSF.Tests
         public IEnumerator FiredShotsApplyFourStepsAndRenderTheSharedNumericFont()
         {
             int firstFrame = Time.frameCount;
-            foreach (var entry in new[] { new Vector2(4f, 1), new Vector2(2.4f, 2), new Vector2(1.2f, 3), new Vector2(0.6f, 4) })
+            foreach (var entry in new[] { new Vector2(8f, 1), new Vector2(4.8f, 2), new Vector2(2.4f, 3), new Vector2(1.2f, 4) })
             {
                 var enemy = MakeEnemy();
                 stage.player.weapon.Fire();
