@@ -182,7 +182,7 @@ Transform:
   m_GameObject: {fileID: 1185288453232686470}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.12, y: 0, z: 0}
+  m_LocalPosition: {x: 0.12, y: 0.045, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -403,6 +403,7 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: 25cb335322adf0e44ba7c4f2ac7679b2, type: 2}
   spreadData: {fileID: 11400000, guid: d60bbf2f5dc61474687bfb4af5502354, type: 2}
   straightShotSpacing: 0.28
+  spawnForward: 0.27
   proximityTiers:
   - distance: 0.8
     multiplier: 4
